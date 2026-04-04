@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ChevronLeft, Heart, Star, Minus, Plus } from 'lucide-react';
-import { addToCart } from '@/lib/cartStore';
+import { addToCart as addItemToCart } from '@/lib/cartStore';
 import { useToast } from '@/components/ui/use-toast';
 
 const SPICE = ['Mild', 'Medium', 'High'];
@@ -46,8 +46,8 @@ export default function ItemDetail() {
     );
   };
 
-  const addToCart = () => {
-    addToCart({
+  const handleAddToCart = () => {
+    addItemToCart({
       item_id: item.id,
       name: item.name,
       price: item.price + addOnTotal,
@@ -59,6 +59,7 @@ export default function ItemDetail() {
     toast({ title: 'Added to cart!', description: `${qty}x ${item.name}` });
     navigate(`/truck/${truckId}`);
   };
+
 
   return (
     <div className="min-h-screen" style={{ background: '#0d1517' }}>
@@ -240,7 +241,7 @@ export default function ItemDetail() {
 
           {/* Add to cart */}
           <button
-            onClick={addToCart}
+            onClick={handleAddToCart}
             className="flex-1 py-4 rounded-2xl font-heading font-black text-base flex items-center justify-between px-5"
             style={{
               background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',

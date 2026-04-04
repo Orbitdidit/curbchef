@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, Link } from 'react-router-dom';
 import { ChevronLeft, Share2, Star, Clock, MapPin, Plus, Play } from 'lucide-react';
-import { cartStore } from '@/lib/cartStore';
+
 
 const TABS = ['Menu', 'Specials', 'Clips'];
 
