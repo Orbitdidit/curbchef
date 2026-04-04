@@ -1,0 +1,118 @@
+{
+  "name": "FoodTruck",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Truck name"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short description"
+    },
+    "cuisine_type": {
+      "type": "string",
+      "enum": [
+        "tacos",
+        "burgers",
+        "bbq",
+        "seafood",
+        "asian",
+        "fusion",
+        "desserts",
+        "vegan",
+        "pizza",
+        "soul_food"
+      ],
+      "description": "Primary cuisine"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Main truck/food image"
+    },
+    "cover_image_url": {
+      "type": "string",
+      "description": "Cover banner image"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Average rating 1-5"
+    },
+    "review_count": {
+      "type": "number",
+      "description": "Total reviews"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "address": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string",
+      "default": "Houston"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "closed",
+        "sold_out"
+      ],
+      "default": "closed"
+    },
+    "is_live": {
+      "type": "boolean",
+      "default": false
+    },
+    "live_description": {
+      "type": "string",
+      "description": "What they are cooking live"
+    },
+    "followers_count": {
+      "type": "number",
+      "default": 0
+    },
+    "total_orders": {
+      "type": "number",
+      "default": 0
+    },
+    "total_revenue": {
+      "type": "number",
+      "default": 0
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Vendor owner email"
+    },
+    "is_approved": {
+      "type": "boolean",
+      "default": false
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags like spicy, organic, etc."
+    },
+    "operating_hours": {
+      "type": "string",
+      "description": "e.g. 11am-9pm"
+    },
+    "phone": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "cuisine_type"
+  ]
+}

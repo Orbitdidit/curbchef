@@ -1,0 +1,70 @@
+{
+  "name": "MenuItem",
+  "type": "object",
+  "properties": {
+    "truck_id": {
+      "type": "string",
+      "description": "Reference to FoodTruck"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "mains",
+        "sides",
+        "drinks",
+        "desserts",
+        "specials"
+      ],
+      "default": "mains"
+    },
+    "is_available": {
+      "type": "boolean",
+      "default": true
+    },
+    "is_special": {
+      "type": "boolean",
+      "default": false
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "spicy, popular, new, etc."
+    },
+    "add_ons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "calories": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "truck_id",
+    "name",
+    "price"
+  ]
+}

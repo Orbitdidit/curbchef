@@ -1,0 +1,93 @@
+{
+  "name": "Order",
+  "type": "object",
+  "properties": {
+    "truck_id": {
+      "type": "string"
+    },
+    "truck_name": {
+      "type": "string"
+    },
+    "customer_email": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "add_ons": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "subtotal": {
+      "type": "number"
+    },
+    "tip": {
+      "type": "number"
+    },
+    "total": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "placed",
+        "preparing",
+        "ready",
+        "picked_up",
+        "cancelled"
+      ],
+      "default": "placed"
+    },
+    "pickup_time": {
+      "type": "string",
+      "description": "ASAP or scheduled time"
+    },
+    "pickup_code": {
+      "type": "string",
+      "description": "4-digit code for pickup"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "card",
+        "apple_pay"
+      ],
+      "default": "card"
+    }
+  },
+  "required": [
+    "truck_id",
+    "items",
+    "total"
+  ]
+}

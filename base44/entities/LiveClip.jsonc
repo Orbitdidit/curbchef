@@ -1,0 +1,41 @@
+{
+  "name": "LiveClip",
+  "type": "object",
+  "properties": {
+    "truck_id": {
+      "type": "string"
+    },
+    "truck_name": {
+      "type": "string"
+    },
+    "truck_image": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "description": "What is being cooked"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Clip thumbnail / food image"
+    },
+    "likes": {
+      "type": "number",
+      "default": 0
+    },
+    "saves": {
+      "type": "number",
+      "default": 0
+    },
+    "is_live": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "truck_id",
+    "truck_name",
+    "title",
+    "image_url"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Reward",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string"
+    },
+    "points": {
+      "type": "number",
+      "default": 0
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "starter",
+        "regular",
+        "vip",
+        "legend"
+      ],
+      "default": "starter"
+    },
+    "orders_count": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "user_email"
+  ]
+}
