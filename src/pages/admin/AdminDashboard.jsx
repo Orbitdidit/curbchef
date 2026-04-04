@@ -2,103 +2,210 @@ import React from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, CheckCircle, XCircle, Truck, ShoppingBag, Users, DollarSign } from 'lucide-react';
+import { Settings, Bell, BarChart2, Users, ShoppingBag, Radio, AlertTriangle } from 'lucide-react';
 
 export default function AdminDashboard() {
-  const queryClient = useQueryClient();
+  const qc = useQueryClient();
 
   const { data: trucks = [] } = useQuery({
-    queryKey: ['all-trucks'],
-    queryFn: () => base44.entities.FoodTruck.list('-created_date'),
+    queryKey: ['admin-trucks'],
+    queryFn: () => base44.entities.FoodTruck.list(),
   });
 
   const { data: orders = [] } = useQuery({
-    queryKey: ['all-orders'],
-    queryFn: () => base44.entities.Order.list('-created_date', 50),
+    queryKey: ['admin-orders'],
+    queryFn: () => base44.entities.Order.list('-created_date', 20),
   });
 
-  const approveMutation = useMutation({
-    mutationFn: async ({ id, approved }) => {
-      await base44.entities.FoodTruck.update(id, { is_approved: approved });
-    },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['all-trucks'] }),
+  const approveTruck = useMutation({
+    mutationFn: (id) => base44.entities.FoodTruck.update(id, { is_approved: true }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-trucks'] }),
   });
 
   const pendingTrucks = trucks.filter(t => !t.is_approved);
   const totalRevenue = orders.reduce((s, o) => s + (o.total || 0), 0);
+  const liveTrucks = trucks.filter(t => t.is_live).length;
 
   return (
-    <div className="px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-6">
-      <div className="flex items-center gap-3 mb-6">
-        <Link to="/" className="w-10 h-10 bg-secondary rounded-xl flex items-center justify-center">
-          <ChevronLeft className="w-5 h-5" />
-        </Link>
-        <h1 className="font-heading font-bold text-lg">Admin Dashboard</h1>
+    <div className="min-h-screen dot-bg" style={{ background: '#0d1517' }}>
+      {/* Header */}
+      <div className="flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4" style={{ background: '#151d1f' }}>
+        <div>
+          <p className="font-heading font-bold text-base" style={{ color: '#dff0e8' }}>Admin</p>
+          <p className="text-xs" style={{ color: '#bacbc0' }}>Platform Overview</p>
+        </div>
+        <div className="flex gap-2">
+          <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
+            <Bell className="w-4 h-4" style={{ color: '#bacbc0' }} />
+          </button>
+          <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
+            <Settings className="w-4 h-4" style={{ color: '#bacbc0' }} />
+          </button>
+        </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 gap-2.5 mb-5">
-        {[
-          { icon: Truck, label: 'Trucks', value: trucks.length, color: 'text-primary' },
-          { icon: ShoppingBag, label: 'Orders', value: orders.length, color: 'text-accent' },
-          { icon: DollarSign, label: 'Revenue', value: `$${totalRevenue.toFixed(0)}`, color: 'text-chart-3' },
-          { icon: Users, label: 'Pending', value: pendingTrucks.length, color: 'text-chart-4' },
-        ].map(stat => (
-          <div key={stat.label} className="bg-card rounded-2xl p-4">
-            <stat.icon className={`w-5 h-5 mb-2 ${stat.color}`} />
-            <p className="font-heading font-bold text-xl">{stat.value}</p>
-            <p className="text-[10px] text-muted-foreground">{stat.label}</p>
-          </div>
-        ))}
-      </div>
+      <div className="px-5 pt-5 pb-16">
+        {/* Platform Stats */}
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>PLATFORM STATS</p>
+          <span
+            className="text-[10px] font-bold px-2.5 py-0.5 rounded-full"
+            style={{ background: 'rgba(119,255,200,0.1)', color: '#77ffc8' }}
+          >
+            Live Data
+          </span>
+        </div>
 
-      {/* Pending approvals */}
-      <h2 className="font-heading font-bold text-base mb-3">Pending Approvals</h2>
-      {pendingTrucks.length === 0 ? (
-        <p className="text-muted-foreground text-sm bg-card rounded-2xl p-4 text-center">No pending approvals</p>
-      ) : (
-        <div className="space-y-2.5 mb-5">
-          {pendingTrucks.map(truck => (
-            <div key={truck.id} className="bg-card rounded-2xl p-4 flex items-center gap-3">
-              {truck.image_url && <img src={truck.image_url} alt="" className="w-12 h-12 rounded-xl object-cover" />}
-              <div className="flex-1">
-                <p className="font-semibold text-sm">{truck.name}</p>
-                <p className="text-xs text-muted-foreground capitalize">{truck.cuisine_type?.replace('_', ' ')}</p>
-              </div>
-              <div className="flex gap-1.5">
-                <button
-                  onClick={() => approveMutation.mutate({ id: truck.id, approved: true })}
-                  className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center"
+        <div className="grid grid-cols-2 gap-3 mb-5">
+          {[
+            { label: 'Active Vendors', value: trucks.filter(t => t.is_approved).length, icon: Users, trend: '+12%' },
+            { label: 'Live Streams', value: liveTrucks, icon: Radio, hot: true },
+          ].map(({ label, value, icon: Icon, trend, hot }) => (
+            <div key={label} className="p-4 rounded-3xl" style={{ background: '#192123' }}>
+              <div className="flex items-center justify-between mb-3">
+                <div
+                  className="w-8 h-8 rounded-xl flex items-center justify-center"
+                  style={{ background: 'rgba(119,255,200,0.1)' }}
                 >
-                  <CheckCircle className="w-4 h-4 text-primary" />
-                </button>
-                <button
-                  onClick={() => approveMutation.mutate({ id: truck.id, approved: false })}
-                  className="w-8 h-8 bg-destructive/10 rounded-lg flex items-center justify-center"
-                >
-                  <XCircle className="w-4 h-4 text-destructive" />
-                </button>
+                  <Icon className="w-4 h-4" style={{ color: '#77ffc8' }} />
+                </div>
+                {trend && <span className="text-[10px] font-bold" style={{ color: '#77ffc8' }}>{trend}</span>}
+                {hot && <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />}
               </div>
+              <p className="font-heading font-black text-3xl" style={{ color: '#dff0e8' }}>{value}</p>
+              <p className="text-xs mt-1" style={{ color: '#bacbc0' }}>{label}</p>
             </div>
           ))}
         </div>
-      )}
 
-      {/* Recent orders */}
-      <h2 className="font-heading font-bold text-base mb-3">Recent Orders</h2>
-      <div className="space-y-2">
-        {orders.slice(0, 10).map(order => (
-          <div key={order.id} className="bg-card rounded-2xl p-3.5 flex items-center justify-between">
-            <div>
-              <p className="font-semibold text-sm">{order.truck_name}</p>
-              <p className="text-xs text-muted-foreground">{order.customer_name} · {order.items?.length} items</p>
+        {/* Total Orders */}
+        <div
+          className="p-5 rounded-3xl mb-5 flex items-center justify-between"
+          style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}
+        >
+          <div>
+            <p className="text-[10px] font-bold tracking-widest" style={{ color: '#bacbc0' }}>TOTAL ORDERS (TODAY)</p>
+            <p className="font-heading font-black text-4xl mt-1" style={{ color: '#dff0e8' }}>
+              {orders.length.toLocaleString()}
+            </p>
+          </div>
+          <div className="flex gap-1 items-end h-10">
+            {[3, 5, 4, 7, 6, 8, 9].map((h, i) => (
+              <div
+                key={i}
+                className="w-3 rounded-sm"
+                style={{
+                  height: `${h * 10}%`,
+                  background: i === 6 ? '#77ffc8' : 'rgba(119,255,200,0.2)',
+                  minHeight: '6px',
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Pending Approvals */}
+        {pendingTrucks.length > 0 && (
+          <div className="mb-5">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>PENDING APPROVALS</p>
+              <button className="text-xs font-semibold" style={{ color: '#77ffc8' }}>View All</button>
             </div>
-            <div className="text-right">
-              <p className="font-bold text-sm text-primary">${order.total?.toFixed(2)}</p>
-              <p className="text-[10px] text-muted-foreground capitalize">{order.status}</p>
+            <div className="flex flex-col gap-3">
+              {pendingTrucks.slice(0, 3).map(truck => (
+                <div
+                  key={truck.id}
+                  className="flex items-center gap-3 p-4 rounded-2xl"
+                  style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}
+                >
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm flex-shrink-0"
+                    style={{ background: '#2e3638', color: '#77ffc8' }}
+                  >
+                    {truck.name.charAt(0)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-heading font-bold text-sm truncate" style={{ color: '#dff0e8' }}>{truck.name}</p>
+                    <p className="text-xs" style={{ color: '#bacbc0' }}>New Vendor Application</p>
+                  </div>
+                  <button
+                    onClick={() => approveTruck.mutate(truck.id)}
+                    className="px-4 py-2 rounded-full text-xs font-bold flex-shrink-0"
+                    style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}
+                  >
+                    Review
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
-        ))}
+        )}
+
+        {/* Flagged Content */}
+        <div>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>FLAGGED CONTENT</p>
+          <div className="flex flex-col gap-3">
+            {[
+              { type: 'report', title: 'Inappropriate Content Report', sub: 'Comment on "Spicy Wings" — User reported this review for hate speech...', time: '2m ago', actions: ['Ignore', 'Moderate'], actionColor: ['#2e3638', '#fd591e'] },
+              { type: 'live', title: 'Late Night Grill Stream', sub: '"Potential copyright music violation detected..."', time: '30m ago', actions: ['Ignore', 'Shutdown'], actionColor: ['#2e3638', '#fd591e'] },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="p-4 rounded-2xl"
+                style={{ background: '#192123', border: '1px solid rgba(253,89,30,0.15)' }}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <AlertTriangle className="w-3.5 h-3.5" style={{ color: '#fd591e' }} />
+                  <span className="text-xs font-bold" style={{ color: '#fd591e' }}>
+                    {item.type === 'live' ? '● LIVE' : '⚑'}
+                  </span>
+                  <span className="font-semibold text-xs flex-1" style={{ color: '#dff0e8' }}>{item.title}</span>
+                  <span className="text-[10px]" style={{ color: '#bacbc0' }}>{item.time}</span>
+                </div>
+                <p className="text-xs mb-3" style={{ color: '#bacbc0' }}>{item.sub}</p>
+                <div className="flex gap-2">
+                  {item.actions.map((action, j) => (
+                    <button
+                      key={action}
+                      className="flex-1 py-2 rounded-xl text-xs font-bold"
+                      style={{ background: item.actionColor[j], color: j === 0 ? '#bacbc0' : 'white' }}
+                    >
+                      {action}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Recent orders */}
+        <div className="mt-5">
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>RECENT ORDERS</p>
+          <div className="rounded-2xl overflow-hidden" style={{ background: '#192123' }}>
+            {orders.slice(0, 5).map((order, i) => (
+              <div
+                key={order.id}
+                className="flex items-center gap-3 px-4 py-3"
+                style={{ borderBottom: i < 4 ? '1px solid rgba(59,74,66,0.15)' : 'none' }}
+              >
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-sm truncate" style={{ color: '#dff0e8' }}>{order.truck_name}</p>
+                  <p className="text-xs" style={{ color: '#bacbc0' }}>{order.customer_email}</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-heading font-bold text-sm" style={{ color: '#77ffc8' }}>${order.total?.toFixed(2)}</p>
+                  <span
+                    className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                    style={{ background: order.status === 'placed' ? 'rgba(119,255,200,0.1)' : '#2e3638', color: order.status === 'placed' ? '#77ffc8' : '#bacbc0' }}
+                  >
+                    {order.status}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,118 +1,190 @@
 import React from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Award, Star, Zap, Crown, Gift } from 'lucide-react';
+import { Star, Lock } from 'lucide-react';
 
-const tiers = [
-  { id: 'starter', label: 'Starter', icon: Star, minPoints: 0, color: 'text-muted-foreground' },
-  { id: 'regular', label: 'Regular', icon: Zap, minPoints: 200, color: 'text-chart-4' },
-  { id: 'vip', label: 'VIP', icon: Award, minPoints: 500, color: 'text-primary' },
-  { id: 'legend', label: 'Legend', icon: Crown, minPoints: 1000, color: 'text-chart-3' },
+const TIERS = [
+  { key: 'starter', label: 'Starter', min: 0 },
+  { key: 'regular', label: 'Regular', min: 500 },
+  { key: 'vip', label: 'Night Owl', min: 1000 },
+  { key: 'legend', label: 'Legend', min: 2500 },
 ];
 
-const rewards = [
-  { name: 'Free Side', points: 100, emoji: '🍟' },
-  { name: '$5 Off', points: 200, emoji: '💰' },
-  { name: 'Free Drink', points: 150, emoji: '🥤' },
-  { name: 'BOGO Entree', points: 350, emoji: '🔥' },
-  { name: 'Free Entree', points: 500, emoji: '🌮' },
+const REWARDS = [
+  { id: 1, label: 'Free Al Pastor Taco', sub: 'Valid at any participating truck tonight.', cost: 1500, hot: true, img: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=300' },
+  { id: 2, label: '$5 Off Next Order', sub: 'Minimum spend $15. No expiration.', cost: 1000, icon: '💵' },
+  { id: 3, label: 'Artisan Soda', sub: 'Choice of any house-made beverage.', cost: 500, icon: '🥤', level: 'Level 5 required', locked: true },
 ];
 
 export default function Rewards() {
-  const { data: rewardData } = useQuery({
+  const { data: user } = useQuery({ queryKey: ['me'], queryFn: () => base44.auth.me() });
+
+  const { data: rewards = [] } = useQuery({
     queryKey: ['my-rewards'],
-    queryFn: async () => {
-      const user = await base44.auth.me();
-      const rewards = await base44.entities.Reward.filter({ user_email: user.email });
-      return rewards[0] || { points: 75, tier: 'starter', orders_count: 3 };
-    },
+    queryFn: () => base44.entities.Reward.filter({ user_email: user?.email }),
+    enabled: !!user?.email,
   });
 
-  const points = rewardData?.points || 75;
-  const tier = rewardData?.tier || 'starter';
-  const currentTier = tiers.find(t => t.id === tier) || tiers[0];
-  const nextTier = tiers[tiers.indexOf(currentTier) + 1];
-  const TierIcon = currentTier.icon;
-
-  const progressToNext = nextTier ? Math.min((points / nextTier.minPoints) * 100, 100) : 100;
+  const reward = rewards[0] || { points: 0, tier: 'starter', orders_count: 0 };
+  const nextTier = TIERS.find(t => t.min > reward.points) || TIERS[TIERS.length - 1];
+  const currentTier = TIERS.find(t => t.key === reward.tier) || TIERS[0];
+  const progress = Math.min((reward.points / nextTier.min) * 100, 100);
 
   return (
-    <div className="px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4">
-      <h1 className="font-heading text-2xl font-bold mb-5">Rewards</h1>
-
-      {/* Points card */}
-      <div className="bg-gradient-to-br from-card to-secondary rounded-3xl p-6 mb-5 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-8 translate-x-8" />
-        <div className="flex items-center gap-3 mb-4">
-          <div className={`w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center ${currentTier.color}`}>
-            <TierIcon className="w-6 h-6" />
-          </div>
-          <div>
-            <p className="text-xs text-muted-foreground">Current Tier</p>
-            <p className="font-heading font-bold text-lg">{currentTier.label}</p>
-          </div>
-        </div>
-        <div className="mb-2">
-          <div className="flex justify-between text-sm mb-1.5">
-            <span className="font-heading font-bold text-2xl text-primary">{points}</span>
-            {nextTier && <span className="text-muted-foreground text-xs">{nextTier.minPoints - points} pts to {nextTier.label}</span>}
-          </div>
-          <div className="w-full h-2 bg-secondary rounded-full overflow-hidden">
-            <div className="h-full bg-primary rounded-full transition-all duration-500" style={{ width: `${progressToNext}%` }} />
-          </div>
-        </div>
-        <p className="text-xs text-muted-foreground mt-3">{rewardData?.orders_count || 3} orders completed</p>
+    <div className="min-h-screen dot-bg" style={{ background: '#0d1517' }}>
+      {/* Header */}
+      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 flex items-center justify-between">
+        <span className="font-heading font-black text-lg" style={{ color: '#77ffc8' }}>CurbChef</span>
+        <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
+          <Star className="w-4 h-4" style={{ color: '#77ffc8' }} />
+        </button>
       </div>
 
-      {/* Available rewards */}
-      <h2 className="font-heading font-bold text-base mb-3 flex items-center gap-2">
-        <Gift className="w-4 h-4 text-primary" />
-        Redeem Rewards
-      </h2>
-      <div className="space-y-2.5">
-        {rewards.map(reward => {
-          const canRedeem = points >= reward.points;
-          return (
+      <div className="px-5 pb-32">
+        {/* Balance card */}
+        <div
+          className="p-6 rounded-3xl mb-5"
+          style={{
+            background: 'linear-gradient(135deg, #192123 0%, #0f1a1c 100%)',
+            border: '1px solid rgba(119,255,200,0.15)',
+            boxShadow: '0 0 30px rgba(119,255,200,0.07)',
+          }}
+        >
+          <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: '#bacbc0' }}>CURRENT BALANCE</p>
+          <p
+            className="font-heading font-black text-5xl mb-1"
+            style={{ color: '#77ffc8', textShadow: '0 0 20px rgba(119,255,200,0.3)' }}
+          >
+            {reward.points.toLocaleString()} pts
+          </p>
+          <p className="text-xs font-semibold" style={{ color: '#bacbc0' }}>
+            ↑ Level: {currentTier.label}
+          </p>
+        </div>
+
+        {/* Progress */}
+        <div
+          className="p-5 rounded-3xl mb-6"
+          style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}
+        >
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm font-bold" style={{ color: '#dff0e8' }}>CurbChef Points</span>
+            <span className="text-sm font-bold" style={{ color: '#77ffc8' }}>{nextTier.min}</span>
+          </div>
+          <div className="relative h-2.5 rounded-full overflow-hidden" style={{ background: '#2e3638' }}>
             <div
-              key={reward.name}
-              className={`flex items-center justify-between bg-card rounded-2xl p-4 transition-all ${canRedeem ? '' : 'opacity-50'}`}
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">{reward.emoji}</span>
-                <div>
-                  <p className="font-semibold text-sm">{reward.name}</p>
-                  <p className="text-xs text-muted-foreground">{reward.points} points</p>
-                </div>
-              </div>
-              <button
-                disabled={!canRedeem}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                  canRedeem
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary text-muted-foreground'
-                }`}
-              >
-                Redeem
-              </button>
-            </div>
-          );
-        })}
-      </div>
+              className="h-full rounded-full transition-all duration-700"
+              style={{
+                width: `${progress}%`,
+                background: 'linear-gradient(90deg, #77ffc8, #00e6a7)',
+                boxShadow: '0 0 8px rgba(119,255,200,0.5)',
+              }}
+            />
+          </div>
+          <div className="flex justify-between mt-2">
+            <span className="text-[10px]" style={{ color: '#bacbc0' }}>0 PTS</span>
+            <span className="text-[10px]" style={{ color: '#bacbc0' }}>FREE TACO ({nextTier.min})</span>
+          </div>
+          <p className="text-xs mt-2 font-semibold" style={{ color: '#77ffc8' }}>
+            {nextTier.min - reward.points} pts to your next reward
+          </p>
+        </div>
 
-      {/* Tier breakdown */}
-      <h2 className="font-heading font-bold text-base mb-3 mt-6">Tier Levels</h2>
-      <div className="grid grid-cols-2 gap-2.5">
-        {tiers.map(t => {
-          const Icon = t.icon;
-          const isActive = t.id === tier;
-          return (
-            <div key={t.id} className={`rounded-2xl p-4 ${isActive ? 'bg-primary/10 ring-1 ring-primary/20' : 'bg-card'}`}>
-              <Icon className={`w-5 h-5 mb-2 ${t.color}`} />
-              <p className="font-heading font-bold text-sm">{t.label}</p>
-              <p className="text-[10px] text-muted-foreground">{t.minPoints}+ pts</p>
+        {/* Redeemable Rewards */}
+        <h2 className="font-heading font-bold text-base mb-4 flex items-center gap-2" style={{ color: '#dff0e8' }}>
+          Redeemable Rewards
+          <span style={{ color: '#77ffc8' }}>★</span>
+        </h2>
+
+        <div className="flex flex-col gap-3">
+          {REWARDS.map(r => (
+            <div
+              key={r.id}
+              className="rounded-3xl overflow-hidden"
+              style={{
+                background: '#192123',
+                border: r.locked ? '1px solid rgba(59,74,66,0.15)' : '1px solid rgba(119,255,200,0.1)',
+                opacity: r.locked ? 0.6 : 1,
+              }}
+            >
+              {r.img ? (
+                <div className="relative">
+                  <img src={r.img} alt={r.label} className="w-full h-36 object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <div className="absolute top-2 left-2">
+                    <span className="text-[10px] font-black px-2.5 py-1 rounded-full" style={{ background: '#fd591e', color: 'white' }}>
+                      LIMITED TIME
+                    </span>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <p className="font-heading font-black text-lg text-white leading-tight">{r.label}</p>
+                    <p className="text-white/60 text-xs mt-0.5">{r.sub}</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-4 flex items-center gap-4">
+                  <div
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+                    style={{ background: '#2e3638' }}
+                  >
+                    {r.icon}
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>{r.label}</p>
+                    <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>{r.sub}</p>
+                    {r.locked && (
+                      <div className="flex items-center gap-1 mt-1">
+                        <Lock className="w-3 h-3" style={{ color: '#fd591e' }} />
+                        <span className="text-[10px] font-bold" style={{ color: '#fd591e' }}>{r.level}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <p className="text-[10px] font-bold tracking-wide" style={{ color: '#bacbc0' }}>COST</p>
+                    <p className="font-heading font-bold text-sm" style={{ color: '#77ffc8' }}>{r.cost.toLocaleString()} pts</p>
+                  </div>
+                </div>
+              )}
+
+              {!r.locked && (
+                <div className="px-4 pb-4">
+                  <button
+                    className="w-full py-3 rounded-full font-heading font-black text-sm flex items-center justify-center gap-2"
+                    style={{
+                      background: reward.points >= r.cost
+                        ? 'linear-gradient(135deg,#77ffc8,#00e6a7)'
+                        : '#2e3638',
+                      color: reward.points >= r.cost ? '#003826' : '#bacbc0',
+                      boxShadow: reward.points >= r.cost ? '0 0 12px rgba(119,255,200,0.3)' : 'none',
+                    }}
+                  >
+                    <span>■</span> Redeem for {r.cost.toLocaleString()} pts
+                  </button>
+                </div>
+              )}
             </div>
-          );
-        })}
+          ))}
+        </div>
+
+        {/* Tier list */}
+        <h2 className="font-heading font-bold text-base mt-8 mb-4" style={{ color: '#dff0e8' }}>All Tiers</h2>
+        <div className="grid grid-cols-2 gap-3">
+          {TIERS.map(tier => (
+            <div
+              key={tier.key}
+              className="p-4 rounded-2xl text-center"
+              style={{
+                background: reward.tier === tier.key ? 'rgba(119,255,200,0.08)' : '#192123',
+                border: reward.tier === tier.key ? '1px solid rgba(119,255,200,0.3)' : '1px solid transparent',
+              }}
+            >
+              <p className="font-heading font-bold text-sm" style={{ color: reward.tier === tier.key ? '#77ffc8' : '#dff0e8' }}>
+                {tier.label}
+              </p>
+              <p className="text-xs mt-1" style={{ color: '#bacbc0' }}>{tier.min.toLocaleString()}+ pts</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

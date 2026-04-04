@@ -1,119 +1,192 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Minus, Plus } from 'lucide-react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ChevronLeft, Heart, Star, Minus, Plus } from 'lucide-react';
 import { addToCart } from '@/lib/cartStore';
 import { useToast } from '@/components/ui/use-toast';
 
+const SPICE = ['Mild', 'Medium', 'High'];
+
 export default function ItemDetail() {
+  const { id: truckId, itemId } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const pathParts = window.location.pathname.split('/');
-  const truckId = pathParts[2];
-  const itemId = pathParts[4];
 
-  const [quantity, setQuantity] = useState(1);
+  const [qty, setQty] = useState(1);
   const [selectedAddOns, setSelectedAddOns] = useState([]);
+  const [spice, setSpice] = useState('Medium');
 
-  const { data: item, isLoading } = useQuery({
+  const { data: item } = useQuery({
     queryKey: ['item', itemId],
-    queryFn: async () => {
-      const items = await base44.entities.MenuItem.filter({ id: itemId });
-      return items[0];
-    },
-    enabled: !!itemId,
+    queryFn: () => base44.entities.MenuItem.get(itemId),
   });
 
   const { data: truck } = useQuery({
     queryKey: ['truck', truckId],
-    queryFn: async () => {
-      const trucks = await base44.entities.FoodTruck.filter({ id: truckId });
-      return trucks[0];
-    },
-    enabled: !!truckId,
+    queryFn: () => base44.entities.FoodTruck.get(truckId),
   });
 
-  const toggleAddOn = (addOn) => {
-    setSelectedAddOns(prev => {
-      const exists = prev.find(a => a.name === addOn.name);
-      return exists ? prev.filter(a => a.name !== addOn.name) : [...prev, addOn];
-    });
-  };
-
-  const addOnsTotal = selectedAddOns.reduce((sum, a) => sum + a.price, 0);
-  const unitPrice = (item?.price || 0) + addOnsTotal;
-  const totalPrice = unitPrice * quantity;
-
-  const handleAddToCart = () => {
-    if (!item || !truck) return;
-    addToCart({
-      item_id: item.id,
-      name: item.name,
-      price: item.price,
-      quantity,
-      add_ons: selectedAddOns,
-      image_url: item.image_url,
-    }, truckId, truck.name);
-    toast({ title: 'Added to cart', description: `${quantity}x ${item.name}` });
-    navigate(-1);
-  };
-
-  if (isLoading || !item) {
+  if (!item) {
     return (
-      <div className="h-screen flex items-center justify-center">
-        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0d1517' }}>
+        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
       </div>
     );
   }
 
-  return (
-    <div className="pb-6">
-      <div className="relative h-72">
-        <img src={item.image_url} alt={item.name} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
-        <button
-          onClick={() => navigate(-1)}
-          className="absolute top-[max(1rem,env(safe-area-inset-top))] left-4 w-10 h-10 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center"
-        >
-          <ChevronLeft className="w-5 h-5 text-white" />
-        </button>
-      </div>
+  const addOnTotal = selectedAddOns.reduce((s, a) => s + a.price, 0);
+  const total = (item.price + addOnTotal) * qty;
 
-      <div className="px-5 -mt-8 relative">
-        <h1 className="font-heading text-2xl font-bold">{item.name}</h1>
-        <p className="text-muted-foreground text-sm mt-1.5">{item.description}</p>
-        <div className="flex items-center gap-3 mt-3">
-          <span className="font-heading text-xl font-bold text-primary">${item.price?.toFixed(2)}</span>
-          {item.calories && <span className="text-xs text-muted-foreground">{item.calories} cal</span>}
+  const toggleAddOn = (addOn) => {
+    setSelectedAddOns(prev =>
+      prev.find(a => a.name === addOn.name)
+        ? prev.filter(a => a.name !== addOn.name)
+        : [...prev, addOn]
+    );
+  };
+
+  const addToCart = () => {
+    addToCart({
+      item_id: item.id,
+      name: item.name,
+      price: item.price + addOnTotal,
+      quantity: qty,
+      image_url: item.image_url,
+      add_ons: selectedAddOns,
+    }, truckId, truck?.name || 'Food Truck');
+
+    toast({ title: 'Added to cart!', description: `${qty}x ${item.name}` });
+    navigate(`/truck/${truckId}`);
+  };
+
+  return (
+    <div className="min-h-screen" style={{ background: '#0d1517' }}>
+      {/* Hero image */}
+      <div className="relative h-72">
+        <img
+          src={item.image_url || 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=600'}
+          alt={item.name}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0d1517] via-transparent to-transparent" />
+
+        {/* Nav */}
+        <div className="absolute top-[max(1rem,env(safe-area-inset-top))] left-4 right-4 flex items-center justify-between">
+          <button
+            onClick={() => navigate(-1)}
+            className="w-9 h-9 rounded-xl flex items-center justify-center"
+            style={{ background: 'rgba(13,21,23,0.7)', backdropFilter: 'blur(10px)' }}
+          >
+            <ChevronLeft className="w-5 h-5 text-white" />
+          </button>
+          <button
+            className="w-9 h-9 rounded-xl flex items-center justify-center"
+            style={{ background: 'rgba(13,21,23,0.7)', backdropFilter: 'blur(10px)' }}
+          >
+            <Heart className="w-4.5 h-4.5 text-white" />
+          </button>
         </div>
 
-        {/* Tags */}
-        {item.tags?.length > 0 && (
-          <div className="flex gap-2 mt-3">
-            {item.tags.map(tag => (
-              <span key={tag} className="text-xs bg-accent/10 text-accent px-2.5 py-1 rounded-full">{tag}</span>
+        {/* Border glow on selected item */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ border: '2px solid rgba(119,255,200,0.1)', borderRadius: 'inherit' }}
+        />
+      </div>
+
+      {/* Content */}
+      <div className="px-5 -mt-4 relative z-10 pb-40">
+        {/* Name + price */}
+        <div className="flex items-start justify-between mb-3">
+          <h1 className="font-heading font-black text-2xl leading-tight flex-1 mr-4" style={{ color: '#dff0e8' }}>
+            {item.name}
+          </h1>
+          <div className="text-right flex-shrink-0">
+            <p className="font-heading font-black text-2xl" style={{ color: '#77ffc8' }}>
+              ${item.price?.toFixed(2)}
+            </p>
+            <p className="text-[10px] font-bold" style={{ color: '#bacbc0' }}>PER {item.category?.toUpperCase()}</p>
+          </div>
+        </div>
+
+        {/* Meta */}
+        <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-1">
+            <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+            <span className="text-sm font-bold" style={{ color: '#dff0e8' }}>4.8</span>
+            <span className="text-xs" style={{ color: '#bacbc0' }}>(100 reviews)</span>
+          </div>
+          {item.is_special && (
+            <span
+              className="text-[10px] font-black px-2.5 py-1 rounded-full"
+              style={{ background: 'rgba(253,89,30,0.15)', color: '#fd591e', border: '1px solid rgba(253,89,30,0.3)' }}
+            >
+              ★ TRENDING
+            </span>
+          )}
+        </div>
+
+        <p className="text-sm leading-relaxed mb-6" style={{ color: '#bacbc0' }}>{item.description}</p>
+
+        {/* Spice Level */}
+        <div className="mb-6">
+          <h3 className="font-heading font-bold text-sm mb-3" style={{ color: '#dff0e8' }}>SPICE LEVEL</h3>
+          <div className="flex gap-3">
+            {SPICE.map(s => (
+              <button
+                key={s}
+                onClick={() => setSpice(s)}
+                className="flex-1 py-2.5 rounded-full text-sm font-bold transition-all"
+                style={spice === s
+                  ? { background: '#fd591e', color: 'white', boxShadow: '0 0 12px rgba(253,89,30,0.4)' }
+                  : { background: '#192123', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }
+                }
+              >
+                {s}
+              </button>
             ))}
           </div>
-        )}
+        </div>
 
         {/* Add-ons */}
         {item.add_ons?.length > 0 && (
-          <div className="mt-6">
-            <h3 className="font-heading font-bold text-base mb-3">Add-ons</h3>
-            <div className="space-y-2">
-              {item.add_ons.map(addOn => {
-                const selected = selectedAddOns.find(a => a.name === addOn.name);
+          <div className="mb-6">
+            <h3 className="font-heading font-bold text-sm mb-3" style={{ color: '#dff0e8' }}>ADD-ONS</h3>
+            <div className="flex flex-col gap-2">
+              {item.add_ons.map((addon) => {
+                const selected = selectedAddOns.find(a => a.name === addon.name);
                 return (
                   <button
-                    key={addOn.name}
-                    onClick={() => toggleAddOn(addOn)}
-                    className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all ${
-                      selected ? 'bg-primary/10 ring-1 ring-primary/30' : 'bg-secondary'
-                    }`}
+                    key={addon.name}
+                    onClick={() => toggleAddOn(addon)}
+                    className="flex items-center gap-3 p-3.5 rounded-2xl transition-all"
+                    style={{
+                      background: '#192123',
+                      border: selected ? '1px solid rgba(119,255,200,0.4)' : '1px solid transparent',
+                    }}
                   >
-                    <span className="text-sm">{addOn.name}</span>
-                    <span className="text-sm font-semibold text-primary">+${addOn.price?.toFixed(2)}</span>
+                    <div
+                      className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 text-sm"
+                      style={{ background: selected ? 'rgba(119,255,200,0.12)' : '#2e3638' }}
+                    >
+                      🍴
+                    </div>
+                    <span className="flex-1 text-sm font-semibold text-left" style={{ color: '#dff0e8' }}>{addon.name}</span>
+                    <span className="text-sm" style={{ color: '#bacbc0' }}>+${addon.price?.toFixed(2)}</span>
+                    <div
+                      className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-all"
+                      style={{
+                        background: selected ? '#77ffc8' : '#2e3638',
+                        border: selected ? 'none' : '1.5px solid rgba(59,74,66,0.4)',
+                      }}
+                    >
+                      {selected && (
+                        <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none">
+                          <path d="M2 6l3 3 5-5" stroke="#003826" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      )}
+                    </div>
                   </button>
                 );
               })}
@@ -121,35 +194,64 @@ export default function ItemDetail() {
           </div>
         )}
 
-        {/* Quantity */}
-        <div className="flex items-center justify-between mt-6 bg-secondary rounded-2xl px-5 py-3">
-          <span className="text-sm font-medium">Quantity</span>
-          <div className="flex items-center gap-4">
+        {/* Tags */}
+        {item.tags?.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {item.tags.map(tag => (
+              <span
+                key={tag}
+                className="text-xs font-bold px-3 py-1 rounded-full"
+                style={{ background: 'rgba(119,255,200,0.08)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.2)' }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Sticky bottom: qty + add to cart */}
+      <div
+        className="fixed bottom-0 left-0 right-0 flex justify-center px-5 pb-6 pt-4 z-50"
+        style={{ background: 'rgba(13,21,23,0.97)', backdropFilter: 'blur(16px)' }}
+      >
+        <div className="w-full max-w-lg flex items-center gap-3">
+          {/* Qty control */}
+          <div
+            className="flex items-center gap-4 px-4 py-3 rounded-2xl flex-shrink-0"
+            style={{ background: '#192123' }}
+          >
             <button
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="w-8 h-8 rounded-full bg-card flex items-center justify-center"
+              onClick={() => setQty(q => Math.max(1, q - 1))}
+              className="w-8 h-8 rounded-full flex items-center justify-center"
+              style={{ background: '#2e3638' }}
             >
-              <Minus className="w-4 h-4" />
+              <Minus className="w-3.5 h-3.5" style={{ color: '#dff0e8' }} />
             </button>
-            <span className="font-heading font-bold text-lg w-6 text-center">{quantity}</span>
+            <span className="font-heading font-black text-lg w-4 text-center" style={{ color: '#dff0e8' }}>{qty}</span>
             <button
-              onClick={() => setQuantity(quantity + 1)}
-              className="w-8 h-8 rounded-full bg-primary flex items-center justify-center"
+              onClick={() => setQty(q => q + 1)}
+              className="w-8 h-8 rounded-full flex items-center justify-center"
+              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}
             >
-              <Plus className="w-4 h-4 text-primary-foreground" />
+              <Plus className="w-3.5 h-3.5" style={{ color: '#003826' }} />
             </button>
           </div>
-        </div>
 
-        {/* Add to cart */}
-        <button
-          onClick={handleAddToCart}
-          disabled={!item.is_available}
-          className="w-full mt-5 bg-primary text-primary-foreground py-4 rounded-2xl font-heading font-bold text-base flex items-center justify-center gap-3 disabled:opacity-50 shadow-lg shadow-primary/20"
-        >
-          <span>Add to Cart</span>
-          <span className="bg-primary-foreground/20 px-3 py-0.5 rounded-lg text-sm">${totalPrice.toFixed(2)}</span>
-        </button>
+          {/* Add to cart */}
+          <button
+            onClick={addToCart}
+            className="flex-1 py-4 rounded-2xl font-heading font-black text-base flex items-center justify-between px-5"
+            style={{
+              background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
+              color: '#003826',
+              boxShadow: '0 0 20px rgba(119,255,200,0.4)',
+            }}
+          >
+            <span>Add to Cart</span>
+            <span>${total.toFixed(2)}</span>
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,77 +6,91 @@
 
 @layer base {
   :root {
-    --font-heading: 'Space Grotesk', sans-serif;
-    --font-body: 'Inter', sans-serif;
+    /* === MIDNIGHT NEON PALETTE === */
+    --background: 195 26% 8%;        /* #0d1517 surface */
+    --foreground: 150 15% 90%;       /* #dff0e8 on-surface */
+    --card: 196 22% 11%;             /* #151d1f surface-container-low */
+    --card-foreground: 150 15% 90%;
+    --popover: 196 22% 13%;
+    --popover-foreground: 150 15% 90%;
 
-    --background: 220 15% 8%;
-    --foreground: 0 0% 96%;
-    --card: 220 14% 11%;
-    --card-foreground: 0 0% 96%;
-    --popover: 220 14% 11%;
-    --popover-foreground: 0 0% 96%;
-    --primary: 160 60% 50%;
-    --primary-foreground: 220 15% 8%;
-    --secondary: 220 12% 16%;
-    --secondary-foreground: 0 0% 90%;
-    --muted: 220 12% 16%;
-    --muted-foreground: 220 10% 55%;
-    --accent: 16 85% 55%;
+    /* Mint Neon Primary */
+    --primary: 161 100% 73%;         /* #77ffc8 */
+    --primary-foreground: 155 100% 11%; /* #003826 on-primary */
+
+    /* Orange-Red Secondary / Accent */
+    --secondary: 196 22% 16%;        /* #1e2a2d surface-container */
+    --secondary-foreground: 150 15% 85%;
+    --muted: 196 22% 13%;
+    --muted-foreground: 155 18% 73%; /* #bacbc0 on-surface-variant */
+    --accent: 14 98% 55%;            /* #fd591e orange-red */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 12% 18%;
-    --input: 220 12% 18%;
-    --ring: 160 60% 50%;
-    --chart-1: 160 60% 50%;
-    --chart-2: 16 85% 55%;
+
+    --border: 154 14% 24%;           /* #3b4a42 outline-variant */
+    --input: 195 26% 6%;             /* #080f11 surface-container-lowest */
+    --ring: 161 100% 73%;            /* mint neon */
+
+    --chart-1: 161 100% 73%;
+    --chart-2: 14 98% 55%;
     --chart-3: 45 90% 60%;
     --chart-4: 200 70% 50%;
     --chart-5: 280 60% 55%;
     --radius: 1rem;
-    --sidebar-background: 220 14% 11%;
-    --sidebar-foreground: 0 0% 96%;
-    --sidebar-primary: 160 60% 50%;
-    --sidebar-primary-foreground: 220 15% 8%;
-    --sidebar-accent: 220 12% 16%;
-    --sidebar-accent-foreground: 0 0% 96%;
-    --sidebar-border: 220 12% 18%;
-    --sidebar-ring: 160 60% 50%;
+
+    --sidebar-background: 196 22% 11%;
+    --sidebar-foreground: 150 15% 90%;
+    --sidebar-primary: 161 100% 73%;
+    --sidebar-primary-foreground: 155 100% 11%;
+    --sidebar-accent: 196 22% 16%;
+    --sidebar-accent-foreground: 150 15% 90%;
+    --sidebar-border: 154 14% 24%;
+    --sidebar-ring: 161 100% 73%;
+
+    /* Custom neon tokens */
+    --surface-dim: 195 30% 6%;        /* #080f11 darkest */
+    --surface-container: 195 22% 13%; /* #192123 */
+    --surface-high: 196 18% 20%;      /* #2e3638 cards */
+    --neon-mint: #77ffc8;
+    --neon-orange: #fd591e;
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
   }
 
   .dark {
-    --background: 220 15% 8%;
-    --foreground: 0 0% 96%;
-    --card: 220 14% 11%;
-    --card-foreground: 0 0% 96%;
-    --popover: 220 14% 11%;
-    --popover-foreground: 0 0% 96%;
-    --primary: 160 60% 50%;
-    --primary-foreground: 220 15% 8%;
-    --secondary: 220 12% 16%;
-    --secondary-foreground: 0 0% 90%;
-    --muted: 220 12% 16%;
-    --muted-foreground: 220 10% 55%;
-    --accent: 16 85% 55%;
+    --background: 195 26% 8%;
+    --foreground: 150 15% 90%;
+    --card: 196 22% 11%;
+    --card-foreground: 150 15% 90%;
+    --popover: 196 22% 13%;
+    --popover-foreground: 150 15% 90%;
+    --primary: 161 100% 73%;
+    --primary-foreground: 155 100% 11%;
+    --secondary: 196 22% 16%;
+    --secondary-foreground: 150 15% 85%;
+    --muted: 196 22% 13%;
+    --muted-foreground: 155 18% 73%;
+    --accent: 14 98% 55%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 12% 18%;
-    --input: 220 12% 18%;
-    --ring: 160 60% 50%;
-    --chart-1: 160 60% 50%;
-    --chart-2: 16 85% 55%;
+    --border: 154 14% 24%;
+    --input: 195 26% 6%;
+    --ring: 161 100% 73%;
+    --chart-1: 161 100% 73%;
+    --chart-2: 14 98% 55%;
     --chart-3: 45 90% 60%;
     --chart-4: 200 70% 50%;
     --chart-5: 280 60% 55%;
-    --sidebar-background: 220 14% 11%;
-    --sidebar-foreground: 0 0% 96%;
-    --sidebar-primary: 160 60% 50%;
-    --sidebar-primary-foreground: 220 15% 8%;
-    --sidebar-accent: 220 12% 16%;
-    --sidebar-accent-foreground: 0 0% 96%;
-    --sidebar-border: 220 12% 18%;
-    --sidebar-ring: 160 60% 50%;
+    --sidebar-background: 196 22% 11%;
+    --sidebar-foreground: 150 15% 90%;
+    --sidebar-primary: 161 100% 73%;
+    --sidebar-primary-foreground: 155 100% 11%;
+    --sidebar-accent: 196 22% 16%;
+    --sidebar-accent-foreground: 150 15% 90%;
+    --sidebar-border: 154 14% 24%;
+    --sidebar-ring: 161 100% 73%;
   }
 }
 
@@ -86,22 +100,42 @@
   }
   body {
     @apply bg-background text-foreground font-body;
+    background-color: #0d1517;
   }
 }
 
-/* Hide scrollbar for clean mobile feel */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Neon glow on primary buttons */
+.neon-glow {
+  box-shadow: 0 0 18px rgba(119, 255, 200, 0.35), 0 0 40px rgba(119, 255, 200, 0.12);
 }
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.neon-glow-sm {
+  box-shadow: 0 0 10px rgba(119, 255, 200, 0.3);
+}
+.orange-glow {
+  box-shadow: 0 0 18px rgba(253, 89, 30, 0.4);
 }
 
-/* Snap scroll for live feed */
-.snap-y-mandatory {
-  scroll-snap-type: y mandatory;
+/* Snap scroll */
+.snap-y-mandatory { scroll-snap-type: y mandatory; }
+.snap-start { scroll-snap-align: start; }
+
+/* Dot texture background */
+.dot-bg {
+  background-image: radial-gradient(rgba(119,255,200,0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
-.snap-start {
-  scroll-snap-align: start;
+
+/* Mint neon gradient button */
+.btn-neon {
+  background: linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%);
+  color: #003826;
+  font-weight: 700;
+  border-radius: 9999px;
+}
+.btn-neon:hover {
+  background: linear-gradient(135deg, #8fffd4 0%, #00f0b0 100%);
 }

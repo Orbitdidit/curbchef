@@ -2,134 +2,236 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Radio, DollarSign, ShoppingBag, Users, ChevronRight, Power } from 'lucide-react';
-import { Switch } from '@/components/ui/switch';
+import { Settings, Video, ShoppingBag, Map, BarChart3, Users, DollarSign } from 'lucide-react';
 
 export default function VendorDashboard() {
-  const queryClient = useQueryClient();
+  const qc = useQueryClient();
 
-  const { data: truck, isLoading } = useQuery({
-    queryKey: ['my-truck'],
-    queryFn: async () => {
-      const user = await base44.auth.me();
-      const trucks = await base44.entities.FoodTruck.filter({ owner_email: user.email });
-      return trucks[0];
-    },
+  const { data: user } = useQuery({ queryKey: ['me'], queryFn: () => base44.auth.me() });
+
+  const { data: trucks = [] } = useQuery({
+    queryKey: ['vendor-truck'],
+    queryFn: () => base44.entities.FoodTruck.filter({ owner_email: user?.email }),
+    enabled: !!user?.email,
+  });
+  const truck = trucks[0];
+
+  const { data: orders = [] } = useQuery({
+    queryKey: ['vendor-orders', truck?.id],
+    queryFn: () => base44.entities.Order.filter({ truck_id: truck.id }),
+    enabled: !!truck?.id,
+    refetchInterval: 15000,
   });
 
-  const toggleLive = useMutation({
-    mutationFn: async () => {
-      await base44.entities.FoodTruck.update(truck.id, { is_live: !truck.is_live });
-    },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['my-truck'] }),
-  });
+  const activeOrders = orders.filter(o => ['placed', 'preparing'].includes(o.status));
 
-  const toggleStatus = useMutation({
-    mutationFn: async (newStatus) => {
-      await base44.entities.FoodTruck.update(truck.id, { status: newStatus });
-    },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['my-truck'] }),
+  const updateTruck = useMutation({
+    mutationFn: (data) => base44.entities.FoodTruck.update(truck.id, data),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['vendor-truck'] }),
   });
-
-  if (isLoading) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
 
   if (!truck) {
     return (
-      <div className="h-screen flex flex-col items-center justify-center px-5 text-center">
-        <div className="text-5xl mb-3">🚚</div>
-        <h2 className="font-heading font-bold text-xl mb-2">No Truck Found</h2>
-        <p className="text-muted-foreground text-sm">You don't have a food truck registered yet.</p>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0d1517' }}>
+        <div className="text-center px-8">
+          <p className="text-5xl mb-4">🚛</p>
+          <p className="font-heading font-bold text-lg mb-2" style={{ color: '#dff0e8' }}>No truck found</p>
+          <p className="text-sm" style={{ color: '#bacbc0' }}>Your account isn't linked to a food truck yet.</p>
+        </div>
       </div>
     );
   }
 
-  const statuses = ['open', 'closed', 'sold_out'];
-
   return (
-    <div className="px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-6">
-      <div className="flex items-center justify-between mb-6">
+    <div className="min-h-screen dot-bg pb-10" style={{ background: '#0d1517' }}>
+      {/* Header */}
+      <div
+        className="flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4"
+        style={{ background: '#151d1f' }}
+      >
         <div>
-          <h1 className="font-heading text-xl font-bold">{truck.name}</h1>
-          <p className="text-xs text-muted-foreground capitalize">{truck.cuisine_type?.replace('_', ' ')}</p>
+          <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>COMMAND CENTER</p>
+          <p className="text-xs" style={{ color: '#bacbc0' }}>Operator #{user?.id?.slice(-4).toUpperCase()}</p>
         </div>
-        <Link to="/" className="text-xs text-primary font-semibold">Customer View →</Link>
+        <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
+          <Settings className="w-4 h-4" style={{ color: '#bacbc0' }} />
+        </button>
       </div>
 
-      {/* Go Live */}
-      <div className="bg-card rounded-3xl p-5 mb-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${truck.is_live ? 'bg-accent/15' : 'bg-secondary'}`}>
-              <Radio className={`w-6 h-6 ${truck.is_live ? 'text-accent' : 'text-muted-foreground'}`} />
-            </div>
-            <div>
-              <p className="font-heading font-bold text-sm">Go Live</p>
-              <p className="text-xs text-muted-foreground">{truck.is_live ? 'Broadcasting to customers' : 'Start streaming'}</p>
-            </div>
+      <div className="px-5 pt-5">
+        {/* Truck identity */}
+        <div className="flex items-center justify-between mb-5">
+          <div>
+            <h1 className="font-heading font-black text-xl" style={{ color: '#dff0e8' }}>{truck.name}</h1>
+            <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>
+              @{truck.slug || truck.name.toLowerCase().replace(/\s/g, '')} • {truck.cuisine_type?.replace('_', ' ')}
+            </p>
           </div>
-          <Switch checked={truck.is_live} onCheckedChange={() => toggleLive.mutate()} />
+          {/* Go Live toggle */}
+          <div className="flex flex-col items-end gap-1">
+            <p className="text-[10px] font-bold" style={{ color: truck.is_live ? '#77ffc8' : '#bacbc0' }}>
+              {truck.is_live ? 'LIVE NOW' : 'GO LIVE'}
+            </p>
+            <button
+              onClick={() => updateTruck.mutate({ is_live: !truck.is_live })}
+              className="relative w-14 h-7 rounded-full transition-all"
+              style={{
+                background: truck.is_live ? 'linear-gradient(135deg,#77ffc8,#00e6a7)' : '#192123',
+                boxShadow: truck.is_live ? '0 0 12px rgba(119,255,200,0.4)' : 'none',
+              }}
+            >
+              <div
+                className="absolute top-0.5 w-6 h-6 rounded-full transition-all"
+                style={{
+                  background: '#fff',
+                  left: truck.is_live ? 'calc(100% - 26px)' : '2px',
+                }}
+              />
+            </button>
+          </div>
         </div>
-      </div>
 
-      {/* Status */}
-      <div className="bg-card rounded-3xl p-5 mb-4">
-        <p className="font-heading font-bold text-sm mb-3 flex items-center gap-2">
-          <Power className="w-4 h-4 text-primary" /> Truck Status
-        </p>
-        <div className="flex gap-2">
-          {statuses.map(s => (
+        {/* Go Live CTA */}
+        {!truck.is_live && (
+          <button
+            onClick={() => updateTruck.mutate({ is_live: true, status: 'open' })}
+            className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl mb-5 font-heading font-black text-base"
+            style={{
+              background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
+              color: '#003826',
+              boxShadow: '0 0 24px rgba(119,255,200,0.35)',
+            }}
+          >
+            <Video className="w-5 h-5" />
+            GO LIVE
+            <span className="text-xs font-semibold opacity-70 ml-1">Connect with 1.2K nearby foodies</span>
+          </button>
+        )}
+
+        {/* Stats */}
+        <div className="mb-5">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>TODAY'S STATS</p>
+            <span
+              className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+              style={{ background: 'rgba(119,255,200,0.1)', color: '#77ffc8' }}
+            >
+              + REAL-TIME
+            </span>
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            {[
+              { label: 'REVENUE', value: `$${(truck.total_revenue || 0).toLocaleString()}`, icon: DollarSign },
+              { label: 'ORDERS', value: truck.total_orders || 0, icon: ShoppingBag },
+              { label: 'FOLLOWERS', value: `+${truck.followers_count || 0}`, icon: Users },
+            ].map(({ label, value, icon: Icon }) => (
+              <div key={label} className="p-3 rounded-2xl text-center" style={{ background: '#192123' }}>
+                <p className="text-[10px] font-bold tracking-wide mb-1" style={{ color: '#bacbc0' }}>{label}</p>
+                <p className="font-heading font-black text-lg" style={{ color: '#dff0e8' }}>{value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Status toggle */}
+        <div className="flex gap-2 mb-5">
+          {['open', 'closed', 'sold_out'].map(s => (
             <button
               key={s}
-              onClick={() => toggleStatus.mutate(s)}
-              className={`flex-1 py-2.5 rounded-xl text-sm font-medium capitalize transition-all ${
-                truck.status === s
-                  ? s === 'open' ? 'bg-primary text-primary-foreground' :
-                    s === 'sold_out' ? 'bg-accent text-accent-foreground' :
-                    'bg-secondary text-secondary-foreground ring-1 ring-foreground/20'
-                  : 'bg-secondary/50 text-muted-foreground'
-              }`}
+              onClick={() => updateTruck.mutate({ status: s })}
+              className="flex-1 py-2.5 rounded-xl text-xs font-bold uppercase transition-all"
+              style={truck.status === s
+                ? {
+                  background: s === 'open'
+                    ? 'linear-gradient(135deg,#77ffc8,#00e6a7)'
+                    : s === 'sold_out'
+                    ? 'rgba(253,89,30,0.2)'
+                    : '#2e3638',
+                  color: s === 'open' ? '#003826' : s === 'sold_out' ? '#fd591e' : '#bacbc0',
+                  boxShadow: s === 'open' ? '0 0 12px rgba(119,255,200,0.25)' : 'none',
+                }
+                : { background: '#192123', color: '#bacbc0' }
+              }
             >
               {s.replace('_', ' ')}
             </button>
           ))}
         </div>
-      </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-2.5 mb-5">
-        {[
-          { icon: DollarSign, label: 'Revenue', value: `$${(truck.total_revenue || 0).toLocaleString()}`, color: 'text-primary' },
-          { icon: ShoppingBag, label: 'Orders', value: truck.total_orders || 0, color: 'text-accent' },
-          { icon: Users, label: 'Followers', value: truck.followers_count || 0, color: 'text-chart-4' },
-        ].map(stat => (
-          <div key={stat.label} className="bg-card rounded-2xl p-4 text-center">
-            <stat.icon className={`w-5 h-5 mx-auto mb-1.5 ${stat.color}`} />
-            <p className="font-heading font-bold text-lg">{stat.value}</p>
-            <p className="text-[10px] text-muted-foreground">{stat.label}</p>
+        {/* Quick Actions */}
+        <div className="mb-5">
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>QUICK ACTIONS</p>
+          <div className="grid grid-cols-3 gap-3">
+            {[
+              { label: 'Update Menu', icon: ShoppingBag, to: '/vendor/menu' },
+              { label: 'Post Clip', icon: Video, to: '/live' },
+              { label: 'View Map', icon: Map, to: '/map' },
+            ].map(({ label, icon: Icon, to }) => (
+              <Link
+                key={label}
+                to={to}
+                className="flex flex-col items-center gap-2 p-4 rounded-2xl"
+                style={{ background: '#192123' }}
+              >
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{ background: 'rgba(119,255,200,0.1)' }}
+                >
+                  <Icon className="w-5 h-5" style={{ color: '#77ffc8' }} />
+                </div>
+                <span className="text-[10px] font-semibold text-center" style={{ color: '#bacbc0' }}>{label}</span>
+              </Link>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
 
-      {/* Quick links */}
-      <div className="space-y-2">
-        {[
-          { label: 'Order Queue', path: '/vendor/orders', desc: 'Manage incoming orders' },
-          { label: 'Menu', path: '/vendor/menu', desc: 'Edit your menu items' },
-        ].map(link => (
-          <Link key={link.path} to={link.path} className="flex items-center justify-between bg-card rounded-2xl p-4">
-            <div>
-              <p className="font-semibold text-sm">{link.label}</p>
-              <p className="text-xs text-muted-foreground">{link.desc}</p>
+        {/* Active Orders */}
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>
+              ACTIVE ORDERS ({activeOrders.length})
+            </p>
+            <Link to="/vendor/orders" className="text-xs font-semibold" style={{ color: '#77ffc8' }}>View history</Link>
+          </div>
+          {activeOrders.length === 0 ? (
+            <div className="py-8 text-center" style={{ background: '#192123', borderRadius: '1rem' }}>
+              <p className="text-sm" style={{ color: '#bacbc0' }}>No active orders</p>
             </div>
-            <ChevronRight className="w-4 h-4 text-muted-foreground" />
-          </Link>
-        ))}
+          ) : (
+            <div className="flex flex-col gap-3">
+              {activeOrders.slice(0, 3).map(order => (
+                <div key={order.id} className="p-4 rounded-2xl" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-heading font-black text-sm" style={{ color: '#dff0e8' }}>
+                        #{order.pickup_code || order.id.slice(-4).toUpperCase()}
+                      </span>
+                      <span
+                        className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                        style={{
+                          background: order.status === 'placed' ? 'rgba(119,255,200,0.15)' : 'rgba(253,89,30,0.15)',
+                          color: order.status === 'placed' ? '#77ffc8' : '#fd591e',
+                        }}
+                      >
+                        {order.status.toUpperCase()}
+                      </span>
+                    </div>
+                    <Link
+                      to="/vendor/orders"
+                      className="py-1.5 px-4 rounded-full text-xs font-bold"
+                      style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}
+                    >
+                      {order.status === 'placed' ? 'ACCEPT' : 'READY'}
+                    </Link>
+                  </div>
+                  <p className="text-xs" style={{ color: '#bacbc0' }}>
+                    {order.items?.map(i => `${i.quantity}x ${i.name}`).join(', ')}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

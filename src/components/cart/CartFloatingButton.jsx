@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
-import { getCart, getCartCount, getCartTotal, subscribe } from '@/lib/cartStore';
-import { motion, AnimatePresence } from 'framer-motion';
+import { subscribe, getCart, getCartCount, getCartTotal } from '@/lib/cartStore';
 
 export default function CartFloatingButton() {
   const [cart, setCart] = useState(getCart());
 
-  useEffect(() => {
-    return subscribe(setCart);
-  }, []);
+  useEffect(() => subscribe(() => setCart(getCart())), []);
 
   const count = getCartCount();
   const total = getCartTotal();
@@ -17,29 +13,41 @@ export default function CartFloatingButton() {
   if (count === 0) return null;
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 100, opacity: 0 }}
-        className="fixed bottom-20 left-4 right-4 z-40 max-w-lg mx-auto"
+    <Link
+      to="/cart"
+      className="fixed bottom-24 left-4 right-4 z-40 flex justify-center"
+      style={{ maxWidth: '512px', margin: '0 auto', left: 0, right: 0 }}
+    >
+      <div
+        className="w-full mx-4 flex items-center justify-between px-5 py-4 rounded-2xl"
+        style={{
+          background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
+          boxShadow: '0 0 24px rgba(119,255,200,0.5)',
+        }}
       >
-        <Link
-          to="/cart"
-          className="flex items-center justify-between bg-primary text-primary-foreground rounded-2xl px-5 py-4 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all"
-        >
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <ShoppingCart className="w-5 h-5" />
-              <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                {count}
-              </span>
-            </div>
-            <span className="font-semibold text-sm">View Cart</span>
+        <div className="flex items-center gap-3">
+          <div
+            className="w-7 h-7 rounded-full flex items-center justify-center font-heading font-black text-sm"
+            style={{ background: 'rgba(0,56,38,0.3)', color: '#003826' }}
+          >
+            {count}
           </div>
-          <span className="font-bold">${total.toFixed(2)}</span>
-        </Link>
-      </motion.div>
-    </AnimatePresence>
+          <span className="font-heading font-bold text-sm" style={{ color: '#003826' }}>
+            {cart.truckName || 'Your Feast'}
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="font-heading font-black text-sm" style={{ color: '#003826' }}>
+            VIEW BAG
+          </span>
+          <span
+            className="font-heading font-black text-sm px-2 py-0.5 rounded-full"
+            style={{ background: 'rgba(0,56,38,0.2)', color: '#003826' }}
+          >
+            ${total.toFixed(2)}
+          </span>
+        </div>
+      </div>
+    </Link>
   );
 }

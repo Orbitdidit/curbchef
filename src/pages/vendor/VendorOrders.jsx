@@ -1,132 +1,200 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, CheckCircle, Clock, ChefHat } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ChevronLeft, Bell, Search, Clock, DollarSign, Plus, Phone } from 'lucide-react';
+
+const STATUS_TABS = [
+  { key: 'placed', label: 'New' },
+  { key: 'preparing', label: 'Preparing' },
+  { key: 'ready', label: 'Ready' },
+];
+
+const NEXT = { placed: 'preparing', preparing: 'ready', ready: 'picked_up' };
+const BTN_LABEL = { placed: 'Prepare Order', preparing: 'Mark as Ready', ready: 'Picked Up' };
 
 export default function VendorOrders() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const qc = useQueryClient();
+  const [activeTab, setActiveTab] = useState('placed');
 
-  const { data: orders = [], isLoading } = useQuery({
-    queryKey: ['vendor-orders'],
-    queryFn: async () => {
-      const user = await base44.auth.me();
-      const trucks = await base44.entities.FoodTruck.filter({ owner_email: user.email });
-      if (!trucks[0]) return [];
-      return base44.entities.Order.filter({ truck_id: trucks[0].id }, '-created_date');
-    },
-    refetchInterval: 10000,
+  const { data: user } = useQuery({ queryKey: ['me'], queryFn: () => base44.auth.me() });
+
+  const { data: trucks = [] } = useQuery({
+    queryKey: ['vendor-truck'],
+    queryFn: () => base44.entities.FoodTruck.filter({ owner_email: user?.email }),
+    enabled: !!user?.email,
+  });
+  const truck = trucks[0];
+
+  const { data: orders = [] } = useQuery({
+    queryKey: ['vendor-orders', truck?.id],
+    queryFn: () => base44.entities.Order.filter({ truck_id: truck.id }, '-created_date'),
+    enabled: !!truck?.id,
+    refetchInterval: 8000,
   });
 
-  const updateStatus = useMutation({
-    mutationFn: async ({ id, status }) => {
-      await base44.entities.Order.update(id, { status });
-    },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['vendor-orders'] }),
+  const advance = useMutation({
+    mutationFn: (order) => base44.entities.Order.update(order.id, { status: NEXT[order.status] }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['vendor-orders'] }),
   });
 
-  const activeOrders = orders.filter(o => ['placed', 'preparing'].includes(o.status));
-  const readyOrders = orders.filter(o => o.status === 'ready');
+  const tabOrders = orders.filter(o => o.status === activeTab);
+  const newCount = orders.filter(o => o.status === 'placed').length;
+  const prepCount = orders.filter(o => o.status === 'preparing').length;
+  const readyCount = orders.filter(o => o.status === 'ready').length;
+  const countMap = { placed: newCount, preparing: prepCount, ready: readyCount };
+
+  const totalRevToday = orders.reduce((s, o) => s + (o.total || 0), 0);
 
   return (
-    <div className="px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-6">
-      <div className="flex items-center gap-3 mb-5">
-        <button onClick={() => navigate('/vendor')} className="w-10 h-10 bg-secondary rounded-xl flex items-center justify-center">
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <h1 className="font-heading font-bold text-lg">Order Queue</h1>
+    <div className="min-h-screen dot-bg" style={{ background: '#0d1517' }}>
+      {/* Header */}
+      <div className="flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4" style={{ background: '#151d1f' }}>
+        <div className="flex items-center gap-3">
+          <Link to="/vendor" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
+            <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
+          </Link>
+          <div>
+            <h1 className="font-heading font-bold text-base" style={{ color: '#dff0e8' }}>Order Queue</h1>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
+            <Search className="w-4 h-4" style={{ color: '#bacbc0' }} />
+          </button>
+          <button className="w-9 h-9 rounded-xl flex items-center justify-center relative" style={{ background: '#192123' }}>
+            <Bell className="w-4 h-4" style={{ color: '#bacbc0' }} />
+            {newCount > 0 && (
+              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-black text-white" style={{ background: '#fd591e' }}>
+                {newCount}
+              </span>
+            )}
+          </button>
+        </div>
       </div>
 
-      {isLoading ? (
-        <div className="flex items-center justify-center h-40">
-          <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      {/* Tab Pills */}
+      <div className="flex gap-2 px-5 py-4">
+        {STATUS_TABS.map(tab => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key)}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold transition-all"
+            style={activeTab === tab.key
+              ? { background: tab.key === 'placed' ? '#fd591e' : 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: tab.key === 'placed' ? 'white' : '#003826', boxShadow: tab.key === 'placed' ? '0 0 12px rgba(253,89,30,0.4)' : '0 0 12px rgba(119,255,200,0.3)' }
+              : { background: '#192123', color: '#bacbc0' }
+            }
+          >
+            {tab.label}
+            {countMap[tab.key] > 0 && (
+              <span
+                className="text-[10px] font-black px-1.5 rounded-full"
+                style={{ background: activeTab === tab.key ? 'rgba(0,0,0,0.2)' : '#2e3638', color: activeTab === tab.key ? 'currentColor' : '#bacbc0' }}
+              >
+                {countMap[tab.key]}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      {/* Orders */}
+      <div className="px-5 flex flex-col gap-4 pb-10">
+        {tabOrders.length === 0 ? (
+          <div className="py-16 text-center">
+            <p className="text-4xl mb-2">✅</p>
+            <p className="text-sm" style={{ color: '#bacbc0' }}>No {activeTab} orders</p>
+          </div>
+        ) : (
+          tabOrders.map(order => (
+            <div
+              key={order.id}
+              className="p-4 rounded-3xl"
+              style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}
+            >
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <p className="text-[10px] font-bold tracking-wide" style={{ color: '#bacbc0' }}>ORDER ID</p>
+                  <p className="font-heading font-black text-xl" style={{ color: '#77ffc8' }}>
+                    #{order.pickup_code || order.id.slice(-4).toUpperCase()}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-[10px] font-bold" style={{ color: '#bacbc0' }}>RECEIVED</p>
+                  <p className="text-xs font-semibold" style={{ color: '#dff0e8' }}>
+                    {new Date(order.created_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
+
+              {/* Customer */}
+              <div className="flex items-center gap-2 mb-3">
+                <div
+                  className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+                  style={{ background: 'rgba(119,255,200,0.12)', color: '#77ffc8' }}
+                >
+                  {order.customer_name?.charAt(0) || 'C'}
+                </div>
+                <p className="text-sm font-semibold" style={{ color: '#dff0e8' }}>{order.customer_name || order.customer_email}</p>
+              </div>
+
+              {/* Items */}
+              <div className="mb-4">
+                {order.items?.map((item, i) => (
+                  <div key={i} className="flex items-baseline gap-2 mb-1">
+                    <span className="text-sm font-bold" style={{ color: '#dff0e8' }}>{item.quantity}x {item.name}</span>
+                    {item.add_ons?.map(a => (
+                      <span key={a.name} className="text-xs italic" style={{ color: '#77ffc8' }}>{a.name}</span>
+                    ))}
+                  </div>
+                ))}
+              </div>
+
+              {/* Action */}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => advance.mutate(order)}
+                  className="flex-1 py-3 rounded-2xl font-heading font-black text-sm"
+                  style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 14px rgba(119,255,200,0.3)' }}
+                >
+                  {BTN_LABEL[order.status]}
+                </button>
+                <button
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: '#2e3638' }}
+                >
+                  <Phone className="w-4 h-4" style={{ color: '#bacbc0' }} />
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Footer stats */}
+      <div
+        className="fixed bottom-0 left-0 right-0 flex justify-center px-5 pb-4 pt-3 z-50"
+        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(16px)' }}
+      >
+        <div className="w-full max-w-lg grid grid-cols-2 gap-4">
+          <div className="text-center p-3 rounded-2xl" style={{ background: '#192123' }}>
+            <p className="text-[10px] font-bold tracking-wide" style={{ color: '#bacbc0' }}>QUEUE TIME</p>
+            <p className="font-heading font-black text-2xl" style={{ color: '#dff0e8' }}>18 min</p>
+          </div>
+          <div className="text-center p-3 rounded-2xl flex items-center justify-between px-4" style={{ background: '#192123' }}>
+            <div>
+              <p className="text-[10px] font-bold tracking-wide" style={{ color: '#bacbc0' }}>HOURLY REVENUE</p>
+              <p className="font-heading font-black text-2xl" style={{ color: '#77ffc8' }}>${Math.round(totalRevToday)}</p>
+            </div>
+            <button
+              className="w-10 h-10 rounded-full flex items-center justify-center"
+              style={{ background: '#fd591e', boxShadow: '0 0 12px rgba(253,89,30,0.4)' }}
+            >
+              <Plus className="w-5 h-5 text-white" />
+            </button>
+          </div>
         </div>
-      ) : (
-        <>
-          {activeOrders.length > 0 && (
-            <div className="mb-5">
-              <h2 className="font-heading font-bold text-sm text-accent uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5" /> Active ({activeOrders.length})
-              </h2>
-              <div className="space-y-3">
-                {activeOrders.map(order => (
-                  <div key={order.id} className="bg-card rounded-3xl p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <div>
-                        <p className="font-heading font-bold text-sm">{order.customer_name || 'Customer'}</p>
-                        <p className="text-[10px] text-muted-foreground">Code: {order.pickup_code}</p>
-                      </div>
-                      <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full ${
-                        order.status === 'placed' ? 'bg-chart-4/15 text-chart-4' : 'bg-accent/15 text-accent'
-                      }`}>
-                        {order.status === 'placed' ? 'NEW' : 'PREPARING'}
-                      </span>
-                    </div>
-                    <div className="space-y-1 mb-3">
-                      {order.items?.map((item, i) => (
-                        <p key={i} className="text-xs text-muted-foreground">{item.quantity}x {item.name}</p>
-                      ))}
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-sm text-primary">${order.total?.toFixed(2)}</span>
-                      <div className="flex gap-2">
-                        {order.status === 'placed' && (
-                          <button
-                            onClick={() => updateStatus.mutate({ id: order.id, status: 'preparing' })}
-                            className="flex items-center gap-1.5 bg-accent text-white px-4 py-2 rounded-xl text-xs font-bold"
-                          >
-                            <ChefHat className="w-3.5 h-3.5" /> Start Preparing
-                          </button>
-                        )}
-                        {order.status === 'preparing' && (
-                          <button
-                            onClick={() => updateStatus.mutate({ id: order.id, status: 'ready' })}
-                            className="flex items-center gap-1.5 bg-primary text-primary-foreground px-4 py-2 rounded-xl text-xs font-bold"
-                          >
-                            <CheckCircle className="w-3.5 h-3.5" /> Mark Ready
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {readyOrders.length > 0 && (
-            <div className="mb-5">
-              <h2 className="font-heading font-bold text-sm text-primary uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                <CheckCircle className="w-3.5 h-3.5" /> Ready ({readyOrders.length})
-              </h2>
-              <div className="space-y-2">
-                {readyOrders.map(order => (
-                  <div key={order.id} className="bg-primary/5 rounded-2xl p-3.5 flex items-center justify-between">
-                    <div>
-                      <p className="font-semibold text-sm">{order.customer_name || 'Customer'}</p>
-                      <p className="text-xs text-primary font-bold">Code: {order.pickup_code}</p>
-                    </div>
-                    <button
-                      onClick={() => updateStatus.mutate({ id: order.id, status: 'picked_up' })}
-                      className="text-xs font-bold text-muted-foreground bg-secondary px-3 py-2 rounded-xl"
-                    >
-                      Picked Up
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {orders.length === 0 && (
-            <div className="text-center py-16">
-              <div className="text-5xl mb-3">📋</div>
-              <p className="text-muted-foreground text-sm">No orders yet</p>
-            </div>
-          )}
-        </>
-      )}
+      </div>
     </div>
   );
 }
