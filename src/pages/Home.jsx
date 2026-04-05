@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
@@ -7,9 +7,18 @@ import TruckCard from '../components/home/TruckCard';
 import LiveCarousel from '../components/home/LiveCarousel';
 import HeroStrip from '../components/home/HeroStrip';
 import CategoryRow from '../components/home/CategoryRow';
+import HeroPromo from '../components/home/HeroPromo';
+import PromoCard from '../components/home/PromoCard';
+import MidVideoBlock from '../components/home/MidVideoBlock';
+import CarouselSection from '../components/home/CarouselSection';
 
 export default function Home() {
   const [category, setCategory] = useState('all');
+  const [user, setUser] = React.useState(null);
+
+  useEffect(() => {
+    base44.auth.me().then(u => setUser(u)).catch(() => {});
+  }, []);
 
   const { data: trucks = [], isLoading } = useQuery({
     queryKey: ['trucks'],
@@ -23,15 +32,22 @@ export default function Home() {
 
   const liveTrucks = trucks.filter(t => t.is_live);
   const openTrucks = trucks.filter(t => t.status === 'open');
+  const topRated = [...trucks].sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 8);
+  const newTrucks = [...trucks].sort((a, b) => new Date(b.created_date) - new Date(a.created_date)).slice(0, 8);
+  // Late night: simulate with is_live or just show first 8 for now
+  const lateNight = trucks.filter(t => t.status === 'open').slice(0, 8);
+
+  const firstName = user?.full_name?.split(' ')[0] || null;
 
   return (
     <div className="min-h-screen" style={{ background: '#0d1517' }}>
-      {/* Header */}
+
+      {/* ── Sticky Header ── */}
       <div
-        className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-20"
-        style={{ background: 'rgba(13,21,23,0.92)', backdropFilter: 'blur(20px)' }}
+        className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-3 sticky top-0 z-20"
+        style={{ background: 'rgba(13,21,23,0.93)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(59,74,66,0.12)' }}
       >
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center"
@@ -39,9 +55,7 @@ export default function Home() {
             >
               <Flame className="w-4 h-4" style={{ color: '#003826' }} />
             </div>
-            <span className="font-heading font-black text-xl tracking-tight" style={{ color: '#77ffc8' }}>
-              CurbChef
-            </span>
+            <span className="font-heading font-black text-xl tracking-tight" style={{ color: '#77ffc8' }}>CurbChef</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
@@ -59,33 +73,44 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Welcome greeting */}
+        {firstName && (
+          <div className="mb-2">
+            <p className="font-heading font-black text-lg leading-tight" style={{ color: '#dff0e8' }}>
+              Welcome back, {firstName} 👋
+            </p>
+            <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>Catch what's cooking near you right now</p>
+          </div>
+        )}
+
         {/* Search bar */}
         <Link to="/search">
           <div
-            className="flex items-center gap-3 px-4 py-3 rounded-2xl"
+            className="flex items-center gap-3 px-4 py-2.5 rounded-2xl"
             style={{ background: '#080f11', border: '1px solid rgba(59,74,66,0.25)' }}
           >
             <Search className="w-4 h-4 flex-shrink-0" style={{ color: '#bacbc0' }} />
-            <span className="text-sm" style={{ color: 'rgba(186,203,192,0.6)' }}>Tacos, brisket, ramen...</span>
+            <span className="text-sm" style={{ color: 'rgba(186,203,192,0.55)' }}>Tacos, brisket, ramen...</span>
           </div>
         </Link>
       </div>
 
-      {/* Hero Stats Strip */}
+      {/* ── Hero Stats Strip ── */}
       <HeroStrip liveTrucks={liveTrucks} openTrucks={openTrucks} trucks={trucks} />
 
-      {/* LIVE NOW — Cinematic Carousel */}
+      {/* ── Hero Promo / Video ── */}
+      <HeroPromo />
+
+      {/* ── Live Now Carousel ── */}
       {liveTrucks.length > 0 && (
-        <div className="mt-5">
+        <div className="mt-6">
           <div className="flex items-center justify-between px-5 mb-3">
             <div className="flex items-center gap-2">
               <span
-                className="w-2.5 h-2.5 rounded-full"
-                style={{ background: '#ff3b30', boxShadow: '0 0 8px #ff3b30', animation: 'pulse 1.5s infinite' }}
+                className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                style={{ background: '#ff3b30', boxShadow: '0 0 8px #ff3b30', animation: 'pulse 1.5s ease-in-out infinite' }}
               />
-              <h2 className="font-heading font-black text-lg tracking-tight" style={{ color: '#dff0e8' }}>
-                Live Now
-              </h2>
+              <h2 className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>Live Now</h2>
               <span
                 className="text-[10px] font-black px-2 py-0.5 rounded-full"
                 style={{ background: 'rgba(255,59,48,0.15)', color: '#ff3b30', border: '1px solid rgba(255,59,48,0.3)' }}
@@ -101,24 +126,90 @@ export default function Home() {
         </div>
       )}
 
-      {/* Category Row */}
+      {/* ── Promo Card #1 — Rewards ── */}
       <div className="mt-6">
+        <PromoCard variant={0} />
+      </div>
+
+      {/* ── Trending Near You Carousel ── */}
+      <CarouselSection
+        title="Trending Near You"
+        emoji="🔥"
+        badge="HOT"
+        trucks={trucks.slice(0, 8)}
+        seeAllHref="/"
+      />
+
+      {/* ── Open Now Carousel ── */}
+      <CarouselSection
+        title="Open Now"
+        emoji="🟢"
+        trucks={openTrucks}
+        seeAllHref="/"
+      />
+
+      {/* ── Mid-page Video Block ── */}
+      <MidVideoBlock />
+
+      {/* ── Top Rated Carousel ── */}
+      <CarouselSection
+        title="Top Rated"
+        emoji="⭐"
+        badge="BEST"
+        trucks={topRated}
+        seeAllHref="/"
+      />
+
+      {/* ── Promo Card #2 — Vendor ── */}
+      <div className="mt-6">
+        <PromoCard variant={1} />
+      </div>
+
+      {/* ── Late Night Eats Carousel ── */}
+      {lateNight.length > 0 && (
+        <CarouselSection
+          title="Late Night Eats"
+          emoji="🌙"
+          badge="OPEN LATE"
+          trucks={lateNight}
+          seeAllHref="/"
+        />
+      )}
+
+      {/* ── New on CurbChef Carousel ── */}
+      {newTrucks.length > 0 && (
+        <CarouselSection
+          title="New on CurbChef"
+          emoji="✨"
+          badge="NEW"
+          trucks={newTrucks}
+          seeAllHref="/"
+        />
+      )}
+
+      {/* ── Category Filter Row ── */}
+      <div className="mt-8">
+        <div className="px-5 mb-3">
+          <h2 className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>Browse by Category</h2>
+        </div>
         <CategoryRow selected={category} onChange={setCategory} />
       </div>
 
-      {/* Trending Near You */}
+      {/* ── Full Truck List (filtered) ── */}
       <div className="px-5 mt-6 pb-32">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="font-heading font-black text-lg" style={{ color: '#dff0e8' }}>Trending Near You</h2>
-            <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>Houston, TX • Updated just now</p>
+            <h2 className="font-heading font-black text-lg" style={{ color: '#dff0e8' }}>
+              {category === 'all' ? 'All Trucks' : `${category.charAt(0).toUpperCase() + category.slice(1)} Trucks`}
+            </h2>
+            <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>Houston, TX · Updated just now</p>
           </div>
         </div>
 
         {isLoading ? (
           <div className="flex flex-col gap-5">
             {[1, 2, 3].map(i => (
-              <div key={i} className="h-64 rounded-3xl animate-pulse" style={{ background: '#192123' }} />
+              <div key={i} className="h-56 rounded-3xl animate-pulse" style={{ background: '#192123' }} />
             ))}
           </div>
         ) : (
