@@ -1,0 +1,46 @@
+{
+  "name": "HomepageConfig",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Unique config key, e.g. 'hero_video', 'mid_video', 'promo_card_1'"
+    },
+    "label": {
+      "type": "string",
+      "description": "Human-readable label for admin UI"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "Video URL for video blocks"
+    },
+    "poster_url": {
+      "type": "string",
+      "description": "Fallback image / poster for video"
+    },
+    "headline": {
+      "type": "string"
+    },
+    "subline": {
+      "type": "string"
+    },
+    "cta_label": {
+      "type": "string"
+    },
+    "cta_href": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "For promo image cards"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "key",
+    "label"
+  ]
+}

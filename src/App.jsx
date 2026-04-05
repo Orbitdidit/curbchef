@@ -20,6 +20,7 @@ import VendorDashboard from './pages/vendor/VendorDashboard';
 import VendorOrders from './pages/vendor/VendorOrders';
 import VendorMenu from './pages/vendor/VendorMenu';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import HomepageCMS from './pages/admin/HomepageCMS';
 import Search from './pages/Search';
 
 const AuthenticatedApp = () => {
@@ -70,6 +71,7 @@ const AuthenticatedApp = () => {
 
       {/* Admin */}
       <Route path="/admin" element={<AdminDashboard />} />
+      <Route path="/admin/homepage" element={<HomepageCMS />} />
 
       <Route path="*" element={<PageNotFound />} />
     </Routes>

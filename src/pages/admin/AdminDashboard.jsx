@@ -2,7 +2,7 @@ import React from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Settings, Bell, BarChart2, Users, ShoppingBag, Radio, AlertTriangle } from 'lucide-react';
+import { Settings, Bell, Users, Radio, AlertTriangle, Layout } from 'lucide-react';
 
 export default function AdminDashboard() {
   const qc = useQueryClient();
@@ -45,6 +45,23 @@ export default function AdminDashboard() {
       </div>
 
       <div className="px-5 pt-5 pb-16">
+        {/* CMS Quick Access */}
+        <Link to="/admin/homepage">
+          <div
+            className="flex items-center gap-3 p-4 rounded-2xl mb-5"
+            style={{ background: 'rgba(119,255,200,0.06)', border: '1px solid rgba(119,255,200,0.2)' }}
+          >
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(119,255,200,0.12)' }}>
+              <Layout className="w-4 h-4" style={{ color: '#77ffc8' }} />
+            </div>
+            <div className="flex-1">
+              <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>Homepage CMS</p>
+              <p className="text-xs" style={{ color: '#bacbc0' }}>Edit videos, promo cards & copy</p>
+            </div>
+            <span className="text-xs font-bold" style={{ color: '#77ffc8' }}>Edit →</span>
+          </div>
+        </Link>
+
         {/* Platform Stats */}
         <div className="flex items-center justify-between mb-3">
           <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>PLATFORM STATS</p>
