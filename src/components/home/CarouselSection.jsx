@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Star, MapPin } from 'lucide-react';
+import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
 
-function SmallTruckCard({ truck }) {
-  const dist = truck.latitude
-    ? `${(Math.random() * 3 + 0.3).toFixed(1)} mi`
-    : '0.8 mi';
+function SmallTruckCard({ truck, userLat, userLng }) {
+  const distVal = (userLat && truck.latitude) ? distanceMiles(userLat, userLng, truck.latitude, truck.longitude) : null;
+  const dist = distVal != null ? formatDist(distVal) : null;
 
   return (
     <Link to={`/truck/${truck.id}`} className="flex-shrink-0 group" style={{ width: '160px' }}>
@@ -62,10 +62,12 @@ function SmallTruckCard({ truck }) {
               <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
               <span className="text-xs font-bold" style={{ color: '#dff0e8' }}>{truck.rating?.toFixed(1) || '4.8'}</span>
             </div>
-            <div className="flex items-center gap-1">
-              <MapPin className="w-2.5 h-2.5" style={{ color: '#bacbc0' }} />
-              <span className="text-[10px]" style={{ color: '#bacbc0' }}>{dist}</span>
-            </div>
+            {dist && (
+              <div className="flex items-center gap-1">
+                <MapPin className="w-2.5 h-2.5" style={{ color: '#bacbc0' }} />
+                <span className="text-[10px]" style={{ color: '#bacbc0' }}>{dist}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -74,6 +76,7 @@ function SmallTruckCard({ truck }) {
 }
 
 export default function CarouselSection({ title, emoji, badge, trucks, seeAllHref = '/' }) {
+  const { lat: userLat, lng: userLng } = useUserLocation();
   if (!trucks || trucks.length === 0) return null;
 
   return (
@@ -102,7 +105,7 @@ export default function CarouselSection({ title, emoji, badge, trucks, seeAllHre
         </Link>
       </div>
       <div className="flex gap-3 px-5 overflow-x-auto no-scrollbar pb-1">
-        {trucks.map(truck => <SmallTruckCard key={truck.id} truck={truck} />)}
+        {trucks.map(truck => <SmallTruckCard key={truck.id} truck={truck} userLat={userLat} userLng={userLng} />)}
       </div>
     </div>
   );

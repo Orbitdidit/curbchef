@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Star, Clock, MapPin } from 'lucide-react';
+import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
 
 export default function TruckCard({ truck, rank }) {
-  // Simulated distance — replace with real geo calc when location API is wired
-  const distance = truck.latitude
-    ? `${(Math.abs(truck.latitude - 29.76) * 69 + Math.random() * 0.8).toFixed(1)} mi`
-    : `${(Math.random() * 3 + 0.3).toFixed(1)} mi`;
+  const { lat, lng } = useUserLocation();
+  const distVal = (lat && truck.latitude) ? distanceMiles(lat, lng, truck.latitude, truck.longitude) : null;
+  const distance = distVal != null ? formatDist(distVal) : '—';
 
   return (
     <Link to={`/truck/${truck.id}`} className="block group">
