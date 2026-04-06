@@ -13,6 +13,7 @@ import HeroPromo from '../components/home/HeroPromo';
 import PromoCard from '../components/home/PromoCard';
 import MidVideoBlock from '../components/home/MidVideoBlock';
 import CarouselSection from '../components/home/CarouselSection';
+import CookinSection from '../components/home/CookinSection';
 
 export default function Home() {
   const [category, setCategory] = useState('all');
@@ -117,8 +118,8 @@ export default function Home() {
           <div className="flex items-center justify-between px-5 mb-3">
             <div className="flex items-center gap-2">
               <span
-                className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                style={{ background: '#ff3b30', boxShadow: '0 0 8px #ff3b30', animation: 'pulse 1.5s ease-in-out infinite' }}
+                className="live-dot w-2.5 h-2.5 rounded-full flex-shrink-0"
+                style={{ background: '#ff3b30' }}
               />
               <h2 className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>Live Now</h2>
               <span
@@ -149,6 +150,9 @@ export default function Home() {
         trucks={trucks.slice(0, 8)}
         seeAllHref="/"
       />
+
+      {/* ── Cookin' on CurbChef — Flame Ads ── */}
+      <CookinSection />
 
       {/* ── Open Now Carousel ── */}
       <CarouselSection
