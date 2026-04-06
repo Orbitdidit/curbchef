@@ -101,6 +101,11 @@
   body {
     @apply bg-background text-foreground font-body;
     background-color: #0d1517;
+    overscroll-behavior: none;
+  }
+  button, a, nav {
+    -webkit-user-select: none;
+    user-select: none;
   }
 }
 

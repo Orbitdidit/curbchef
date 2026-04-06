@@ -27,7 +27,17 @@ export default function VendorDashboard() {
 
   const updateTruck = useMutation({
     mutationFn: (data) => base44.entities.FoodTruck.update(truck.id, data),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['vendor-truck'] }),
+    // Optimistic: patch local truck data immediately
+    onMutate: async (newData) => {
+      await qc.cancelQueries({ queryKey: ['vendor-truck'] });
+      const prev = qc.getQueryData(['vendor-truck']);
+      qc.setQueryData(['vendor-truck'], (old = []) =>
+        old.map(t => t.id === truck.id ? { ...t, ...newData } : t)
+      );
+      return { prev };
+    },
+    onError: (_err, _vars, ctx) => qc.setQueryData(['vendor-truck'], ctx.prev),
+    onSettled: () => qc.invalidateQueries({ queryKey: ['vendor-truck'] }),
   });
 
   if (!truck) {
