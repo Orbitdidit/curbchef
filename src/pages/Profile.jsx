@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import {
   ShoppingBag, Star, Gift, Truck, Settings, ChevronRight,
-  LogOut, Shield, Lock, Trash2
+  LogOut, Shield, Trash2, Bell, HelpCircle
 } from 'lucide-react';
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel,
@@ -49,7 +49,12 @@ export default function Profile() {
     { icon: ShoppingBag, label: 'My Orders', sub: `${orders.length} orders`, to: '/orders' },
     { icon: Star, label: 'Rewards', sub: `${reward.points.toLocaleString()} pts · ${currentTier.label}`, to: '/rewards' },
     { icon: Gift, label: 'Refer a Friend', sub: 'Earn 500 pts per referral', to: null },
-    { icon: Truck, label: 'Refer a Truck', sub: 'Help a truck join CurbChef', to: '/onboard-truck' },
+    { icon: Truck, label: 'Refer a Vendor', sub: 'Help a truck join CurbChef', to: '/onboard-truck' },
+  ];
+
+  const settingsItems = [
+    { icon: Bell, label: 'Notifications', sub: 'Manage alerts & live pings', to: null },
+    { icon: HelpCircle, label: 'Help & Support', sub: 'FAQs, contact, report issue', to: null },
   ];
 
   return (
@@ -119,6 +124,28 @@ export default function Profile() {
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: 'rgba(119,255,200,0.08)' }}>
                   <Icon className="w-5 h-5" style={{ color: '#77ffc8' }} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>{label}</p>
+                  <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>{sub}</p>
+                </div>
+                <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: '#bacbc0' }} />
+              </div>
+            );
+            return to ? <Link key={label} to={to}>{inner}</Link> : <div key={label}>{inner}</div>;
+          })}
+        </div>
+
+        {/* Settings */}
+        <div className="flex flex-col gap-2 mb-6">
+          <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: '#bacbc0' }}>SETTINGS</p>
+          {settingsItems.map(({ icon: Icon, label, sub, to }) => {
+            const inner = (
+              <div className="flex items-center gap-3 p-4 rounded-2xl"
+                style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.15)' }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: 'rgba(186,203,192,0.06)' }}>
+                  <Icon className="w-5 h-5" style={{ color: '#bacbc0' }} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>{label}</p>

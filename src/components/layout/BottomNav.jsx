@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Compass, Map, Radio, Tag, User } from 'lucide-react';
+import { Home, Compass, Radio, Tag, User } from 'lucide-react';
 
 const tabs = [
+  { path: '/', icon: Home, label: 'Home' },
   { path: '/explore', icon: Compass, label: 'Explore' },
-  { path: '/map', icon: Map, label: 'Map' },
   { path: '/live', icon: Radio, label: 'Live', special: true },
   { path: '/deals', icon: Tag, label: 'Deals' },
   { path: '/profile', icon: User, label: 'Profile' },
@@ -28,16 +28,17 @@ export default function BottomNav() {
           }}
         >
           {tabs.map(({ path, icon: Icon, label, special }) => {
-            const active = pathname === path || (path !== '/' && pathname.startsWith(path));
+            const active = path === '/' ? pathname === '/' : pathname.startsWith(path);
 
             if (special) {
               return (
                 <Link key={path} to={path} className="flex flex-col items-center relative -mt-6">
                   <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg live-dot"
+                    className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
                     style={{
                       background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
                       boxShadow: '0 0 24px rgba(119,255,200,0.55), 0 4px 16px rgba(0,0,0,0.4)',
+                      animation: 'neon-pulse 2s ease-in-out infinite',
                     }}
                   >
                     <Icon className="w-6 h-6" style={{ color: '#003826' }} />
