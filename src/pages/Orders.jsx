@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { Package, ChefHat, CheckCircle, QrCode } from 'lucide-react';
+import { usePullToRefresh } from '@/hooks/usePullToRefresh';
+import PullIndicator from '@/components/layout/PullIndicator';
 
 const statusConfig = {
   placed: { icon: Package, label: 'Order Placed', color: 'text-chart-4', step: 1 },
@@ -13,6 +15,8 @@ const statusConfig = {
 };
 
 export default function Orders() {
+  const queryClient = useQueryClient();
+
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ['my-orders'],
     queryFn: async () => {
@@ -21,11 +25,18 @@ export default function Orders() {
     },
   });
 
+  const onRefresh = useCallback(
+    () => queryClient.invalidateQueries({ queryKey: ['my-orders'] }),
+    [queryClient]
+  );
+  const { pullDist, refreshing } = usePullToRefresh({ onRefresh });
+
   const activeOrders = orders.filter(o => ['placed', 'preparing', 'ready'].includes(o.status));
   const pastOrders = orders.filter(o => ['picked_up', 'cancelled'].includes(o.status));
 
   return (
     <div className="px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4">
+      <PullIndicator pullDist={pullDist} refreshing={refreshing} />
       <h1 className="font-heading text-2xl font-bold mb-5">My Orders</h1>
 
       {isLoading ? (

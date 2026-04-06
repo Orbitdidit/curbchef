@@ -1,10 +1,12 @@
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
+import ThemeProvider from '@/lib/ThemeProvider';
 
 import AppLayout from './components/layout/AppLayout';
 import Home from './pages/Home';
@@ -25,6 +27,7 @@ import Search from './pages/Search';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
+  const location = useLocation();
 
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
@@ -47,47 +50,60 @@ const AuthenticatedApp = () => {
   }
 
   return (
-    <Routes>
-      {/* Customer routes with bottom nav */}
-      <Route element={<AppLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/map" element={<MapView />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/rewards" element={<Rewards />} />
-      </Route>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -20 }}
+        transition={{ duration: 0.2, ease: 'easeInOut' }}
+        style={{ minHeight: '100dvh' }}
+      >
+        <Routes location={location}>
+          {/* Customer routes with bottom nav */}
+          <Route element={<AppLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/map" element={<MapView />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/rewards" element={<Rewards />} />
+          </Route>
 
-      {/* Full-screen routes (no bottom nav) */}
-      <Route path="/search" element={<Search />} />
-      <Route path="/live" element={<LiveFeed />} />
-      <Route path="/truck/:id" element={<TruckProfile />} />
-      <Route path="/truck/:id/item/:itemId" element={<ItemDetail />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/order/:id" element={<OrderDetail />} />
+          {/* Full-screen routes (no bottom nav) */}
+          <Route path="/search" element={<Search />} />
+          <Route path="/live" element={<LiveFeed />} />
+          <Route path="/truck/:id" element={<TruckProfile />} />
+          <Route path="/truck/:id/item/:itemId" element={<ItemDetail />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/order/:id" element={<OrderDetail />} />
 
-      {/* Vendor routes */}
-      <Route path="/vendor" element={<VendorDashboard />} />
-      <Route path="/vendor/orders" element={<VendorOrders />} />
-      <Route path="/vendor/menu" element={<VendorMenu />} />
+          {/* Vendor routes */}
+          <Route path="/vendor" element={<VendorDashboard />} />
+          <Route path="/vendor/orders" element={<VendorOrders />} />
+          <Route path="/vendor/menu" element={<VendorMenu />} />
 
-      {/* Admin */}
-      <Route path="/admin" element={<AdminDashboard />} />
-      <Route path="/admin/homepage" element={<HomepageCMS />} />
+          {/* Admin */}
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/homepage" element={<HomepageCMS />} />
 
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
 function App() {
   return (
-    <AuthProvider>
-      <QueryClientProvider client={queryClientInstance}>
-        <Router>
-          <AuthenticatedApp />
-        </Router>
-        <Toaster />
-      </QueryClientProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClientInstance}>
+          <Router>
+            <AuthenticatedApp />
+          </Router>
+          <Toaster />
+        </QueryClientProvider>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 

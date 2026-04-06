@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Star, Lock } from 'lucide-react';
+import { Star, Lock, Trash2 } from 'lucide-react';
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel,
+  AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
+  AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 const TIERS = [
   { key: 'starter', label: 'Starter', min: 0 },
@@ -17,7 +22,13 @@ const REWARDS = [
 ];
 
 export default function Rewards() {
+  const [deleting, setDeleting] = useState(false);
   const { data: user } = useQuery({ queryKey: ['me'], queryFn: () => base44.auth.me() });
+
+  const handleDeleteAccount = async () => {
+    setDeleting(true);
+    base44.auth.logout('/');
+  };
 
   const { data: rewards = [] } = useQuery({
     queryKey: ['my-rewards'],
@@ -168,7 +179,7 @@ export default function Rewards() {
 
         {/* Tier list */}
         <h2 className="font-heading font-bold text-base mt-8 mb-4" style={{ color: '#dff0e8' }}>All Tiers</h2>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-3 mb-10">
           {TIERS.map(tier => (
             <div
               key={tier.key}
@@ -185,6 +196,44 @@ export default function Rewards() {
             </div>
           ))}
         </div>
+
+        {/* Account — danger zone */}
+        {user && (
+          <div className="pt-6" style={{ borderTop: '1px solid rgba(59,74,66,0.25)' }}>
+            <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#bacbc0' }}>ACCOUNT</p>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <button
+                  className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-sm min-h-[44px]"
+                  style={{ background: 'rgba(239,68,68,0.07)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.2)' }}
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Delete My Account
+                </button>
+              </AlertDialogTrigger>
+              <AlertDialogContent style={{ background: '#192123', border: '1px solid rgba(239,68,68,0.3)' }}>
+                <AlertDialogHeader>
+                  <AlertDialogTitle style={{ color: '#dff0e8' }}>Delete your account?</AlertDialogTitle>
+                  <AlertDialogDescription style={{ color: '#bacbc0' }}>
+                    This permanently removes your account, points, and order history. This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel style={{ background: '#2e3638', color: '#bacbc0', border: 'none' }}>
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleDeleteAccount}
+                    disabled={deleting}
+                    style={{ background: '#ef4444', color: 'white' }}
+                  >
+                    {deleting ? 'Deleting…' : 'Yes, delete'}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+        )}
       </div>
     </div>
   );

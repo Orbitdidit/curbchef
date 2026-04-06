@@ -1,7 +1,9 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
+import { usePullToRefresh } from '@/hooks/usePullToRefresh';
+import PullIndicator from '@/components/layout/PullIndicator';
 import { MapPin, Search, Flame, ChevronRight } from 'lucide-react';
 import TruckCard from '../components/home/TruckCard';
 import LiveCarousel from '../components/home/LiveCarousel';
@@ -15,6 +17,7 @@ import CarouselSection from '../components/home/CarouselSection';
 export default function Home() {
   const [category, setCategory] = useState('all');
   const [user, setUser] = React.useState(null);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     base44.auth.me().then(u => setUser(u)).catch(() => {});
@@ -24,6 +27,12 @@ export default function Home() {
     queryKey: ['trucks'],
     queryFn: () => base44.entities.FoodTruck.filter({ is_approved: true }),
   });
+
+  const onRefresh = useCallback(
+    () => queryClient.invalidateQueries({ queryKey: ['trucks'] }),
+    [queryClient]
+  );
+  const { pulling, pullDist, refreshing } = usePullToRefresh({ onRefresh });
 
   const filtered = useMemo(() =>
     category === 'all' ? trucks : trucks.filter(t => t.cuisine_type === category),
@@ -41,6 +50,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen" style={{ background: '#0d1517' }}>
+      <PullIndicator pullDist={pullDist} refreshing={refreshing} />
 
       {/* ── Sticky Header ── */}
       <div
