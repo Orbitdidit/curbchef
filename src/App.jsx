@@ -26,6 +26,9 @@ import HomepageCMS from './pages/admin/HomepageCMS';
 import Search from './pages/Search';
 import OnboardTruck from './pages/OnboardTruck';
 import UserQuiz from './pages/UserQuiz';
+import Explore from './pages/Explore';
+import Deals from './pages/Deals';
+import Profile from './pages/Profile';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -65,7 +68,10 @@ const AuthenticatedApp = () => {
           {/* Customer routes with bottom nav */}
           <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/explore" element={<Explore />} />
             <Route path="/map" element={<MapView />} />
+            <Route path="/deals" element={<Deals />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/rewards" element={<Rewards />} />
           </Route>
