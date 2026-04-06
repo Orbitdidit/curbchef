@@ -1,0 +1,111 @@
+{
+  "name": "TruckOnboarding",
+  "type": "object",
+  "properties": {
+    "truck_name": {
+      "type": "string"
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "cuisine_type": {
+      "type": "string",
+      "enum": [
+        "tacos",
+        "burgers",
+        "bbq",
+        "seafood",
+        "asian",
+        "fusion",
+        "desserts",
+        "vegan",
+        "pizza",
+        "soul_food",
+        "other"
+      ]
+    },
+    "instagram": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "logo_url": {
+      "type": "string"
+    },
+    "truck_photo_url": {
+      "type": "string"
+    },
+    "food_images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "menu_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "prep_time": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "is_open_now": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_opening_soon": {
+      "type": "boolean",
+      "default": false
+    },
+    "countdown_minutes": {
+      "type": "number"
+    },
+    "kitchen_check_photo": {
+      "type": "string"
+    },
+    "kitchen_check_time": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "submitted",
+        "approved",
+        "rejected"
+      ],
+      "default": "draft"
+    },
+    "step_completed": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "truck_name",
+    "owner_name",
+    "email"
+  ]
+}

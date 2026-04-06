@@ -1,0 +1,19 @@
+{
+  "name": "Follow",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string"
+    },
+    "truck_id": {
+      "type": "string"
+    },
+    "truck_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_email",
+    "truck_id"
+  ]
+}

@@ -24,6 +24,8 @@ import VendorMenu from './pages/vendor/VendorMenu';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import HomepageCMS from './pages/admin/HomepageCMS';
 import Search from './pages/Search';
+import OnboardTruck from './pages/OnboardTruck';
+import UserQuiz from './pages/UserQuiz';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -84,6 +86,9 @@ const AuthenticatedApp = () => {
           {/* Admin */}
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/homepage" element={<HomepageCMS />} />
+
+          <Route path="/onboard-truck" element={<OnboardTruck />} />
+          <Route path="/quiz" element={<UserQuiz />} />
 
           <Route path="*" element={<PageNotFound />} />
         </Routes>

@@ -175,6 +175,22 @@ export default function Home() {
         <PromoCard variant={1} />
       </div>
 
+      {/* ── Onboard Truck CTA ── */}
+      <div className="px-5 mt-6">
+        <Link to="/onboard-truck">
+          <div className="p-5 rounded-3xl flex items-center gap-4"
+            style={{ background: 'linear-gradient(135deg,rgba(253,89,30,0.12),rgba(253,89,30,0.06))', border: '1px solid rgba(253,89,30,0.25)' }}>
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 text-2xl"
+              style={{ background: 'rgba(253,89,30,0.15)' }}>🚚</div>
+            <div className="flex-1">
+              <p className="font-heading font-black text-sm" style={{ color: '#dff0e8' }}>Own a Food Truck?</p>
+              <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>Join CurbChef in 10 minutes. Free to list.</p>
+            </div>
+            <ChevronRight className="w-5 h-5 flex-shrink-0" style={{ color: '#fd591e' }} />
+          </div>
+        </Link>
+      </div>
+
       {/* ── Late Night Eats Carousel ── */}
       {lateNight.length > 0 && (
         <CarouselSection

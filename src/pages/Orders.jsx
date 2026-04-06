@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Package, ChefHat, CheckCircle, QrCode } from 'lucide-react';
+import { Package, ChefHat, CheckCircle, QrCode, ChevronRight, Star } from 'lucide-react';
 import { usePullToRefresh } from '@/hooks/usePullToRefresh';
 import PullIndicator from '@/components/layout/PullIndicator';
 
@@ -25,6 +25,11 @@ export default function Orders() {
     },
   });
 
+  const { data: nearbyTrucks = [] } = useQuery({
+    queryKey: ['trucks-nearby'],
+    queryFn: () => base44.entities.FoodTruck.filter({ is_approved: true }, '-rating', 6),
+  });
+
   const onRefresh = useCallback(
     () => queryClient.invalidateQueries({ queryKey: ['my-orders'] }),
     [queryClient]
@@ -35,27 +40,70 @@ export default function Orders() {
   const pastOrders = orders.filter(o => ['picked_up', 'cancelled'].includes(o.status));
 
   return (
-    <div className="px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4">
+    <div className="min-h-screen pb-32" style={{ background: '#0d1517' }}>
       <PullIndicator pullDist={pullDist} refreshing={refreshing} />
-      <h1 className="font-heading text-2xl font-bold mb-5">My Orders</h1>
 
+      {/* Header */}
+      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-10"
+        style={{ background: 'rgba(13,21,23,0.93)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(59,74,66,0.12)' }}>
+        <h1 className="font-heading font-black text-xl" style={{ color: '#dff0e8' }}>Orders</h1>
+      </div>
+
+      <div className="px-5 pt-5">
       {isLoading ? (
         <div className="flex items-center justify-center h-40">
-          <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
         </div>
       ) : orders.length === 0 ? (
-        <div className="text-center py-16">
-          <div className="text-5xl mb-3">🍽️</div>
-          <p className="text-muted-foreground text-sm">No orders yet</p>
-          <Link to="/" className="inline-block mt-4 bg-primary text-primary-foreground px-5 py-2.5 rounded-2xl text-sm font-semibold">
-            Start Ordering
-          </Link>
+        <div>
+          {/* Empty hero */}
+          <div className="text-center py-10">
+            <div className="text-5xl mb-3">🍽️</div>
+            <h2 className="font-heading font-black text-xl mb-1" style={{ color: '#dff0e8' }}>No orders yet</h2>
+            <p className="text-sm mb-5" style={{ color: '#bacbc0' }}>Find a truck and start your first order</p>
+            <Link to="/">
+              <button className="px-8 py-3.5 rounded-full font-heading font-black text-sm"
+                style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 20px rgba(119,255,200,0.3)' }}>
+                Browse Trucks Near You
+              </button>
+            </Link>
+          </div>
+
+          {/* Nearby truck suggestions */}
+          {nearbyTrucks.length > 0 && (
+            <div className="mt-4">
+              <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>TRUCKS NEAR YOU</p>
+              <div className="flex flex-col gap-3">
+                {nearbyTrucks.map(truck => (
+                  <Link key={truck.id} to={`/truck/${truck.id}`}>
+                    <div className="flex items-center gap-3 p-3 rounded-2xl" style={{ background: '#192123' }}>
+                      <img src={truck.image_url || 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=200'}
+                        alt={truck.name} className="w-14 h-14 rounded-xl object-cover flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="font-heading font-bold text-sm truncate" style={{ color: '#dff0e8' }}>{truck.name}</p>
+                        <p className="text-xs capitalize" style={{ color: '#bacbc0' }}>{truck.cuisine_type?.replace('_', ' ')} • 15–20 min</p>
+                        <div className="flex items-center gap-1 mt-0.5">
+                          <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                          <span className="text-xs font-bold" style={{ color: '#dff0e8' }}>{truck.rating?.toFixed(1) || '4.8'}</span>
+                          {truck.status === 'open' && <span className="ml-1 text-[10px] font-bold" style={{ color: '#77ffc8' }}>● OPEN</span>}
+                        </div>
+                      </div>
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                        style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}>
+                        <ChevronRight className="w-4 h-4" style={{ color: '#003826' }} />
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <>
           {activeOrders.length > 0 && (
             <div className="mb-6">
-              <h2 className="font-heading font-bold text-sm text-muted-foreground uppercase tracking-wider mb-3">Active</h2>
+              <h2 className="font-heading font-bold text-xs tracking-widest mb-3" style={{ color: '#77ffc8' }}>ACTIVE ORDERS</h2>
               <div className="space-y-3">
                 {activeOrders.map(order => {
                   const config = statusConfig[order.status];
@@ -100,7 +148,7 @@ export default function Orders() {
 
           {pastOrders.length > 0 && (
             <div>
-              <h2 className="font-heading font-bold text-sm text-muted-foreground uppercase tracking-wider mb-3">Past Orders</h2>
+              <h2 className="font-heading font-bold text-xs tracking-widest mb-3 mt-6" style={{ color: '#bacbc0' }}>PAST ORDERS</h2>
               <div className="space-y-2">
                 {pastOrders.map(order => (
                   <div key={order.id} className="bg-secondary/50 rounded-2xl p-3.5 flex items-center justify-between">
@@ -116,6 +164,7 @@ export default function Orders() {
           )}
         </>
       )}
+      </div>
     </div>
   );
 }

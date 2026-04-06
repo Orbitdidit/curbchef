@@ -1,0 +1,58 @@
+{
+  "name": "UserProfile",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string"
+    },
+    "favorite_foods": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "spice_level": {
+      "type": "string",
+      "enum": [
+        "mild",
+        "medium",
+        "hot",
+        "fire"
+      ]
+    },
+    "vibe": {
+      "type": "string",
+      "enum": [
+        "quick_bite",
+        "late_night",
+        "healthy",
+        "comfort"
+      ]
+    },
+    "max_distance_miles": {
+      "type": "number",
+      "default": 5
+    },
+    "notifications_enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "quiz_completed": {
+      "type": "boolean",
+      "default": false
+    },
+    "referral_code": {
+      "type": "string"
+    },
+    "referred_by": {
+      "type": "string"
+    },
+    "referral_count": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "user_email"
+  ]
+}

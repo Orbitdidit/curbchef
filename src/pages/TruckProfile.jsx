@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronLeft, Share2, Star, Clock, MapPin, Plus, Play } from 'lucide-react';
+import { ChevronLeft, Share2, Star, Clock, Plus, Play, UserPlus, UserCheck } from 'lucide-react';
+import { useFollow } from '@/hooks/useFollow';
 
 
 const TABS = ['Menu', 'Specials', 'Clips'];
@@ -16,6 +17,8 @@ export default function TruckProfile() {
     queryKey: ['truck', id],
     queryFn: () => base44.entities.FoodTruck.get(id),
   });
+
+  const { isFollowing, toggle: toggleFollow, isPending } = useFollow(id, truck?.name);
 
   const { data: menuItems = [] } = useQuery({
     queryKey: ['menu', id],
@@ -61,12 +64,22 @@ export default function TruckProfile() {
           </Link>
           <div className="flex gap-2">
             <button
-              className="py-2 px-4 rounded-full text-xs font-bold"
-              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}
+              onClick={toggleFollow}
+              disabled={isPending}
+              className="flex items-center gap-1.5 py-2 px-4 rounded-full text-xs font-bold transition-all"
+              style={isFollowing
+                ? { background: 'rgba(119,255,200,0.12)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.4)' }
+                : { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }
+              }
             >
-              Follow ★
+              {isFollowing ? <><UserCheck className="w-3 h-3" /> Following</> : <><UserPlus className="w-3 h-3" /> Follow</>}
             </button>
             <button
+              onClick={() => {
+                const url = `${window.location.origin}/truck/${id}`;
+                if (navigator.share) navigator.share({ title: truck?.name, url });
+                else navigator.clipboard?.writeText(url);
+              }}
               className="w-9 h-9 rounded-xl flex items-center justify-center"
               style={{ background: 'rgba(13,21,23,0.7)', backdropFilter: 'blur(10px)' }}
             >
