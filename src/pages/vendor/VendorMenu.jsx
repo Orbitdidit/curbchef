@@ -2,17 +2,26 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Plus, Pencil, Trash2 } from 'lucide-react';
+import { ChevronLeft, Plus, Pencil, Trash2, ChevronRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
+
+const CATEGORIES = [
+  { value: 'mains', label: 'Mains' },
+  { value: 'sides', label: 'Sides' },
+  { value: 'drinks', label: 'Drinks' },
+  { value: 'desserts', label: 'Desserts' },
+  { value: 'specials', label: 'Specials' },
+];
 
 export default function VendorMenu() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [showForm, setShowForm] = useState(false);
+  const [showCategoryDrawer, setShowCategoryDrawer] = useState(false);
   const [editItem, setEditItem] = useState(null);
   const [form, setForm] = useState({ name: '', description: '', price: '', category: 'mains', image_url: '', is_available: true, is_special: false });
 
@@ -126,16 +135,15 @@ export default function VendorMenu() {
             <Textarea placeholder="Description" value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className="bg-secondary border-0" />
             <Input placeholder="Price" type="number" step="0.01" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} className="bg-secondary border-0" />
             <Input placeholder="Image URL" value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} className="bg-secondary border-0" />
-            <Select value={form.category} onValueChange={v => setForm({ ...form, category: v })}>
-              <SelectTrigger className="bg-secondary border-0"><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="mains">Mains</SelectItem>
-                <SelectItem value="sides">Sides</SelectItem>
-                <SelectItem value="drinks">Drinks</SelectItem>
-                <SelectItem value="desserts">Desserts</SelectItem>
-                <SelectItem value="specials">Specials</SelectItem>
-              </SelectContent>
-            </Select>
+            <button
+              type="button"
+              onClick={() => setShowCategoryDrawer(true)}
+              className="w-full flex items-center justify-between px-3 py-3 rounded-lg text-sm"
+              style={{ background: 'hsl(var(--secondary))', color: 'hsl(var(--foreground))' }}
+            >
+              <span>{CATEGORIES.find(c => c.value === form.category)?.label || 'Category'}</span>
+              <ChevronRight className="w-4 h-4 opacity-50" />
+            </button>
             <div className="flex items-center justify-between">
               <span className="text-sm">Available</span>
               <Switch checked={form.is_available} onCheckedChange={v => setForm({ ...form, is_available: v })} />
@@ -154,6 +162,37 @@ export default function VendorMenu() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Native-feel Category Bottom Sheet */}
+      <Drawer open={showCategoryDrawer} onOpenChange={setShowCategoryDrawer}>
+        <DrawerContent style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}>
+          <DrawerHeader>
+            <DrawerTitle style={{ color: '#dff0e8' }}>Select Category</DrawerTitle>
+          </DrawerHeader>
+          <div className="flex flex-col gap-1 px-4 pb-8">
+            {CATEGORIES.map(cat => (
+              <button
+                key={cat.value}
+                onClick={() => { setForm(f => ({ ...f, category: cat.value })); setShowCategoryDrawer(false); }}
+                className="flex items-center justify-between px-4 py-4 rounded-2xl text-sm font-semibold transition-all"
+                style={{
+                  background: form.category === cat.value ? 'rgba(119,255,200,0.1)' : 'transparent',
+                  color: form.category === cat.value ? '#77ffc8' : '#dff0e8',
+                  border: form.category === cat.value ? '1px solid rgba(119,255,200,0.3)' : '1px solid transparent',
+                  minHeight: '52px',
+                }}
+              >
+                {cat.label}
+                {form.category === cat.value && (
+                  <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8l4 4 6-6" stroke="#77ffc8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
+              </button>
+            ))}
+          </div>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 }

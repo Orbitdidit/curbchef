@@ -53,7 +53,7 @@ export default function BottomNav() {
               );
             }
             return (
-              <Link key={path} to={path} className="flex flex-col items-center gap-1 flex-1 py-1">
+              <Link key={path} to={path} className="flex flex-col items-center gap-1 flex-1 py-2 min-h-[44px] justify-center">
                 <Icon
                   className="w-5 h-5 transition-colors"
                   style={{ color: active ? '#77ffc8' : '#bacbc0' }}
