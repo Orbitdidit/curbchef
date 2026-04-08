@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Save, Trash2, Video, Image, Star, Truck } from 'lucide-react';
+import { ChevronLeft, Save, Trash2, Video, Image, Star, Truck, Plus } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import MediaUpload from '@/components/shared/MediaUpload';
 import AIAssist from '@/components/shared/AIAssist';
@@ -170,6 +170,122 @@ function ConfigCard({ item, onSave, onDelete }) {
   );
 }
 
+function LiveVideosManager() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const [newClip, setNewClip] = useState({ title: '', truck_name: '', video_url: '', poster_url: '' });
+  const [showForm, setShowForm] = useState(false);
+
+  const { data: clips = [] } = useQuery({
+    queryKey: ['live-clip-videos'],
+    queryFn: () => base44.entities.LiveClipVideo.list('sort_order', 20),
+  });
+
+  const createClip = useMutation({
+    mutationFn: (data) => base44.entities.LiveClipVideo.create({ ...data, is_active: true }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['live-clip-videos'] });
+      setNewClip({ title: '', truck_name: '', video_url: '', poster_url: '' });
+      setShowForm(false);
+      toast({ title: 'Video added to Live Now!' });
+    },
+  });
+
+  const deleteClip = useMutation({
+    mutationFn: (id) => base44.entities.LiveClipVideo.delete(id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['live-clip-videos'] }),
+  });
+
+  const toggleClip = useMutation({
+    mutationFn: ({ id, is_active }) => base44.entities.LiveClipVideo.update(id, { is_active }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['live-clip-videos'] }),
+  });
+
+  return (
+    <div className="rounded-2xl p-5" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}>
+      <div className="flex items-center gap-3 mb-5">
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+          style={{ background: 'rgba(255,59,48,0.12)', border: '1px solid rgba(255,59,48,0.25)' }}>
+          <Video className="w-4 h-4" style={{ color: '#ff3b30' }} />
+        </div>
+        <div className="flex-1">
+          <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>Live Now Videos</p>
+          <p className="text-[10px]" style={{ color: '#bacbc0' }}>Shown on homepage when no trucks are live · loops silently</p>
+        </div>
+        <button onClick={() => setShowForm(s => !s)}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
+          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+          <Plus className="w-3 h-3" /> Add
+        </button>
+      </div>
+
+      {/* Add form */}
+      {showForm && (
+        <div className="mb-4 p-4 rounded-xl flex flex-col gap-3" style={{ background: '#0d1517', border: '1px solid rgba(119,255,200,0.15)' }}>
+          <input placeholder="Title (e.g. 14hr brisket slicing 🔥)" value={newClip.title}
+            onChange={e => setNewClip(c => ({ ...c, title: e.target.value }))}
+            className="w-full rounded-xl px-3 py-2 text-sm outline-none"
+            style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
+          <input placeholder="Truck name" value={newClip.truck_name}
+            onChange={e => setNewClip(c => ({ ...c, truck_name: e.target.value }))}
+            className="w-full rounded-xl px-3 py-2 text-sm outline-none"
+            style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
+          <MediaUpload type="video" label="Video File" value={newClip.video_url}
+            onChange={v => setNewClip(c => ({ ...c, video_url: v }))}
+            hint="MP4 recommended · loops muted on homepage" />
+          <MediaUpload type="image" label="Thumbnail (optional)" value={newClip.poster_url}
+            onChange={v => setNewClip(c => ({ ...c, poster_url: v }))}
+            hint="Shows in thumbnail strip and while video loads" />
+          <button
+            onClick={() => createClip.mutate(newClip)}
+            disabled={!newClip.video_url || !newClip.title || createClip.isPending}
+            className="py-2.5 rounded-xl font-bold text-sm"
+            style={newClip.video_url && newClip.title
+              ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }
+              : { background: '#2e3638', color: '#bacbc0', opacity: 0.5 }}>
+            {createClip.isPending ? 'Saving...' : 'Save Video'}
+          </button>
+        </div>
+      )}
+
+      {/* Clip list */}
+      {clips.length === 0 ? (
+        <p className="text-xs text-center py-4" style={{ color: '#bacbc0' }}>No videos yet — add one above</p>
+      ) : (
+        <div className="flex flex-col gap-2">
+          {clips.map(clip => (
+            <div key={clip.id} className="flex items-center gap-3 p-3 rounded-xl"
+              style={{ background: '#0d1517', border: '1px solid rgba(59,74,66,0.2)' }}>
+              {clip.poster_url ? (
+                <img src={clip.poster_url} alt="" className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />
+              ) : (
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 text-xl"
+                  style={{ background: '#192123' }}>🎬</div>
+              )}
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold truncate" style={{ color: '#dff0e8' }}>{clip.title}</p>
+                {clip.truck_name && <p className="text-xs truncate" style={{ color: '#bacbc0' }}>{clip.truck_name}</p>}
+              </div>
+              <button onClick={() => toggleClip.mutate({ id: clip.id, is_active: !clip.is_active })}
+                className="px-2.5 py-1 rounded-full text-[10px] font-bold flex-shrink-0"
+                style={clip.is_active
+                  ? { background: 'rgba(119,255,200,0.12)', color: '#77ffc8' }
+                  : { background: '#2e3638', color: '#bacbc0' }}>
+                {clip.is_active ? 'On' : 'Off'}
+              </button>
+              <button onClick={() => deleteClip.mutate(clip.id)}
+                className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: 'rgba(255,59,48,0.1)' }}>
+                <Trash2 className="w-3 h-3" style={{ color: '#ff3b30' }} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function HomepageCMS() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -222,6 +338,9 @@ export default function HomepageCMS() {
       </div>
 
       <div className="px-5 py-6 flex flex-col gap-4">
+        {/* Live Now videos manager — always shown first */}
+        <LiveVideosManager />
+
         {isLoading ? (
           [1, 2, 3].map(i => <div key={i} className="h-40 rounded-2xl animate-pulse" style={{ background: '#192123' }} />)
         ) : (
