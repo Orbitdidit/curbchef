@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import BottomNav from './BottomNav';
 import CartFloatingButton from '../cart/CartFloatingButton';
+import TopMenuBar from './TopMenuBar';
 
 export default function AppLayout() {
   const { pathname } = useLocation();
@@ -28,6 +29,10 @@ export default function AppLayout() {
 
   return (
     <div className="min-h-screen relative" style={{ background: '#0d1517', maxWidth: '480px', margin: '0 auto' }}>
+      {/* Top-right hamburger menu — floats above page content */}
+      <div className="fixed top-[max(1rem,env(safe-area-inset-top))] right-4 z-30">
+        <TopMenuBar />
+      </div>
       <main
         ref={containerRef}
         onScroll={handleScroll}

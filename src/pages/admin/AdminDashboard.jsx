@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { Settings, Bell, Users, Radio, AlertTriangle, Layout } from 'lucide-react';
+import AdminQuickAddTruck from '@/components/admin/AdminQuickAddTruck';
 
 export default function AdminDashboard() {
   const qc = useQueryClient();
@@ -121,12 +122,20 @@ export default function AdminDashboard() {
           </div>
         </div>
 
+        {/* Admin Quick Add */}
+        {pendingTrucks.length === 0 && (
+          <div className="flex items-center justify-between mb-5">
+            <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>ONBOARD A VENDOR</p>
+            <AdminQuickAddTruck />
+          </div>
+        )}
+
         {/* Pending Approvals */}
         {pendingTrucks.length > 0 && (
           <div className="mb-5">
             <div className="flex items-center justify-between mb-3">
               <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>PENDING APPROVALS</p>
-              <button className="text-xs font-semibold" style={{ color: '#77ffc8' }}>View All</button>
+              <AdminQuickAddTruck />
             </div>
             <div className="flex flex-col gap-3">
               {pendingTrucks.slice(0, 3).map(truck => (

@@ -31,6 +31,7 @@ import UserQuiz from './pages/UserQuiz';
 import Explore from './pages/Explore';
 import Deals from './pages/Deals';
 import Profile from './pages/Profile';
+import VendorPortal from './pages/VendorPortal';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -96,6 +97,7 @@ const AuthenticatedApp = () => {
           <Route path="/admin/homepage" element={<HomepageCMS />} />
 
           <Route path="/onboard-truck" element={<OnboardTruck />} />
+          <Route path="/vendor-portal" element={<VendorPortal />} />
           <Route path="/quiz" element={<UserQuiz />} />
 
           <Route path="*" element={<PageNotFound />} />

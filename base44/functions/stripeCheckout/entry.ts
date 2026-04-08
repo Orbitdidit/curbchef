@@ -22,7 +22,8 @@ Deno.serve(async (req) => {
     return Response.json({ error: 'Vendor payment not set up', truck_not_connected: true }, { status: 422 });
   }
 
-  const grossAmount = subtotal + (tip || 0) + 1.50; // +service fee
+  const taxAmount = Number((subtotal * 0.0825).toFixed(2)); // 8.25% sales tax
+  const grossAmount = Number((subtotal + (tip || 0) + 1.50 + taxAmount).toFixed(2));
   const platformFeeAmount = Math.round(subtotal * PLATFORM_FEE_PERCENT * 100); // in cents
   const grossCents = Math.round(grossAmount * 100);
 
@@ -58,6 +59,16 @@ Deno.serve(async (req) => {
     quantity: 1,
   });
 
+  // Tax line item
+  lineItems.push({
+    price_data: {
+      currency: 'usd',
+      product_data: { name: 'Tax (8.25%)' },
+      unit_amount: Math.round(taxAmount * 100),
+    },
+    quantity: 1,
+  });
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: lineItems,
@@ -89,6 +100,7 @@ Deno.serve(async (req) => {
     customer_name: user.full_name,
     items,
     subtotal,
+    tax: taxAmount,
     tip: tip || 0,
     total: grossAmount,
     gross_amount: grossAmount,

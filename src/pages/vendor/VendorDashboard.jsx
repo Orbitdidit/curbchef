@@ -4,18 +4,18 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { Settings, Video, ShoppingBag, Map, BarChart3, Users, DollarSign, TrendingUp } from 'lucide-react';
 import StripeConnectButton from '@/components/vendor/StripeConnectButton';
+import VendorGate from '@/components/vendor/VendorGate';
 
-export default function VendorDashboard() {
+function VendorDashboardInner({ truck: initialTruck, user }) {
   const qc = useQueryClient();
 
-  const { data: user } = useQuery({ queryKey: ['me'], queryFn: () => base44.auth.me() });
-
-  const { data: trucks = [] } = useQuery({
+  const { data: trucks = [initialTruck] } = useQuery({
     queryKey: ['vendor-truck'],
     queryFn: () => base44.entities.FoodTruck.filter({ owner_email: user?.email }),
     enabled: !!user?.email,
+    initialData: [initialTruck],
   });
-  const truck = trucks[0];
+  const truck = trucks[0] || initialTruck;
 
   const { data: orders = [] } = useQuery({
     queryKey: ['vendor-orders', truck?.id],
@@ -28,7 +28,6 @@ export default function VendorDashboard() {
 
   const updateTruck = useMutation({
     mutationFn: (data) => base44.entities.FoodTruck.update(truck.id, data),
-    // Optimistic: patch local truck data immediately
     onMutate: async (newData) => {
       await qc.cancelQueries({ queryKey: ['vendor-truck'] });
       const prev = qc.getQueryData(['vendor-truck']);
@@ -40,18 +39,6 @@ export default function VendorDashboard() {
     onError: (_err, _vars, ctx) => qc.setQueryData(['vendor-truck'], ctx.prev),
     onSettled: () => qc.invalidateQueries({ queryKey: ['vendor-truck'] }),
   });
-
-  if (!truck) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0d1517' }}>
-        <div className="text-center px-8">
-          <p className="text-5xl mb-4">🚛</p>
-          <p className="font-heading font-bold text-lg mb-2" style={{ color: '#dff0e8' }}>No truck found</p>
-          <p className="text-sm" style={{ color: '#bacbc0' }}>Your account isn't linked to a food truck yet.</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen dot-bg pb-10" style={{ background: '#0d1517' }}>
@@ -275,5 +262,13 @@ export default function VendorDashboard() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function VendorDashboard() {
+  return (
+    <VendorGate>
+      {({ truck, user }) => <VendorDashboardInner truck={truck} user={user} />}
+    </VendorGate>
   );
 }

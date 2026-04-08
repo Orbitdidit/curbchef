@@ -59,7 +59,7 @@ export default function Home() {
         className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-3 sticky top-0 z-20"
         style={{ background: 'rgba(13,21,23,0.93)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(59,74,66,0.12)' }}
       >
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-3 pr-12">
           <div className="flex items-center gap-2">
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center"

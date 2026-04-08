@@ -73,14 +73,18 @@ export default function OnboardTruck() {
 
   const handleSubmit = async () => {
     setSubmitting(true);
+    // Attach logged-in vendor's email so admin can link truck to their account
+    const user = await base44.auth.me().catch(() => null);
+    const vendorEmail = user?.email || form.email;
     await base44.entities.TruckOnboarding.create({
       ...form,
+      email: vendorEmail,
       menu_items: form.menu_items.filter(m => m.name),
       status: 'submitted',
       step_completed: 7,
     });
-    toast({ title: '🎉 Submitted! We\'ll review and approve shortly.' });
-    navigate('/');
+    toast({ title: '🎉 Submitted! We\'ll review and approve shortly.', duration: 4000 });
+    navigate('/vendor-portal');
     setSubmitting(false);
   };
 
