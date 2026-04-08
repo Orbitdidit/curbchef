@@ -80,10 +80,8 @@ export default function LiveCarousel({ trucks }) {
     queryFn: () => base44.entities.LiveClipVideo.filter({ is_active: true }, 'sort_order', 20),
   });
 
-  // Use DB videos if no live trucks; otherwise use live trucks
-  const clips = trucks.length > 0
-    ? trucks.map(t => ({ ...t, video_url: null }))
-    : liveVideos;
+  // Always prefer DB live videos; fall back to live trucks as image cards
+  const clips = liveVideos.length > 0 ? liveVideos : trucks.map(t => ({ ...t, video_url: null }));
 
   if (clips.length === 0) return null;
 

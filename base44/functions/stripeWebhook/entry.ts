@@ -33,9 +33,8 @@ Deno.serve(async (req) => {
 
     // Update truck stats
     if (truck_id) {
-      const trucks = await base44.asServiceRole.entities.FoodTruck.filter({ id: truck_id });
-      if (trucks.length > 0) {
-        const truck = trucks[0];
+      const truck = await base44.asServiceRole.entities.FoodTruck.get(truck_id);
+      if (truck) {
         await base44.asServiceRole.entities.FoodTruck.update(truck_id, {
           total_orders: (truck.total_orders || 0) + 1,
           total_revenue: (truck.total_revenue || 0) + (session.amount_total / 100),
