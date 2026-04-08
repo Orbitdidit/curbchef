@@ -3,16 +3,13 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string",
-      "description": "Truck name"
+      "type": "string"
     },
     "slug": {
-      "type": "string",
-      "description": "URL-friendly name"
+      "type": "string"
     },
     "description": {
-      "type": "string",
-      "description": "Short description"
+      "type": "string"
     },
     "cuisine_type": {
       "type": "string",
@@ -27,24 +24,19 @@
         "vegan",
         "pizza",
         "soul_food"
-      ],
-      "description": "Primary cuisine"
+      ]
     },
     "image_url": {
-      "type": "string",
-      "description": "Main truck/food image"
+      "type": "string"
     },
     "cover_image_url": {
-      "type": "string",
-      "description": "Cover banner image"
+      "type": "string"
     },
     "rating": {
-      "type": "number",
-      "description": "Average rating 1-5"
+      "type": "number"
     },
     "review_count": {
-      "type": "number",
-      "description": "Total reviews"
+      "type": "number"
     },
     "latitude": {
       "type": "number"
@@ -73,8 +65,7 @@
       "default": false
     },
     "live_description": {
-      "type": "string",
-      "description": "What they are cooking live"
+      "type": "string"
     },
     "followers_count": {
       "type": "number",
@@ -89,8 +80,7 @@
       "default": 0
     },
     "owner_email": {
-      "type": "string",
-      "description": "Vendor owner email"
+      "type": "string"
     },
     "is_approved": {
       "type": "boolean",
@@ -100,15 +90,28 @@
       "type": "array",
       "items": {
         "type": "string"
-      },
-      "description": "Tags like spicy, organic, etc."
+      }
     },
     "operating_hours": {
-      "type": "string",
-      "description": "e.g. 11am-9pm"
+      "type": "string"
     },
     "phone": {
       "type": "string"
+    },
+    "stripe_account_id": {
+      "type": "string",
+      "description": "Stripe Express account ID"
+    },
+    "stripe_onboarding_status": {
+      "type": "string",
+      "enum": [
+        "not_connected",
+        "onboarding_started",
+        "charges_enabled",
+        "payouts_enabled"
+      ],
+      "default": "not_connected",
+      "description": "Stripe Connect onboarding status"
     }
   },
   "required": [

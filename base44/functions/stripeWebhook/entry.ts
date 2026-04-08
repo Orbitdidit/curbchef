@@ -1,0 +1,63 @@
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.23';
+import Stripe from 'npm:stripe@14.21.0';
+
+const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'), { apiVersion: '2024-04-10' });
+const webhookSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET');
+
+Deno.serve(async (req) => {
+  const body = await req.text();
+  const signature = req.headers.get('stripe-signature');
+
+  let event;
+  try {
+    event = await stripe.webhooks.constructEventAsync(body, signature, webhookSecret);
+  } catch (err) {
+    return Response.json({ error: `Webhook signature failed: ${err.message}` }, { status: 400 });
+  }
+
+  // Use service role since this is a webhook (no user auth)
+  const base44 = createClientFromRequest(req);
+
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object;
+    const { truck_id, customer_email, pickup_code, pickup_time } = session.metadata || {};
+
+    // Find the pre-created order by session id
+    const orders = await base44.asServiceRole.entities.Order.filter({ stripe_checkout_session_id: session.id });
+    if (orders.length > 0) {
+      await base44.asServiceRole.entities.Order.update(orders[0].id, {
+        status: 'placed',
+        stripe_payment_intent_id: session.payment_intent,
+      });
+    }
+
+    // Update truck stats
+    if (truck_id) {
+      const trucks = await base44.asServiceRole.entities.FoodTruck.filter({ id: truck_id });
+      if (trucks.length > 0) {
+        const truck = trucks[0];
+        await base44.asServiceRole.entities.FoodTruck.update(truck_id, {
+          total_orders: (truck.total_orders || 0) + 1,
+          total_revenue: (truck.total_revenue || 0) + (session.amount_total / 100),
+        });
+      }
+    }
+  }
+
+  if (event.type === 'account.updated') {
+    const account = event.data.object;
+    const status = account.payouts_enabled
+      ? 'payouts_enabled'
+      : account.charges_enabled
+      ? 'charges_enabled'
+      : 'onboarding_started';
+
+    // Find truck by stripe_account_id and update status
+    const trucks = await base44.asServiceRole.entities.FoodTruck.filter({ stripe_account_id: account.id });
+    if (trucks.length > 0) {
+      await base44.asServiceRole.entities.FoodTruck.update(trucks[0].id, { stripe_onboarding_status: status });
+    }
+  }
+
+  return Response.json({ received: true });
+});

@@ -13,9 +13,19 @@ const STEPS = [
 
 export default function OrderDetail() {
   const { id } = useParams();
+  // id might be a Stripe checkout session id (cs_test_...) or a real order id
+  const isStripeSession = id?.startsWith('cs_');
+
   const { data: order } = useQuery({
     queryKey: ['order', id],
-    queryFn: () => base44.entities.Order.get(id),
+    queryFn: async () => {
+      if (isStripeSession) {
+        // Look up order by Stripe checkout session id
+        const orders = await base44.entities.Order.filter({ stripe_checkout_session_id: id });
+        return orders[0] || null;
+      }
+      return base44.entities.Order.get(id);
+    },
     refetchInterval: 10000,
   });
 

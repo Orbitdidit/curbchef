@@ -384,6 +384,12 @@ export default function OnboardTruck() {
               </div>
             </div>
 
+            <div className="p-4 rounded-2xl" style={{ background: '#192123', border: '1px solid rgba(119,255,200,0.12)' }}>
+              <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: '#77ffc8' }}>NEXT STEP AFTER APPROVAL</p>
+              <p className="text-xs" style={{ color: '#bacbc0' }}>
+                Once approved, visit your Vendor Dashboard to connect your Stripe account and start accepting card payments. CurbChef collects a 12% platform fee per order.
+              </p>
+            </div>
             <p className="text-xs text-center px-4" style={{ color: '#bacbc0' }}>
               After submitting, our team will review your application and approve your truck within 24 hours.
             </p>

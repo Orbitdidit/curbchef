@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Settings, Video, ShoppingBag, Map, BarChart3, Users, DollarSign } from 'lucide-react';
+import { Settings, Video, ShoppingBag, Map, BarChart3, Users, DollarSign, TrendingUp } from 'lucide-react';
+import StripeConnectButton from '@/components/vendor/StripeConnectButton';
 
 export default function VendorDashboard() {
   const qc = useQueryClient();
@@ -118,15 +119,45 @@ export default function VendorDashboard() {
           </button>
         )}
 
+        {/* Stripe Connect */}
+        <div className="mb-5">
+          <StripeConnectButton
+            truck={truck}
+            onStatusUpdate={(status) => qc.invalidateQueries({ queryKey: ['vendor-truck'] })}
+          />
+        </div>
+
+        {/* Earnings breakdown — only shown if Stripe connected */}
+        {truck.stripe_onboarding_status === 'payouts_enabled' && (
+          <div className="mb-5 p-4 rounded-2xl" style={{ background: '#192123', border: '1px solid rgba(119,255,200,0.1)' }}>
+            <div className="flex items-center gap-2 mb-3">
+              <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>EARNINGS BREAKDOWN</p>
+              {orders.some(o => o.is_test_payment) && (
+                <span className="text-[9px] font-black px-2 py-0.5 rounded-full" style={{ background: 'rgba(251,191,36,0.15)', color: '#fbbf24' }}>TEST MODE</span>
+              )}
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { label: 'GROSS SALES', value: `$${orders.reduce((s, o) => s + (o.gross_amount || o.total || 0), 0).toFixed(2)}` },
+                { label: 'NET EARNINGS', value: `$${orders.reduce((s, o) => s + (o.vendor_net_amount || o.total || 0), 0).toFixed(2)}`, highlight: true },
+                { label: 'PLATFORM FEES', value: `$${orders.reduce((s, o) => s + (o.platform_fee_amount || 0), 0).toFixed(2)}` },
+                { label: 'PAID ORDERS', value: orders.filter(o => o.stripe_payment_intent_id).length },
+              ].map(({ label, value, highlight }) => (
+                <div key={label} className="p-3 rounded-xl" style={{ background: '#0d1517' }}>
+                  <p className="text-[10px] font-bold tracking-wide mb-1" style={{ color: '#bacbc0' }}>{label}</p>
+                  <p className="font-heading font-black text-base" style={{ color: highlight ? '#77ffc8' : '#dff0e8' }}>{value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Stats */}
         <div className="mb-5">
           <div className="flex items-center justify-between mb-2">
             <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>TODAY'S STATS</p>
-            <span
-              className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-              style={{ background: 'rgba(119,255,200,0.1)', color: '#77ffc8' }}
-            >
-              + REAL-TIME
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: 'rgba(119,255,200,0.1)', color: '#77ffc8' }}>
+              REAL-TIME
             </span>
           </div>
           <div className="grid grid-cols-3 gap-3">

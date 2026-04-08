@@ -196,27 +196,80 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Recent orders */}
+        {/* Payment mode indicator */}
+        {orders.some(o => o.is_test_payment) && (
+          <div className="mt-5 p-3 rounded-2xl flex items-center gap-3"
+            style={{ background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.25)' }}>
+            <span className="text-[10px] font-black px-2 py-1 rounded-full" style={{ background: 'rgba(251,191,36,0.2)', color: '#fbbf24' }}>TEST MODE</span>
+            <p className="text-xs" style={{ color: '#fbbf24' }}>App is running Stripe in test mode. Switch to live keys when ready.</p>
+          </div>
+        )}
+
+        {/* Payment stats */}
         <div className="mt-5">
-          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>RECENT ORDERS</p>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>PLATFORM FEES COLLECTED</p>
+          <div className="grid grid-cols-2 gap-3 mb-5">
+            {[
+              { label: 'Total Platform Revenue', value: `$${orders.reduce((s, o) => s + (o.platform_fee_amount || 0), 0).toFixed(2)}` },
+              { label: 'Paid via Stripe', value: orders.filter(o => o.stripe_payment_intent_id || o.stripe_checkout_session_id).length },
+            ].map(({ label, value }) => (
+              <div key={label} className="p-4 rounded-2xl" style={{ background: '#192123' }}>
+                <p className="text-[10px] font-bold tracking-wide mb-1" style={{ color: '#bacbc0' }}>{label}</p>
+                <p className="font-heading font-black text-2xl" style={{ color: '#77ffc8' }}>{value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Vendor payment status */}
+        <div className="mt-2">
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>VENDOR PAYMENT STATUS</p>
+          <div className="flex flex-col gap-2 mb-5">
+            {trucks.filter(t => t.is_approved).slice(0, 6).map(truck => {
+              const statusColors = {
+                payouts_enabled: '#77ffc8',
+                charges_enabled: '#fbbf24',
+                onboarding_started: '#fd591e',
+                not_connected: '#bacbc0',
+              };
+              const s = truck.stripe_onboarding_status || 'not_connected';
+              return (
+                <div key={truck.id} className="flex items-center gap-3 px-4 py-3 rounded-xl" style={{ background: '#192123' }}>
+                  <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: statusColors[s] }} />
+                  <p className="flex-1 text-sm font-semibold truncate" style={{ color: '#dff0e8' }}>{truck.name}</p>
+                  <span className="text-[10px] font-bold" style={{ color: statusColors[s] }}>
+                    {s.replace(/_/g, ' ').toUpperCase()}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Recent orders */}
+        <div className="mt-2">
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>RECENT PAID ORDERS</p>
           <div className="rounded-2xl overflow-hidden" style={{ background: '#192123' }}>
             {orders.slice(0, 5).map((order, i) => (
-              <div
-                key={order.id}
-                className="flex items-center gap-3 px-4 py-3"
-                style={{ borderBottom: i < 4 ? '1px solid rgba(59,74,66,0.15)' : 'none' }}
-              >
+              <div key={order.id} className="flex items-center gap-3 px-4 py-3"
+                style={{ borderBottom: i < 4 ? '1px solid rgba(59,74,66,0.15)' : 'none' }}>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm truncate" style={{ color: '#dff0e8' }}>{order.truck_name}</p>
+                  <div className="flex items-center gap-1.5">
+                    <p className="font-semibold text-sm truncate" style={{ color: '#dff0e8' }}>{order.truck_name}</p>
+                    {order.is_test_payment && (
+                      <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full flex-shrink-0" style={{ background: 'rgba(251,191,36,0.15)', color: '#fbbf24' }}>TEST</span>
+                    )}
+                  </div>
                   <p className="text-xs" style={{ color: '#bacbc0' }}>{order.customer_email}</p>
                 </div>
                 <div className="text-right">
                   <p className="font-heading font-bold text-sm" style={{ color: '#77ffc8' }}>${order.total?.toFixed(2)}</p>
-                  <span
-                    className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                    style={{ background: order.status === 'placed' ? 'rgba(119,255,200,0.1)' : '#2e3638', color: order.status === 'placed' ? '#77ffc8' : '#bacbc0' }}
-                  >
-                    {order.status}
+                  {order.platform_fee_amount > 0 && (
+                    <p className="text-[10px]" style={{ color: '#bacbc0' }}>fee: ${order.platform_fee_amount?.toFixed(2)}</p>
+                  )}
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                    style={{ background: order.stripe_payment_intent_id ? 'rgba(119,255,200,0.1)' : '#2e3638', color: order.stripe_payment_intent_id ? '#77ffc8' : '#bacbc0' }}>
+                    {order.stripe_payment_intent_id ? 'PAID' : order.status}
                   </span>
                 </div>
               </div>
