@@ -9,7 +9,7 @@ export default function TruckCard({ truck, rank }) {
   const distance = distVal != null ? formatDist(distVal) : '—';
 
   return (
-    <Link to={`/truck/${truck.id}`} className="block group">
+    <Link to={`/truck/${truck.id}`} aria-label={`${truck.name} — ${truck.cuisine_type?.replace('_',' ')} · ${truck.status === 'open' ? 'Open now' : 'Closed'}`} className="block group">
       <div
         className="rounded-3xl overflow-hidden relative"
         style={{

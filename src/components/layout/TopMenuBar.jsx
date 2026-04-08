@@ -32,18 +32,22 @@ export default function TopMenuBar() {
 
   return (
     <>
-      {/* Trigger button */}
+      {/* Trigger button — 44×44 minimum touch target */}
       <button
         onClick={() => setOpen(true)}
-        className="w-9 h-9 rounded-xl flex items-center justify-center transition-all"
+        aria-label="Open menu"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        className="w-11 h-11 rounded-xl flex items-center justify-center transition-all"
         style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}
       >
-        <Menu className="w-4 h-4" style={{ color: '#bacbc0' }} />
+        <Menu className="w-4 h-4" style={{ color: '#bacbc0' }} aria-hidden="true" />
       </button>
 
       {/* Overlay */}
       {open && (
         <div
+          role="presentation"
           className="fixed inset-0 z-[100]"
           style={{ background: 'rgba(8,15,17,0.7)', backdropFilter: 'blur(6px)' }}
           onClick={() => setOpen(false)}
@@ -52,6 +56,9 @@ export default function TopMenuBar() {
 
       {/* Slide-in drawer */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
         className="fixed top-0 right-0 bottom-0 z-[101] flex flex-col"
         style={{
           width: '280px',
@@ -71,22 +78,27 @@ export default function TopMenuBar() {
           </div>
           <button
             onClick={() => setOpen(false)}
-            className="w-8 h-8 rounded-xl flex items-center justify-center"
+            aria-label="Close menu"
+            className="w-11 h-11 rounded-xl flex items-center justify-center"
             style={{ background: '#192123' }}
           >
-            <X className="w-4 h-4" style={{ color: '#bacbc0' }} />
+            <X className="w-4 h-4" style={{ color: '#bacbc0' }} aria-hidden="true" />
           </button>
         </div>
 
         {/* Menu items */}
-        <div className="flex-1 overflow-y-auto py-3">
+        <div className="flex-1 overflow-y-auto py-3" role="menu">
           {menuItems.map(({ icon: Icon, label, to, highlight, admin }) => (
             <Link
               key={label}
               to={to}
+              role="menuitem"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-5 py-3.5 transition-all"
+              className="flex items-center gap-3 px-5 transition-all"
               style={{
+                minHeight: '52px',
+                alignItems: 'center',
+                display: 'flex',
                 background: admin ? 'rgba(253,89,30,0.04)' : highlight ? 'rgba(119,255,200,0.04)' : 'transparent',
                 borderBottom: '1px solid rgba(59,74,66,0.08)',
               }}

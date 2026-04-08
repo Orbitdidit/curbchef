@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Home, Compass, Radio, Tag, User } from 'lucide-react';
+import { useTabNav, TAB_ROOTS } from '@/hooks/useTabNav';
 
 const tabs = [
   { path: '/', icon: Home, label: 'Home' },
@@ -12,15 +13,18 @@ const tabs = [
 
 export default function BottomNav() {
   const { pathname } = useLocation();
+  const { navigateTab } = useTabNav();
 
   return (
-    <div
+    <nav
+      aria-label="Main navigation"
       className="fixed bottom-0 left-0 right-0 z-50 flex justify-center"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <div className="w-full max-w-lg">
         <div
           className="flex items-center justify-around px-2 py-2 mx-3 mb-3 rounded-3xl"
+          role="tablist"
           style={{
             background: 'rgba(21,29,31,0.88)',
             backdropFilter: 'blur(24px)',
@@ -32,7 +36,14 @@ export default function BottomNav() {
 
             if (special) {
               return (
-                <Link key={path} to={path} className="flex flex-col items-center relative -mt-6">
+                <button
+                  key={path}
+                  role="tab"
+                  aria-selected={active}
+                  aria-label={label}
+                  onClick={() => navigateTab(path)}
+                  className="flex flex-col items-center relative -mt-6 min-w-[44px] min-h-[44px] justify-end pb-1"
+                >
                   <div
                     className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
                     style={{
@@ -41,23 +52,27 @@ export default function BottomNav() {
                       animation: 'neon-pulse 2s ease-in-out infinite',
                     }}
                   >
-                    <Icon className="w-6 h-6" style={{ color: '#003826' }} />
+                    <Icon className="w-6 h-6" style={{ color: '#003826' }} aria-hidden="true" />
                   </div>
                   <span className="text-[10px] font-bold mt-1" style={{ color: '#77ffc8' }}>{label}</span>
-                </Link>
+                </button>
               );
             }
 
             return (
-              <Link
+              <button
                 key={path}
-                to={path}
+                role="tab"
+                aria-selected={active}
+                aria-label={label}
+                onClick={() => navigateTab(path)}
                 className="flex flex-col items-center gap-1 flex-1 py-2 min-h-[44px] justify-center"
               >
                 <Icon
                   className="w-5 h-5 transition-colors"
                   style={{ color: active ? '#77ffc8' : '#bacbc0' }}
                   strokeWidth={active ? 2.5 : 1.8}
+                  aria-hidden="true"
                 />
                 <span
                   className="text-[10px] font-medium transition-colors"
@@ -65,11 +80,11 @@ export default function BottomNav() {
                 >
                   {label}
                 </span>
-              </Link>
+              </button>
             );
           })}
         </div>
       </div>
-    </div>
+    </nav>
   );
 }

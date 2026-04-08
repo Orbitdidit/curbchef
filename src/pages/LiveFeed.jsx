@@ -33,15 +33,16 @@ function ClipCard({ clip, liked, saved, onLike, onSave }) {
           <button
             onClick={toggleFollow}
             disabled={isPending}
-            className="w-5 h-5 rounded-full flex items-center justify-center -mt-2.5"
-            style={{ background: isFollowing ? '#77ffc8' : 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}
+            aria-label={isFollowing ? `Unfollow ${clip.truck_name}` : `Follow ${clip.truck_name}`}
+            className="w-7 h-7 rounded-full flex items-center justify-center -mt-2.5"
+            style={{ background: isFollowing ? '#77ffc8' : 'linear-gradient(135deg,#77ffc8,#00e6a7)', minWidth: '28px', minHeight: '28px' }}
           >
-            <span className="text-[8px] font-black" style={{ color: '#003826' }}>{isFollowing ? '✓' : '+'}</span>
+            <span className="text-[9px] font-black" style={{ color: '#003826' }}>{isFollowing ? '✓' : '+'}</span>
           </button>
         </div>
 
         {/* Like */}
-        <button onClick={onLike} className="flex flex-col items-center gap-1">
+        <button onClick={onLike} aria-label={liked ? 'Unlike' : 'Like'} aria-pressed={liked} className="flex flex-col items-center gap-1">
           <div className="w-12 h-12 rounded-full flex items-center justify-center"
             style={{ background: liked ? 'rgba(253,89,30,0.3)' : 'rgba(13,21,23,0.6)', backdropFilter: 'blur(8px)' }}>
             <Heart className="w-6 h-6" style={{ color: liked ? '#fd591e' : 'white' }} fill={liked ? '#fd591e' : 'none'} />
@@ -50,7 +51,7 @@ function ClipCard({ clip, liked, saved, onLike, onSave }) {
         </button>
 
         {/* Share */}
-        <button onClick={handleShare} className="flex flex-col items-center gap-1">
+        <button onClick={handleShare} aria-label="Share" className="flex flex-col items-center gap-1">
           <div className="w-12 h-12 rounded-full flex items-center justify-center"
             style={{ background: 'rgba(13,21,23,0.6)', backdropFilter: 'blur(8px)' }}>
             <Share2 className="w-6 h-6 text-white" />
@@ -59,7 +60,7 @@ function ClipCard({ clip, liked, saved, onLike, onSave }) {
         </button>
 
         {/* Save */}
-        <button onClick={onSave} className="flex flex-col items-center gap-1">
+        <button onClick={onSave} aria-label={saved ? 'Unsave' : 'Save'} aria-pressed={saved} className="flex flex-col items-center gap-1">
           <div className="w-12 h-12 rounded-full flex items-center justify-center"
             style={{ background: saved ? 'rgba(119,255,200,0.2)' : 'rgba(13,21,23,0.6)', backdropFilter: 'blur(8px)' }}>
             <Bookmark className="w-6 h-6" style={{ color: saved ? '#77ffc8' : 'white' }} fill={saved ? '#77ffc8' : 'none'} />
@@ -137,7 +138,21 @@ export default function LiveFeed() {
 
   const likeClip = useMutation({
     mutationFn: (clip) => base44.entities.LiveClip.update(clip.id, { likes: (clip.likes || 0) + 1 }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['clips'] }),
+    // Optimistic: update cache immediately
+    onMutate: async (clip) => {
+      await qc.cancelQueries({ queryKey: ['clips'] });
+      const previous = qc.getQueryData(['clips']);
+      qc.setQueryData(['clips'], (old = []) =>
+        old.map(c => c.id === clip.id ? { ...c, likes: (c.likes || 0) + 1 } : c)
+      );
+      return { previous };
+    },
+    onError: (_err, clip, context) => {
+      // Rollback: undo the like in the UI
+      if (context?.previous) qc.setQueryData(['clips'], context.previous);
+      setLiked(p => { const n = { ...p }; delete n[clip.id]; return n; });
+    },
+    onSettled: () => qc.invalidateQueries({ queryKey: ['clips'] }),
   });
 
   if (clips.length === 0) {
@@ -151,9 +166,9 @@ export default function LiveFeed() {
   return (
     <div className="h-screen overflow-y-scroll snap-y-mandatory no-scrollbar" style={{ background: '#0d1517' }}>
       {/* Close */}
-      <Link to="/" className="fixed top-[max(1rem,env(safe-area-inset-top))] left-4 z-50 w-9 h-9 rounded-xl flex items-center justify-center"
+      <Link to="/" aria-label="Close live feed" className="fixed top-[max(1rem,env(safe-area-inset-top))] left-4 z-50 w-11 h-11 rounded-xl flex items-center justify-center"
         style={{ background: 'rgba(13,21,23,0.7)', backdropFilter: 'blur(10px)' }}>
-        <X className="w-5 h-5 text-white" />
+        <X className="w-5 h-5 text-white" aria-hidden="true" />
       </Link>
 
       {clips.map((clip) => (

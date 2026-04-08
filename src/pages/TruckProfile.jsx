@@ -281,9 +281,10 @@ export default function TruckProfile() {
                       </div>
                       <button
                         onClick={(e) => handleAddToCart(e, item)}
-                        className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center"
+                        aria-label={`Add ${item.name} to cart`}
+                        className="absolute top-2 right-2 w-11 h-11 rounded-full flex items-center justify-center"
                         style={{ background: 'rgba(119,255,200,0.9)' }}>
-                        <Plus className="w-3.5 h-3.5" style={{ color: '#003826' }} />
+                        <Plus className="w-4 h-4" style={{ color: '#003826' }} aria-hidden="true" />
                       </button>
                     </Link>
                   ))}
@@ -321,16 +322,17 @@ export default function TruckProfile() {
                           style={{ background: '#fd591e', color: 'white' }}>HOT</span>
                       )}
                     </div>
-                    <p className="text-xs leading-relaxed line-clamp-2 mb-1.5" style={{ color: '#bacbc0' }}>{item.description}</p>
+                    <p className="text-sm leading-relaxed line-clamp-2 mb-1.5" style={{ color: '#bacbc0' }}>{item.description}</p>
                     <p className="font-heading font-black text-base" style={{ color: '#77ffc8' }}>
                       ${item.price?.toFixed(2)}
                     </p>
                   </div>
                   <button
                     onClick={(e) => handleAddToCart(e, item)}
-                    className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform active:scale-90"
+                    aria-label={`Add ${item.name} to cart`}
+                    className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform active:scale-90"
                     style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', boxShadow: '0 0 12px rgba(119,255,200,0.25)' }}>
-                    <Plus className="w-4 h-4" style={{ color: '#003826' }} />
+                    <Plus className="w-4 h-4" style={{ color: '#003826' }} aria-hidden="true" />
                   </button>
                 </Link>
               ))}

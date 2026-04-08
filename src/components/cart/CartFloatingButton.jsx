@@ -15,6 +15,7 @@ export default function CartFloatingButton() {
   return (
     <Link
       to="/cart"
+      aria-label={`View cart: ${count} item${count !== 1 ? 's' : ''}, $${total.toFixed(2)}`}
       className="fixed bottom-24 left-4 right-4 z-40 flex justify-center"
       style={{ maxWidth: '512px', margin: '0 auto', left: 0, right: 0 }}
     >
@@ -23,6 +24,7 @@ export default function CartFloatingButton() {
         style={{
           background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
           boxShadow: '0 0 24px rgba(119,255,200,0.5)',
+          minHeight: '56px',
         }}
       >
         <div className="flex items-center gap-3">
