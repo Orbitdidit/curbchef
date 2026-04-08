@@ -25,19 +25,15 @@ export default function MediaUpload({ value, onChange, type = 'any', label, hint
 
   const handleFile = async (file) => {
     if (!file) return;
-    const maxMB = type === 'video' ? 100 : 10;
+    const maxMB = type === 'video' ? 500 : 20;
     if (file.size > maxMB * 1024 * 1024) {
-      setError(`Max ${maxMB}MB allowed`);
+      setError(`File too large — max ${maxMB}MB`);
       return;
     }
     setError('');
     setUploading(true);
-    try {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
-      onChange(file_url);
-    } catch (e) {
-      setError('Upload failed — try again');
-    }
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    onChange(file_url);
     setUploading(false);
   };
 
@@ -125,7 +121,6 @@ export default function MediaUpload({ value, onChange, type = 'any', label, hint
         ref={inputRef}
         type="file"
         accept={accept}
-        capture="environment"
         className="hidden"
         onChange={e => handleFile(e.target.files[0])}
       />

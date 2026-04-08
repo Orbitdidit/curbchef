@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Save, Trash2, Video, Image, Star, Truck, Plus } from 'lucide-react';
+import { ChevronLeft, Save, Trash2, Video, Image, Star, Truck, Plus, Pencil, X } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import MediaUpload from '@/components/shared/MediaUpload';
 import AIAssist from '@/components/shared/AIAssist';
@@ -54,6 +54,7 @@ function TextFieldWithAI({ label, value, onChange, multiline, context }) {
 
 function ConfigCard({ item, onSave, onDelete }) {
   const [form, setForm] = useState(item);
+  useEffect(() => { setForm(item); }, [item.id, item.video_url, item.image_url, item.poster_url]);
   const Icon = SECTION_ICONS[item.key] || Truck;
   const isDirty = JSON.stringify(form) !== JSON.stringify(item);
   const isVideo = item.key.includes('video');
@@ -175,6 +176,7 @@ function LiveVideosManager() {
   const { toast } = useToast();
   const [newClip, setNewClip] = useState({ title: '', truck_name: '', video_url: '', poster_url: '' });
   const [showForm, setShowForm] = useState(false);
+  const [editingClip, setEditingClip] = useState(null);
 
   const { data: clips = [] } = useQuery({
     queryKey: ['live-clip-videos'],
@@ -199,6 +201,15 @@ function LiveVideosManager() {
   const toggleClip = useMutation({
     mutationFn: ({ id, is_active }) => base44.entities.LiveClipVideo.update(id, { is_active }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['live-clip-videos'] }),
+  });
+
+  const updateClip = useMutation({
+    mutationFn: ({ id, ...data }) => base44.entities.LiveClipVideo.update(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['live-clip-videos'] });
+      setEditingClip(null);
+      toast({ title: 'Video updated!', duration: 2000 });
+    },
   });
 
   return (
