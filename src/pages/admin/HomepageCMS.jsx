@@ -277,6 +277,11 @@ function LiveVideosManager() {
                 <p className="text-sm font-bold truncate" style={{ color: '#dff0e8' }}>{clip.title}</p>
                 {clip.truck_name && <p className="text-xs truncate" style={{ color: '#bacbc0' }}>{clip.truck_name}</p>}
               </div>
+              <button onClick={() => setEditingClip({ ...clip })}
+                className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: 'rgba(119,255,200,0.1)' }}>
+                <Pencil className="w-3 h-3" style={{ color: '#77ffc8' }} />
+              </button>
               <button onClick={() => toggleClip.mutate({ id: clip.id, is_active: !clip.is_active })}
                 className="px-2.5 py-1 rounded-full text-[10px] font-bold flex-shrink-0"
                 style={clip.is_active
@@ -291,6 +296,42 @@ function LiveVideosManager() {
               </button>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Edit modal */}
+      {editingClip && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)' }}>
+          <div className="w-full max-w-lg rounded-t-3xl p-6 flex flex-col gap-4 max-h-[90vh] overflow-y-auto"
+            style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.4)' }}>
+            <div className="flex items-center justify-between">
+              <p className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>Edit Video</p>
+              <button onClick={() => setEditingClip(null)} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: '#2e3638' }}>
+                <X className="w-4 h-4" style={{ color: '#bacbc0' }} />
+              </button>
+            </div>
+            <input placeholder="Title" value={editingClip.title || ''}
+              onChange={e => setEditingClip(c => ({ ...c, title: e.target.value }))}
+              className="w-full rounded-xl px-3 py-2 text-sm outline-none"
+              style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
+            <input placeholder="Truck name" value={editingClip.truck_name || ''}
+              onChange={e => setEditingClip(c => ({ ...c, truck_name: e.target.value }))}
+              className="w-full rounded-xl px-3 py-2 text-sm outline-none"
+              style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
+            <MediaUpload type="video" label="Video File" value={editingClip.video_url}
+              onChange={v => setEditingClip(c => ({ ...c, video_url: v }))}
+              hint="MP4 recommended" />
+            <MediaUpload type="image" label="Thumbnail" value={editingClip.poster_url}
+              onChange={v => setEditingClip(c => ({ ...c, poster_url: v }))}
+              hint="Shows in thumbnail strip" />
+            <button
+              onClick={() => updateClip.mutate(editingClip)}
+              disabled={updateClip.isPending}
+              className="py-3 rounded-xl font-bold text-sm"
+              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+              {updateClip.isPending ? 'Saving...' : 'Save Changes'}
+            </button>
+          </div>
         </div>
       )}
     </div>
@@ -313,7 +354,7 @@ export default function HomepageCMS() {
         : base44.entities.HomepageConfig.create(item),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['homepage_config'] });
-      toast({ title: 'Saved!', description: 'Homepage updated.' });
+      toast({ title: 'Saved!', description: 'Homepage updated.', duration: 2000 });
     },
   });
 
