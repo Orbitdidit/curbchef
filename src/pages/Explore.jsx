@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { Search, Star, MapPin, Clock, LayoutGrid, List, AlignJustify, SlidersHorizontal } from 'lucide-react';
 import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
+import AssistantFAB from '@/components/assistant/AssistantFAB';
 
 const FILTERS = [
   { id: 'all', label: 'All' },
@@ -195,6 +196,7 @@ export default function Explore() {
 
   return (
     <div className="min-h-screen pb-32" style={{ background: '#0d1517' }}>
+      <AssistantFAB />
       {/* Sticky header */}
       <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-3 sticky top-0 z-20"
         style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(59,74,66,0.12)' }}>

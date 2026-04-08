@@ -14,6 +14,7 @@ import PromoCard from '../components/home/PromoCard';
 import MidVideoBlock from '../components/home/MidVideoBlock';
 import CarouselSection from '../components/home/CarouselSection';
 import CookinSection from '../components/home/CookinSection';
+import AssistantHomeCard from '../components/assistant/AssistantHomeCard';
 
 export default function Home() {
   const [category, setCategory] = useState('all');
@@ -111,6 +112,11 @@ export default function Home() {
 
       {/* ── Hero Promo / Video ── */}
       <HeroPromo />
+
+      {/* ── Assistant Card ── */}
+      <div className="px-5 mt-6">
+        <AssistantHomeCard />
+      </div>
 
       {/* ── Live Now Carousel ── */}
       {liveTrucks.length > 0 && (

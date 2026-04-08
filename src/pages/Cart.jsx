@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { getCart, subscribe, getCartTotal, clearCart } from '@/lib/cartStore';
 import { ChevronLeft, Truck, Clock, CreditCard, Zap, MoreVertical, ExternalLink } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import AssistantNudge from '@/components/assistant/AssistantNudge';
 
 const TIPS = [15, 18, 20];
 
@@ -88,6 +89,9 @@ export default function Cart() {
             Discover Trucks
           </div>
         </Link>
+        <div className="mt-4">
+          <AssistantNudge />
+        </div>
       </div>
     );
   }

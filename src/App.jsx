@@ -7,6 +7,8 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ThemeProvider from '@/lib/ThemeProvider';
+import { AssistantProvider } from '@/components/assistant/AssistantContext';
+import AssistantSheet from '@/components/assistant/AssistantSheet';
 
 import AppLayout from './components/layout/AppLayout';
 import Home from './pages/Home';
@@ -108,10 +110,13 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <QueryClientProvider client={queryClientInstance}>
-          <Router>
-            <AuthenticatedApp />
-          </Router>
-          <Toaster />
+          <AssistantProvider>
+            <Router>
+              <AuthenticatedApp />
+              <AssistantSheet />
+            </Router>
+            <Toaster />
+          </AssistantProvider>
         </QueryClientProvider>
       </AuthProvider>
     </ThemeProvider>

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Package, ChefHat, CheckCircle, QrCode, ChevronRight, Star } from 'lucide-react';
 import { usePullToRefresh } from '@/hooks/usePullToRefresh';
 import PullIndicator from '@/components/layout/PullIndicator';
+import AssistantNudge from '@/components/assistant/AssistantNudge';
 
 const statusConfig = {
   placed: { icon: Package, label: 'Order Placed', color: 'text-chart-4', step: 1 },
@@ -67,6 +68,9 @@ export default function Orders() {
                 Browse Trucks Near You
               </button>
             </Link>
+            <div className="mt-4">
+              <AssistantNudge />
+            </div>
           </div>
 
           {/* Nearby truck suggestions */}
