@@ -28,7 +28,7 @@ export default function VendorPortal() {
           base44.entities.TruckOnboarding.filter({ email: u.email }, '-created_date', 1),
         ]);
         if (trucks?.length) setTruck(trucks[0]);
-        if (applications?.length) setOnboarding(applications[0]);
+        if (applications?.length) setOnboarding(applications[0].data || applications[0]);
       }
       setLoading(false);
     })();
@@ -124,7 +124,7 @@ export default function VendorPortal() {
         )}
 
         {/* === CASE 2: Applied but no approved truck yet === */}
-        {!truck && onboarding && (
+        {!truck && onboarding && onboarding.status !== 'rejected' && (
           <div className="p-5 rounded-3xl mb-6"
             style={{ background: 'rgba(251,191,36,0.06)', border: '1px solid rgba(251,191,36,0.2)' }}>
             <div className="flex items-center gap-3 mb-3">
@@ -143,6 +143,29 @@ export default function VendorPortal() {
               </div>
               <span className="text-[10px] font-bold" style={{ color: '#fbbf24' }}>REVIEWING</span>
             </div>
+          </div>
+        )}
+
+        {/* === CASE 2b: Application rejected === */}
+        {!truck && onboarding && onboarding.status === 'rejected' && (
+          <div className="p-5 rounded-3xl mb-6"
+            style={{ background: 'rgba(255,59,48,0.06)', border: '1px solid rgba(255,59,48,0.2)' }}>
+            <div className="flex items-center gap-3 mb-3">
+              <AlertCircle className="w-6 h-6 flex-shrink-0" style={{ color: '#ff3b30' }} />
+              <div>
+                <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>Application Not Approved</p>
+                <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>For {onboarding.truck_name}</p>
+              </div>
+            </div>
+            <p className="text-xs mb-4" style={{ color: '#bacbc0' }}>
+              Unfortunately your application wasn't approved this time. Please contact support or re-apply with updated information.
+            </p>
+            <Link to="/onboard-truck">
+              <button className="w-full py-3 rounded-full font-heading font-black text-sm"
+                style={{ background: 'rgba(119,255,200,0.1)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.25)' }}>
+                Re-apply
+              </button>
+            </Link>
           </div>
         )}
 

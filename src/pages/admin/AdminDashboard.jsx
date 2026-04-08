@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Settings, Bell, Users, Radio, AlertTriangle, Layout } from 'lucide-react';
+import { Settings, Bell, Users, Radio, AlertTriangle, Layout, ClipboardList } from 'lucide-react';
 import AdminQuickAddTruck from '@/components/admin/AdminQuickAddTruck';
+import ApplicationsPanel from '@/components/admin/ApplicationsPanel';
 
 export default function AdminDashboard() {
   const qc = useQueryClient();
+  const [activeTab, setActiveTab] = useState('overview');
 
   const { data: trucks = [] } = useQuery({
     queryKey: ['admin-trucks'],
@@ -23,6 +25,11 @@ export default function AdminDashboard() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-trucks'] }),
   });
 
+  const { data: pendingApplications = [] } = useQuery({
+    queryKey: ['pending-applications-count'],
+    queryFn: () => base44.entities.TruckOnboarding.filter({ status: 'submitted' }),
+  });
+
   const pendingTrucks = trucks.filter(t => !t.is_approved);
   const totalRevenue = orders.reduce((s, o) => s + (o.total || 0), 0);
   const liveTrucks = trucks.filter(t => t.is_live).length;
@@ -30,22 +37,58 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen dot-bg" style={{ background: '#0d1517' }}>
       {/* Header */}
-      <div className="flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4" style={{ background: '#151d1f' }}>
-        <div>
-          <p className="font-heading font-bold text-base" style={{ color: '#dff0e8' }}>Admin</p>
-          <p className="text-xs" style={{ color: '#bacbc0' }}>Platform Overview</p>
+      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-0" style={{ background: '#151d1f' }}>
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <p className="font-heading font-bold text-base" style={{ color: '#dff0e8' }}>Admin</p>
+            <p className="text-xs" style={{ color: '#bacbc0' }}>Platform Overview</p>
+          </div>
+          <div className="flex gap-2">
+            <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
+              <Bell className="w-4 h-4" style={{ color: '#bacbc0' }} />
+            </button>
+            <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
+              <Settings className="w-4 h-4" style={{ color: '#bacbc0' }} />
+            </button>
+          </div>
         </div>
-        <div className="flex gap-2">
-          <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-            <Bell className="w-4 h-4" style={{ color: '#bacbc0' }} />
-          </button>
-          <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-            <Settings className="w-4 h-4" style={{ color: '#bacbc0' }} />
-          </button>
+
+        {/* Tabs */}
+        <div className="flex gap-2 pb-0">
+          {[
+            { id: 'overview', label: 'Overview' },
+            { id: 'applications', label: 'Applications', badge: pendingApplications.length },
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className="relative flex items-center gap-2 px-5 py-2.5 rounded-t-xl text-sm font-bold transition-all"
+              style={activeTab === tab.id
+                ? { background: '#0d1517', color: '#77ffc8', borderTop: '2px solid #77ffc8' }
+                : { background: 'transparent', color: '#bacbc0' }
+              }
+            >
+              {tab.label}
+              {tab.badge > 0 && (
+                <span className="text-[10px] font-black px-1.5 py-0.5 rounded-full"
+                  style={{ background: '#fbbf24', color: '#0d1517' }}>
+                  {tab.badge}
+                </span>
+              )}
+            </button>
+          ))}
         </div>
       </div>
 
-      <div className="px-5 pt-5 pb-16">
+      {/* Applications Tab */}
+      {activeTab === 'applications' && (
+        <div className="px-5 pt-5 pb-16">
+          <ApplicationsPanel />
+        </div>
+      )}
+
+      {/* Overview Tab */}
+      {activeTab === 'overview' && <div className="px-5 pt-5 pb-16">
         {/* CMS Quick Access */}
         <Link to="/admin/homepage">
           <div
@@ -285,7 +328,7 @@ export default function AdminDashboard() {
             ))}
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }
