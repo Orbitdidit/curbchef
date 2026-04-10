@@ -23,6 +23,9 @@ function VendorProfileInner({ truck }) {
     image_url: truck.image_url || '',
     cover_image_url: truck.cover_image_url || '',
     live_description: truck.live_description || '',
+    delivery_mode: truck.delivery_mode || 'pickup_only',
+    delivery_fee: truck.delivery_fee || 0,
+    delivery_eta: truck.delivery_eta || '25–40',
   });
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
@@ -119,6 +122,35 @@ function VendorProfileInner({ truck }) {
           <label style={labelStyle}>LIVE STATUS MESSAGE</label>
           <input style={inputStyle} value={form.live_description} onChange={e => set('live_description', e.target.value)} placeholder="e.g. 🔥 Cooking brisket plates until sold out" />
         </div>
+
+        {/* Delivery mode */}
+        <div>
+          <label style={labelStyle}>DELIVERY MODE</label>
+          <select style={inputStyle} value={form.delivery_mode} onChange={e => set('delivery_mode', e.target.value)}>
+            <option value="pickup_only">🏪 Pickup Only</option>
+            <option value="pickup_delivery_curbchef">🛵 Pickup + CurbChef Delivery</option>
+            <option value="pickup_delivery_vendor">🚗 Pickup + Vendor Delivery</option>
+            <option value="full_delivery" disabled>📦 Full Delivery (coming soon)</option>
+          </select>
+        </div>
+
+        {/* Delivery details (shown when delivery is enabled) */}
+        {form.delivery_mode !== 'pickup_only' && (
+          <div className="flex gap-3">
+            <div className="flex-1">
+              <label style={labelStyle}>DELIVERY FEE ($)</label>
+              <input type="number" min="0" step="0.5" style={inputStyle} value={form.delivery_fee}
+                onChange={e => set('delivery_fee', parseFloat(e.target.value) || 0)}
+                placeholder="0 = free" />
+            </div>
+            <div className="flex-1">
+              <label style={labelStyle}>ETA (MIN)</label>
+              <input style={inputStyle} value={form.delivery_eta}
+                onChange={e => set('delivery_eta', e.target.value)}
+                placeholder="25–40" />
+            </div>
+          </div>
+        )}
 
         <button onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}
           className="w-full py-4 rounded-full font-heading font-black text-base"

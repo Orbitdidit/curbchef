@@ -99,8 +99,7 @@
       "type": "string"
     },
     "stripe_account_id": {
-      "type": "string",
-      "description": "Stripe Express account ID"
+      "type": "string"
     },
     "stripe_onboarding_status": {
       "type": "string",
@@ -110,8 +109,7 @@
         "charges_enabled",
         "payouts_enabled"
       ],
-      "default": "not_connected",
-      "description": "Stripe Connect onboarding status"
+      "default": "not_connected"
     },
     "vendor_plan": {
       "type": "string",
@@ -121,17 +119,35 @@
         "plus",
         "premium"
       ],
-      "default": "free",
-      "description": "Monthly vendor plan tier"
+      "default": "free"
     },
     "boost_credits": {
       "type": "number",
-      "default": 0,
-      "description": "Available visibility boost credits"
+      "default": 0
     },
     "plan_expires_at": {
+      "type": "string"
+    },
+    "delivery_mode": {
       "type": "string",
-      "description": "ISO date when current paid plan expires"
+      "enum": [
+        "pickup_only",
+        "pickup_delivery_curbchef",
+        "pickup_delivery_vendor",
+        "full_delivery"
+      ],
+      "default": "pickup_only",
+      "description": "Delivery availability mode"
+    },
+    "delivery_fee": {
+      "type": "number",
+      "default": 0,
+      "description": "Delivery fee in dollars (0 = free)"
+    },
+    "delivery_eta": {
+      "type": "string",
+      "default": "25\u201340",
+      "description": "Estimated delivery time range e.g. '25\u201340'"
     }
   },
   "required": [

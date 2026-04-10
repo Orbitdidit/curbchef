@@ -6,6 +6,7 @@ import {
   ChevronLeft, Share2, Star, Clock, Plus, Play,
   UserPlus, UserCheck, MapPin, ShoppingBag, Flame, Radio, Zap
 } from 'lucide-react';
+import DeliveryBadge from '@/components/truck/DeliveryBadge';
 import { useFollow } from '@/hooks/useFollow';
 import { addToCart } from '@/lib/cartStore';
 import { useToast } from '@/components/ui/use-toast';
@@ -159,10 +160,15 @@ export default function TruckProfile() {
 
         {/* Description */}
         {truck.description && (
-          <p className="text-sm leading-relaxed mb-4" style={{ color: '#bacbc0' }}>
+          <p className="text-sm leading-relaxed mb-3" style={{ color: '#bacbc0' }}>
             {truck.description}
           </p>
         )}
+
+        {/* Delivery availability */}
+        <div className="mb-4">
+          <DeliveryBadge truck={truck} />
+        </div>
 
         {/* Stats row */}
         <div className="grid grid-cols-3 gap-2">

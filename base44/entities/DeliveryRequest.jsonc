@@ -1,0 +1,19 @@
+{
+  "name": "DeliveryRequest",
+  "type": "object",
+  "properties": {
+    "truck_id": {
+      "type": "string"
+    },
+    "truck_name": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "truck_id",
+    "truck_name"
+  ]
+}
