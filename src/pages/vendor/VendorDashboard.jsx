@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { Settings, Video, ShoppingBag, Map, BarChart3, Users, DollarSign, ChevronLeft, Pencil, Zap } from 'lucide-react';
+import DashboardDave from '@/components/vendor/DashboardDave';
 import StripeConnectButton from '@/components/vendor/StripeConnectButton';
 import VendorGate from '@/components/vendor/VendorGate';
 
@@ -22,6 +23,12 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
     queryFn: () => base44.entities.Order.filter({ truck_id: truck.id }),
     enabled: !!truck?.id,
     refetchInterval: 15000,
+  });
+
+  const { data: menuItems = [] } = useQuery({
+    queryKey: ['vendor-menu', truck?.id],
+    queryFn: () => base44.entities.MenuItem.filter({ truck_id: truck.id }),
+    enabled: !!truck?.id,
   });
 
   const activeOrders = orders.filter(o => ['placed', 'preparing'].includes(o.status));
@@ -230,6 +237,9 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
             ))}
           </div>
         </div>
+
+        {/* Dashboard Dave */}
+        <DashboardDave truck={truck} menuItems={menuItems} />
 
         {/* Active Orders */}
         <div>
