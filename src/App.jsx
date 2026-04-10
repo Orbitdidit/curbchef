@@ -34,6 +34,7 @@ import Profile from './pages/Profile';
 import VendorPortal from './pages/VendorPortal';
 import VendorPlans from './pages/vendor/VendorPlans';
 import VendorProfile from './pages/vendor/VendorProfile';
+import LaunchDashboard from './pages/admin/LaunchDashboard';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -99,6 +100,7 @@ const AuthenticatedApp = () => {
           {/* Admin */}
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/homepage" element={<HomepageCMS />} />
+          <Route path="/admin/launch" element={<LaunchDashboard />} />
 
           <Route path="/onboard-truck" element={<OnboardTruck />} />
           <Route path="/vendor-portal" element={<VendorPortal />} />

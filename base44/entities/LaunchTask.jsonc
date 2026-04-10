@@ -1,0 +1,63 @@
+{
+  "name": "LaunchTask",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Vendor Flow",
+        "Customer Flow",
+        "Admin",
+        "Payments",
+        "Media",
+        "Mobile",
+        "Legal",
+        "Bug",
+        "Nice to Have",
+        "Infrastructure"
+      ]
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "Critical",
+        "High",
+        "Medium",
+        "Low"
+      ],
+      "default": "Medium"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "Blocked",
+        "Needs Test",
+        "Complete"
+      ],
+      "default": "Not Started"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "affected_page": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "launch_blocker": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "title",
+    "priority",
+    "status"
+  ]
+}

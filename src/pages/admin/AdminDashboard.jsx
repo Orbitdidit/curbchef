@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Settings, Bell, Users, Radio, AlertTriangle, Layout, ChevronLeft } from 'lucide-react';
+import { Settings, Bell, Users, Radio, AlertTriangle, Layout, ChevronLeft, Rocket } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AdminQuickAddTruck from '@/components/admin/AdminQuickAddTruck';
 import ApplicationsPanel from '@/components/admin/ApplicationsPanel';
@@ -92,11 +92,23 @@ export default function AdminDashboard() {
       {/* Overview Tab */}
       {activeTab === 'overview' && <div className="px-5 pt-5 pb-16">
         {/* CMS Quick Access */}
+        <Link to="/admin/launch">
+          <div className="flex items-center gap-3 p-4 rounded-2xl mb-3"
+            style={{ background: 'rgba(253,89,30,0.06)', border: '1px solid rgba(253,89,30,0.2)' }}>
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(253,89,30,0.12)' }}>
+              <Rocket className="w-4 h-4" style={{ color: '#fd591e' }} />
+            </div>
+            <div className="flex-1">
+              <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>Launch Command Center</p>
+              <p className="text-xs" style={{ color: '#bacbc0' }}>Track launch readiness & blockers</p>
+            </div>
+            <span className="text-xs font-bold" style={{ color: '#fd591e' }}>Open →</span>
+          </div>
+        </Link>
         <Link to="/admin/homepage">
           <div
             className="flex items-center gap-3 p-4 rounded-2xl mb-5"
-            style={{ background: 'rgba(119,255,200,0.06)', border: '1px solid rgba(119,255,200,0.2)' }}
-          >
+            style={{ background: 'rgba(119,255,200,0.06)', border: '1px solid rgba(119,255,200,0.2)' }}>
             <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(119,255,200,0.12)' }}>
               <Layout className="w-4 h-4" style={{ color: '#77ffc8' }} />
             </div>

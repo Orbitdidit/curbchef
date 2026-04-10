@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
@@ -63,6 +63,8 @@ export default function MapView() {
   const { lat: userLat, lng: userLng } = useUserLocation();
   const [selected, setSelected] = useState(null);
   const [activeFilter, setActiveFilter] = useState('All');
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  const carouselRef = useRef(null);
   const mapRef = useRef(null);
   const houstonCenter = [29.7604, -95.3698];
 
@@ -83,6 +85,26 @@ export default function MapView() {
   function getDistance(truck) {
     if (!userLat || !truck.latitude) return null;
     return distanceMiles(userLat, userLng, truck.latitude, truck.longitude);
+  }
+
+  // Trucks with coordinates sorted by distance
+  const mappedTrucks = filteredTrucks
+    .filter(t => t.latitude && t.longitude)
+    .sort((a, b) => {
+      const da = getDistance(a) ?? 9999;
+      const db = getDistance(b) ?? 9999;
+      return da - db;
+    });
+
+  function selectTruckAtIndex(i) {
+    const idx = Math.max(0, Math.min(i, mappedTrucks.length - 1));
+    setCarouselIndex(idx);
+    const truck = mappedTrucks[idx];
+    setSelected(truck);
+    // Pan map to truck
+    if (mapRef.current && truck?.latitude) {
+      mapRef.current.setView([truck.latitude, truck.longitude], 15, { animate: true });
+    }
   }
 
   return (
@@ -159,8 +181,7 @@ export default function MapView() {
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         />
 
-        {filteredTrucks.map(truck => {
-          if (!truck.latitude || !truck.longitude) return null;
+        {mappedTrucks.map((truck, i) => {
           const isSelected = selected?.id === truck.id;
           return (
             <Marker
@@ -168,7 +189,14 @@ export default function MapView() {
               position={[truck.latitude, truck.longitude]}
               icon={makeTruckIcon(truck.is_live, isSelected)}
               eventHandlers={{
-                click: () => setSelected(isSelected ? null : truck),
+                click: () => {
+                  const idx = mappedTrucks.findIndex(t => t.id === truck.id);
+                  selectTruckAtIndex(idx);
+                  // scroll carousel
+                  if (carouselRef.current) {
+                    carouselRef.current.scrollTo({ left: idx * (carouselRef.current.offsetWidth + 12), behavior: 'smooth' });
+                  }
+                },
               }}
             />
           );
@@ -177,83 +205,123 @@ export default function MapView() {
         <RecenterButton userLat={userLat} userLng={userLng} />
       </MapContainer>
 
-      {/* ── Selected Truck Card ── */}
-      {selected && (
-        <div
-          className="absolute bottom-6 left-4 right-4 z-[1000]"
-          style={{ animation: 'fadeSlideUp 0.25s ease' }}
-        >
+      {/* ── Truck Carousel ── */}
+      {mappedTrucks.length > 0 && selected && (
+        <div className="absolute bottom-6 left-0 right-0 z-[1000]" style={{ animation: 'fadeSlideUp 0.25s ease' }}>
           <div
-            className="rounded-3xl overflow-hidden"
-            style={{
-              background: 'rgba(13,21,23,0.97)',
-              border: '1px solid rgba(119,255,200,0.18)',
-              backdropFilter: 'blur(24px)',
-              boxShadow: '0 12px 48px rgba(0,0,0,0.7), 0 0 28px rgba(119,255,200,0.07)',
+            ref={carouselRef}
+            className="flex gap-3 px-4 overflow-x-auto no-scrollbar snap-x snap-mandatory"
+            onScroll={e => {
+              const el = e.currentTarget;
+              const idx = Math.round(el.scrollLeft / (el.offsetWidth + 12));
+              if (idx !== carouselIndex && mappedTrucks[idx]) {
+                setCarouselIndex(idx);
+                setSelected(mappedTrucks[idx]);
+                const t = mappedTrucks[idx];
+                if (mapRef.current && t.latitude) {
+                  mapRef.current.setView([t.latitude, t.longitude], 15, { animate: true });
+                }
+              }
             }}
           >
-            {/* Image + info row */}
-            <div className="flex gap-0">
-              <div className="w-32 flex-shrink-0 relative" style={{ height: 110 }}>
-                <img
-                  src={selected.image_url || 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=300'}
-                  alt={selected.name}
-                  className="w-full h-full object-cover"
-                />
-                {selected.is_live && (
-                  <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
-                    style={{ background: 'rgba(255,59,48,0.9)' }}>
-                    <span className="w-1.5 h-1.5 rounded-full bg-white live-dot" />
-                    <span className="text-[9px] font-black text-white">LIVE</span>
-                  </div>
-                )}
-              </div>
-              <div className="flex-1 px-4 pt-3 pb-2 min-w-0">
-                <p className="font-heading font-black text-base leading-tight mb-0.5" style={{ color: '#dff0e8' }}>
-                  {selected.name}
-                </p>
-                <p className="text-xs capitalize mb-2" style={{ color: '#bacbc0' }}>
-                  {selected.cuisine_type?.replace('_', ' ')}
-                </p>
-                {/* Stats row */}
-                <div className="flex gap-2">
-                  {[
-                    { label: 'WAIT TIME', value: '~12 min' },
-                    { label: 'DISTANCE', value: getDistance(selected) != null ? `${getDistance(selected).toFixed(1)} mi` : '—' },
-                    { label: 'STATUS', value: selected.status === 'open' ? 'Open' : 'Closed', color: selected.status === 'open' ? '#77ffc8' : '#bacbc0' },
-                  ].map(({ label, value, color }) => (
-                    <div key={label} className="flex flex-col items-center px-2 py-1.5 rounded-xl flex-1"
-                      style={{ background: '#0d1517' }}>
-                      <p className="text-[8px] font-bold tracking-wider mb-0.5" style={{ color: 'rgba(186,203,192,0.5)' }}>{label}</p>
-                      <p className="font-heading font-black text-xs" style={{ color: color || '#dff0e8' }}>{value}</p>
+            {mappedTrucks.map((truck, i) => {
+              const dist = getDistance(truck);
+              const isActive = i === carouselIndex;
+              return (
+                <div key={truck.id} className="flex-shrink-0 snap-start" style={{ width: 'calc(100vw - 32px)' }}>
+                  <div
+                    className="rounded-3xl overflow-hidden transition-all duration-200"
+                    style={{
+                      background: 'rgba(13,21,23,0.97)',
+                      border: isActive ? '1px solid rgba(119,255,200,0.35)' : '1px solid rgba(59,74,66,0.25)',
+                      backdropFilter: 'blur(24px)',
+                      boxShadow: isActive ? '0 12px 48px rgba(0,0,0,0.7), 0 0 28px rgba(119,255,200,0.1)' : '0 8px 32px rgba(0,0,0,0.5)',
+                      opacity: isActive ? 1 : 0.75,
+                    }}
+                  >
+                    <div className="flex gap-0">
+                      <div className="w-28 flex-shrink-0 relative" style={{ height: 100 }}>
+                        <img
+                          src={truck.image_url || 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=300'}
+                          alt={truck.name}
+                          className="w-full h-full object-cover"
+                        />
+                        {truck.is_live && (
+                          <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
+                            style={{ background: 'rgba(255,59,48,0.9)' }}>
+                            <span className="w-1.5 h-1.5 rounded-full bg-white live-dot" />
+                            <span className="text-[9px] font-black text-white">LIVE</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex-1 px-4 pt-3 pb-2 min-w-0">
+                        <p className="font-heading font-black text-base leading-tight mb-0.5" style={{ color: '#dff0e8' }}>{truck.name}</p>
+                        <p className="text-xs capitalize mb-2" style={{ color: '#bacbc0' }}>{truck.cuisine_type?.replace('_', ' ')}</p>
+                        <div className="flex gap-2">
+                          {[
+                            { label: 'WAIT TIME', value: '~12 min' },
+                            { label: 'DISTANCE', value: dist != null ? `${dist.toFixed(1)} mi` : '—' },
+                            { label: 'STATUS', value: truck.status === 'open' ? 'Open' : 'Closed', color: truck.status === 'open' ? '#77ffc8' : '#bacbc0' },
+                          ].map(({ label, value, color }) => (
+                            <div key={label} className="flex flex-col items-center px-2 py-1.5 rounded-xl flex-1"
+                              style={{ background: '#0d1517' }}>
+                              <p className="text-[8px] font-bold tracking-wider mb-0.5" style={{ color: 'rgba(186,203,192,0.5)' }}>{label}</p>
+                              <p className="font-heading font-black text-xs" style={{ color: color || '#dff0e8' }}>{value}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                  ))}
+                    <div className="flex gap-2.5 px-4 pb-4 pt-2">
+                      <Link to={`/truck/${truck.id}`} className="flex-1">
+                        <button className="w-full py-3 rounded-full font-heading font-black text-sm"
+                          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 16px rgba(119,255,200,0.3)' }}>
+                          View Menu
+                        </button>
+                      </Link>
+                      <button
+                        onClick={() => {
+                          if (truck.latitude) window.open(`https://www.google.com/maps/dir/?api=1&destination=${truck.latitude},${truck.longitude}`, '_blank');
+                        }}
+                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full font-heading font-black text-sm"
+                        style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.3)' }}>
+                        🚶 Directions
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Action buttons */}
-            <div className="flex gap-2.5 px-4 pb-4 pt-2">
-              <Link to={`/truck/${selected.id}`} className="flex-1">
-                <button
-                  className="w-full py-3 rounded-full font-heading font-black text-sm"
-                  style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 16px rgba(119,255,200,0.3)' }}>
-                  View Menu
-                </button>
-              </Link>
-              <button
-                onClick={() => {
-                  if (selected.latitude && navigator.geolocation) {
-                    window.open(`https://www.google.com/maps/dir/?api=1&destination=${selected.latitude},${selected.longitude}`, '_blank');
-                  }
-                }}
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full font-heading font-black text-sm"
-                style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.3)' }}>
-                🚶 Directions
-              </button>
-            </div>
+              );
+            })}
           </div>
+          {/* dot indicators */}
+          {mappedTrucks.length > 1 && (
+            <div className="flex items-center justify-center gap-1.5 mt-2">
+              {mappedTrucks.map((_, i) => (
+                <button key={i}
+                  onClick={() => {
+                    selectTruckAtIndex(i);
+                    if (carouselRef.current) {
+                      carouselRef.current.scrollTo({ left: i * (carouselRef.current.offsetWidth + 12), behavior: 'smooth' });
+                    }
+                  }}
+                  className="rounded-full transition-all duration-300"
+                  style={{ width: i === carouselIndex ? 20 : 6, height: 6, background: i === carouselIndex ? '#77ffc8' : 'rgba(186,203,192,0.3)' }}
+                />
+              ))}
+            </div>
+          )}
         </div>
+      )}
+
+      {/* open carousel on first truck tap */}
+      {mappedTrucks.length > 0 && !selected && (
+        <button
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[1000] px-5 py-3 rounded-full font-heading font-black text-sm"
+          style={{ background: 'rgba(13,21,23,0.92)', border: '1px solid rgba(119,255,200,0.3)', color: '#77ffc8', backdropFilter: 'blur(12px)' }}
+          onClick={() => selectTruckAtIndex(0)}
+        >
+          {openCount} trucks nearby — tap to explore
+        </button>
       )}
 
       <style>{`
