@@ -1,0 +1,40 @@
+{
+  "name": "VendorBoost",
+  "type": "object",
+  "properties": {
+    "truck_id": {
+      "type": "string"
+    },
+    "truck_name": {
+      "type": "string"
+    },
+    "boost_type": {
+      "type": "string",
+      "enum": [
+        "homepage_featured",
+        "explore_top",
+        "live_top",
+        "deals_featured",
+        "promo_boost"
+      ],
+      "description": "Type of visibility boost"
+    },
+    "credits_used": {
+      "type": "number"
+    },
+    "starts_at": {
+      "type": "string"
+    },
+    "ends_at": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "truck_id",
+    "boost_type"
+  ]
+}

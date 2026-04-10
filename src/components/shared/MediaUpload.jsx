@@ -12,7 +12,7 @@ import { Upload, X, Image, Video, RefreshCw } from 'lucide-react';
  *   hint        — spec hint text (dimensions, formats, etc.)
  *   aspectHint  — e.g. '16:9 landscape'
  */
-export default function MediaUpload({ value, onChange, type = 'any', label, hint, aspectHint }) {
+export default function MediaUpload({ value, onChange, type = 'any', label, hint, aspectHint, onThumbnailGenerated }) {
   const inputRef = useRef();
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
@@ -22,6 +22,31 @@ export default function MediaUpload({ value, onChange, type = 'any', label, hint
     : type === 'video'
     ? 'video/mp4,video/webm,video/quicktime'
     : 'image/*,video/mp4,video/webm,image/gif';
+
+  const captureThumbnail = (file) => {
+    return new Promise((resolve) => {
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+      video.muted = true;
+      video.playsInline = true;
+      const url = URL.createObjectURL(file);
+      video.src = url;
+      video.onloadeddata = () => {
+        video.currentTime = 1.5;
+      };
+      video.onseeked = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth || 640;
+        canvas.height = video.videoHeight || 360;
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob((blob) => {
+          URL.revokeObjectURL(url);
+          resolve(blob);
+        }, 'image/jpeg', 0.85);
+      };
+      video.onerror = () => { URL.revokeObjectURL(url); resolve(null); };
+    });
+  };
 
   const handleFile = async (file) => {
     if (!file) return;
@@ -34,6 +59,15 @@ export default function MediaUpload({ value, onChange, type = 'any', label, hint
     setUploading(true);
     const { file_url } = await base44.integrations.Core.UploadFile({ file });
     onChange(file_url);
+    // Auto-generate thumbnail for videos
+    if (file.type.startsWith('video/') && onThumbnailGenerated) {
+      const thumbBlob = await captureThumbnail(file);
+      if (thumbBlob) {
+        const thumbFile = new File([thumbBlob], 'thumb.jpg', { type: 'image/jpeg' });
+        const { file_url: thumb_url } = await base44.integrations.Core.UploadFile({ file: thumbFile });
+        onThumbnailGenerated(thumb_url);
+      }
+    }
     setUploading(false);
   };
 

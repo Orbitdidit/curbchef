@@ -112,6 +112,26 @@
       ],
       "default": "not_connected",
       "description": "Stripe Connect onboarding status"
+    },
+    "vendor_plan": {
+      "type": "string",
+      "enum": [
+        "free",
+        "standard",
+        "plus",
+        "premium"
+      ],
+      "default": "free",
+      "description": "Monthly vendor plan tier"
+    },
+    "boost_credits": {
+      "type": "number",
+      "default": 0,
+      "description": "Available visibility boost credits"
+    },
+    "plan_expires_at": {
+      "type": "string",
+      "description": "ISO date when current paid plan expires"
     }
   },
   "required": [

@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Settings, Bell, Users, Radio, AlertTriangle, Layout, ClipboardList } from 'lucide-react';
+import { Settings, Bell, Users, Radio, AlertTriangle, Layout, ChevronLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import AdminQuickAddTruck from '@/components/admin/AdminQuickAddTruck';
 import ApplicationsPanel from '@/components/admin/ApplicationsPanel';
 
 export default function AdminDashboard() {
   const qc = useQueryClient();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
 
   const { data: trucks = [] } = useQuery({
@@ -39,18 +41,18 @@ export default function AdminDashboard() {
       {/* Header */}
       <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-0" style={{ background: '#151d1f' }}>
         <div className="flex items-center justify-between mb-4">
-          <div>
-            <p className="font-heading font-bold text-base" style={{ color: '#dff0e8' }}>Admin</p>
-            <p className="text-xs" style={{ color: '#bacbc0' }}>Platform Overview</p>
-          </div>
-          <div className="flex gap-2">
-            <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-              <Bell className="w-4 h-4" style={{ color: '#bacbc0' }} />
+          <div className="flex items-center gap-3">
+            <button onClick={() => navigate('/')} className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#192123' }}>
+              <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
             </button>
-            <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-              <Settings className="w-4 h-4" style={{ color: '#bacbc0' }} />
-            </button>
+            <div>
+              <p className="font-heading font-bold text-base" style={{ color: '#dff0e8' }}>Admin</p>
+              <p className="text-xs" style={{ color: '#bacbc0' }}>Platform Overview</p>
+            </div>
           </div>
+          <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
+            <Bell className="w-4 h-4" style={{ color: '#bacbc0' }} />
+          </button>
         </div>
 
         {/* Tabs */}

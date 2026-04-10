@@ -243,10 +243,11 @@ function LiveVideosManager() {
             style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
           <MediaUpload type="video" label="Video File" value={newClip.video_url}
             onChange={v => setNewClip(c => ({ ...c, video_url: v }))}
-            hint="MP4 recommended · loops muted on homepage" />
-          <MediaUpload type="image" label="Thumbnail (optional)" value={newClip.poster_url}
+            onThumbnailGenerated={t => setNewClip(c => ({ ...c, poster_url: c.poster_url || t }))}
+            hint="MP4 recommended · thumbnail auto-generated" />
+          <MediaUpload type="image" label="Thumbnail (auto-generated or replace)" value={newClip.poster_url}
             onChange={v => setNewClip(c => ({ ...c, poster_url: v }))}
-            hint="Shows in thumbnail strip and while video loads" />
+            hint="Auto-captured from video · tap to replace" />
           <button
             onClick={() => createClip.mutate(newClip)}
             disabled={!newClip.video_url || !newClip.title || createClip.isPending}
@@ -320,10 +321,11 @@ function LiveVideosManager() {
               style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
             <MediaUpload type="video" label="Video File" value={editingClip.video_url}
               onChange={v => setEditingClip(c => ({ ...c, video_url: v }))}
-              hint="MP4 recommended" />
-            <MediaUpload type="image" label="Thumbnail" value={editingClip.poster_url}
+              onThumbnailGenerated={t => setEditingClip(c => ({ ...c, poster_url: c.poster_url || t }))}
+              hint="MP4 recommended · thumbnail auto-generated" />
+            <MediaUpload type="image" label="Thumbnail (auto-generated or replace)" value={editingClip.poster_url}
               onChange={v => setEditingClip(c => ({ ...c, poster_url: v }))}
-              hint="Shows in thumbnail strip" />
+              hint="Auto-captured from video · tap to replace" />
             <button
               onClick={() => updateClip.mutate(editingClip)}
               disabled={updateClip.isPending}

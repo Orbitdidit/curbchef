@@ -32,6 +32,8 @@ import Explore from './pages/Explore';
 import Deals from './pages/Deals';
 import Profile from './pages/Profile';
 import VendorPortal from './pages/VendorPortal';
+import VendorPlans from './pages/vendor/VendorPlans';
+import VendorProfile from './pages/vendor/VendorProfile';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -91,6 +93,8 @@ const AuthenticatedApp = () => {
           <Route path="/vendor" element={<VendorDashboard />} />
           <Route path="/vendor/orders" element={<VendorOrders />} />
           <Route path="/vendor/menu" element={<VendorMenu />} />
+          <Route path="/vendor/plans" element={<VendorPlans />} />
+          <Route path="/vendor/profile" element={<VendorProfile />} />
 
           {/* Admin */}
           <Route path="/admin" element={<AdminDashboard />} />

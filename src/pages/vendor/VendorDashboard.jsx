@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Settings, Video, ShoppingBag, Map, BarChart3, Users, DollarSign, TrendingUp } from 'lucide-react';
+import { Settings, Video, ShoppingBag, Map, BarChart3, Users, DollarSign, ChevronLeft, Pencil, Zap } from 'lucide-react';
 import StripeConnectButton from '@/components/vendor/StripeConnectButton';
 import VendorGate from '@/components/vendor/VendorGate';
 
@@ -44,16 +44,19 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
     <div className="min-h-screen dot-bg pb-10" style={{ background: '#0d1517' }}>
       {/* Header */}
       <div
-        className="flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4"
+        className="flex items-center gap-3 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4"
         style={{ background: '#151d1f' }}
       >
-        <div>
+        <Link to="/vendor-portal" className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#192123' }}>
+          <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
+        </Link>
+        <div className="flex-1">
           <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>COMMAND CENTER</p>
           <p className="text-xs" style={{ color: '#bacbc0' }}>Operator #{user?.id?.slice(-4).toUpperCase()}</p>
         </div>
-        <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-          <Settings className="w-4 h-4" style={{ color: '#bacbc0' }} />
-        </button>
+        <Link to="/vendor/profile" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
+          <Pencil className="w-4 h-4" style={{ color: '#bacbc0' }} />
+        </Link>
       </div>
 
       <div className="px-5 pt-5">
@@ -105,6 +108,21 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
             <span className="text-xs font-semibold opacity-70 ml-1">Connect with 1.2K nearby foodies</span>
           </button>
         )}
+
+        {/* Plan badge */}
+        <div className="flex items-center gap-2 mb-3">
+          <Link to="/vendor/plans" className="flex-1 flex items-center justify-between px-4 py-3 rounded-2xl"
+            style={{ background: 'rgba(119,255,200,0.06)', border: '1px solid rgba(119,255,200,0.15)' }}>
+            <div>
+              <p className="text-[10px] font-bold tracking-widest" style={{ color: '#bacbc0' }}>YOUR PLAN</p>
+              <p className="font-heading font-black text-sm capitalize" style={{ color: '#77ffc8' }}>{truck.vendor_plan || 'Free'}</p>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Zap className="w-3.5 h-3.5" style={{ color: '#77ffc8' }} />
+              <span className="font-bold text-sm" style={{ color: '#77ffc8' }}>{truck.boost_credits || 0} credits</span>
+            </div>
+          </Link>
+        </div>
 
         {/* Stripe Connect */}
         <div className="mb-5">
@@ -191,9 +209,9 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
           <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>QUICK ACTIONS</p>
           <div className="grid grid-cols-3 gap-3">
             {[
-              { label: 'Update Menu', icon: ShoppingBag, to: '/vendor/menu' },
-              { label: 'Post Clip', icon: Video, to: '/live' },
-              { label: 'View Map', icon: Map, to: '/map' },
+              { label: 'Edit Menu', icon: ShoppingBag, to: '/vendor/menu' },
+              { label: 'Edit Profile', icon: Pencil, to: '/vendor/profile' },
+              { label: 'Plans & Boosts', icon: Zap, to: '/vendor/plans' },
             ].map(({ label, icon: Icon, to }) => (
               <Link
                 key={label}
