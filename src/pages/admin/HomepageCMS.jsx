@@ -243,11 +243,14 @@ function LiveVideosManager() {
             style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
           <MediaUpload type="video" label="Video File" value={newClip.video_url}
             onChange={v => setNewClip(c => ({ ...c, video_url: v }))}
-            onThumbnailGenerated={t => setNewClip(c => ({ ...c, poster_url: c.poster_url || t }))}
-            hint="MP4 recommended · thumbnail auto-generated" />
-          <MediaUpload type="image" label="Thumbnail (auto-generated or replace)" value={newClip.poster_url}
-            onChange={v => setNewClip(c => ({ ...c, poster_url: v }))}
-            hint="Auto-captured from video · tap to replace" />
+            onThumbnailGenerated={t => setNewClip(c => ({ ...c, poster_url: t }))}
+            hint="MP4 recommended · thumbnail auto-generated from video" />
+          {newClip.poster_url && (
+            <div className="flex items-center gap-2 p-2 rounded-xl" style={{ background: '#0d1517' }}>
+              <img src={newClip.poster_url} alt="thumb" className="w-12 h-12 rounded-lg object-cover" />
+              <p className="text-xs" style={{ color: '#77ffc8' }}>✓ Thumbnail auto-generated</p>
+            </div>
+          )}
           <button
             onClick={() => createClip.mutate(newClip)}
             disabled={!newClip.video_url || !newClip.title || createClip.isPending}
@@ -321,11 +324,14 @@ function LiveVideosManager() {
               style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
             <MediaUpload type="video" label="Video File" value={editingClip.video_url}
               onChange={v => setEditingClip(c => ({ ...c, video_url: v }))}
-              onThumbnailGenerated={t => setEditingClip(c => ({ ...c, poster_url: c.poster_url || t }))}
-              hint="MP4 recommended · thumbnail auto-generated" />
-            <MediaUpload type="image" label="Thumbnail (auto-generated or replace)" value={editingClip.poster_url}
-              onChange={v => setEditingClip(c => ({ ...c, poster_url: v }))}
-              hint="Auto-captured from video · tap to replace" />
+              onThumbnailGenerated={t => setEditingClip(c => ({ ...c, poster_url: t }))}
+              hint="MP4 recommended · thumbnail auto-generated from video" />
+            {editingClip.poster_url && (
+              <div className="flex items-center gap-2 p-2 rounded-xl" style={{ background: '#0d1517' }}>
+                <img src={editingClip.poster_url} alt="thumb" className="w-12 h-12 rounded-lg object-cover" />
+                <p className="text-xs" style={{ color: '#77ffc8' }}>✓ Thumbnail auto-generated</p>
+              </div>
+            )}
             <button
               onClick={() => updateClip.mutate(editingClip)}
               disabled={updateClip.isPending}

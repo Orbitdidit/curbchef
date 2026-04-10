@@ -108,14 +108,15 @@ export default function LiveCarousel({ trucks }) {
     <div>
       {/* Horizontal card carousel */}
       <div ref={scrollRef}
-        className="flex gap-3 px-5 overflow-x-auto no-scrollbar snap-x snap-mandatory"
+        className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory"
+        style={{ paddingLeft: '20px', paddingRight: '20px', scrollPaddingLeft: '20px' }}
         onScroll={e => {
           const el = e.currentTarget;
           const i = Math.round(el.scrollLeft / (el.offsetWidth + 12));
           if (i !== active) setActive(i);
         }}>
         {clips.map((clip, i) => (
-          <div key={clip.id} className="flex-shrink-0 snap-start" style={{ width: clips.length === 1 ? '100%' : 'calc(100% - 40px)' }}>
+          <div key={clip.id} className="flex-shrink-0 snap-center" style={{ width: clips.length === 1 ? 'calc(100%)' : 'calc(100% - 48px)' }}>
             <LiveCard clip={clip} isActive={i === active} isTruckCard={clip._isTruckCard} />
           </div>
         ))}
