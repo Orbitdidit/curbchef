@@ -6,6 +6,11 @@ import { usePullToRefresh } from '@/hooks/usePullToRefresh';
 import PullIndicator from '@/components/layout/PullIndicator';
 import { MapPin, Search, Flame, ChevronRight } from 'lucide-react';
 import TruckCard from '../components/home/TruckCard';
+import DailyPulse from '../components/home/DailyPulse';
+import FollowedTrucksRail from '../components/home/FollowedTrucksRail';
+import QuickReorder from '../components/home/QuickReorder';
+import FoodMoodRail from '../components/home/FoodMoodRail';
+import ActivityFeed from '../components/home/ActivityFeed';
 import LiveCarousel from '../components/home/LiveCarousel';
 import HeroStrip from '../components/home/HeroStrip';
 import CategoryRow from '../components/home/CategoryRow';
@@ -59,7 +64,7 @@ export default function Home() {
         className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-3 sticky top-0 z-20"
         style={{ background: 'rgba(13,21,23,0.93)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(59,74,66,0.12)' }}
       >
-        <div className="flex items-center justify-between mb-3 pr-12">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center"
@@ -84,28 +89,22 @@ export default function Home() {
             </Link>
           </div>
         </div>
-
-        {/* Welcome greeting */}
-        {firstName && (
-          <div className="mb-2">
-            <p className="font-heading font-black text-lg leading-tight" style={{ color: '#dff0e8' }}>
-              Welcome back, {firstName} 👋
-            </p>
-            <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>Catch what's cooking near you right now</p>
-          </div>
-        )}
-
-        {/* Search bar */}
-        <Link to="/search">
-          <div
-            className="flex items-center gap-3 px-4 py-2.5 rounded-2xl"
-            style={{ background: '#080f11', border: '1px solid rgba(59,74,66,0.25)' }}
-          >
-            <Search className="w-4 h-4 flex-shrink-0" style={{ color: '#bacbc0' }} />
-            <span className="text-sm" style={{ color: 'rgba(186,203,192,0.55)' }}>Tacos, brisket, ramen...</span>
-          </div>
-        </Link>
       </div>
+
+      {/* ── Daily Pulse (greeting, streak, points, vibe) ── */}
+      <DailyPulse user={user} trucks={trucks} />
+
+      {/* ── Quick Access Grid ── */}
+      <FoodMoodRail />
+
+      {/* ── Followed Trucks Rail ── */}
+      <FollowedTrucksRail user={user} trucks={trucks} />
+
+      {/* ── Quick Reorder ── */}
+      <QuickReorder user={user} />
+
+      {/* ── Activity Feed ── */}
+      <ActivityFeed trucks={trucks} />
 
       {/* ── Hero Stats Strip ── */}
       <HeroStrip liveTrucks={liveTrucks} openTrucks={openTrucks} trucks={trucks} />
