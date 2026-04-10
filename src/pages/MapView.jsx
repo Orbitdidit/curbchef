@@ -183,79 +183,76 @@ export default function MapView() {
           className="absolute bottom-6 left-4 right-4 z-[1000]"
           style={{ animation: 'fadeSlideUp 0.25s ease' }}
         >
-          <Link to={`/truck/${selected.id}`}>
-            <div
-              className="rounded-3xl overflow-hidden flex gap-0"
-              style={{
-                background: 'rgba(13,21,23,0.96)',
-                border: '1px solid rgba(119,255,200,0.2)',
-                backdropFilter: 'blur(20px)',
-                boxShadow: '0 8px 40px rgba(0,0,0,0.6), 0 0 24px rgba(119,255,200,0.08)',
-              }}
-            >
-              {/* Image */}
-              <div className="w-28 flex-shrink-0 relative" style={{ height: '100px' }}>
+          <div
+            className="rounded-3xl overflow-hidden"
+            style={{
+              background: 'rgba(13,21,23,0.97)',
+              border: '1px solid rgba(119,255,200,0.18)',
+              backdropFilter: 'blur(24px)',
+              boxShadow: '0 12px 48px rgba(0,0,0,0.7), 0 0 28px rgba(119,255,200,0.07)',
+            }}
+          >
+            {/* Image + info row */}
+            <div className="flex gap-0">
+              <div className="w-32 flex-shrink-0 relative" style={{ height: 110 }}>
                 <img
                   src={selected.image_url || 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=300'}
                   alt={selected.name}
                   className="w-full h-full object-cover"
                 />
                 {selected.is_live && (
-                  <div
-                    className="absolute top-2 left-2 flex items-center gap-1 px-1.5 py-0.5 rounded-full"
-                    style={{ background: 'rgba(255,59,48,0.9)' }}
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                  <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
+                    style={{ background: 'rgba(255,59,48,0.9)' }}>
+                    <span className="w-1.5 h-1.5 rounded-full bg-white live-dot" />
                     <span className="text-[9px] font-black text-white">LIVE</span>
                   </div>
                 )}
               </div>
-
-              {/* Info */}
-              <div className="flex-1 px-4 py-3 flex flex-col justify-between min-w-0">
-                <div>
-                  <p className="font-heading font-black text-base leading-tight truncate" style={{ color: '#dff0e8' }}>
-                    {selected.name}
-                  </p>
-                  <p className="text-xs mt-0.5 capitalize" style={{ color: '#bacbc0' }}>
-                    {selected.cuisine_type?.replace('_', ' ')}
-                  </p>
-                </div>
-                <div className="flex items-center gap-3 mt-2">
-                  <div className="flex items-center gap-1">
-                    <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                    <span className="text-xs font-bold" style={{ color: '#dff0e8' }}>{selected.rating?.toFixed(1) || '4.8'}</span>
-                  </div>
-                  {getDistance(selected) != null && (
-                    <div className="flex items-center gap-1">
-                      <Navigation className="w-3 h-3" style={{ color: '#77ffc8' }} />
-                      <span className="text-xs" style={{ color: '#bacbc0' }}>{formatDist(getDistance(selected))} away</span>
+              <div className="flex-1 px-4 pt-3 pb-2 min-w-0">
+                <p className="font-heading font-black text-base leading-tight mb-0.5" style={{ color: '#dff0e8' }}>
+                  {selected.name}
+                </p>
+                <p className="text-xs capitalize mb-2" style={{ color: '#bacbc0' }}>
+                  {selected.cuisine_type?.replace('_', ' ')}
+                </p>
+                {/* Stats row */}
+                <div className="flex gap-2">
+                  {[
+                    { label: 'WAIT TIME', value: '~12 min' },
+                    { label: 'DISTANCE', value: getDistance(selected) != null ? `${getDistance(selected).toFixed(1)} mi` : '—' },
+                    { label: 'STATUS', value: selected.status === 'open' ? 'Open' : 'Closed', color: selected.status === 'open' ? '#77ffc8' : '#bacbc0' },
+                  ].map(({ label, value, color }) => (
+                    <div key={label} className="flex flex-col items-center px-2 py-1.5 rounded-xl flex-1"
+                      style={{ background: '#0d1517' }}>
+                      <p className="text-[8px] font-bold tracking-wider mb-0.5" style={{ color: 'rgba(186,203,192,0.5)' }}>{label}</p>
+                      <p className="font-heading font-black text-xs" style={{ color: color || '#dff0e8' }}>{value}</p>
                     </div>
-                  )}
-                  <span
-                    className="text-[10px] font-black px-2 py-0.5 rounded-full ml-auto"
-                    style={
-                      selected.status === 'open'
-                        ? { background: 'rgba(119,255,200,0.12)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.3)' }
-                        : { background: '#2e3638', color: '#bacbc0' }
-                    }
-                  >
-                    {selected.status === 'open' ? 'OPEN' : 'CLOSED'}
-                  </span>
-                </div>
-              </div>
-
-              {/* CTA arrow */}
-              <div className="flex items-center pr-4">
-                <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}
-                >
-                  <ChevronLeft className="w-4 h-4 rotate-180" style={{ color: '#003826' }} />
+                  ))}
                 </div>
               </div>
             </div>
-          </Link>
+
+            {/* Action buttons */}
+            <div className="flex gap-2.5 px-4 pb-4 pt-2">
+              <Link to={`/truck/${selected.id}`} className="flex-1">
+                <button
+                  className="w-full py-3 rounded-full font-heading font-black text-sm"
+                  style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 16px rgba(119,255,200,0.3)' }}>
+                  View Menu
+                </button>
+              </Link>
+              <button
+                onClick={() => {
+                  if (selected.latitude && navigator.geolocation) {
+                    window.open(`https://www.google.com/maps/dir/?api=1&destination=${selected.latitude},${selected.longitude}`, '_blank');
+                  }
+                }}
+                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full font-heading font-black text-sm"
+                style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.3)' }}>
+                🚶 Directions
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
