@@ -1,8 +1,20 @@
 // Simple cart state using a module-level store with listeners
-let cart = { items: [], truckId: null, truckName: '' };
+const STORAGE_KEY = 'curbchef_cart';
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { items: [], truckId: null, truckName: '' }; }
+  catch { return { items: [], truckId: null, truckName: '' }; }
+}
+
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); } catch {}
+}
+
+let cart = load();
 let listeners = new Set();
 
 function notify() {
+  save();
   listeners.forEach(fn => fn({ ...cart }));
 }
 
@@ -48,7 +60,8 @@ export function updateQuantity(itemId, quantity) {
 
 export function clearCart() {
   cart = { items: [], truckId: null, truckName: '' };
-  notify();
+  try { localStorage.removeItem(STORAGE_KEY); } catch {}
+  listeners.forEach(fn => fn({ ...cart }));
 }
 
 export function getCartTotal() {
