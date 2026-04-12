@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
@@ -6,12 +6,35 @@ import { Settings, Bell, Users, Radio, AlertTriangle, Layout, ChevronLeft, Rocke
 import { useNavigate } from 'react-router-dom';
 import AdminQuickAddTruck from '@/components/admin/AdminQuickAddTruck';
 import ApplicationsPanel from '@/components/admin/ApplicationsPanel';
+import { useToast } from '@/components/ui/use-toast';
+
+// 🔒 ADD YOUR ADMIN EMAIL(S) HERE
+const ADMIN_EMAILS = ['orbitdidit@gmail.com'];
 
 export default function AdminDashboard() {
   const qc = useQueryClient();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('overview');
 
+  const { data: adminUser } = useQuery({ queryKey: ['admin-me'], queryFn: () => base44.auth.me() });
+
+  useEffect(() => {
+    if (adminUser && !ADMIN_EMAILS.includes(adminUser.email)) {
+      toast({ title: 'Unauthorized', description: 'Admin access required.', variant: 'destructive' });
+      navigate('/');
+    }
+  }, [adminUser]);
+
+  if (!adminUser || !ADMIN_EMAILS.includes(adminUser.email)) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0d1517' }}>
+        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
+      </div>
+    );
+  }
+
+  const { data: trucks = [] } = useQuery({
   const { data: trucks = [] } = useQuery({
     queryKey: ['admin-trucks'],
     queryFn: () => base44.entities.FoodTruck.list(),
