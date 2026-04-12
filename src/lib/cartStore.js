@@ -1,20 +1,26 @@
-// Simple cart state using a module-level store with listeners
-const STORAGE_KEY = 'curbchef_cart';
+// Persistent cart state — survives page refresh via localStorage
+const CART_KEY = 'curbchef_cart';
+const EMPTY = { items: [], truckId: null, truckName: '' };
 
-function load() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { items: [], truckId: null, truckName: '' }; }
-  catch { return { items: [], truckId: null, truckName: '' }; }
+function loadCart() {
+  try {
+    const raw = localStorage.getItem(CART_KEY);
+    if (!raw) return { ...EMPTY };
+    const parsed = JSON.parse(raw);
+    if (!parsed?.items?.length) return { ...EMPTY };
+    return parsed;
+  } catch { return { ...EMPTY }; }
 }
 
-function save() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); } catch {}
-}
-
-let cart = load();
+let cart = loadCart();
 let listeners = new Set();
 
+function persist() {
+  try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch {}
+}
+
 function notify() {
-  save();
+  persist();
   listeners.forEach(fn => fn({ ...cart }));
 }
 
@@ -60,8 +66,8 @@ export function updateQuantity(itemId, quantity) {
 
 export function clearCart() {
   cart = { items: [], truckId: null, truckName: '' };
-  try { localStorage.removeItem(STORAGE_KEY); } catch {}
-  listeners.forEach(fn => fn({ ...cart }));
+  try { localStorage.removeItem(CART_KEY); } catch {}
+  notify();
 }
 
 export function getCartTotal() {
