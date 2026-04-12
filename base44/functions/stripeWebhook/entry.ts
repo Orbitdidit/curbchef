@@ -41,6 +41,37 @@ Deno.serve(async (req) => {
         });
       }
     }
+
+    // Award loyalty points to customer
+    if (customer_email) {
+      try {
+        const orderTotal = session.amount_total / 100;
+        const pointsEarned = Math.round(orderTotal * 10);
+        const rewards = await base44.asServiceRole.entities.Reward.filter({ user_email: customer_email });
+
+        if (rewards.length > 0) {
+          const r = rewards[0];
+          const newPoints = (r.points || 0) + pointsEarned;
+          const newOrders = (r.orders_count || 0) + 1;
+          const newTier = newPoints >= 2500 ? 'legend' : newPoints >= 1000 ? 'vip' : newPoints >= 500 ? 'regular' : 'starter';
+          await base44.asServiceRole.entities.Reward.update(r.id, {
+            points: newPoints,
+            orders_count: newOrders,
+            tier: newTier,
+          });
+        } else {
+          const newTier = pointsEarned >= 500 ? 'regular' : 'starter';
+          await base44.asServiceRole.entities.Reward.create({
+            user_email: customer_email,
+            points: pointsEarned,
+            orders_count: 1,
+            tier: newTier,
+          });
+        }
+      } catch (e) {
+        console.error('Rewards update failed:', e);
+      }
+    }
   }
 
   if (event.type === 'account.updated') {
