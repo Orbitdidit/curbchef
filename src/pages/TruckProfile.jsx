@@ -10,6 +10,7 @@ import DeliveryBadge from '@/components/truck/DeliveryBadge';
 import { useFollow } from '@/hooks/useFollow';
 import { addToCart } from '@/lib/cartStore';
 import { useToast } from '@/components/ui/use-toast';
+import { useUserLocation, distanceMiles } from '@/lib/geoUtils';
 
 const TABS = ['Menu', 'Specials', 'Clips'];
 
@@ -26,6 +27,10 @@ export default function TruckProfile() {
   });
 
   const { isFollowing, toggle: toggleFollow, isPending } = useFollow(id, truck?.name);
+  const { lat: userLat, lng: userLng } = useUserLocation();
+  const realDist = userLat && truck?.latitude
+    ? distanceMiles(userLat, userLng, truck.latitude, truck.longitude)
+    : null;
 
   const { data: menuItems = [] } = useQuery({
     queryKey: ['menu', id],
@@ -155,7 +160,7 @@ export default function TruckProfile() {
             {truck.cuisine_type?.replace('_', ' ')}
           </span>
           <span style={{ color: 'rgba(186,203,192,0.4)' }}>·</span>
-          <span className="text-sm" style={{ color: '#bacbc0' }}>0.8 mi</span>
+          <span className="text-sm" style={{ color: '#bacbc0' }}>{realDist != null ? `${realDist.toFixed(1)} mi` : '—'}</span>
         </div>
 
         {/* Description */}
