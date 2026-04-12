@@ -51,6 +51,10 @@
     "subtotal": {
       "type": "number"
     },
+    "tax": {
+      "type": "number",
+      "description": "Calculated sales tax amount (8.25%)"
+    },
     "tip": {
       "type": "number"
     },
