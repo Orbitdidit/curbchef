@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, Bell, Search, Clock, DollarSign, Plus, Phone } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 const STATUS_TABS = [
   { key: 'placed', label: 'New' },
@@ -46,6 +47,37 @@ export default function VendorOrders() {
 
   const totalRevToday = orders.reduce((s, o) => s + (o.total || 0), 0);
 
+  // 🔔 New order notification — sound + browser alert
+  const { toast } = useToast();
+  const prevNewCount = useRef(newCount);
+
+  useEffect(() => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (newCount > prevNewCount.current && prevNewCount.current >= 0) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = 880;
+        gain.gain.setValueAtTime(0.35, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.4);
+      } catch (e) {}
+      toast({ title: '🔔 New order!', description: `${newCount} order(s) waiting to be accepted`, duration: 5000 });
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('CurbChef — New Order! 🚐', { body: `You have ${newCount} new order(s) waiting` });
+      }
+    }
+    prevNewCount.current = newCount;
+  }, [newCount]);
   return (
     <div className="min-h-screen dot-bg" style={{ background: '#0d1517' }}>
       {/* Header */}
