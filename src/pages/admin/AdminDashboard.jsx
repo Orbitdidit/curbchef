@@ -19,22 +19,6 @@ export default function AdminDashboard() {
 
   const { data: adminUser } = useQuery({ queryKey: ['admin-me'], queryFn: () => base44.auth.me() });
 
-  useEffect(() => {
-    if (adminUser && !ADMIN_EMAILS.includes(adminUser.email)) {
-      toast({ title: 'Unauthorized', description: 'Admin access required.', variant: 'destructive' });
-      navigate('/');
-    }
-  }, [adminUser]);
-
-  if (!adminUser || !ADMIN_EMAILS.includes(adminUser.email)) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0d1517' }}>
-        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
-      </div>
-    );
-  }
-
-  const { data: trucks = [] } = useQuery({
   const { data: trucks = [] } = useQuery({
     queryKey: ['admin-trucks'],
     queryFn: () => base44.entities.FoodTruck.list(),
@@ -54,6 +38,21 @@ export default function AdminDashboard() {
     queryKey: ['pending-applications-count'],
     queryFn: () => base44.entities.TruckOnboarding.filter({ status: 'submitted' }),
   });
+
+  useEffect(() => {
+    if (adminUser && !ADMIN_EMAILS.includes(adminUser.email)) {
+      toast({ title: 'Unauthorized', description: 'Admin access required.', variant: 'destructive' });
+      navigate('/');
+    }
+  }, [adminUser]);
+
+  if (!adminUser || !ADMIN_EMAILS.includes(adminUser.email)) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0d1517' }}>
+        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
+      </div>
+    );
+  }
 
   const pendingTrucks = trucks.filter(t => !t.is_approved);
   const totalRevenue = orders.reduce((s, o) => s + (o.total || 0), 0);
