@@ -20,6 +20,7 @@ import MidVideoBlock from '../components/home/MidVideoBlock';
 import CarouselSection from '../components/home/CarouselSection';
 import CookinSection from '../components/home/CookinSection';
 import AssistantHomeCard from '../components/assistant/AssistantHomeCard';
+import FiveDollarSpecials from '../components/home/FiveDollarSpecials';
 
 export default function Home() {
   const [category, setCategory] = useState('all');
@@ -136,6 +137,9 @@ export default function Home() {
         </div>
         <LiveCarousel trucks={liveTrucks} />
       </div>
+
+      {/* ── $5 Specials Carousel ── */}
+      <FiveDollarSpecials trucks={trucks} />
 
       {/* ── Promo Card #1 — Rewards ── */}
       <div className="mt-6">
