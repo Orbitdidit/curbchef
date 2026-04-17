@@ -53,7 +53,7 @@
     },
     "tax": {
       "type": "number",
-      "description": "Calculated sales tax amount (8.25%)"
+      "description": "Tax amount charged on subtotal"
     },
     "tip": {
       "type": "number"
@@ -112,6 +112,23 @@
         "apple_pay"
       ],
       "default": "card"
+    },
+    "customer_eta_minutes": {
+      "type": "number",
+      "description": "Customer's estimated arrival time in minutes from when they set it"
+    },
+    "customer_eta_set_at": {
+      "type": "string",
+      "description": "ISO timestamp when the customer set their ETA"
+    },
+    "customer_eta_type": {
+      "type": "string",
+      "enum": [
+        "walking",
+        "driving",
+        "arrived"
+      ],
+      "description": "How the customer is traveling"
     }
   },
   "required": [

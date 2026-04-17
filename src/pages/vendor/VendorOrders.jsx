@@ -4,6 +4,87 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, Bell, Search, Clock, DollarSign, Plus, Phone } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import OrderEtaBadge from '@/components/vendor/OrderEtaBadge';
+
+function etaMinsLeft(order) {
+  if (!order.customer_eta_set_at || order.customer_eta_minutes == null) return null;
+  const setAt = new Date(order.customer_eta_set_at).getTime();
+  const arrivalMs = setAt + order.customer_eta_minutes * 60 * 1000;
+  return Math.max(0, Math.round((arrivalMs - Date.now()) / 60000));
+}
+
+function OrderCard({ order, advance }) {
+  const [, tick] = React.useState(0);
+  useEffect(() => {
+    const id = setInterval(() => tick(t => t + 1), 15000);
+    return () => clearInterval(id);
+  }, []);
+
+  const arrived = order.customer_eta_type === 'arrived';
+  const minsLeft = etaMinsLeft(order);
+  let borderColor = 'rgba(59,74,66,0.2)';
+  let bg = '#192123';
+  if (arrived) { borderColor = 'rgba(119,255,200,0.5)'; bg = 'rgba(119,255,200,0.04)'; }
+  else if (minsLeft !== null && minsLeft <= 5) { borderColor = 'rgba(253,89,30,0.6)'; bg = 'rgba(253,89,30,0.04)'; }
+  else if (minsLeft !== null && minsLeft <= 10) { borderColor = 'rgba(251,191,36,0.5)'; bg = 'rgba(251,191,36,0.03)'; }
+
+  return (
+    <div className="p-4 rounded-3xl" style={{ background: bg, border: `1px solid ${borderColor}` }}>
+      <div className="flex items-start justify-between mb-3">
+        <div>
+          <p className="text-[10px] font-bold tracking-wide" style={{ color: '#bacbc0' }}>ORDER ID</p>
+          <p className="font-heading font-black text-xl" style={{ color: '#77ffc8' }}>
+            #{order.pickup_code || order.id.slice(-4).toUpperCase()}
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="text-[10px] font-bold" style={{ color: '#bacbc0' }}>RECEIVED</p>
+          <p className="text-xs font-semibold" style={{ color: '#dff0e8' }}>
+            {new Date(order.created_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          </p>
+        </div>
+      </div>
+
+      {order.customer_eta_type && (
+        <div className="mb-3">
+          <OrderEtaBadge order={order} />
+        </div>
+      )}
+
+      <div className="flex items-center gap-2 mb-3">
+        <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+          style={{ background: 'rgba(119,255,200,0.12)', color: '#77ffc8' }}>
+          {order.customer_name?.charAt(0) || 'C'}
+        </div>
+        <p className="text-sm font-semibold" style={{ color: '#dff0e8' }}>{order.customer_name || order.customer_email}</p>
+      </div>
+
+      <div className="mb-4">
+        {order.items?.map((item, i) => (
+          <div key={i} className="flex items-baseline gap-2 mb-1">
+            <span className="text-sm font-bold" style={{ color: '#dff0e8' }}>{item.quantity}x {item.name}</span>
+            {item.add_ons?.map(a => (
+              <span key={a.name} className="text-xs italic" style={{ color: '#77ffc8' }}>{a.name}</span>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <div className="flex gap-2">
+        <button
+          onClick={() => advance.mutate(order)}
+          className="flex-1 py-3 rounded-2xl font-heading font-black text-sm"
+          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 14px rgba(119,255,200,0.3)' }}
+        >
+          {BTN_LABEL[order.status]}
+        </button>
+        <button className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: '#2e3638' }}>
+          <Phone className="w-4 h-4" style={{ color: '#bacbc0' }} />
+        </button>
+      </div>
+    </div>
+  );
+}
 
 const STATUS_TABS = [
   { key: 'placed', label: 'New' },
@@ -50,6 +131,22 @@ export default function VendorOrders() {
   // 🔔 New order notification — sound + browser alert
   const { toast } = useToast();
   const prevNewCount = useRef(newCount);
+
+  // 🔔 Customer arrived notification
+  const prevArrivedIds = useRef(new Set());
+  useEffect(() => {
+    const arrivedOrders = orders.filter(o => o.customer_eta_type === 'arrived');
+    arrivedOrders.forEach(o => {
+      if (!prevArrivedIds.current.has(o.id)) {
+        const code = o.pickup_code || o.id.slice(-4).toUpperCase();
+        toast({ title: `👋 Customer ${code} has arrived!`, description: 'Their order should be ready for pickup.', duration: 8000 });
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification(`CurbChef — Customer Arrived 👋`, { body: `Customer #${code} has arrived for pickup` });
+        }
+      }
+    });
+    prevArrivedIds.current = new Set(arrivedOrders.map(o => o.id));
+  }, [orders]);
 
   useEffect(() => {
     if ('Notification' in window && Notification.permission === 'default') {
@@ -139,66 +236,7 @@ export default function VendorOrders() {
           </div>
         ) : (
           tabOrders.map(order => (
-            <div
-              key={order.id}
-              className="p-4 rounded-3xl"
-              style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}
-            >
-              <div className="flex items-start justify-between mb-3">
-                <div>
-                  <p className="text-[10px] font-bold tracking-wide" style={{ color: '#bacbc0' }}>ORDER ID</p>
-                  <p className="font-heading font-black text-xl" style={{ color: '#77ffc8' }}>
-                    #{order.pickup_code || order.id.slice(-4).toUpperCase()}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-[10px] font-bold" style={{ color: '#bacbc0' }}>RECEIVED</p>
-                  <p className="text-xs font-semibold" style={{ color: '#dff0e8' }}>
-                    {new Date(order.created_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </p>
-                </div>
-              </div>
-
-              {/* Customer */}
-              <div className="flex items-center gap-2 mb-3">
-                <div
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-                  style={{ background: 'rgba(119,255,200,0.12)', color: '#77ffc8' }}
-                >
-                  {order.customer_name?.charAt(0) || 'C'}
-                </div>
-                <p className="text-sm font-semibold" style={{ color: '#dff0e8' }}>{order.customer_name || order.customer_email}</p>
-              </div>
-
-              {/* Items */}
-              <div className="mb-4">
-                {order.items?.map((item, i) => (
-                  <div key={i} className="flex items-baseline gap-2 mb-1">
-                    <span className="text-sm font-bold" style={{ color: '#dff0e8' }}>{item.quantity}x {item.name}</span>
-                    {item.add_ons?.map(a => (
-                      <span key={a.name} className="text-xs italic" style={{ color: '#77ffc8' }}>{a.name}</span>
-                    ))}
-                  </div>
-                ))}
-              </div>
-
-              {/* Action */}
-              <div className="flex gap-2">
-                <button
-                  onClick={() => advance.mutate(order)}
-                  className="flex-1 py-3 rounded-2xl font-heading font-black text-sm"
-                  style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 14px rgba(119,255,200,0.3)' }}
-                >
-                  {BTN_LABEL[order.status]}
-                </button>
-                <button
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: '#2e3638' }}
-                >
-                  <Phone className="w-4 h-4" style={{ color: '#bacbc0' }} />
-                </button>
-              </div>
-            </div>
+            <OrderCard key={order.id} order={order} advance={advance} />
           ))
         )}
       </div>

@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, Link } from 'react-router-dom';
 import { ChevronLeft, HelpCircle, MapPin, MessageSquare } from 'lucide-react';
+import CustomerEtaCard from '@/components/order/CustomerEtaCard';
 
 const STEPS = [
   { key: 'placed', label: 'Confirmed' },
@@ -20,13 +21,18 @@ export default function OrderDetail() {
     queryKey: ['order', id],
     queryFn: async () => {
       if (isStripeSession) {
-        // Look up order by Stripe checkout session id
         const orders = await base44.entities.Order.filter({ stripe_checkout_session_id: id });
         return orders[0] || null;
       }
       return base44.entities.Order.get(id);
     },
     refetchInterval: 10000,
+  });
+
+  const { data: truck } = useQuery({
+    queryKey: ['truck-for-order', order?.truck_id],
+    queryFn: () => base44.entities.FoodTruck.get(order.truck_id),
+    enabled: !!order?.truck_id,
   });
 
   if (!order) {
@@ -127,6 +133,11 @@ export default function OrderDetail() {
             </p>
             <p className="text-xs mt-3" style={{ color: '#bacbc0' }}>Show this to the vendor at the window</p>
           </div>
+        )}
+
+        {/* ETA Card — shown once order is placed */}
+        {order.status !== 'pending_payment' && order.status !== 'picked_up' && (
+          <CustomerEtaCard order={order} truck={truck} />
         )}
 
         {/* Truck info */}
