@@ -20,7 +20,18 @@ Deno.serve(async (req) => {
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
-    const { truck_id, customer_email, pickup_code, pickup_time } = session.metadata || {};
+    const { truck_id, customer_email, pickup_code, pickup_time, type, tokens_to_add } = session.metadata || {};
+
+    // Handle token pack purchase
+    if (type === 'token_pack' && truck_id) {
+      const truck = await base44.asServiceRole.entities.FoodTruck.get(truck_id);
+      if (truck) {
+        await base44.asServiceRole.entities.FoodTruck.update(truck_id, {
+          drop_tokens: (truck.drop_tokens || 0) + parseInt(tokens_to_add || '3'),
+        });
+      }
+      return Response.json({ received: true });
+    }
 
     // Find the pre-created order by session id
     const orders = await base44.asServiceRole.entities.Order.filter({ stripe_checkout_session_id: session.id });

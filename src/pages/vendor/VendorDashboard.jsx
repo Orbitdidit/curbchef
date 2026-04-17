@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { Settings, Video, ShoppingBag, Map, BarChart3, Users, DollarSign, ChevronLeft, Pencil, Zap } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 import DashboardDave from '@/components/vendor/DashboardDave';
 import StripeConnectButton from '@/components/vendor/StripeConnectButton';
 import VendorGate from '@/components/vendor/VendorGate';
+import DropTokenCounter from '@/components/vendor/DropTokenCounter';
 
 function VendorDashboardInner({ truck: initialTruck, user }) {
   const qc = useQueryClient();
+  const { toast } = useToast();
 
   const { data: trucks = [initialTruck] } = useQuery({
     queryKey: ['vendor-truck'],
@@ -32,6 +35,16 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
   });
 
   const activeOrders = orders.filter(o => ['placed', 'preparing'].includes(o.status));
+
+  // Show success toast if returning from token pack purchase
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('token_pack') === 'success') {
+      toast({ title: '🎟️ Token Pack added! +3 drops this week.', duration: 4000 });
+      window.history.replaceState({}, '', '/vendor');
+      qc.invalidateQueries({ queryKey: ['vendor-truck'] });
+    }
+  }, []);
 
   const updateTruck = useMutation({
     mutationFn: (data) => base44.entities.FoodTruck.update(truck.id, data),
@@ -132,48 +145,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         </div>
 
         {/* Curb Drop Token Counter */}
-        {(() => {
-          const tokens = truck.drop_tokens ?? 2;
-          const maxTokens = { free: 2, standard: 10, plus: 25, premium: 60 }[truck.vendor_plan || 'free'] ?? 2;
-          const isEmpty = tokens === 0;
-          return (
-            <div className="mb-5 p-4 rounded-2xl flex items-center gap-4"
-              style={{
-                background: isEmpty ? 'rgba(253,89,30,0.07)' : 'rgba(251,191,36,0.07)',
-                border: `1px solid ${isEmpty ? 'rgba(253,89,30,0.25)' : 'rgba(251,191,36,0.25)'}`,
-              }}>
-              <div className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0 text-xl"
-                style={{ background: isEmpty ? 'rgba(253,89,30,0.15)' : 'rgba(251,191,36,0.15)' }}>
-                🪂
-              </div>
-              <div className="flex-1">
-                <p className="font-heading font-black text-base leading-tight"
-                  style={{ color: isEmpty ? '#fd591e' : '#fbbf24' }}>
-                  {isEmpty ? 'No Drops left' : `${tokens} Drop${tokens !== 1 ? 's' : ''} left this week`}
-                </p>
-                <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>
-                  {isEmpty ? 'Resets Monday · Upgrade for more' : `${tokens} / ${maxTokens} · Resets every Monday`}
-                </p>
-              </div>
-              {/* Pip progress */}
-              <div className="flex gap-1 flex-shrink-0">
-                {Array.from({ length: Math.min(maxTokens, 5) }).map((_, i) => (
-                  <div key={i} className="w-2.5 h-2.5 rounded-full"
-                    style={{
-                      background: i < Math.min(tokens, 5)
-                        ? (isEmpty ? '#fd591e' : '#fbbf24')
-                        : 'rgba(186,203,192,0.15)',
-                    }} />
-                ))}
-                {maxTokens > 5 && (
-                  <span className="text-[9px] font-black self-center ml-0.5" style={{ color: '#bacbc0' }}>
-                    +{maxTokens - 5}
-                  </span>
-                )}
-              </div>
-            </div>
-          );
-        })()}
+        <DropTokenCounter truck={truck} />
 
         {/* Stripe Connect */}
         <div className="mb-5">
