@@ -38,12 +38,24 @@ import LaunchDashboard from './pages/admin/LaunchDashboard';
 import FoodScan from './pages/FoodScan';
 import FoodConcierge from './pages/FoodConcierge';
 import TruckRadar from './pages/TruckRadar';
+import LandingPage from './pages/LandingPage';
 
 const AuthenticatedApp = () => {
-  const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
+  const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin, isAuthenticated } = useAuth();
   const location = useLocation();
 
-  if (isLoadingPublicSettings || isLoadingAuth) {
+  // Fetch launch_mode config (public — no auth needed)
+  const [launchMode, setLaunchMode] = React.useState(null);
+  React.useEffect(() => {
+    base44.entities.HomepageConfig.filter({ key: 'launch_mode' })
+      .then(rows => {
+        const mode = rows[0]?.headline || 'waitlist';
+        setLaunchMode(mode);
+      })
+      .catch(() => setLaunchMode('waitlist'));
+  }, []);
+
+  if (isLoadingPublicSettings || isLoadingAuth || launchMode === null) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-3">
@@ -58,9 +70,22 @@ const AuthenticatedApp = () => {
     if (authError.type === 'user_not_registered') {
       return <UserNotRegisteredError />;
     } else if (authError.type === 'auth_required') {
+      // In waitlist mode, show landing instead of redirecting to login
+      if (launchMode === 'waitlist' && location.pathname === '/') {
+        return <LandingPage />;
+      }
       navigateToLogin();
       return null;
     }
+  }
+
+  // Waitlist gate: unauthenticated + root path + waitlist mode → LandingPage
+  // /onboard-truck is always public
+  const isOnboardRoute = location.pathname === '/onboard-truck';
+  const showLanding = launchMode === 'waitlist' && !isAuthenticated && !isOnboardRoute;
+
+  if (showLanding && location.pathname === '/') {
+    return <LandingPage />;
   }
 
   return (
@@ -76,7 +101,7 @@ const AuthenticatedApp = () => {
         <Routes location={location}>
           {/* Customer routes with bottom nav */}
           <Route element={<AppLayout />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={showLanding ? <LandingPage /> : <Home />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/map" element={<MapView />} />
             <Route path="/deals" element={<Deals />} />

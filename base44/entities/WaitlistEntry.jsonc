@@ -1,0 +1,39 @@
+{
+  "name": "WaitlistEntry",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "Applicant email (unique)"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Optional phone number"
+    },
+    "position": {
+      "type": "number",
+      "description": "Position in waitlist (auto-incremented)"
+    },
+    "referred_by": {
+      "type": "string",
+      "description": "Email of the referrer"
+    },
+    "referral_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of successful referrals made by this entry"
+    },
+    "signup_date": {
+      "type": "string",
+      "description": "ISO datetime of signup"
+    },
+    "notified_launch": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the user was notified at launch"
+    }
+  },
+  "required": [
+    "email"
+  ]
+}

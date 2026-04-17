@@ -347,6 +347,57 @@ function LiveVideosManager() {
   );
 }
 
+function LaunchModeToggle() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  const { data: configs = [] } = useQuery({
+    queryKey: ['homepage_config'],
+    queryFn: () => base44.entities.HomepageConfig.list(),
+  });
+
+  const record = configs.find(c => c.key === 'launch_mode');
+  const isLive = record?.headline === 'live';
+
+  const toggle = async () => {
+    const newMode = isLive ? 'waitlist' : 'live';
+    if (record?.id) {
+      await base44.entities.HomepageConfig.update(record.id, { headline: newMode });
+    } else {
+      await base44.entities.HomepageConfig.create({ key: 'launch_mode', label: 'Launch Mode', headline: newMode, is_active: true });
+    }
+    queryClient.invalidateQueries({ queryKey: ['homepage_config'] });
+    toast({ title: `Launch mode → ${newMode.toUpperCase()}`, duration: 3000 });
+  };
+
+  return (
+    <div className="rounded-2xl p-5 flex items-center justify-between"
+      style={{ background: isLive ? 'rgba(119,255,200,0.07)' : 'rgba(253,89,30,0.07)', border: `1px solid ${isLive ? 'rgba(119,255,200,0.3)' : 'rgba(253,89,30,0.3)'}` }}>
+      <div>
+        <p className="font-heading font-black text-sm" style={{ color: '#dff0e8' }}>
+          Launch Mode
+        </p>
+        <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>
+          {isLive
+            ? '🟢 LIVE — All users see the full app'
+            : '🔴 WAITLIST — Unauthenticated users see the landing page'}
+        </p>
+      </div>
+      <button
+        onClick={toggle}
+        className="flex items-center gap-2 px-4 py-2.5 rounded-full font-heading font-black text-sm transition-all"
+        style={isLive
+          ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 14px rgba(119,255,200,0.3)' }
+          : { background: 'rgba(253,89,30,0.2)', color: '#fd591e', border: '1px solid rgba(253,89,30,0.4)' }
+        }
+      >
+        {isLive ? '🟢 LIVE' : '🔴 WAITLIST'}
+        <span className="text-xs font-normal opacity-70">→ flip</span>
+      </button>
+    </div>
+  );
+}
+
 export default function HomepageCMS() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -399,6 +450,9 @@ export default function HomepageCMS() {
       </div>
 
       <div className="px-5 py-6 flex flex-col gap-4">
+        {/* Launch Mode Toggle */}
+        <LaunchModeToggle />
+
         {/* AI Content Curator */}
         <ContentCuratorCard />
 
