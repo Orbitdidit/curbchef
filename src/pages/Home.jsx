@@ -49,7 +49,8 @@ export default function Home() {
   );
 
   const liveTrucks = trucks.filter(t => t.is_live);
-  const openTrucks = trucks.filter(t => t.status === 'open');
+  // Exclude trucks with reliability score below 50 from Open Now
+  const openTrucks = trucks.filter(t => t.status === 'open' && (t.reliability_score ?? 100) >= 50);
   const topRated = [...trucks].sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 8);
   const newTrucks = [...trucks].sort((a, b) => new Date(b.created_date) - new Date(a.created_date)).slice(0, 8);
   // Late night: simulate with is_live or just show first 8 for now

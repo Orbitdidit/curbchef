@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Star, MapPin, Clock } from 'lucide-react';
 import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
 import { useCloseCountdown } from '@/hooks/useCloseCountdown';
+import ReliabilityBadge from '@/components/shared/ReliabilityBadge';
 
 export default function TruckCard({ truck, rank }) {
   const { lat, lng } = useUserLocation();
@@ -123,16 +124,19 @@ export default function TruckCard({ truck, rank }) {
               <span className="text-[11px]" style={{ color: '#bacbc0' }}>{distance}</span>
             </div>
           </div>
-          {/* Sleek compact CTA */}
-          <div
-            className="px-3 py-1.5 rounded-full text-[11px] font-black"
-            style={{
-              background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
-              color: '#003826',
-              boxShadow: '0 0 10px rgba(119,255,200,0.28)',
-            }}
-          >
-            Order →
+          <div className="flex items-center gap-2">
+            <ReliabilityBadge score={truck.reliability_score} size="sm" />
+            {/* Sleek compact CTA */}
+            <div
+              className="px-3 py-1.5 rounded-full text-[11px] font-black"
+              style={{
+                background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
+                color: '#003826',
+                boxShadow: '0 0 10px rgba(119,255,200,0.28)',
+              }}
+            >
+              Order →
+            </div>
           </div>
         </div>
       </div>

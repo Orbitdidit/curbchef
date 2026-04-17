@@ -10,6 +10,7 @@ import VendorGate from '@/components/vendor/VendorGate';
 import DropTokenCounter from '@/components/vendor/DropTokenCounter';
 import CreateCurbDropModal from '@/components/drops/CreateCurbDropModal';
 import TodaysHours from '@/components/vendor/TodaysHours';
+import ReliabilityCard from '@/components/vendor/ReliabilityCard';
 
 function VendorDashboardInner({ truck: initialTruck, user }) {
   const qc = useQueryClient();
@@ -165,6 +166,9 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
             : <span className="text-xs opacity-50 ml-1">— no tokens</span>
           }
         </button>
+
+        {/* Reliability Score Card */}
+        <ReliabilityCard truck={truck} />
 
         {/* Today's Hours */}
         <TodaysHours

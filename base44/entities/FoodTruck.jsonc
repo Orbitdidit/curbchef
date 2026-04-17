@@ -136,27 +136,22 @@
         "pickup_delivery_vendor",
         "full_delivery"
       ],
-      "default": "pickup_only",
-      "description": "Delivery availability mode"
+      "default": "pickup_only"
     },
     "delivery_fee": {
       "type": "number",
-      "default": 0,
-      "description": "Delivery fee in dollars (0 = free)"
+      "default": 0
     },
     "delivery_eta": {
       "type": "string",
-      "default": "25\u201340",
-      "description": "Estimated delivery time range e.g. '25\u201340'"
+      "default": "25\u201340"
     },
     "drop_tokens": {
       "type": "number",
-      "default": 2,
-      "description": "Curb Drop tokens remaining this week. Each Drop costs 1 token."
+      "default": 2
     },
     "tokens_reset_at": {
-      "type": "string",
-      "description": "ISO timestamp of when tokens were last reset (every Monday midnight)"
+      "type": "string"
     },
     "scheduled_open_time": {
       "type": "string",
@@ -168,18 +163,36 @@
     },
     "order_cutoff_minutes": {
       "type": "number",
-      "default": 15,
-      "description": "Stop taking orders this many minutes before close"
+      "default": 15
     },
     "last_call_active": {
       "type": "boolean",
-      "default": false,
-      "description": "True when inside the last-call window before closing"
+      "default": false
     },
     "early_close_count": {
       "type": "number",
-      "default": 0,
-      "description": "Count of times closed before scheduled_close_time (reliability scoring)"
+      "default": 0
+    },
+    "reliability_score": {
+      "type": "number",
+      "default": 100,
+      "description": "0-100 punctuality score"
+    },
+    "late_opens_count": {
+      "type": "number",
+      "default": 0
+    },
+    "early_closes_count": {
+      "type": "number",
+      "default": 0
+    },
+    "no_show_days": {
+      "type": "number",
+      "default": 0
+    },
+    "last_punctuality_check": {
+      "type": "string",
+      "description": "ISO datetime of last nightly check"
     }
   },
   "required": [

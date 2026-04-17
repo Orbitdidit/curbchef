@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCloseCountdown } from '@/hooks/useCloseCountdown';
+import ReliabilityBadge from '@/components/shared/ReliabilityBadge';
 import {
   ChevronLeft, Share2, Star, Clock, Plus, Play,
   UserPlus, UserCheck, MapPin, ShoppingBag, Flame, Radio, Zap
@@ -32,7 +33,6 @@ export default function TruckProfile() {
   const realDist = userLat && truck?.latitude
     ? distanceMiles(userLat, userLng, truck.latitude, truck.longitude)
     : null;
-  const { label: closeLabel, variant: closeVariant } = useCloseCountdown(truck);
 
   const { data: menuItems = [] } = useQuery({
     queryKey: ['menu', id],
@@ -71,6 +71,7 @@ export default function TruckProfile() {
   }
 
   const isOpen = truck.status === 'open';
+  const { label: closeLabel, variant: closeVariant } = useCloseCountdown(truck);
 
   // Group menu items by category for section display
   const menuByCategory = categories.reduce((acc, cat) => {
@@ -150,6 +151,13 @@ export default function TruckProfile() {
             {isFollowing ? 'Following' : 'Follow'}
           </button>
         </div>
+
+        {/* Reliability badge */}
+        {truck.reliability_score != null && (
+          <div className="mb-2">
+            <ReliabilityBadge score={truck.reliability_score} size="md" />
+          </div>
+        )}
 
         {/* Rating + cuisine + distance */}
         <div className="flex items-center gap-2 mb-3 flex-wrap">
