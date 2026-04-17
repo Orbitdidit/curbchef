@@ -44,6 +44,9 @@ export default function TruckProfile() {
     queryFn: () => base44.entities.LiveClip.filter({ truck_id: id }),
   });
 
+  // Must be called unconditionally before any early return
+  const { label: closeLabel, variant: closeVariant } = useCloseCountdown(truck);
+
   const categories = [...new Set(menuItems.map(i => i.category))];
   const filteredMenu = menuFilter === 'all' ? menuItems : menuItems.filter(i => i.category === menuFilter);
   const specials = menuItems.filter(i => i.is_special);
@@ -71,7 +74,6 @@ export default function TruckProfile() {
   }
 
   const isOpen = truck.status === 'open';
-  const { label: closeLabel, variant: closeVariant } = useCloseCountdown(truck);
 
   // Group menu items by category for section display
   const menuByCategory = categories.reduce((acc, cat) => {
