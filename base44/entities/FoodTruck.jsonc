@@ -157,6 +157,29 @@
     "tokens_reset_at": {
       "type": "string",
       "description": "ISO timestamp of when tokens were last reset (every Monday midnight)"
+    },
+    "scheduled_open_time": {
+      "type": "string",
+      "description": "Today's scheduled open time, e.g. '11:00'"
+    },
+    "scheduled_close_time": {
+      "type": "string",
+      "description": "Today's scheduled close time, e.g. '21:00'"
+    },
+    "order_cutoff_minutes": {
+      "type": "number",
+      "default": 15,
+      "description": "Stop taking orders this many minutes before close"
+    },
+    "last_call_active": {
+      "type": "boolean",
+      "default": false,
+      "description": "True when inside the last-call window before closing"
+    },
+    "early_close_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Count of times closed before scheduled_close_time (reliability scoring)"
     }
   },
   "required": [

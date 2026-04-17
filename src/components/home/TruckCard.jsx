@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Star, Clock, MapPin } from 'lucide-react';
+import { Star, MapPin, Clock } from 'lucide-react';
 import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
+import { useCloseCountdown } from '@/hooks/useCloseCountdown';
 
 export default function TruckCard({ truck, rank }) {
   const { lat, lng } = useUserLocation();
   const distVal = (lat && truck.latitude) ? distanceMiles(lat, lng, truck.latitude, truck.longitude) : null;
   const distance = distVal != null ? formatDist(distVal) : '—';
+  const { label: closeLabel, variant: closeVariant } = useCloseCountdown(truck);
 
   return (
     <Link to={`/truck/${truck.id}`} aria-label={`${truck.name} — ${truck.cuisine_type?.replace('_',' ')} · ${truck.status === 'open' ? 'Open now' : 'Closed'}`} className="block group">
@@ -101,8 +103,20 @@ export default function TruckCard({ truck, rank }) {
               <span className="text-[10px]" style={{ color: 'rgba(186,203,192,0.45)' }}>({truck.review_count || 500}+)</span>
             </div>
             <div className="flex items-center gap-1">
-              <Clock className="w-3 h-3" style={{ color: '#bacbc0' }} />
-              <span className="text-[11px]" style={{ color: '#bacbc0' }}>15–20 min</span>
+              {closeVariant === 'last_call' && (
+                <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse" style={{ background: '#ff3b30' }} />
+              )}
+              <span
+                className="text-[11px] font-semibold"
+                style={{
+                  color: closeVariant === 'last_call' ? '#ff3b30'
+                    : closeVariant === 'cutoff' ? '#bacbc0'
+                    : closeVariant === 'soon' ? '#fd591e'
+                    : '#bacbc0'
+                }}
+              >
+                {closeLabel || <><Clock className="w-3 h-3 inline mr-0.5" />15–20 min</>}
+              </span>
             </div>
             <div className="flex items-center gap-1">
               <MapPin className="w-3 h-3" style={{ color: '#bacbc0' }} />

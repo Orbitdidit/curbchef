@@ -9,6 +9,7 @@ import StripeConnectButton from '@/components/vendor/StripeConnectButton';
 import VendorGate from '@/components/vendor/VendorGate';
 import DropTokenCounter from '@/components/vendor/DropTokenCounter';
 import CreateCurbDropModal from '@/components/drops/CreateCurbDropModal';
+import TodaysHours from '@/components/vendor/TodaysHours';
 
 function VendorDashboardInner({ truck: initialTruck, user }) {
   const qc = useQueryClient();
@@ -165,6 +166,23 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
           }
         </button>
 
+        {/* Today's Hours */}
+        <TodaysHours
+          truck={truck}
+          onUpdate={async (data) => {
+            // If vendor is closing early before scheduled close, track it
+            if (data.status === 'closed' && truck.scheduled_close_time) {
+              const [h, m] = truck.scheduled_close_time.split(':').map(Number);
+              const closeDate = new Date();
+              closeDate.setHours(h, m, 0, 0);
+              if (new Date() < closeDate) {
+                data.early_close_count = (truck.early_close_count || 0) + 1;
+              }
+            }
+            return updateTruck.mutate(data);
+          }}
+        />
+
         {/* Stripe Connect */}
         <div className="mb-5">
           <StripeConnectButton
@@ -225,7 +243,18 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
           {['open', 'closed', 'sold_out'].map(s => (
             <button
               key={s}
-              onClick={() => updateTruck.mutate({ status: s })}
+              onClick={() => {
+                const data = { status: s };
+                if (s === 'closed' && truck.scheduled_close_time) {
+                  const [h, m] = truck.scheduled_close_time.split(':').map(Number);
+                  const closeDate = new Date();
+                  closeDate.setHours(h, m, 0, 0);
+                  if (new Date() < closeDate) {
+                    data.early_close_count = (truck.early_close_count || 0) + 1;
+                  }
+                }
+                updateTruck.mutate(data);
+              }}
               className="flex-1 py-2.5 rounded-xl text-xs font-bold uppercase transition-all"
               style={truck.status === s
                 ? {

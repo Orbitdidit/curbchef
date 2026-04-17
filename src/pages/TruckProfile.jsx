@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useCloseCountdown } from '@/hooks/useCloseCountdown';
 import {
   ChevronLeft, Share2, Star, Clock, Plus, Play,
   UserPlus, UserCheck, MapPin, ShoppingBag, Flame, Radio, Zap
@@ -69,6 +70,7 @@ export default function TruckProfile() {
   }
 
   const isOpen = truck.status === 'open';
+  const { label: closeLabel, variant: closeVariant } = useCloseCountdown(truck);
 
   // Group menu items by category for section display
   const menuByCategory = categories.reduce((acc, cat) => {
@@ -177,17 +179,36 @@ export default function TruckProfile() {
 
         {/* Stats row */}
         <div className="grid grid-cols-3 gap-2">
-          {[
-            { label: 'WAIT TIME', value: '~12 min' },
-            { label: 'SPICE LEVEL', value: 'Medium', highlight: '#fd591e' },
-            { label: 'STATUS', value: isOpen ? 'Open' : 'Closed', highlight: isOpen ? '#77ffc8' : '#bacbc0' },
-          ].map(({ label, value, highlight }) => (
-            <div key={label} className="flex flex-col items-center justify-center py-3 px-2 rounded-2xl"
-              style={{ background: '#0d1517' }}>
-              <p className="text-[9px] font-bold tracking-widest mb-1" style={{ color: 'rgba(186,203,192,0.5)' }}>{label}</p>
-              <p className="font-heading font-black text-sm" style={{ color: highlight || '#dff0e8' }}>{value}</p>
+          <div className="flex flex-col items-center justify-center py-3 px-2 rounded-2xl" style={{ background: '#0d1517' }}>
+            <p className="text-[9px] font-bold tracking-widest mb-1" style={{ color: 'rgba(186,203,192,0.5)' }}>WAIT TIME</p>
+            <p className="font-heading font-black text-sm" style={{ color: '#dff0e8' }}>~12 min</p>
+          </div>
+          <div className="flex flex-col items-center justify-center py-3 px-1 rounded-2xl col-span-1" style={{ background: '#0d1517' }}>
+            <p className="text-[9px] font-bold tracking-widest mb-1" style={{ color: 'rgba(186,203,192,0.5)' }}>HOURS</p>
+            <div className="flex items-center gap-1">
+              {closeVariant === 'last_call' && (
+                <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse" style={{ background: '#ff3b30' }} />
+              )}
+              <p
+                className="font-heading font-black text-[11px] text-center leading-tight"
+                style={{
+                  color: closeVariant === 'last_call' ? '#ff3b30'
+                    : closeVariant === 'cutoff' ? '#bacbc0'
+                    : closeVariant === 'soon' ? '#fd591e'
+                    : closeVariant === 'closed' ? '#bacbc0'
+                    : '#77ffc8'
+                }}
+              >
+                {closeLabel || (isOpen ? 'Open' : 'Closed')}
+              </p>
             </div>
-          ))}
+          </div>
+          <div className="flex flex-col items-center justify-center py-3 px-2 rounded-2xl" style={{ background: '#0d1517' }}>
+            <p className="text-[9px] font-bold tracking-widest mb-1" style={{ color: 'rgba(186,203,192,0.5)' }}>STATUS</p>
+            <p className="font-heading font-black text-sm" style={{ color: isOpen ? '#77ffc8' : '#bacbc0' }}>
+              {isOpen ? 'Open' : 'Closed'}
+            </p>
+          </div>
         </div>
       </div>
 
