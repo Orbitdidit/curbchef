@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
@@ -8,10 +8,12 @@ import DashboardDave from '@/components/vendor/DashboardDave';
 import StripeConnectButton from '@/components/vendor/StripeConnectButton';
 import VendorGate from '@/components/vendor/VendorGate';
 import DropTokenCounter from '@/components/vendor/DropTokenCounter';
+import CreateCurbDropModal from '@/components/drops/CreateCurbDropModal';
 
 function VendorDashboardInner({ truck: initialTruck, user }) {
   const qc = useQueryClient();
   const { toast } = useToast();
+  const [showDropModal, setShowDropModal] = useState(false);
 
   const { data: trucks = [initialTruck] } = useQuery({
     queryKey: ['vendor-truck'],
@@ -144,8 +146,24 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
           </Link>
         </div>
 
-        {/* Curb Drop Token Counter */}
+        {/* Curb Drop Token Counter + Create Drop */}
         <DropTokenCounter truck={truck} />
+        <button
+          onClick={() => setShowDropModal(true)}
+          className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl mb-5 font-heading font-black text-sm transition-all active:scale-95"
+          style={{
+            background: (truck.drop_tokens ?? 0) > 0
+              ? 'linear-gradient(135deg,rgba(253,89,30,0.15),rgba(253,89,30,0.08))'
+              : '#192123',
+            color: (truck.drop_tokens ?? 0) > 0 ? '#fd591e' : '#bacbc0',
+            border: `1px solid ${(truck.drop_tokens ?? 0) > 0 ? 'rgba(253,89,30,0.35)' : 'rgba(59,74,66,0.2)'}`,
+          }}>
+          🪂 Create Curb Drop
+          {(truck.drop_tokens ?? 0) > 0
+            ? <span className="text-xs font-semibold opacity-70 ml-1">— 1 token</span>
+            : <span className="text-xs opacity-50 ml-1">— no tokens</span>
+          }
+        </button>
 
         {/* Stripe Connect */}
         <div className="mb-5">
@@ -305,6 +323,10 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
           )}
         </div>
       </div>
+      {/* Create Drop Modal */}
+      {showDropModal && (
+        <CreateCurbDropModal truck={truck} onClose={() => setShowDropModal(false)} />
+      )}
     </div>
   );
 }

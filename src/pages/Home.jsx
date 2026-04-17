@@ -21,6 +21,7 @@ import CarouselSection from '../components/home/CarouselSection';
 import CookinSection from '../components/home/CookinSection';
 import AssistantHomeCard from '../components/assistant/AssistantHomeCard';
 import FiveDollarSpecials from '../components/home/FiveDollarSpecials';
+import DropsNearYou from '../components/home/DropsNearYou';
 
 export default function Home() {
   const [category, setCategory] = useState('all');
@@ -117,6 +118,9 @@ export default function Home() {
       <div className="px-5 mt-6">
         <AssistantHomeCard />
       </div>
+
+      {/* ── Drops Near You ── */}
+      <DropsNearYou />
 
       {/* ── Live Now Carousel ── */}
       <div className="mt-6">

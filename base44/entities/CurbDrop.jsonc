@@ -1,0 +1,50 @@
+{
+  "name": "CurbDrop",
+  "type": "object",
+  "properties": {
+    "truck_id": {
+      "type": "string"
+    },
+    "truck_name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "original_price": {
+      "type": "number"
+    },
+    "deal_price": {
+      "type": "number"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "expires_at": {
+      "type": "string"
+    },
+    "max_claims": {
+      "type": "number",
+      "default": 20
+    },
+    "current_claims": {
+      "type": "number",
+      "default": 0
+    },
+    "radius_miles": {
+      "type": "number",
+      "default": 1
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "truck_id",
+    "title"
+  ]
+}

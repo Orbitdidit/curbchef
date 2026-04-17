@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { Zap, Clock, Tag, Star, ChevronRight } from 'lucide-react';
+import CurbDropCard from '@/components/drops/CurbDropCard';
 
 const FEATURED_DEALS = [
   {
@@ -65,6 +66,13 @@ export default function Deals() {
     queryFn: () => base44.entities.FoodTruck.filter({ is_approved: true }),
   });
 
+  const { data: allDrops = [] } = useQuery({
+    queryKey: ['curb-drops'],
+    queryFn: () => base44.entities.CurbDrop.filter({ is_active: true }, '-created_date', 20),
+    refetchInterval: 15000,
+  });
+  const liveDrops = allDrops.filter(d => new Date(d.expires_at) > new Date());
+
   return (
     <div className="min-h-screen pb-32" style={{ background: '#0d1517' }}>
       {/* Header */}
@@ -74,11 +82,32 @@ export default function Deals() {
           <h1 className="font-heading font-black text-xl" style={{ color: '#dff0e8' }}>Deals</h1>
           <span className="text-[10px] font-black px-3 py-1 rounded-full"
             style={{ background: 'rgba(253,89,30,0.15)', color: '#fd591e', border: '1px solid rgba(253,89,30,0.3)' }}>
-            🔥 {FEATURED_DEALS.length + LIMITED.length} ACTIVE
+            🔥 {FEATURED_DEALS.length + LIMITED.length + (liveDrops?.length || 0)} ACTIVE
           </span>
         </div>
         <p className="text-xs" style={{ color: '#bacbc0' }}>Exclusive drops for CurbChef fans</p>
       </div>
+
+      {/* 🔥 Live Curb Drops section */}
+      {liveDrops.length > 0 && (
+        <div className="pt-5 pb-2">
+          <div className="flex items-center justify-between px-5 mb-3">
+            <div className="flex items-center gap-2">
+              <span className="text-base">🪂</span>
+              <h2 className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>Live Curb Drops</h2>
+              <span className="text-[10px] font-black px-2 py-0.5 rounded-full"
+                style={{ background: 'rgba(253,89,30,0.15)', color: '#fd591e', border: '1px solid rgba(253,89,30,0.3)' }}>
+                {liveDrops.length} LIVE
+              </span>
+            </div>
+          </div>
+          <div className="flex gap-3 overflow-x-auto no-scrollbar" style={{ paddingLeft: '20px', paddingRight: '20px' }}>
+            {liveDrops.map(drop => (
+              <CurbDropCard key={drop.id} drop={drop} />
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="px-5 pt-5">
 
