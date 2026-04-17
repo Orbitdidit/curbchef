@@ -138,6 +138,22 @@ export default function Home() {
         <LiveCarousel trucks={liveTrucks} />
       </div>
 
+      {/* ── Food Concierge CTA ── */}
+      <div className="px-5 mt-4">
+        <Link to="/concierge">
+          <div className="flex items-center gap-4 p-4 rounded-2xl active:scale-95 transition-all"
+            style={{ background: 'linear-gradient(135deg,rgba(119,255,200,0.08),rgba(119,255,200,0.03))', border: '1px solid rgba(119,255,200,0.2)' }}>
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}>🍽️</div>
+            <div className="flex-1">
+              <p className="font-heading font-black text-sm" style={{ color: '#dff0e8' }}>AI Food Concierge</p>
+              <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>Tell me what you're craving — I'll find it</p>
+            </div>
+            <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: '#77ffc8' }} />
+          </div>
+        </Link>
+      </div>
+
       {/* ── $5 Specials Carousel ── */}
       <FiveDollarSpecials trucks={trucks} />
 
