@@ -37,6 +37,7 @@ import VendorProfile from './pages/vendor/VendorProfile';
 import LaunchDashboard from './pages/admin/LaunchDashboard';
 import FoodScan from './pages/FoodScan';
 import FoodConcierge from './pages/FoodConcierge';
+import TruckRadar from './pages/TruckRadar';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -104,6 +105,7 @@ const AuthenticatedApp = () => {
           <Route path="/admin/homepage" element={<HomepageCMS />} />
           <Route path="/admin/launch" element={<LaunchDashboard />} />
           <Route path="/scan" element={<FoodScan />} />
+          <Route path="/radar" element={<TruckRadar />} />
           <Route path="/concierge" element={<FoodConcierge />} />
 
           <Route path="/onboard-truck" element={<OnboardTruck />} />

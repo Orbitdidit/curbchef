@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
-import { Star, ChevronLeft, Navigation, Radio } from 'lucide-react';
+import { Star, ChevronLeft, Navigation, Radio, Crosshair } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
@@ -55,6 +55,7 @@ function RecenterButton({ userLat, userLng }) {
 const FILTERS = ['All', 'Live', 'Open Now', 'Tacos', 'BBQ', 'Near Me'];
 
 export default function MapView() {
+  const navigate = useNavigate();
   const { data: trucks = [] } = useQuery({
     queryKey: ['trucks'],
     queryFn: () => base44.entities.FoodTruck.filter({ is_approved: true }),
@@ -123,6 +124,15 @@ export default function MapView() {
           >
             <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
           </Link>
+          {/* Radar button */}
+          <button
+            onClick={() => navigate('/radar')}
+            className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0"
+            style={{ background: 'rgba(119,255,200,0.12)', border: '1px solid rgba(119,255,200,0.35)', backdropFilter: 'blur(12px)' }}
+            title="Truck Radar AR"
+          >
+            <Crosshair className="w-5 h-5" style={{ color: '#77ffc8' }} />
+          </button>
           <div
             className="flex-1 flex items-center gap-2 px-4 py-2.5 rounded-2xl"
             style={{ background: 'rgba(13,21,23,0.88)', border: '1px solid rgba(59,74,66,0.35)', backdropFilter: 'blur(12px)' }}
