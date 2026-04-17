@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Star, Lock, Trash2 } from 'lucide-react';
+import RewardsCoach from '@/components/rewards/RewardsCoach';
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel,
   AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
@@ -175,6 +176,12 @@ export default function Rewards() {
               )}
             </div>
           ))}
+        </div>
+
+        {/* Rewards Coach AI */}
+        <div className="mt-8 mb-6">
+          <h2 className="font-heading font-bold text-base mb-4" style={{ color: '#dff0e8' }}>Your Rewards Coach 🏅</h2>
+          <RewardsCoach user={user} reward={reward} />
         </div>
 
         {/* Tier list */}
