@@ -32,6 +32,7 @@ export default function TruckProfile() {
   const realDist = userLat && truck?.latitude
     ? distanceMiles(userLat, userLng, truck.latitude, truck.longitude)
     : null;
+  const { label: closeLabel, variant: closeVariant } = useCloseCountdown(truck);
 
   const { data: menuItems = [] } = useQuery({
     queryKey: ['menu', id],
@@ -70,7 +71,6 @@ export default function TruckProfile() {
   }
 
   const isOpen = truck.status === 'open';
-  const { label: closeLabel, variant: closeVariant } = useCloseCountdown(truck);
 
   // Group menu items by category for section display
   const menuByCategory = categories.reduce((acc, cat) => {
