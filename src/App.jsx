@@ -1,3 +1,4 @@
+import React from 'react';
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
@@ -7,6 +8,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ThemeProvider from '@/lib/ThemeProvider';
+import { base44 } from '@/api/base44Client';
 import { AssistantProvider } from '@/components/assistant/AssistantContext';
 import AssistantSheet from '@/components/assistant/AssistantSheet';
 
