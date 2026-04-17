@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, MapPin, Upload, Plus, Trash2, Check, Flame } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import OnboardingGuideChat from '@/components/onboarding/OnboardingGuideChat';
 
 const STEPS = ['Basic Info', 'Location', 'Media', 'Menu', 'Go Live', 'Kitchen Check', 'Preview'];
 
@@ -410,6 +411,11 @@ export default function OnboardTruck() {
             </button>
           </div>
         )}
+      </div>
+
+      {/* Launch Coach — contextual AI helper */}
+      <div className="fixed bottom-24 left-4 right-4 z-40">
+        <OnboardingGuideChat currentStep={step} vendorEmail={form.email} />
       </div>
 
       {/* Sticky nav */}
