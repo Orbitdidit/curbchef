@@ -148,6 +148,15 @@
       "type": "string",
       "default": "25\u201340",
       "description": "Estimated delivery time range e.g. '25\u201340'"
+    },
+    "drop_tokens": {
+      "type": "number",
+      "default": 2,
+      "description": "Curb Drop tokens remaining this week. Each Drop costs 1 token."
+    },
+    "tokens_reset_at": {
+      "type": "string",
+      "description": "ISO timestamp of when tokens were last reset (every Monday midnight)"
     }
   },
   "required": [

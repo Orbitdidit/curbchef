@@ -116,8 +116,8 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
           </button>
         )}
 
-        {/* Plan badge */}
-        <div className="flex items-center gap-2 mb-3">
+        {/* Plan badge + Drop Tokens */}
+        <div className="flex gap-2 mb-3">
           <Link to="/vendor/plans" className="flex-1 flex items-center justify-between px-4 py-3 rounded-2xl"
             style={{ background: 'rgba(119,255,200,0.06)', border: '1px solid rgba(119,255,200,0.15)' }}>
             <div>
@@ -130,6 +130,50 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
             </div>
           </Link>
         </div>
+
+        {/* Curb Drop Token Counter */}
+        {(() => {
+          const tokens = truck.drop_tokens ?? 2;
+          const maxTokens = { free: 2, standard: 10, plus: 25, premium: 60 }[truck.vendor_plan || 'free'] ?? 2;
+          const isEmpty = tokens === 0;
+          return (
+            <div className="mb-5 p-4 rounded-2xl flex items-center gap-4"
+              style={{
+                background: isEmpty ? 'rgba(253,89,30,0.07)' : 'rgba(251,191,36,0.07)',
+                border: `1px solid ${isEmpty ? 'rgba(253,89,30,0.25)' : 'rgba(251,191,36,0.25)'}`,
+              }}>
+              <div className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0 text-xl"
+                style={{ background: isEmpty ? 'rgba(253,89,30,0.15)' : 'rgba(251,191,36,0.15)' }}>
+                🪂
+              </div>
+              <div className="flex-1">
+                <p className="font-heading font-black text-base leading-tight"
+                  style={{ color: isEmpty ? '#fd591e' : '#fbbf24' }}>
+                  {isEmpty ? 'No Drops left' : `${tokens} Drop${tokens !== 1 ? 's' : ''} left this week`}
+                </p>
+                <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>
+                  {isEmpty ? 'Resets Monday · Upgrade for more' : `${tokens} / ${maxTokens} · Resets every Monday`}
+                </p>
+              </div>
+              {/* Pip progress */}
+              <div className="flex gap-1 flex-shrink-0">
+                {Array.from({ length: Math.min(maxTokens, 5) }).map((_, i) => (
+                  <div key={i} className="w-2.5 h-2.5 rounded-full"
+                    style={{
+                      background: i < Math.min(tokens, 5)
+                        ? (isEmpty ? '#fd591e' : '#fbbf24')
+                        : 'rgba(186,203,192,0.15)',
+                    }} />
+                ))}
+                {maxTokens > 5 && (
+                  <span className="text-[9px] font-black self-center ml-0.5" style={{ color: '#bacbc0' }}>
+                    +{maxTokens - 5}
+                  </span>
+                )}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Stripe Connect */}
         <div className="mb-5">
