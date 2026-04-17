@@ -6,6 +6,7 @@ import { ChevronLeft, Save, Trash2, Video, Image, Star, Truck, Plus, Pencil, X }
 import { useToast } from '@/components/ui/use-toast';
 import MediaUpload from '@/components/shared/MediaUpload';
 import AIAssist from '@/components/shared/AIAssist';
+import ContentCuratorCard from '@/components/admin/ContentCuratorCard';
 
 const SECTION_ICONS = {
   hero_video: Video,
@@ -398,6 +399,9 @@ export default function HomepageCMS() {
       </div>
 
       <div className="px-5 py-6 flex flex-col gap-4">
+        {/* AI Content Curator */}
+        <ContentCuratorCard />
+
         {/* Live Now videos manager — always shown first */}
         <LiveVideosManager />
 
