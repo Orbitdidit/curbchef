@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ChevronLeft, Heart, Star, Minus, Plus } from 'lucide-react';
-import { addToCart as addItemToCart } from '@/lib/cartStore';
+import { addToCart as addItemToCart, getCart, updateQuantity } from '@/lib/cartStore';
 import { useToast } from '@/components/ui/use-toast';
 
 const SPICE = ['Mild', 'Medium', 'High'];
@@ -27,6 +27,16 @@ export default function ItemDetail() {
     queryFn: () => base44.entities.FoodTruck.get(truckId),
   });
 
+  // Pre-fill qty from cart if item already added
+  useEffect(() => {
+    if (!item) return;
+    const cartItem = getCart().items.find(i => i.item_id === item.id);
+    if (cartItem) setQty(cartItem.quantity);
+  }, [item?.id]);
+
+  const cartItem = item ? getCart().items.find(i => i.item_id === item.id) : null;
+  const isInCart = !!cartItem;
+
   if (!item) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: '#0d1517' }}>
@@ -47,16 +57,21 @@ export default function ItemDetail() {
   };
 
   const handleAddToCart = () => {
-    addItemToCart({
-      item_id: item.id,
-      name: item.name,
-      price: item.price + addOnTotal,
-      quantity: qty,
-      image_url: item.image_url,
-      add_ons: selectedAddOns,
-    }, truckId, truck?.name || 'Food Truck');
-
-    toast({ title: 'Added to cart!', description: `${qty}x ${item.name}` });
+    if (isInCart) {
+      // Update quantity directly
+      updateQuantity(item.id, qty);
+      toast({ title: 'Cart updated!', description: `${qty}x ${item.name}` });
+    } else {
+      addItemToCart({
+        item_id: item.id,
+        name: item.name,
+        price: item.price + addOnTotal,
+        quantity: qty,
+        image_url: item.image_url,
+        add_ons: selectedAddOns,
+      }, truckId, truck?.name || 'Food Truck');
+      toast({ title: 'Added to cart!', description: `${qty}x ${item.name}` });
+    }
     navigate(`/truck/${truckId}`);
   };
 
@@ -257,7 +272,7 @@ export default function ItemDetail() {
               boxShadow: '0 0 20px rgba(119,255,200,0.4)',
             }}
           >
-            <span>Add to Cart</span>
+            <span>{isInCart ? 'Update Cart' : 'Add to Cart'}</span>
             <span>${total.toFixed(2)}</span>
           </button>
         </div>

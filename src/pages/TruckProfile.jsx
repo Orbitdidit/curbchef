@@ -1,15 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCloseCountdown } from '@/hooks/useCloseCountdown';
 import ReliabilityBadge from '@/components/shared/ReliabilityBadge';
 import {
-  ChevronLeft, Share2, Star, Clock, Plus, Play,
+  ChevronLeft, Share2, Star, Clock, Plus, Minus, Play,
   UserPlus, UserCheck, MapPin, ShoppingBag, Flame, Radio, Zap
 } from 'lucide-react';
 import DeliveryBadge from '@/components/truck/DeliveryBadge';
 import CoverMediaCarousel from '@/components/truck/CoverMediaCarousel';
+import { getCart, addToCart, updateQuantity, subscribe as subscribeCart } from '@/lib/cartStore';
 import { useFollow } from '@/hooks/useFollow';
 import { addToCart } from '@/lib/cartStore';
 import { useToast } from '@/components/ui/use-toast';
@@ -23,6 +24,15 @@ export default function TruckProfile() {
   const { toast } = useToast();
   const [tab, setTab] = useState('Menu');
   const [menuFilter, setMenuFilter] = useState('all');
+  const [cartState, setCartState] = useState(() => getCart());
+
+  useEffect(() => {
+    const unsub = subscribeCart(c => setCartState({ ...c }));
+    return unsub;
+  }, []);
+
+  const getItemQty = (itemId) => cartState.items.find(i => i.item_id === itemId)?.quantity || 0;
+  const totalCartCount = cartState.items.reduce((s, i) => s + i.quantity, 0);
 
   const { data: truck } = useQuery({
     queryKey: ['truck', id],
@@ -57,6 +67,42 @@ export default function TruckProfile() {
     e.stopPropagation();
     addToCart({ ...item, item_id: item.id, quantity: 1 }, id, truck?.name);
     toast({ title: `${item.name} added`, description: `$${item.price?.toFixed(2)}`, duration: 1500 });
+  };
+
+  const handleDecrement = (e, item) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const qty = getItemQty(item.id);
+    updateQuantity(item.id, qty - 1);
+  };
+
+  // Reusable inline qty counter rendered on menu rows
+  const QtyControl = ({ item }) => {
+    const qty = getItemQty(item.id);
+    if (qty === 0) {
+      return (
+        <button onClick={(e) => handleAddToCart(e, item)}
+          className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', boxShadow: '0 0 10px rgba(119,255,200,0.2)' }}>
+          <Plus className="w-4 h-4" style={{ color: '#003826' }} />
+        </button>
+      );
+    }
+    return (
+      <div className="flex items-center gap-2 flex-shrink-0" onClick={e => { e.preventDefault(); e.stopPropagation(); }}>
+        <button onClick={(e) => handleDecrement(e, item)}
+          className="w-8 h-8 rounded-full flex items-center justify-center"
+          style={{ background: '#2e3638' }}>
+          <Minus className="w-3.5 h-3.5" style={{ color: '#dff0e8' }} />
+        </button>
+        <span className="font-heading font-black text-sm w-4 text-center" style={{ color: '#77ffc8' }}>{qty}</span>
+        <button onClick={(e) => handleAddToCart(e, item)}
+          className="w-8 h-8 rounded-full flex items-center justify-center"
+          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}>
+          <Plus className="w-3.5 h-3.5" style={{ color: '#003826' }} />
+        </button>
+      </div>
+    );
   };
 
   const handleShare = () => {
@@ -288,11 +334,7 @@ export default function TruckProfile() {
                             </div>
                             <div className="flex items-center justify-between mt-3">
                               <p className="font-heading font-black text-base" style={{ color: '#77ffc8' }}>${item.price?.toFixed(2)}</p>
-                              <button onClick={(e) => handleAddToCart(e, item)}
-                                className="w-8 h-8 rounded-full flex items-center justify-center"
-                                style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}>
-                                <Plus className="w-3.5 h-3.5" style={{ color: '#003826' }} />
-                              </button>
+                              <QtyControl item={item} />
                             </div>
                           </Link>
                         ))}
@@ -324,11 +366,7 @@ export default function TruckProfile() {
                               <p className="text-xs leading-snug mb-2 line-clamp-2" style={{ color: '#bacbc0' }}>{item.description}</p>
                               <p className="font-heading font-black text-base" style={{ color: '#77ffc8' }}>${item.price?.toFixed(2)}</p>
                             </div>
-                            <button onClick={(e) => handleAddToCart(e, item)}
-                              className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', boxShadow: '0 0 10px rgba(119,255,200,0.2)' }}>
-                              <Plus className="w-4 h-4" style={{ color: '#003826' }} />
-                            </button>
+                            <QtyControl item={item} />
                           </Link>
                         ))}
                       </div>
@@ -357,11 +395,7 @@ export default function TruckProfile() {
                       <p className="text-xs leading-snug mb-2 line-clamp-2" style={{ color: '#bacbc0' }}>{item.description}</p>
                       <p className="font-heading font-black text-base" style={{ color: '#77ffc8' }}>${item.price?.toFixed(2)}</p>
                     </div>
-                    <button onClick={(e) => handleAddToCart(e, item)}
-                      className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}>
-                      <Plus className="w-4 h-4" style={{ color: '#003826' }} />
-                    </button>
+                    <QtyControl item={item} />
                   </Link>
                 ))}
               </div>
@@ -417,11 +451,7 @@ export default function TruckProfile() {
                       <p className="text-xs leading-snug mb-2 line-clamp-3" style={{ color: '#bacbc0' }}>{item.description}</p>
                       <p className="font-heading font-black text-lg" style={{ color: '#77ffc8' }}>${item.price?.toFixed(2)}</p>
                     </div>
-                    <button onClick={(e) => handleAddToCart(e, item)}
-                      className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}>
-                      <Plus className="w-4 h-4" style={{ color: '#003826' }} />
-                    </button>
+                    <QtyControl item={item} />
                   </Link>
                 ))}
               </div>
@@ -498,7 +528,13 @@ export default function TruckProfile() {
               boxShadow: isOpen ? '0 0 28px rgba(119,255,200,0.4), 0 8px 32px rgba(0,0,0,0.4)' : 'none',
             }}>
             <ShoppingBag className="w-5 h-5" />
-            {isOpen ? 'Order From This Truck' : 'Truck is Closed'}
+            <span className="flex-1 text-center">{isOpen ? 'Order From This Truck' : 'Truck is Closed'}</span>
+            {isOpen && totalCartCount > 0 && (
+              <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black"
+                style={{ background: 'rgba(0,56,38,0.35)' }}>
+                {totalCartCount}
+              </span>
+            )}
           </button>
         </Link>
       </div>

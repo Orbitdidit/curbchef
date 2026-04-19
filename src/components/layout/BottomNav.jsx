@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Home, Compass, Radio, Tag, User } from 'lucide-react';
 import { useTabNav, TAB_ROOTS } from '@/hooks/useTabNav';
+import { subscribe, getCartCount } from '@/lib/cartStore';
 
 const tabs = [
   { path: '/', icon: Home, label: 'Home' },
@@ -14,6 +15,8 @@ const tabs = [
 export default function BottomNav() {
   const { pathname } = useLocation();
   const { navigateTab } = useTabNav();
+  const [cartCount, setCartCount] = useState(getCartCount());
+  useEffect(() => subscribe(() => setCartCount(getCartCount())), []);
 
   return (
     <nav
@@ -68,12 +71,21 @@ export default function BottomNav() {
                 onClick={() => navigateTab(path)}
                 className="flex flex-col items-center gap-1 flex-1 py-2 min-h-[44px] justify-center"
               >
-                <Icon
-                  className="w-5 h-5 transition-colors"
-                  style={{ color: active ? '#77ffc8' : '#bacbc0' }}
-                  strokeWidth={active ? 2.5 : 1.8}
-                  aria-hidden="true"
-                />
+                <div className="relative">
+                  <Icon
+                    className="w-5 h-5 transition-colors"
+                    style={{ color: active ? '#77ffc8' : '#bacbc0' }}
+                    strokeWidth={active ? 2.5 : 1.8}
+                    aria-hidden="true"
+                  />
+                  {/* Cart count badge on Home tab */}
+                  {path === '/' && cartCount > 0 && (
+                    <span className="absolute -top-1.5 -right-2 min-w-[16px] h-4 rounded-full flex items-center justify-center text-[9px] font-black text-white px-1"
+                      style={{ background: '#ff3b30' }}>
+                      {cartCount}
+                    </span>
+                  )}
+                </div>
                 <span
                   className="text-[10px] font-medium transition-colors"
                   style={{ color: active ? '#77ffc8' : '#bacbc0' }}
