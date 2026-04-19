@@ -308,12 +308,9 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
 
         {/* Dashboard Dave */}
         <DashboardDave truck={truck} menuItems={menuItems} />
-      </div>
 
-      {/* Right column on desktop — Active Orders */}
-      <div className="px-5 lg:px-0 lg:pt-5">
-        {/* Active Orders */}
-        <div>
+        {/* Right column on desktop — Active Orders */}
+        <div className="lg:pt-0">
           <div className="flex items-center justify-between mb-3">
             <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>
               ACTIVE ORDERS ({activeOrders.length})
@@ -360,11 +357,11 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
           )}
         </div>
       </div>
+
       {/* Create Drop Modal */}
       {showDropModal && (
         <CreateCurbDropModal truck={truck} onClose={() => setShowDropModal(false)} />
       )}
-    </div>
     </div>
   );
 }
