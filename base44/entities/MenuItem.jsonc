@@ -37,6 +37,11 @@
       "type": "boolean",
       "default": false
     },
+    "has_spice_option": {
+      "type": "boolean",
+      "default": false,
+      "description": "Vendor-controlled toggle to show spice level selector on item detail page"
+    },
     "tags": {
       "type": "array",
       "items": {

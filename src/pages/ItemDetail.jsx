@@ -15,7 +15,7 @@ export default function ItemDetail() {
 
   const [qty, setQty] = useState(1);
   const [selectedAddOns, setSelectedAddOns] = useState([]);
-  const [spice, setSpice] = useState('Medium');
+  const [spice, setSpice] = useState(null);
 
   const { data: item } = useQuery({
     queryKey: ['item', itemId],
@@ -130,25 +130,33 @@ export default function ItemDetail() {
 
         <p className="text-sm leading-relaxed mb-6" style={{ color: '#bacbc0' }}>{item.description}</p>
 
-        {/* Spice Level */}
-        <div className="mb-6">
-          <h3 className="font-heading font-bold text-sm mb-3" style={{ color: '#dff0e8' }}>SPICE LEVEL</h3>
-          <div className="flex gap-3">
-            {SPICE.map(s => (
-              <button
-                key={s}
-                onClick={() => setSpice(s)}
-                className="flex-1 py-2.5 rounded-full text-sm font-bold transition-all"
-                style={spice === s
-                  ? { background: '#fd591e', color: 'white', boxShadow: '0 0 12px rgba(253,89,30,0.4)' }
-                  : { background: '#192123', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }
-                }
-              >
-                {s}
-              </button>
-            ))}
+        {/* Spice Level — only shown when vendor enabled it AND category/tags support it */}
+        {item.has_spice_option && (
+          item.category === 'mains' ||
+          item.tags?.some(t => ['spicy', 'hot'].includes(t.toLowerCase()))
+        ) && (
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>SPICE LEVEL</h3>
+              <span className="text-[10px]" style={{ color: '#bacbc0' }}>Optional</span>
+            </div>
+            <div className="flex gap-3">
+              {SPICE.map(s => (
+                <button
+                  key={s}
+                  onClick={() => setSpice(prev => prev === s ? null : s)}
+                  className="flex-1 py-2.5 rounded-full text-sm font-bold transition-all"
+                  style={spice === s
+                    ? { background: '#fd591e', color: 'white', boxShadow: '0 0 12px rgba(253,89,30,0.4)' }
+                    : { background: '#192123', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }
+                  }
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Add-ons */}
         {item.add_ons?.length > 0 && (

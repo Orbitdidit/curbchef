@@ -23,7 +23,7 @@ export default function VendorMenu() {
   const [showForm, setShowForm] = useState(false);
   const [showCategoryDrawer, setShowCategoryDrawer] = useState(false);
   const [editItem, setEditItem] = useState(null);
-  const [form, setForm] = useState({ name: '', description: '', price: '', category: 'mains', image_url: '', is_available: true, is_special: false });
+  const [form, setForm] = useState({ name: '', description: '', price: '', category: 'mains', image_url: '', is_available: true, is_special: false, has_spice_option: false });
 
   const { data: truck } = useQuery({
     queryKey: ['my-truck'],
@@ -53,7 +53,7 @@ export default function VendorMenu() {
       queryClient.invalidateQueries({ queryKey: ['vendor-menu'] });
       setShowForm(false);
       setEditItem(null);
-      setForm({ name: '', description: '', price: '', category: 'mains', image_url: '', is_available: true, is_special: false });
+      setForm({ name: '', description: '', price: '', category: 'mains', image_url: '', is_available: true, is_special: false, has_spice_option: false });
     },
   });
 
@@ -64,7 +64,7 @@ export default function VendorMenu() {
 
   const openEdit = (item) => {
     setEditItem(item);
-    setForm({ name: item.name, description: item.description || '', price: String(item.price), category: item.category || 'mains', image_url: item.image_url || '', is_available: item.is_available !== false, is_special: item.is_special || false });
+    setForm({ name: item.name, description: item.description || '', price: String(item.price), category: item.category || 'mains', image_url: item.image_url || '', is_available: item.is_available !== false, is_special: item.is_special || false, has_spice_option: item.has_spice_option || false });
     setShowForm(true);
   };
 
@@ -78,7 +78,7 @@ export default function VendorMenu() {
           <h1 className="font-heading font-bold text-lg">Menu</h1>
         </div>
         <button
-          onClick={() => { setEditItem(null); setForm({ name: '', description: '', price: '', category: 'mains', image_url: '', is_available: true, is_special: false }); setShowForm(true); }}
+          onClick={() => { setEditItem(null); setForm({ name: '', description: '', price: '', category: 'mains', image_url: '', is_available: true, is_special: false, has_spice_option: false }); setShowForm(true); }}
           className="flex items-center gap-1.5 bg-primary text-primary-foreground px-4 py-2 rounded-xl text-xs font-bold"
         >
           <Plus className="w-3.5 h-3.5" /> Add Item
@@ -151,6 +151,13 @@ export default function VendorMenu() {
             <div className="flex items-center justify-between">
               <span className="text-sm">Special Item</span>
               <Switch checked={form.is_special} onCheckedChange={v => setForm({ ...form, is_special: v })} />
+            </div>
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-sm">Spice Level Selector</span>
+                <p className="text-[10px] text-muted-foreground">Show spice options on item page</p>
+              </div>
+              <Switch checked={form.has_spice_option} onCheckedChange={v => setForm({ ...form, has_spice_option: v })} />
             </div>
             <button
               onClick={() => saveMutation.mutate(form)}
