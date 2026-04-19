@@ -32,6 +32,30 @@
     "cover_image_url": {
       "type": "string"
     },
+    "cover_media": {
+      "type": "array",
+      "description": "Up to 4 media items for the hero carousel",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "image",
+              "video",
+              "gif"
+            ]
+          },
+          "url": {
+            "type": "string"
+          },
+          "thumbnail_url": {
+            "type": "string",
+            "description": "Optional poster/thumbnail for videos"
+          }
+        }
+      }
+    },
     "rating": {
       "type": "number"
     },

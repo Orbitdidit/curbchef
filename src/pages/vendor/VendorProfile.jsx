@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Save } from 'lucide-react';
 import VendorGate from '@/components/vendor/VendorGate';
 import MediaUpload from '@/components/shared/MediaUpload';
+import CoverMediaUploader from '@/components/vendor/CoverMediaUploader';
 import { useToast } from '@/components/ui/use-toast';
 
 const CUISINE_OPTIONS = ['tacos','burgers','bbq','seafood','asian','fusion','desserts','vegan','pizza','soul_food'];
@@ -22,6 +23,7 @@ function VendorProfileInner({ truck }) {
     phone: truck.phone || '',
     image_url: truck.image_url || '',
     cover_image_url: truck.cover_image_url || '',
+    cover_media: truck.cover_media || [],
     live_description: truck.live_description || '',
     delivery_mode: truck.delivery_mode || 'pickup_only',
     delivery_fee: truck.delivery_fee || 0,
@@ -66,10 +68,16 @@ function VendorProfileInner({ truck }) {
       </div>
 
       <div className="px-5 pt-5 flex flex-col gap-5">
-        {/* Cover photo */}
-        <MediaUpload type="image" label="Cover Photo" value={form.cover_image_url}
+        {/* Cover Media Carousel */}
+        <CoverMediaUploader
+          value={form.cover_media}
+          onChange={v => set('cover_media', v)}
+        />
+
+        {/* Fallback cover photo (used if no cover_media set) */}
+        <MediaUpload type="image" label="Fallback Cover Photo" value={form.cover_image_url}
           onChange={v => set('cover_image_url', v)}
-          hint="Shown at the top of your truck page · 16:9 recommended" />
+          hint="Used if no carousel media is uploaded · 16:9 recommended" />
 
         {/* Logo / avatar */}
         <MediaUpload type="image" label="Truck Logo / Avatar" value={form.image_url}

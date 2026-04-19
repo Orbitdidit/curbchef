@@ -9,6 +9,7 @@ import {
   UserPlus, UserCheck, MapPin, ShoppingBag, Flame, Radio, Zap
 } from 'lucide-react';
 import DeliveryBadge from '@/components/truck/DeliveryBadge';
+import CoverMediaCarousel from '@/components/truck/CoverMediaCarousel';
 import { useFollow } from '@/hooks/useFollow';
 import { addToCart } from '@/lib/cartStore';
 import { useToast } from '@/components/ui/use-toast';
@@ -90,20 +91,15 @@ export default function TruckProfile() {
   return (
     <div className="min-h-screen pb-32" style={{ background: '#0d1517' }}>
 
-      {/* ── HERO IMAGE ── */}
-      <div className="relative overflow-hidden" style={{ height: '56vw', minHeight: 240, maxHeight: 340 }}>
-        <img
-          src={truck.cover_image_url || truck.image_url || 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=900'}
-          alt={truck.name}
-          className="w-full h-full object-cover"
-          style={{ animation: 'heroZoom 14s ease-in-out infinite alternate' }}
+      {/* ── HERO CAROUSEL ── */}
+      <div className="relative">
+        <CoverMediaCarousel
+          media={truck.cover_media || []}
+          fallbackUrl={truck.cover_image_url || truck.image_url || 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=900'}
         />
-        {/* gradient bottom fade into card */}
-        <div className="absolute inset-0"
-          style={{ background: 'linear-gradient(180deg, rgba(13,21,23,0.3) 0%, rgba(13,21,23,0.05) 50%, rgba(13,21,23,0.75) 100%)' }} />
 
-        {/* Nav buttons */}
-        <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 pt-[max(1rem,env(safe-area-inset-top))]">
+        {/* Nav buttons overlay */}
+        <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 pt-[max(1rem,env(safe-area-inset-top))] z-10">
           <button onClick={() => navigate(-1)}
             className="w-10 h-10 rounded-2xl flex items-center justify-center"
             style={{ background: 'rgba(13,21,23,0.7)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.1)' }}>
@@ -117,7 +113,7 @@ export default function TruckProfile() {
         </div>
 
         {/* HOT & FRESH / LIVE badge */}
-        <div className="absolute bottom-4 left-4">
+        <div className="absolute bottom-10 left-4 z-10">
           {truck.is_live ? (
             <span className="flex items-center gap-1.5 text-[11px] font-black px-3 py-1.5 rounded-full"
               style={{ background: 'rgba(255,40,40,0.92)', color: 'white', backdropFilter: 'blur(8px)', boxShadow: '0 0 16px rgba(255,60,60,0.5)' }}>
