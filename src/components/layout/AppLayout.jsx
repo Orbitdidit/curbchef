@@ -34,23 +34,52 @@ export default function AppLayout() {
   }, [pathname]);
 
   return (
-    <div className="min-h-screen relative" style={{ background: '#0d1517', maxWidth: '480px', margin: '0 auto' }}>
-      {/* Top-right hamburger menu — floats above page content */}
-      <div className="fixed top-[max(1rem,env(safe-area-inset-top))] right-4 z-30">
-        <TopMenuBar />
+    /* Desktop: dark side panels flanking a centered phone-frame */
+    <div className="min-h-screen flex items-stretch justify-center" style={{ background: '#080f11' }}>
+      {/* Left side panel — desktop only */}
+      <div className="hidden lg:flex flex-1 items-center justify-end pr-8 max-w-xs">
+        <div className="text-right">
+          <p className="font-heading font-black text-2xl" style={{ color: '#77ffc8' }}>CurbChef</p>
+          <p className="text-xs mt-1" style={{ color: '#bacbc0' }}>Street food, delivered</p>
+        </div>
       </div>
-      <main
-        id="main-content"
-        ref={containerRef}
-        onScroll={handleScroll}
-        className="pb-24"
-        style={{ overflowY: 'auto', height: '100dvh' }}
-        tabIndex={-1}
+
+      {/* Phone frame */}
+      <div
+        className="relative w-full lg:w-[480px] lg:shadow-2xl"
+        style={{ background: '#0d1517', maxWidth: '480px', minHeight: '100dvh' }}
       >
-        <Outlet />
-      </main>
-      <CartFloatingButton />
-      <BottomNav />
+        {/* Top-right hamburger menu */}
+        <div className="fixed top-[max(1rem,env(safe-area-inset-top))] z-30" style={{ right: 'max(1rem, calc(50% - 225px))' }}>
+          <TopMenuBar />
+        </div>
+        <main
+          id="main-content"
+          ref={containerRef}
+          onScroll={handleScroll}
+          className="pb-24"
+          style={{ overflowY: 'auto', height: '100dvh' }}
+          tabIndex={-1}
+        >
+          <Outlet />
+        </main>
+        <CartFloatingButton />
+        <BottomNav />
+      </div>
+
+      {/* Right side panel — desktop only */}
+      <div className="hidden lg:flex flex-1 items-center justify-start pl-8 max-w-xs">
+        <div className="space-y-3">
+          <div className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(119,255,200,0.05)', border: '1px solid rgba(119,255,200,0.1)' }}>
+            <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: '#77ffc8' }}>OPEN NOW</p>
+            <p className="font-heading font-black text-lg" style={{ color: '#dff0e8' }}>Houston, TX</p>
+          </div>
+          <div className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(253,89,30,0.05)', border: '1px solid rgba(253,89,30,0.12)' }}>
+            <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: '#fd591e' }}>GET THE APP</p>
+            <p className="text-xs" style={{ color: '#bacbc0' }}>iOS &amp; Android coming soon</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

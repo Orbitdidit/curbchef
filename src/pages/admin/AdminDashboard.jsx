@@ -105,7 +105,7 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen dot-bg" style={{ background: '#0d1517' }}>
       {/* Header */}
-      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-0" style={{ background: '#151d1f' }}>
+      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-0 lg:max-w-5xl lg:mx-auto" style={{ background: '#151d1f' }}>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <button onClick={() => navigate('/')} className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#192123' }}>
@@ -150,13 +150,13 @@ export default function AdminDashboard() {
 
       {/* Applications Tab */}
       {activeTab === 'applications' && (
-        <div className="px-5 pt-5 pb-16">
+        <div className="px-5 pt-5 pb-16 lg:max-w-5xl lg:mx-auto">
           <ApplicationsPanel />
         </div>
       )}
 
       {/* Overview Tab */}
-      {activeTab === 'overview' && <div className="px-5 pt-5 pb-16">
+      {activeTab === 'overview' && <div className="px-5 pt-5 pb-16 lg:max-w-5xl lg:mx-auto lg:grid lg:grid-cols-2 lg:gap-x-8">
         {/* CMS Quick Access */}
         <Link to="/admin/launch">
           <div className="flex items-center gap-3 p-4 rounded-2xl mb-3"

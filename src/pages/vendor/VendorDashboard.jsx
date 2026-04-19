@@ -83,7 +83,8 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         </Link>
       </div>
 
-      <div className="px-5 pt-5">
+      {/* Desktop: 2-col grid; mobile: single column */}
+      <div className="px-5 pt-5 lg:max-w-5xl lg:mx-auto lg:grid lg:grid-cols-[1fr_380px] lg:gap-8 lg:items-start">
         {/* Truck identity */}
         <div className="flex items-center justify-between mb-5">
           <div>
@@ -307,7 +308,10 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
 
         {/* Dashboard Dave */}
         <DashboardDave truck={truck} menuItems={menuItems} />
+      </div>
 
+      {/* Right column on desktop — Active Orders */}
+      <div className="px-5 lg:px-0 lg:pt-5">
         {/* Active Orders */}
         <div>
           <div className="flex items-center justify-between mb-3">
@@ -355,7 +359,8 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
             </div>
           )}
         </div>
-      </div>
+      </div>{/* end right column */}
+    </div>{/* end grid */}
       {/* Create Drop Modal */}
       {showDropModal && (
         <CreateCurbDropModal truck={truck} onClose={() => setShowDropModal(false)} />
