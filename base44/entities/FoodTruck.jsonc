@@ -23,7 +23,11 @@
         "desserts",
         "vegan",
         "pizza",
-        "soul_food"
+        "soul_food",
+        "cajun-fusion",
+        "grilled-fusion",
+        "mediterranean",
+        "fusion-sliders"
       ]
     },
     "image_url": {
@@ -109,6 +113,11 @@
     "is_approved": {
       "type": "boolean",
       "default": false
+    },
+    "is_sample": {
+      "type": "boolean",
+      "default": false,
+      "description": "True for demo/example trucks \u2014 exclude from analytics and live/nearby feeds"
     },
     "tags": {
       "type": "array",

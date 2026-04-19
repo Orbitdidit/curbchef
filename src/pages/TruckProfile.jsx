@@ -157,6 +157,20 @@ export default function TruckProfile() {
           </button>
         </div>
 
+        {/* DEMO TRUCK banner */}
+        {truck.is_sample && (
+          <div className="absolute top-16 left-0 right-0 z-10 mx-4">
+            <div className="flex items-center gap-2 px-4 py-2.5 rounded-2xl"
+              style={{ background: 'rgba(251,191,36,0.12)', border: '1px solid rgba(251,191,36,0.4)', backdropFilter: 'blur(10px)' }}>
+              <span className="text-[10px] font-black px-2 py-0.5 rounded-full flex-shrink-0"
+                style={{ background: 'rgba(251,191,36,0.25)', color: '#fbbf24' }}>DEMO TRUCK</span>
+              <p className="text-xs" style={{ color: '#fbbf24' }}>
+                This is an example truck showing what your CurbChef page can look like. <a href="/onboard-truck" className="underline font-bold">Create your own!</a>
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* HOT & FRESH / LIVE badge */}
         <div className="absolute bottom-10 left-4 z-10">
           {truck.is_live ? (

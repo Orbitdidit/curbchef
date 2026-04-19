@@ -48,13 +48,15 @@ export default function Home() {
     [trucks, category]
   );
 
-  const liveTrucks = trucks.filter(t => t.is_live);
+  // Real trucks only (exclude sample/demo trucks from curated feeds)
+  const realTrucks = trucks.filter(t => !t.is_sample);
+  const liveTrucks = realTrucks.filter(t => t.is_live);
   // Exclude trucks with reliability score below 50 from Open Now
-  const openTrucks = trucks.filter(t => t.status === 'open' && (t.reliability_score ?? 100) >= 50);
-  const topRated = [...trucks].sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 8);
-  const newTrucks = [...trucks].sort((a, b) => new Date(b.created_date) - new Date(a.created_date)).slice(0, 8);
+  const openTrucks = realTrucks.filter(t => t.status === 'open' && (t.reliability_score ?? 100) >= 50);
+  const topRated = [...realTrucks].sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 8);
+  const newTrucks = [...realTrucks].sort((a, b) => new Date(b.created_date) - new Date(a.created_date)).slice(0, 8);
   // Late night: simulate with is_live or just show first 8 for now
-  const lateNight = trucks.filter(t => t.status === 'open').slice(0, 8);
+  const lateNight = realTrucks.filter(t => t.status === 'open').slice(0, 8);
 
   const firstName = user?.full_name?.split(' ')[0] || null;
 
@@ -172,7 +174,7 @@ export default function Home() {
         title="Trending Near You"
         emoji="🔥"
         badge="HOT"
-        trucks={trucks.slice(0, 8)}
+        trucks={realTrucks.slice(0, 8)}
         seeAllHref="/"
       />
 
