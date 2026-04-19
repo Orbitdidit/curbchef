@@ -359,12 +359,12 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
             </div>
           )}
         </div>
-      </div>{/* end right column */}
+      </div>
       {/* Create Drop Modal */}
       {showDropModal && (
         <CreateCurbDropModal truck={truck} onClose={() => setShowDropModal(false)} />
       )}
-    </div>{/* end grid */}
+    </div>
     </div>
   );
 }
