@@ -12,7 +12,6 @@ import DeliveryBadge from '@/components/truck/DeliveryBadge';
 import CoverMediaCarousel from '@/components/truck/CoverMediaCarousel';
 import { getCart, addToCart, updateQuantity, subscribe as subscribeCart } from '@/lib/cartStore';
 import { useFollow } from '@/hooks/useFollow';
-import { addToCart } from '@/lib/cartStore';
 import { useToast } from '@/components/ui/use-toast';
 import { useUserLocation, distanceMiles } from '@/lib/geoUtils';
 
