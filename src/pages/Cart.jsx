@@ -26,55 +26,75 @@ export default function Cart() {
 
   const handlePlace = async () => {
     setPlacing(true);
-    const user = await base44.auth.me();
     const code = Math.random().toString(36).substring(2, 6).toUpperCase();
 
-    const res = await base44.functions.invoke('stripeCheckout', {
-      truck_id: cart.truckId,
-      items: cart.items,
-      subtotal,
-      tip: tipAmt,
-      pickup_time: pickupMode === 'asap' ? 'ASAP' : '7:30 PM',
-      pickup_code: code,
-      payment_method: 'card',
-      success_url: `${window.location.origin}/order/{CHECKOUT_SESSION_ID}`,
-      cancel_url: `${window.location.origin}/cart`,
-    });
+    // Auto-reset after 15 seconds
+    const timeout = setTimeout(() => {
+      setPlacing(false);
+      toast({ title: 'Checkout timed out', description: 'Please try again.', variant: 'destructive' });
+    }, 15000);
 
-    if (res.data?.checkout_url) {
-      // Stripe Checkout — redirect
-      clearCart();
-      window.location.href = res.data.checkout_url;
-      return;
-    }
+    try {
+      const user = await base44.auth.me();
 
-    if (res.data?.truck_not_connected) {
-      // Truck hasn't connected Stripe yet — fall back to direct order creation
-      toast({ title: 'Payment processing unavailable', description: 'Placing order directly — vendor will collect payment at pickup.', duration: 4000 });
-      const order = await base44.entities.Order.create({
+      const res = await base44.functions.invoke('stripeCheckout', {
         truck_id: cart.truckId,
-        truck_name: cart.truckName,
-        customer_email: user.email,
-        customer_name: user.full_name,
         items: cart.items,
         subtotal,
         tip: tipAmt,
-        total,
-        gross_amount: total,
-        status: 'placed',
         pickup_time: pickupMode === 'asap' ? 'ASAP' : '7:30 PM',
         pickup_code: code,
         payment_method: 'card',
-        is_test_payment: false,
+        success_url: `${window.location.origin}/order/{CHECKOUT_SESSION_ID}`,
+        cancel_url: `${window.location.origin}/cart`,
       });
-      clearCart();
-      navigate(`/order/${order.id}`);
-      setPlacing(false);
-      return;
-    }
 
-    toast({ title: 'Error', description: res.data?.error || 'Could not start checkout', variant: 'destructive' });
-    setPlacing(false);
+      clearTimeout(timeout);
+
+      if (res.data?.checkout_url) {
+        clearCart();
+        window.location.href = res.data.checkout_url;
+        return;
+      }
+
+      if (res.data?.truck_not_connected) {
+        toast({ title: "This truck isn't accepting payments yet.", description: "Order saved — you'll pay at pickup.", duration: 4000 });
+        const order = await base44.entities.Order.create({
+          truck_id: cart.truckId,
+          truck_name: cart.truckName,
+          customer_email: user.email,
+          customer_name: user.full_name,
+          items: cart.items,
+          subtotal,
+          tip: tipAmt,
+          total,
+          gross_amount: total,
+          status: 'placed',
+          pickup_time: pickupMode === 'asap' ? 'ASAP' : '7:30 PM',
+          pickup_code: code,
+          payment_method: 'card',
+          is_test_payment: false,
+        });
+        clearCart();
+        navigate(`/order/${order.id}`);
+        setPlacing(false);
+        return;
+      }
+
+      if (res.data?.error) {
+        toast({ title: 'Checkout error', description: res.data.error, variant: 'destructive' });
+        setPlacing(false);
+        return;
+      }
+
+      // Unexpected response
+      toast({ title: 'Checkout error', description: 'Could not start checkout. Please try again.', variant: 'destructive' });
+      setPlacing(false);
+    } catch (err) {
+      clearTimeout(timeout);
+      toast({ title: 'Checkout failed — please try again', variant: 'destructive' });
+      setPlacing(false);
+    }
   };
 
   if (!cart.items?.length) {
