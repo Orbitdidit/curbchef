@@ -16,17 +16,37 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('overview');
+  const [timedOut, setTimedOut] = useState(false);
 
-  const { data: adminUser } = useQuery({ queryKey: ['admin-me'], queryFn: () => base44.auth.me() });
+  const { data: adminUser, isLoading: adminLoading, isError: adminError } = useQuery({
+    queryKey: ['admin-me'],
+    queryFn: () => base44.auth.me(),
+    retry: false,
+  });
+
+  const isAdmin = !!adminUser && ADMIN_EMAILS.includes(adminUser.email);
+
+  // 5-second timeout if auth never resolves
+  useEffect(() => {
+    const t = setTimeout(() => {
+      if (!adminUser) {
+        setTimedOut(true);
+        base44.auth.redirectToLogin(window.location.pathname);
+      }
+    }, 5000);
+    return () => clearTimeout(t);
+  }, [adminUser]);
 
   const { data: trucks = [] } = useQuery({
     queryKey: ['admin-trucks'],
     queryFn: () => base44.entities.FoodTruck.list(),
+    enabled: isAdmin,
   });
 
   const { data: orders = [] } = useQuery({
     queryKey: ['admin-orders'],
     queryFn: () => base44.entities.Order.list('-created_date', 20),
+    enabled: isAdmin,
   });
 
   const approveTruck = useMutation({
@@ -37,16 +57,40 @@ export default function AdminDashboard() {
   const { data: pendingApplications = [] } = useQuery({
     queryKey: ['pending-applications-count'],
     queryFn: () => base44.entities.TruckOnboarding.filter({ status: 'submitted' }),
+    enabled: isAdmin,
   });
 
-  useEffect(() => {
-    if (adminUser && !ADMIN_EMAILS.includes(adminUser.email)) {
-      toast({ title: 'Unauthorized', description: 'Admin access required.', variant: 'destructive' });
-      navigate('/');
-    }
-  }, [adminUser]);
+  // Not authorized (user loaded but not in ADMIN_EMAILS)
+  if (!adminLoading && adminUser && !isAdmin) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-8 text-center" style={{ background: '#0d1517' }}>
+        <p className="text-4xl">🔒</p>
+        <p className="font-heading font-bold text-lg" style={{ color: '#dff0e8' }}>Not Authorized</p>
+        <p className="text-sm" style={{ color: '#bacbc0' }}>You don't have admin access.</p>
+        <button onClick={() => navigate('/')} className="px-6 py-3 rounded-full font-bold text-sm"
+          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+          Back to Home
+        </button>
+      </div>
+    );
+  }
 
-  if (!adminUser || !ADMIN_EMAILS.includes(adminUser.email)) {
+  // Auth error
+  if (adminError) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-8 text-center" style={{ background: '#0d1517' }}>
+        <p className="text-4xl">⚠️</p>
+        <p className="font-heading font-bold text-lg" style={{ color: '#dff0e8' }}>Authentication Error</p>
+        <button onClick={() => navigate('/')} className="px-6 py-3 rounded-full font-bold text-sm"
+          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+          Back to Home
+        </button>
+      </div>
+    );
+  }
+
+  // Still loading
+  if (!isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: '#0d1517' }}>
         <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
