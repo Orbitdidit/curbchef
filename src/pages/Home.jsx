@@ -22,6 +22,7 @@ import CookinSection from '../components/home/CookinSection';
 import AssistantHomeCard from '../components/assistant/AssistantHomeCard';
 import FiveDollarSpecials from '../components/home/FiveDollarSpecials';
 import DropsNearYou from '../components/home/DropsNearYou';
+import LiveHeroBanner from '../components/home/LiveHeroBanner';
 
 export default function Home() {
   const [category, setCategory] = useState('all');
@@ -96,37 +97,20 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── Daily Pulse (greeting, streak, points, vibe) ── */}
+      {/* ── Daily Pulse (greeting, streak, vibe) ── */}
       <DailyPulse user={user} trucks={trucks} />
 
-      {/* ── Quick Access Grid ── */}
-      <FoodMoodRail />
-
-      {/* ── Followed Trucks Rail ── */}
-      <FollowedTrucksRail user={user} trucks={trucks} />
-
-      {/* ── Quick Reorder ── */}
-      <QuickReorder user={user} />
-
-      {/* ── Activity Feed ── */}
-      <ActivityFeed trucks={trucks} />
-
-      {/* ── Hero Stats Strip ── */}
+      {/* ── Hero Stats Strip (Trucks Live · Open Now · Trending) ── */}
       <HeroStrip liveTrucks={liveTrucks} openTrucks={openTrucks} trucks={trucks} />
 
-      {/* ── Hero Promo / Video ── */}
-      <HeroPromo />
+      {/* ── LIVE HERO BANNER — food-first, exciting top section ── */}
+      <LiveHeroBanner liveTrucks={liveTrucks} openTrucks={openTrucks} />
 
-      {/* ── Assistant Card ── */}
-      <div className="px-5 mt-6">
-        <AssistantHomeCard />
-      </div>
-
-      {/* ── Drops Near You ── */}
-      <DropsNearYou />
+      {/* ── Quick Access Pills (slim horizontal row) ── */}
+      <FoodMoodRail />
 
       {/* ── Live Now Carousel ── */}
-      <div className="mt-6">
+      <div className="mt-5">
         <div className="flex items-center justify-between px-5 mb-3">
           <div className="flex items-center gap-2">
             <span className="live-dot w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#ff3b30' }} />
@@ -161,11 +145,31 @@ export default function Home() {
         </Link>
       </div>
 
+      {/* ── Followed Trucks Rail ── */}
+      <FollowedTrucksRail user={user} trucks={trucks} />
+
+      {/* ── Quick Reorder ── */}
+      <QuickReorder user={user} />
+
+      {/* ── Activity Feed ── */}
+      <ActivityFeed trucks={trucks} />
+
+      {/* ── Hero Promo / Video ── */}
+      <HeroPromo />
+
+      {/* ── Assistant Card ── */}
+      <div className="px-5 mt-4">
+        <AssistantHomeCard />
+      </div>
+
+      {/* ── Drops Near You ── */}
+      <DropsNearYou />
+
       {/* ── $5 Specials Carousel ── */}
       <FiveDollarSpecials trucks={trucks} />
 
       {/* ── Promo Card #1 — Rewards ── */}
-      <div className="mt-6">
+      <div className="mt-4">
         <PromoCard variant={0} />
       </div>
 
@@ -202,12 +206,12 @@ export default function Home() {
       />
 
       {/* ── Promo Card #2 — Vendor ── */}
-      <div className="mt-6">
+      <div className="mt-4">
         <PromoCard variant={1} />
       </div>
 
       {/* ── Onboard Truck CTA ── */}
-      <div className="px-5 mt-6">
+      <div className="px-5 mt-4">
         <Link to="/onboard-truck">
           <div className="p-5 rounded-3xl flex items-center gap-4"
             style={{ background: 'linear-gradient(135deg,rgba(253,89,30,0.12),rgba(253,89,30,0.06))', border: '1px solid rgba(253,89,30,0.25)' }}>

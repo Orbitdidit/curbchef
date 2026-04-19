@@ -12,15 +12,14 @@ const MOODS = [
 
 export default function FoodMoodRail() {
   return (
-    <div className="px-5 mt-6">
-      <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: 'rgba(186,203,192,0.5)' }}>QUICK ACCESS</p>
-      <div className="grid grid-cols-3 gap-2.5">
+    <div className="px-4 mt-3">
+      <div className="flex gap-2 overflow-x-auto no-scrollbar">
         {MOODS.map(m => (
-          <Link key={m.label} to={m.href}>
-            <div className="flex flex-col items-center justify-center py-4 rounded-2xl gap-1.5 active:scale-95 transition-transform"
+          <Link key={m.label} to={m.href} className="flex-shrink-0">
+            <div className="flex items-center gap-1.5 px-3 py-2 rounded-full active:scale-95 transition-transform"
               style={{ background: m.color, border: `1px solid ${m.border}` }}>
-              <span className="text-2xl">{m.emoji}</span>
-              <p className="text-[11px] font-black text-center" style={{ color: m.textColor }}>{m.label}</p>
+              <span className="text-base leading-none">{m.emoji}</span>
+              <p className="text-[11px] font-black whitespace-nowrap" style={{ color: m.textColor }}>{m.label}</p>
             </div>
           </Link>
         ))}
