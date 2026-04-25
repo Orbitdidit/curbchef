@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useNavigate, Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { getCart, subscribe, getCartTotal, clearCart } from '@/lib/cartStore';
-import { ChevronLeft, Truck, Clock, CreditCard, Zap, MoreVertical, ExternalLink } from 'lucide-react';
+import { ChevronLeft, Truck, ExternalLink } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import AssistantNudge from '@/components/assistant/AssistantNudge';
 
@@ -19,16 +20,23 @@ export default function Cart() {
 
   useEffect(() => subscribe(() => setCart(getCart())), []);
 
+  // Fetch the truck to get real address
+  const { data: truck } = useQuery({
+    queryKey: ['cart-truck', cart.truckId],
+    queryFn: () => base44.entities.FoodTruck.get(cart.truckId),
+    enabled: !!cart.truckId,
+  });
+
   const subtotal = getCartTotal();
   const serviceFee = 1.50;
-  const tipAmt = customTip ? parseFloat(customTip) : (subtotal * tip / 100);
-  const total = subtotal + serviceFee + tipAmt;
+  const taxAmt = Number((subtotal * 0.0825).toFixed(2));
+  const tipAmt = customTip ? parseFloat(customTip) || 0 : (subtotal * tip / 100);
+  const total = subtotal + serviceFee + taxAmt + tipAmt;
 
   const handlePlace = async () => {
     setPlacing(true);
     const code = Math.random().toString(36).substring(2, 6).toUpperCase();
 
-    // Auto-reset after 15 seconds
     const timeout = setTimeout(() => {
       setPlacing(false);
       toast({ title: 'Checkout timed out', description: 'Please try again.', variant: 'destructive' });
@@ -42,7 +50,7 @@ export default function Cart() {
         items: cart.items,
         subtotal,
         tip: tipAmt,
-        pickup_time: pickupMode === 'asap' ? 'ASAP' : '7:30 PM',
+        pickup_time: pickupMode === 'asap' ? 'ASAP' : 'Scheduled',
         pickup_code: code,
         payment_method: 'card',
         success_url: `${window.location.origin}/order/{CHECKOUT_SESSION_ID}`,
@@ -66,11 +74,12 @@ export default function Cart() {
           customer_name: user.full_name,
           items: cart.items,
           subtotal,
+          tax: taxAmt,
           tip: tipAmt,
           total,
           gross_amount: total,
           status: 'placed',
-          pickup_time: pickupMode === 'asap' ? 'ASAP' : '7:30 PM',
+          pickup_time: pickupMode === 'asap' ? 'ASAP' : 'Scheduled',
           pickup_code: code,
           payment_method: 'card',
           is_test_payment: false,
@@ -87,7 +96,6 @@ export default function Cart() {
         return;
       }
 
-      // Unexpected response
       toast({ title: 'Checkout error', description: 'Could not start checkout. Please try again.', variant: 'destructive' });
       setPlacing(false);
     } catch (err) {
@@ -109,12 +117,12 @@ export default function Cart() {
             Discover Trucks
           </div>
         </Link>
-        <div className="mt-4">
-          <AssistantNudge />
-        </div>
+        <div className="mt-4"><AssistantNudge /></div>
       </div>
     );
   }
+
+  const truckAddress = truck?.address || (truck?.city ? `${truck.city}, TX` : 'Houston, TX');
 
   return (
     <div className="min-h-screen dot-bg" style={{ background: '#0d1517' }}>
@@ -125,9 +133,6 @@ export default function Cart() {
           <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
         </button>
         <h1 className="font-heading font-bold text-lg" style={{ color: '#dff0e8' }}>Your Bag</h1>
-        <button className="ml-auto" style={{ color: '#bacbc0' }}>
-          <MoreVertical className="w-5 h-5" />
-        </button>
       </div>
 
       <div className="px-5 pb-40">
@@ -140,11 +145,11 @@ export default function Cart() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-heading font-bold text-sm truncate" style={{ color: '#dff0e8' }}>{cart.truckName}</p>
-              <p className="text-xs" style={{ color: '#bacbc0' }}>123 Main St, Houston</p>
+              <p className="text-xs" style={{ color: '#bacbc0' }}>{truckAddress}</p>
             </div>
             <span className="text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0"
               style={{ background: 'rgba(119,255,200,0.12)', color: '#77ffc8' }}>
-              15–20 min
+              {truck?.delivery_eta || '15–20 min'}
             </span>
           </div>
         </div>
@@ -216,12 +221,13 @@ export default function Cart() {
           </div>
         </div>
 
-        {/* Totals */}
+        {/* Totals — now includes tax */}
         <div className="p-4 rounded-2xl mb-2 space-y-2" style={{ background: '#192123' }}>
           {[
             { label: 'Subtotal', val: `$${subtotal.toFixed(2)}` },
+            { label: 'Tax (8.25%)', val: `$${taxAmt.toFixed(2)}` },
             { label: 'Service Fee', val: `$${serviceFee.toFixed(2)}` },
-            { label: `Tip (${tip || 'custom'}%)`, val: `$${tipAmt.toFixed(2)}` },
+            { label: `Tip (${customTip ? 'custom' : `${tip}%`})`, val: `$${tipAmt.toFixed(2)}` },
           ].map(row => (
             <div key={row.label} className="flex justify-between">
               <span className="text-sm" style={{ color: '#bacbc0' }}>{row.label}</span>
@@ -233,7 +239,7 @@ export default function Cart() {
             <span className="font-heading font-bold text-lg" style={{ color: '#77ffc8' }}>${total.toFixed(2)}</span>
           </div>
         </div>
-        <p className="text-center text-[10px] mb-6" style={{ color: '#bacbc0' }}>Secure payment via Stripe</p>
+        <p className="text-center text-[10px] mb-6" style={{ color: '#bacbc0' }}>Secure payment via Stripe · Tax included</p>
       </div>
 
       {/* Sticky CTA */}

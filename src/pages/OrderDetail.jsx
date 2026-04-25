@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronLeft, HelpCircle, MapPin, MessageSquare } from 'lucide-react';
+import { ChevronLeft, MapPin, Phone, Copy, Check } from 'lucide-react';
 import CustomerEtaCard from '@/components/order/CustomerEtaCard';
+import { useToast } from '@/components/ui/use-toast';
 
 const STEPS = [
   { key: 'placed', label: 'Confirmed' },
@@ -12,9 +13,20 @@ const STEPS = [
   { key: 'picked_up', label: 'Pickup' },
 ];
 
+const STATUS_LABELS = {
+  placed: 'Order Confirmed',
+  preparing: 'Preparing Your Feast',
+  ready: 'Ready for Pickup! 🎉',
+  picked_up: 'Enjoy! 😋',
+  pending_payment: 'Payment Pending...',
+};
+
 export default function OrderDetail() {
   const { id } = useParams();
-  // id might be a Stripe checkout session id (cs_test_...) or a real order id
+  const { toast } = useToast();
+  const [showContact, setShowContact] = useState(false);
+  const [copied, setCopied] = useState(false);
+
   const isStripeSession = id?.startsWith('cs_');
 
   const { data: order } = useQuery({
@@ -26,7 +38,7 @@ export default function OrderDetail() {
       }
       return base44.entities.Order.get(id);
     },
-    refetchInterval: 10000,
+    refetchInterval: 8000,
   });
 
   const { data: truck } = useQuery({
@@ -34,6 +46,15 @@ export default function OrderDetail() {
     queryFn: () => base44.entities.FoodTruck.get(order.truck_id),
     enabled: !!order?.truck_id,
   });
+
+  const handleCopyCode = () => {
+    if (order?.pickup_code) {
+      navigator.clipboard.writeText(order.pickup_code);
+      setCopied(true);
+      toast({ title: 'Pickup code copied!', duration: 1500 });
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
   if (!order) {
     return (
@@ -45,6 +66,15 @@ export default function OrderDetail() {
 
   const stepIdx = STEPS.findIndex(s => s.key === order.status);
 
+  // Dynamic ready estimate: placed time + ~15 min
+  const placedAt = order.created_date ? new Date(order.created_date) : new Date();
+  const readyAt = new Date(placedAt.getTime() + 15 * 60000);
+  const readyLabel = order.status === 'ready'
+    ? 'Ready now!'
+    : order.status === 'picked_up'
+    ? 'Completed'
+    : `Est. ready ${readyAt.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`;
+
   return (
     <div className="min-h-screen dot-bg" style={{ background: '#0d1517' }}>
       {/* Header */}
@@ -52,12 +82,8 @@ export default function OrderDetail() {
         <Link to="/orders" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
           <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
         </Link>
-        <div className="text-center">
-          <p className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>CurbChef</p>
-        </div>
-        <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-          <HelpCircle className="w-4 h-4" style={{ color: '#bacbc0' }} />
-        </button>
+        <p className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>CurbChef</p>
+        <div className="w-9 h-9" />
       </div>
 
       <div className="px-5 pb-32">
@@ -65,45 +91,33 @@ export default function OrderDetail() {
         <div className="mb-6">
           <p className="text-xs font-semibold" style={{ color: '#bacbc0' }}>CURRENT STATUS</p>
           <h1 className="font-heading font-black text-2xl mt-1 leading-tight" style={{ color: '#dff0e8' }}>
-            {order.status === 'placed' && 'Order Confirmed'}
-            {order.status === 'preparing' && 'Preparing Your Feast'}
-            {order.status === 'ready' && 'Ready for Pickup!'}
-            {order.status === 'picked_up' && 'Enjoy! 🎉'}
+            {STATUS_LABELS[order.status] || 'Processing...'}
           </h1>
-          <p className="text-sm mt-1" style={{ color: '#77ffc8' }}>Est. Ready 11:45 PM</p>
+          <p className="text-sm mt-1 font-semibold" style={{ color: '#77ffc8' }}>{readyLabel}</p>
         </div>
 
         {/* Progress tracker */}
         <div className="relative flex items-center justify-between mb-8">
-          <div
-            className="absolute h-1 rounded-full"
-            style={{
-              left: '12px', right: '12px', top: '50%', transform: 'translateY(-50%)',
-              background: '#192123',
-            }}
-          />
-          <div
-            className="absolute h-1 rounded-full transition-all duration-700"
+          <div className="absolute h-1 rounded-full"
+            style={{ left: '12px', right: '12px', top: '50%', transform: 'translateY(-50%)', background: '#192123' }} />
+          <div className="absolute h-1 rounded-full transition-all duration-700"
             style={{
               left: '12px', top: '50%', transform: 'translateY(-50%)',
-              width: stepIdx === 0 ? '0%' : stepIdx === 1 ? '33%' : stepIdx === 2 ? '66%' : '100%',
+              width: stepIdx <= 0 ? '0%' : stepIdx === 1 ? '33%' : stepIdx === 2 ? '66%' : '100%',
               background: 'linear-gradient(90deg, #77ffc8, #00e6a7)',
               boxShadow: '0 0 8px rgba(119,255,200,0.5)',
-            }}
-          />
+            }} />
           {STEPS.map((step, i) => {
             const done = i < stepIdx;
             const active = i === stepIdx;
             return (
               <div key={step.key} className="flex flex-col items-center gap-1.5 relative z-10">
-                <div
-                  className="w-6 h-6 rounded-full flex items-center justify-center transition-all"
+                <div className="w-6 h-6 rounded-full flex items-center justify-center transition-all"
                   style={{
                     background: done || active ? 'linear-gradient(135deg, #77ffc8, #00e6a7)' : '#192123',
                     border: !done && !active ? '2px solid rgba(59,74,66,0.4)' : 'none',
                     boxShadow: active ? '0 0 12px rgba(119,255,200,0.5)' : 'none',
-                  }}
-                >
+                  }}>
                   {(done || active) && (
                     <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none">
                       <path d="M2 6l3 3 5-5" stroke="#003826" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -120,45 +134,36 @@ export default function OrderDetail() {
 
         {/* Pickup Code */}
         {order.pickup_code && (
-          <div
-            className="p-6 rounded-3xl text-center mb-5"
-            style={{ background: '#192123', border: '1px solid rgba(119,255,200,0.15)' }}
-          >
+          <button onClick={handleCopyCode}
+            className="w-full p-6 rounded-3xl text-center mb-5 active:scale-95 transition-all"
+            style={{ background: '#192123', border: '1px solid rgba(119,255,200,0.15)' }}>
             <p className="text-xs font-bold tracking-widest mb-3" style={{ color: '#bacbc0' }}>YOUR PICKUP CODE</p>
-            <p
-              className="font-heading font-black text-5xl tracking-widest"
-              style={{ color: '#77ffc8', textShadow: '0 0 20px rgba(119,255,200,0.5)' }}
-            >
+            <p className="font-heading font-black text-5xl tracking-widest"
+              style={{ color: '#77ffc8', textShadow: '0 0 20px rgba(119,255,200,0.5)' }}>
               {order.pickup_code}
             </p>
-            <p className="text-xs mt-3" style={{ color: '#bacbc0' }}>Show this to the vendor at the window</p>
-          </div>
+            <div className="flex items-center justify-center gap-1.5 mt-3">
+              {copied ? <Check className="w-3.5 h-3.5" style={{ color: '#77ffc8' }} /> : <Copy className="w-3.5 h-3.5" style={{ color: '#bacbc0' }} />}
+              <p className="text-xs" style={{ color: '#bacbc0' }}>
+                {copied ? 'Copied!' : 'Tap to copy · Show to vendor at window'}
+              </p>
+            </div>
+          </button>
         )}
 
-        {/* ETA Card — shown once order is placed */}
+        {/* ETA Card */}
         {order.status !== 'pending_payment' && order.status !== 'picked_up' && (
           <CustomerEtaCard order={order} truck={truck} />
         )}
 
         {/* Truck info */}
         <div className="p-4 rounded-2xl flex items-center gap-3 mb-5" style={{ background: '#192123' }}>
-          <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{ background: 'rgba(119,255,200,0.1)' }}
-          >
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(119,255,200,0.1)' }}>
             <MapPin className="w-5 h-5" style={{ color: '#77ffc8' }} />
           </div>
           <div className="flex-1">
             <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>{order.truck_name}</p>
-            <p className="text-xs" style={{ color: '#bacbc0' }}>Rainey Street District</p>
-          </div>
-          <div
-            className="w-8 h-8 rounded-full flex items-center justify-center"
-            style={{ background: 'rgba(119,255,200,0.12)' }}
-          >
-            <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none">
-              <path d="M8 1L15 8L8 15" stroke="#77ffc8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <p className="text-xs" style={{ color: '#bacbc0' }}>{truck?.address || truck?.city || 'Houston, TX'}</p>
           </div>
         </div>
 
@@ -167,11 +172,18 @@ export default function OrderDetail() {
           <h3 className="font-heading font-bold text-sm mb-3" style={{ color: '#dff0e8' }}>Order Details</h3>
           <div className="rounded-2xl overflow-hidden" style={{ background: '#192123' }}>
             {order.items?.map((item, i) => (
-              <div key={i} className="flex justify-between px-4 py-3" style={{ borderBottom: i < order.items.length - 1 ? '1px solid rgba(59,74,66,0.2)' : 'none' }}>
+              <div key={i} className="flex justify-between px-4 py-3"
+                style={{ borderBottom: i < order.items.length - 1 ? '1px solid rgba(59,74,66,0.2)' : 'none' }}>
                 <span className="text-sm" style={{ color: '#bacbc0' }}>{item.quantity}x {item.name}</span>
                 <span className="text-sm font-semibold" style={{ color: '#dff0e8' }}>${(item.price * item.quantity).toFixed(2)}</span>
               </div>
             ))}
+            {order.tax > 0 && (
+              <div className="flex justify-between px-4 py-2">
+                <span className="text-xs" style={{ color: '#bacbc0' }}>Tax (8.25%)</span>
+                <span className="text-xs" style={{ color: '#bacbc0' }}>${order.tax?.toFixed(2)}</span>
+              </div>
+            )}
             <div className="flex justify-between px-4 py-3" style={{ borderTop: '1px solid rgba(59,74,66,0.3)' }}>
               <span className="font-heading font-bold" style={{ color: '#dff0e8' }}>Total</span>
               <span className="font-heading font-bold" style={{ color: '#77ffc8' }}>${order.total?.toFixed(2)}</span>
@@ -180,23 +192,52 @@ export default function OrderDetail() {
         </div>
       </div>
 
-      {/* Contact CTA */}
-      <div
-        className="fixed bottom-0 left-0 right-0 flex justify-center px-5 pb-6 pt-4 z-50"
-        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(16px)' }}
-      >
-        <button
+      {/* Contact Truck CTA */}
+      <div className="fixed bottom-0 left-0 right-0 flex justify-center px-5 pb-6 pt-4 z-50"
+        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(16px)' }}>
+        <button onClick={() => setShowContact(true)}
           className="w-full max-w-lg flex items-center justify-center gap-2 py-4 rounded-full font-heading font-black text-sm"
-          style={{
-            background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
-            color: '#003826',
-            boxShadow: '0 0 20px rgba(119,255,200,0.35)',
-          }}
-        >
-          <MessageSquare className="w-4 h-4" />
-          CONTACT TRUCK
+          style={{ background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)', color: '#003826', boxShadow: '0 0 20px rgba(119,255,200,0.35)' }}>
+          <Phone className="w-4 h-4" />
+          Contact Truck
         </button>
       </div>
+
+      {/* Contact Modal */}
+      {showContact && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}
+          onClick={() => setShowContact(false)}>
+          <div className="w-full max-w-lg rounded-t-3xl p-6 pb-10" style={{ background: '#151d1f', border: '1px solid rgba(59,74,66,0.25)' }}
+            onClick={e => e.stopPropagation()}>
+            <h2 className="font-heading font-black text-lg mb-1" style={{ color: '#dff0e8' }}>Contact {order.truck_name}</h2>
+            <p className="text-xs mb-5" style={{ color: '#bacbc0' }}>Order #{order.pickup_code}</p>
+            <div className="flex flex-col gap-3 mb-4">
+              {truck?.phone ? (
+                <a href={`tel:${truck.phone}`}
+                  className="flex items-center gap-3 p-4 rounded-2xl active:scale-95 transition-all"
+                  style={{ background: 'linear-gradient(135deg,rgba(119,255,200,0.1),rgba(119,255,200,0.05))', border: '1px solid rgba(119,255,200,0.2)' }}>
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(119,255,200,0.12)' }}>
+                    <Phone className="w-5 h-5" style={{ color: '#77ffc8' }} />
+                  </div>
+                  <div>
+                    <p className="font-bold text-sm" style={{ color: '#dff0e8' }}>Call Truck</p>
+                    <p className="text-xs" style={{ color: '#bacbc0' }}>{truck.phone}</p>
+                  </div>
+                </a>
+              ) : (
+                <div className="p-4 rounded-2xl" style={{ background: '#192123' }}>
+                  <p className="text-sm font-bold mb-1" style={{ color: '#dff0e8' }}>📍 Pickup location</p>
+                  <p className="text-xs" style={{ color: '#bacbc0' }}>{truck?.address || 'Find the truck at its listed location'}</p>
+                  <p className="text-xs mt-2" style={{ color: '#bacbc0' }}>Show your pickup code <span className="font-black" style={{ color: '#77ffc8' }}>{order.pickup_code}</span> at the window.</p>
+                </div>
+              )}
+            </div>
+            <button onClick={() => setShowContact(false)}
+              className="w-full py-3.5 rounded-full font-heading font-black text-sm"
+              style={{ background: '#2e3638', color: '#bacbc0' }}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
