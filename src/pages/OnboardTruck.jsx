@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, MapPin, Upload, Plus, Trash2, Check, Flame } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import OnboardingGuideChat from '@/components/onboarding/OnboardingGuideChat';
+import PermitsStep from '@/components/onboarding/PermitsStep';
 
 const STEPS = ['Vendor Type', 'Basic Info', 'Location', 'Permits', 'Media', 'Menu', 'Go Live', 'Kitchen Check', 'Preview'];
 
@@ -17,6 +18,10 @@ const VENDOR_TYPES = [
   { id: 'cottage_goods',      label: 'Cottage Goods / Packaged',     emoji: '🏡', sub: 'Pre-packaged goods made in a permitted cottage kitchen' },
 ];
 
+const COMING_SOON_TYPES = [
+  { id: 'private_chef', label: 'Private Chef / Experiences', emoji: '👑', sub: 'Coming soon — curated private dining & chef experiences' },
+];
+
 export default function OnboardTruck() {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -27,7 +32,7 @@ export default function OnboardTruck() {
   const [form, setForm] = useState({
     vendor_type: '', truck_name: '', owner_name: '', phone: '', email: '', cuisine_type: '', instagram: '',
     city: 'Houston', latitude: null, longitude: null,
-    permit_doc_url: '', food_handler_cert_url: '', commissary_info: '', event_authorization_info: '',
+    permit_doc_url: '', food_handler_cert_url: '', event_permit_url: '', commissary_info: '', event_authorization_info: '',
     health_permit_status: 'not_submitted',
     logo_url: '', truck_photo_url: '', food_images: [],
     menu_items: [{ name: '', price: '', prep_time: '' }],
@@ -206,6 +211,24 @@ export default function OnboardTruck() {
                 </div>
               </button>
             ))}
+            {/* Coming Soon */}
+            {COMING_SOON_TYPES.map(({ id, label, emoji, sub }) => (
+              <div key={id} className="flex items-center gap-4 p-4 rounded-2xl opacity-50 cursor-not-allowed"
+                style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.15)' }}>
+                <span className="text-3xl flex-shrink-0">{emoji}</span>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>{label}</p>
+                    <span className="text-[9px] font-black px-2 py-0.5 rounded-full"
+                      style={{ background: 'rgba(192,132,252,0.15)', color: '#C084FC', border: '1px solid rgba(192,132,252,0.25)' }}>
+                      COMING SOON
+                    </span>
+                  </div>
+                  <p className="text-xs mt-0.5" style={{ color: '#6B665C' }}>{sub}</p>
+                </div>
+              </div>
+            ))}
+
             <div className="p-3 rounded-xl" style={{ background: 'rgba(253,89,30,0.07)', border: '1px solid rgba(253,89,30,0.2)' }}>
               <p className="text-xs" style={{ color: '#fd591e' }}>
                 ⚠️ Home kitchen hot plates without a permit or commissary agreement are not eligible. All vendors must hold a valid health permit or cottage food license.
@@ -277,109 +300,14 @@ export default function OnboardTruck() {
 
         {/* STEP 3 — Permits & Verification */}
         {step === 3 && (
-          <div className="space-y-5">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: '#dff0e8' }}>Permits & Verification 📋</h2>
-            <p className="text-sm mb-2" style={{ color: '#bacbc0' }}>
-              Upload your permits and certifications. This keeps CurbChef safe and builds customer trust. Required fields depend on your vendor type.
-            </p>
-
-            {/* Health Permit Status */}
-            <div>
-              <p className="mb-2" style={labelStyle}>HEALTH PERMIT STATUS</p>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  { id: 'approved', label: '✅ Approved' },
-                  { id: 'pending', label: '⏳ Pending Approval' },
-                  { id: 'not_submitted', label: '📝 Not Yet Submitted' },
-                ].map(({ id, label }) => (
-                  <button key={id} onClick={() => set('health_permit_status', id)}
-                    className="px-3 py-2 rounded-full text-xs font-bold transition-all"
-                    style={form.health_permit_status === id
-                      ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }
-                      : { background: '#192123', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }
-                    }>
-                    {label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Permit Upload */}
-            <div>
-              <p className="mb-2" style={labelStyle}>HEALTH / OPERATING PERMIT (PDF or Photo)</p>
-              {form.permit_doc_url ? (
-                <div className="flex items-center gap-3 p-3 rounded-2xl" style={{ background: 'rgba(119,255,200,0.08)', border: '1px solid rgba(119,255,200,0.25)' }}>
-                  <Check className="w-4 h-4" style={{ color: '#77ffc8' }} />
-                  <span className="text-xs font-bold" style={{ color: '#77ffc8' }}>Permit uploaded</span>
-                  <button onClick={() => set('permit_doc_url', '')} className="ml-auto text-xs" style={{ color: '#bacbc0' }}>Remove</button>
-                </div>
-              ) : (
-                <label className="block w-full h-16 rounded-2xl flex items-center justify-center cursor-pointer"
-                  style={{ background: '#192123', border: '2px dashed rgba(119,255,200,0.2)' }}>
-                  <div className="flex items-center gap-2">
-                    <Upload className="w-4 h-4" style={{ color: '#77ffc8' }} />
-                    <span className="text-xs" style={{ color: '#bacbc0' }}>Upload permit document</span>
-                  </div>
-                  <input type="file" accept="image/*,application/pdf" className="hidden" onChange={e => handleFileUpload(e, 'permit_doc_url')} />
-                </label>
-              )}
-            </div>
-
-            {/* Food Handler Cert */}
-            <div>
-              <p className="mb-2" style={labelStyle}>FOOD HANDLER CERTIFICATION (optional)</p>
-              {form.food_handler_cert_url ? (
-                <div className="flex items-center gap-3 p-3 rounded-2xl" style={{ background: 'rgba(119,255,200,0.08)', border: '1px solid rgba(119,255,200,0.25)' }}>
-                  <Check className="w-4 h-4" style={{ color: '#77ffc8' }} />
-                  <span className="text-xs font-bold" style={{ color: '#77ffc8' }}>Certification uploaded</span>
-                  <button onClick={() => set('food_handler_cert_url', '')} className="ml-auto text-xs" style={{ color: '#bacbc0' }}>Remove</button>
-                </div>
-              ) : (
-                <label className="block w-full h-16 rounded-2xl flex items-center justify-center cursor-pointer"
-                  style={{ background: '#192123', border: '2px dashed rgba(59,74,66,0.3)' }}>
-                  <div className="flex items-center gap-2">
-                    <Upload className="w-4 h-4" style={{ color: '#bacbc0' }} />
-                    <span className="text-xs" style={{ color: '#bacbc0' }}>Upload certification</span>
-                  </div>
-                  <input type="file" accept="image/*,application/pdf" className="hidden" onChange={e => handleFileUpload(e, 'food_handler_cert_url')} />
-                </label>
-              )}
-            </div>
-
-            {/* Commissary info — required for caterer/commercial */}
-            {(form.vendor_type === 'caterer_commercial' || form.vendor_type === 'cottage_goods') && (
-              <div>
-                <p className="mb-1.5" style={labelStyle}>
-                  {form.vendor_type === 'caterer_commercial' ? 'COMMISSARY / COMMERCIAL KITCHEN NAME & ADDRESS' : 'COTTAGE KITCHEN ADDRESS / LICENSE INFO'}
-                </p>
-                <textarea
-                  placeholder={form.vendor_type === 'caterer_commercial' ? 'e.g. Houston Shared Kitchen, 123 Main St' : 'e.g. Texas Cottage Food License #12345'}
-                  value={form.commissary_info}
-                  onChange={e => set('commissary_info', e.target.value)}
-                  className={inputClass + ' min-h-[80px]'}
-                  style={inputStyle}
-                />
-              </div>
-            )}
-
-            {/* Event/location authorization — for pop-ups */}
-            {form.vendor_type === 'licensed_popup' && (
-              <div>
-                <p className="mb-1.5" style={labelStyle}>EVENT / LOCATION AUTHORIZATION DETAILS</p>
-                <textarea
-                  placeholder="e.g. Event name, organizer contact, permit number, location address"
-                  value={form.event_authorization_info}
-                  onChange={e => set('event_authorization_info', e.target.value)}
-                  className={inputClass + ' min-h-[80px]'}
-                  style={inputStyle}
-                />
-              </div>
-            )}
-
-            <p className="text-xs" style={{ color: '#bacbc0' }}>
-              All documents are reviewed by the CurbChef team and kept confidential. You can also email them to <span style={{ color: '#77ffc8' }}>verify@curbchef.com</span>.
-            </p>
-          </div>
+          <PermitsStep
+            form={form}
+            set={set}
+            handleFileUpload={handleFileUpload}
+            labelStyle={labelStyle}
+            inputClass={inputClass}
+            inputStyle={inputStyle}
+          />
         )}
 
         {/* STEP 4 — Media */}
