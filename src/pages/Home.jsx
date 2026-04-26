@@ -97,6 +97,15 @@ export default function Home() {
       {/* Daily pulse — greeting, streak, points, vibe picker */}
       <DailyPulse user={user} trucks={visibleTrucks} />
 
+      {/* Live carousel — RIGHT after vibe picker, the mindblower */}
+      <div className="mt-4">
+        <div className="flex items-center justify-between px-4 mb-3">
+          <h2 className="font-heading font-bold text-base" style={{ color: '#F5F0E8', letterSpacing: '-0.02em' }}>🔴 Live & Featured</h2>
+          <Link to="/live" className="text-xs font-semibold" style={{ color: '#00F5D4' }}>Watch all →</Link>
+        </div>
+        <LiveCarousel trucks={liveTrucks} />
+      </div>
+
       {/* Quick action mood rail */}
       <FoodMoodRail />
 
@@ -105,15 +114,6 @@ export default function Home() {
 
       {/* Stats strip — live count, open count, trending */}
       <HeroStrip liveTrucks={liveTrucks} openTrucks={openTrucks} trucks={visibleTrucks} />
-
-      {/* Live carousel / featured video clips */}
-      <div className="mt-6">
-        <div className="flex items-center justify-between px-4 mb-3">
-          <h2 className="font-heading font-bold text-base" style={{ color: '#F5F0E8', letterSpacing: '-0.02em' }}>🔴 Live & Featured</h2>
-          <Link to="/live" className="text-xs font-semibold" style={{ color: '#00F5D4' }}>Watch all →</Link>
-        </div>
-        <LiveCarousel trucks={liveTrucks} />
-      </div>
 
       {/* Followed trucks rail */}
       <FollowedTrucksRail user={user} trucks={visibleTrucks} />
