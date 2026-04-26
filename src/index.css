@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,91 +6,97 @@
 
 @layer base {
   :root {
-    /* === MIDNIGHT NEON PALETTE === */
-    --background: 195 26% 8%;        /* #0d1517 surface */
-    --foreground: 150 15% 90%;       /* #dff0e8 on-surface */
-    --card: 196 22% 11%;             /* #151d1f surface-container-low */
-    --card-foreground: 150 15% 90%;
-    --popover: 196 22% 13%;
-    --popover-foreground: 150 15% 90%;
+    /* === THERMAL NIGHT PALETTE === */
+    --background: 0 0% 4%;           /* #0A0A0A pure near-black */
+    --foreground: 37 16% 95%;        /* #F5F0E8 warm off-white */
+    --card: 0 0% 8%;                 /* #141414 elevated surface */
+    --card-foreground: 37 16% 95%;
+    --popover: 0 0% 10%;             /* #1A1A1A */
+    --popover-foreground: 37 16% 95%;
 
-    /* Mint Neon Primary */
-    --primary: 161 100% 73%;         /* #77ffc8 */
-    --primary-foreground: 155 100% 11%; /* #003826 on-primary */
+    /* Neon Teal Primary */
+    --primary: 173 100% 48%;         /* #00F5D4 neon teal */
+    --primary-foreground: 0 0% 4%;   /* #0A0A0A on-primary */
 
-    /* Orange-Red Secondary / Accent */
-    --secondary: 196 22% 16%;        /* #1e2a2d surface-container */
-    --secondary-foreground: 150 15% 85%;
-    --muted: 196 22% 13%;
-    --muted-foreground: 155 18% 73%; /* #bacbc0 on-surface-variant */
-    --accent: 14 98% 55%;            /* #fd591e orange-red */
+    --secondary: 0 0% 10%;           /* #1A1A1A chips/secondary */
+    --secondary-foreground: 37 16% 95%;
+    --muted: 0 0% 12%;               /* #1E1E1E input/divider */
+    --muted-foreground: 35 9% 62%;   /* #A39E94 warm gray */
+    --accent: 3 100% 59%;            /* #FF3B30 flame red */
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 3 100% 59%;       /* #FF3B30 */
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 154 14% 24%;           /* #3b4a42 outline-variant */
-    --input: 195 26% 6%;             /* #080f11 surface-container-lowest */
-    --ring: 161 100% 73%;            /* mint neon */
+    --border: 0 0% 14%;              /* #242424 subtle border */
+    --input: 0 0% 12%;               /* #1E1E1E */
+    --ring: 173 100% 48%;            /* neon teal */
 
-    --chart-1: 161 100% 73%;
-    --chart-2: 14 98% 55%;
-    --chart-3: 45 90% 60%;
-    --chart-4: 200 70% 50%;
+    --chart-1: 173 100% 48%;
+    --chart-2: 3 100% 59%;
+    --chart-3: 27 100% 55%;
+    --chart-4: 48 100% 52%;
     --chart-5: 280 60% 55%;
-    --radius: 1rem;
+    --radius: 0.875rem;
 
-    --sidebar-background: 196 22% 11%;
-    --sidebar-foreground: 150 15% 90%;
-    --sidebar-primary: 161 100% 73%;
-    --sidebar-primary-foreground: 155 100% 11%;
-    --sidebar-accent: 196 22% 16%;
-    --sidebar-accent-foreground: 150 15% 90%;
-    --sidebar-border: 154 14% 24%;
-    --sidebar-ring: 161 100% 73%;
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 37 16% 95%;
+    --sidebar-primary: 173 100% 48%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 37 16% 95%;
+    --sidebar-border: 0 0% 14%;
+    --sidebar-ring: 173 100% 48%;
 
-    /* Custom neon tokens */
-    --surface-dim: 195 30% 6%;        /* #080f11 darkest */
-    --surface-container: 195 22% 13%; /* #192123 */
-    --surface-high: 196 18% 20%;      /* #2e3638 cards */
-    --neon-mint: #77ffc8;
-    --neon-orange: #fd591e;
+    /* Thermal Night custom tokens */
+    --tn-bg: #0A0A0A;
+    --tn-card: #141414;
+    --tn-surface: #1A1A1A;
+    --tn-input: #1E1E1E;
+    --tn-teal: #00F5D4;
+    --tn-red: #FF3B30;
+    --tn-orange: #FF6B1A;
+    --tn-yellow: #FFD60A;
+    --tn-text: #F5F0E8;
+    --tn-text-secondary: #A39E94;
+    --tn-text-muted: #6B665C;
     --font-heading: 'Plus Jakarta Sans', sans-serif;
     --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
   }
 
   .dark {
-    --background: 195 26% 8%;
-    --foreground: 150 15% 90%;
-    --card: 196 22% 11%;
-    --card-foreground: 150 15% 90%;
-    --popover: 196 22% 13%;
-    --popover-foreground: 150 15% 90%;
-    --primary: 161 100% 73%;
-    --primary-foreground: 155 100% 11%;
-    --secondary: 196 22% 16%;
-    --secondary-foreground: 150 15% 85%;
-    --muted: 196 22% 13%;
-    --muted-foreground: 155 18% 73%;
-    --accent: 14 98% 55%;
+    --background: 0 0% 4%;
+    --foreground: 37 16% 95%;
+    --card: 0 0% 8%;
+    --card-foreground: 37 16% 95%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 37 16% 95%;
+    --primary: 173 100% 48%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 37 16% 95%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 35 9% 62%;
+    --accent: 3 100% 59%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 154 14% 24%;
-    --input: 195 26% 6%;
-    --ring: 161 100% 73%;
-    --chart-1: 161 100% 73%;
-    --chart-2: 14 98% 55%;
-    --chart-3: 45 90% 60%;
-    --chart-4: 200 70% 50%;
+    --destructive: 3 100% 59%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 14%;
+    --input: 0 0% 12%;
+    --ring: 173 100% 48%;
+    --chart-1: 173 100% 48%;
+    --chart-2: 3 100% 59%;
+    --chart-3: 27 100% 55%;
+    --chart-4: 48 100% 52%;
     --chart-5: 280 60% 55%;
-    --sidebar-background: 196 22% 11%;
-    --sidebar-foreground: 150 15% 90%;
-    --sidebar-primary: 161 100% 73%;
-    --sidebar-primary-foreground: 155 100% 11%;
-    --sidebar-accent: 196 22% 16%;
-    --sidebar-accent-foreground: 150 15% 90%;
-    --sidebar-border: 154 14% 24%;
-    --sidebar-ring: 161 100% 73%;
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 37 16% 95%;
+    --sidebar-primary: 173 100% 48%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 37 16% 95%;
+    --sidebar-border: 0 0% 14%;
+    --sidebar-ring: 173 100% 48%;
   }
 }
 
@@ -100,7 +106,7 @@
   }
   body {
     @apply bg-background text-foreground font-body;
-    background-color: #0d1517;
+    background-color: #0A0A0A;
     overscroll-behavior: none;
   }
   button, a, nav {
@@ -115,13 +121,16 @@
 
 /* Neon glow on primary buttons */
 .neon-glow {
-  box-shadow: 0 0 18px rgba(119, 255, 200, 0.35), 0 0 40px rgba(119, 255, 200, 0.12);
+  box-shadow: 0 0 18px rgba(0, 245, 212, 0.3), 0 0 40px rgba(0, 245, 212, 0.1);
 }
 .neon-glow-sm {
-  box-shadow: 0 0 10px rgba(119, 255, 200, 0.3);
+  box-shadow: 0 0 10px rgba(0, 245, 212, 0.25);
 }
 .orange-glow {
-  box-shadow: 0 0 18px rgba(253, 89, 30, 0.4);
+  box-shadow: 0 0 18px rgba(255, 107, 26, 0.35);
+}
+.red-glow {
+  box-shadow: 0 0 18px rgba(255, 59, 48, 0.35);
 }
 
 /* Snap scroll */
@@ -130,7 +139,7 @@
 
 /* Dot texture background */
 .dot-bg {
-  background-image: radial-gradient(rgba(119,255,200,0.04) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
@@ -159,7 +168,7 @@ button:active, a:active {
   100% { background-position: 200% center; }
 }
 .shimmer-text {
-  background: linear-gradient(90deg, #77ffc8 0%, #00e6a7 40%, #77ffc8 60%, #00e6a7 100%);
+  background: linear-gradient(90deg, #00F5D4 0%, #00d4b8 40%, #00F5D4 60%, #00d4b8 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -175,13 +184,13 @@ button:active, a:active {
   animation: livePulse 1.4s ease-in-out infinite;
 }
 
-/* Mint neon gradient button */
+/* Teal primary button */
 .btn-neon {
-  background: linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%);
-  color: #003826;
+  background: #00F5D4;
+  color: #0A0A0A;
   font-weight: 700;
   border-radius: 9999px;
 }
 .btn-neon:hover {
-  background: linear-gradient(135deg, #8fffd4 0%, #00f0b0 100%);
+  background: #1ffcdc;
 }

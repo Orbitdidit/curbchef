@@ -13,9 +13,9 @@ function ClipBadge({ clip, isTruckCard }) {
   if (!isTruckCard && clip.is_live) {
     return (
       <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-        style={{ background: 'rgba(255,59,48,0.9)', backdropFilter: 'blur(8px)', boxShadow: '0 0 14px rgba(255,59,48,0.5)' }}>
-        <span className="w-2 h-2 rounded-full bg-white live-dot" />
-        <span className="text-white text-[11px] font-black tracking-widest">LIVE FEED</span>
+        style={{ background: 'rgba(255,59,48,0.9)', backdropFilter: 'blur(8px)' }}>
+        <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+        <span className="text-white text-[11px] font-bold font-mono tracking-widest">LIVE FEED</span>
       </div>
     );
   }
@@ -59,7 +59,7 @@ function LiveCard({ clip, isActive, isTruckCard }) {
           className="absolute inset-0 w-full h-full object-cover" />
       )}
       {/* Gradient overlay */}
-      <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(13,21,23,0.2) 0%, rgba(13,21,23,0) 40%, rgba(13,21,23,0.9) 100%)' }} />
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0) 35%, rgba(10,10,10,0.92) 100%)' }} />
 
       {/* Badge top-left */}
       <div className="absolute top-4 left-4">
@@ -131,7 +131,7 @@ export default function LiveCarousel({ trucks }) {
               style={{
                 width: i === active ? 20 : 6,
                 height: 6,
-                background: i === active ? '#77ffc8' : 'rgba(186,203,192,0.3)',
+                background: i === active ? '#00F5D4' : 'rgba(255,255,255,0.15)',
               }} />
           ))}
         </div>

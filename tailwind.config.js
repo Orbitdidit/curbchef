@@ -7,6 +7,7 @@ module.exports = {
       fontFamily: {
         heading: ['Plus Jakarta Sans', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -50,17 +51,27 @@ module.exports = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-        /* Custom neon surface tokens */
+        /* Thermal Night tokens */
         surface: {
-          DEFAULT: '#0d1517',
-          dim: '#080f11',
-          container: '#192123',
-          high: '#2e3638',
-          variant: '#1e2a2d',
+          DEFAULT: '#0A0A0A',
+          dim: '#050505',
+          container: '#141414',
+          high: '#1A1A1A',
+          variant: '#1E1E1E',
         },
         neon: {
-          mint: '#77ffc8',
-          orange: '#fd591e',
+          teal: '#00F5D4',
+          red: '#FF3B30',
+          orange: '#FF6B1A',
+          yellow: '#FFD60A',
+          /* legacy aliases */
+          mint: '#00F5D4',
+          orange2: '#FF6B1A',
+        },
+        thermal: {
+          text: '#F5F0E8',
+          secondary: '#A39E94',
+          muted: '#6B665C',
         },
         chart: {
           '1': 'hsl(var(--chart-1))',
@@ -102,8 +113,11 @@ module.exports = {
     }
   },
   safelist: [
-    'bg-neon-mint', 'text-neon-mint', 'bg-neon-orange', 'text-neon-orange',
+    'bg-neon-teal', 'text-neon-teal', 'bg-neon-red', 'text-neon-red',
+    'bg-neon-orange', 'text-neon-orange', 'bg-neon-yellow', 'text-neon-yellow',
+    'bg-neon-mint', 'text-neon-mint',
     'bg-surface-high', 'bg-surface-container', 'bg-surface-dim', 'bg-surface-variant',
+    'font-mono',
   ],
   plugins: [require("tailwindcss-animate")],
 }

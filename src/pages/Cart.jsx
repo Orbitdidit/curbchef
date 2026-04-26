@@ -107,13 +107,13 @@ export default function Cart() {
 
   if (!cart.items?.length) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-8 text-center dot-bg" style={{ background: '#0d1517' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-8 text-center dot-bg" style={{ background: '#0A0A0A' }}>
         <div className="text-6xl mb-4">🛒</div>
-        <h2 className="font-heading font-bold text-xl mb-2" style={{ color: '#dff0e8' }}>Your bag is empty</h2>
-        <p className="text-sm mb-8" style={{ color: '#bacbc0' }}>Add items from a truck to get started</p>
+        <h2 className="font-heading font-bold text-xl mb-2" style={{ color: '#F5F0E8' }}>Your bag is empty</h2>
+        <p className="text-sm mb-8" style={{ color: '#A39E94' }}>Add items from a truck to get started</p>
         <Link to="/">
           <div className="px-8 py-3 rounded-full font-bold text-sm"
-            style={{ background: 'linear-gradient(135deg, #77ffc8, #00e6a7)', color: '#003826' }}>
+            style={{ background: 'linear-gradient(135deg, #00F5D4, #00e6a7)', color: '#0A0A0A' }}>
             Discover Trucks
           </div>
         </Link>
@@ -125,30 +125,30 @@ export default function Cart() {
   const truckAddress = truck?.address || (truck?.city ? `${truck.city}, TX` : 'Houston, TX');
 
   return (
-    <div className="min-h-screen dot-bg" style={{ background: '#0d1517' }}>
+    <div className="min-h-screen" style={{ background: '#0A0A0A' }}>
       {/* Header */}
       <div className="flex items-center gap-3 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-10"
-        style={{ background: 'rgba(13,21,23,0.9)', backdropFilter: 'blur(16px)' }}>
-        <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-          <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
+        style={{ background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#141414' }}>
+          <ChevronLeft className="w-5 h-5" style={{ color: '#F5F0E8' }} />
         </button>
-        <h1 className="font-heading font-bold text-lg" style={{ color: '#dff0e8' }}>Your Bag</h1>
+        <h1 className="font-heading font-bold text-lg" style={{ color: '#F5F0E8', letterSpacing: '-0.02em' }}>Your Bag</h1>
       </div>
 
       <div className="px-5 pb-40">
         {/* Pickup Location */}
         <div className="mb-5">
-          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>PICKUP LOCATION</p>
-          <div className="p-4 rounded-2xl flex items-center gap-3" style={{ background: '#192123' }}>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#00F5D4' }}>PICKUP LOCATION</p>
+          <div className="p-4 rounded-2xl flex items-center gap-3" style={{ background: '#141414' }}>
             <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(119,255,200,0.12)' }}>
-              <Truck className="w-5 h-5" style={{ color: '#77ffc8' }} />
+              <Truck className="w-5 h-5" style={{ color: '#00F5D4' }} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-heading font-bold text-sm truncate" style={{ color: '#dff0e8' }}>{cart.truckName}</p>
-              <p className="text-xs" style={{ color: '#bacbc0' }}>{truckAddress}</p>
+              <p className="font-heading font-bold text-sm truncate" style={{ color: '#F5F0E8' }}>{cart.truckName}</p>
+              <p className="text-xs" style={{ color: '#A39E94' }}>{truckAddress}</p>
             </div>
             <span className="text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0"
-              style={{ background: 'rgba(119,255,200,0.12)', color: '#77ffc8' }}>
+              style={{ background: 'rgba(119,255,200,0.12)', color: '#00F5D4' }}>
               {truck?.delivery_eta || '15–20 min'}
             </span>
           </div>
@@ -156,8 +156,8 @@ export default function Cart() {
 
         {/* Order Summary */}
         <div className="mb-5">
-          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>ORDER SUMMARY</p>
-          <div className="rounded-2xl overflow-hidden" style={{ background: '#192123' }}>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#00F5D4' }}>ORDER SUMMARY</p>
+          <div className="rounded-2xl overflow-hidden" style={{ background: '#141414' }}>
             {cart.items.map((item, i) => (
               <div key={i} className="flex items-center gap-3 p-4"
                 style={{ borderBottom: i < cart.items.length - 1 ? '1px solid rgba(59,74,66,0.2)' : 'none' }}>
@@ -165,13 +165,13 @@ export default function Cart() {
                   <img src={item.image_url} alt={item.name} className="w-14 h-14 rounded-xl object-cover flex-shrink-0" />
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>{item.name}</p>
+                  <p className="font-heading font-bold text-sm" style={{ color: '#F5F0E8' }}>{item.name}</p>
                   {item.add_ons?.map((a, j) => (
-                    <p key={j} className="text-xs" style={{ color: '#bacbc0' }}>+ {a.name}</p>
+                    <p key={j} className="text-xs" style={{ color: '#A39E94' }}>+ {a.name}</p>
                   ))}
-                  <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>Qty: {item.quantity}</p>
+                  <p className="text-xs mt-0.5" style={{ color: '#A39E94' }}>Qty: {item.quantity}</p>
                 </div>
-                <span className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>
+                <span className="font-heading font-bold text-sm" style={{ color: '#F5F0E8' }}>
                   ${(item.price * item.quantity).toFixed(2)}
                 </span>
               </div>
@@ -181,7 +181,7 @@ export default function Cart() {
 
         {/* Pickup Time */}
         <div className="mb-5">
-          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>PICKUP TIME</p>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#00F5D4' }}>PICKUP TIME</p>
           <div className="flex gap-3">
             {[
               { id: 'asap', label: 'ASAP (15–20 min)' },
@@ -190,8 +190,8 @@ export default function Cart() {
               <button key={m.id} onClick={() => setPickupMode(m.id)}
                 className="flex-1 py-2.5 rounded-full text-sm font-bold transition-all"
                 style={pickupMode === m.id
-                  ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 14px rgba(119,255,200,0.35)' }
-                  : { background: '#192123', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }
+                  ? { background: 'linear-gradient(135deg,#00F5D4,#00e6a7)', color: '#0A0A0A', boxShadow: '0 0 14px rgba(119,255,200,0.35)' }
+                  : { background: '#141414', color: '#A39E94', border: '1px solid rgba(59,74,66,0.3)' }
                 }>
                 {m.label}
               </button>
@@ -202,27 +202,27 @@ export default function Cart() {
         {/* Tip */}
         <div className="mb-5">
           <div className="flex items-center justify-between mb-3">
-            <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>SUPPORT THE CREW</p>
-            <span className="text-[10px]" style={{ color: '#bacbc0' }}>100% goes to staff</span>
+            <p className="text-[10px] font-bold tracking-widest" style={{ color: '#00F5D4' }}>SUPPORT THE CREW</p>
+            <span className="text-[10px]" style={{ color: '#A39E94' }}>100% goes to staff</span>
           </div>
           <div className="flex gap-2">
             {TIPS.map(t => (
               <button key={t} onClick={() => { setTip(t); setCustomTip(''); }}
                 className="flex-1 py-2.5 rounded-xl font-bold text-sm transition-all"
                 style={tip === t && !customTip
-                  ? { background: 'rgba(119,255,200,0.12)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.4)' }
-                  : { background: '#192123', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.2)' }
+                  ? { background: 'rgba(119,255,200,0.12)', color: '#00F5D4', border: '1px solid rgba(119,255,200,0.4)' }
+                  : { background: '#141414', color: '#A39E94', border: '1px solid rgba(59,74,66,0.2)' }
                 }>{t}%</button>
             ))}
             <input type="number" placeholder="Other" value={customTip}
               onChange={e => { setCustomTip(e.target.value); setTip(0); }}
               className="flex-1 py-2.5 rounded-xl text-sm text-center font-semibold outline-none"
-              style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.2)' }} />
+              style={{ background: '#141414', color: '#F5F0E8', border: '1px solid rgba(59,74,66,0.2)' }} />
           </div>
         </div>
 
         {/* Totals — now includes tax */}
-        <div className="p-4 rounded-2xl mb-2 space-y-2" style={{ background: '#192123' }}>
+        <div className="p-4 rounded-2xl mb-2 space-y-2" style={{ background: '#141414' }}>
           {[
             { label: 'Subtotal', val: `$${subtotal.toFixed(2)}` },
             { label: 'Tax (8.25%)', val: `$${taxAmt.toFixed(2)}` },
@@ -230,16 +230,16 @@ export default function Cart() {
             { label: `Tip (${customTip ? 'custom' : `${tip}%`})`, val: `$${tipAmt.toFixed(2)}` },
           ].map(row => (
             <div key={row.label} className="flex justify-between">
-              <span className="text-sm" style={{ color: '#bacbc0' }}>{row.label}</span>
-              <span className="text-sm font-semibold" style={{ color: '#dff0e8' }}>{row.val}</span>
+              <span className="text-sm" style={{ color: '#A39E94' }}>{row.label}</span>
+              <span className="text-sm font-semibold" style={{ color: '#F5F0E8' }}>{row.val}</span>
             </div>
           ))}
           <div className="pt-2 flex justify-between" style={{ borderTop: '1px solid rgba(59,74,66,0.3)' }}>
-            <span className="font-heading font-bold" style={{ color: '#dff0e8' }}>Total</span>
-            <span className="font-heading font-bold text-lg" style={{ color: '#77ffc8' }}>${total.toFixed(2)}</span>
+            <span className="font-heading font-bold" style={{ color: '#F5F0E8' }}>Total</span>
+            <span className="font-heading font-bold text-lg" style={{ color: '#00F5D4' }}>${total.toFixed(2)}</span>
           </div>
         </div>
-        <p className="text-center text-[10px] mb-6" style={{ color: '#bacbc0' }}>Secure payment via Stripe · Tax included</p>
+        <p className="text-center text-[10px] mb-6" style={{ color: '#A39E94' }}>Secure payment via Stripe · Tax included</p>
       </div>
 
       {/* Sticky CTA */}
@@ -248,13 +248,13 @@ export default function Cart() {
         <button onClick={handlePlace} disabled={placing}
           className="w-full max-w-lg flex items-center justify-center gap-2 py-4 rounded-full font-heading font-black text-base transition-all"
           style={{
-            background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
-            color: '#003826',
+            background: 'linear-gradient(135deg, #00F5D4 0%, #00e6a7 100%)',
+            color: '#0A0A0A',
             boxShadow: '0 0 24px rgba(119,255,200,0.4)',
             opacity: placing ? 0.7 : 1,
           }}>
           {placing ? (
-            <><div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#003826 transparent transparent transparent' }} /> Processing...</>
+            <><div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#0A0A0A transparent transparent transparent' }} /> Processing...</>
           ) : (
             <><ExternalLink className="w-5 h-5" /> Pay ${total.toFixed(2)} via Stripe</>
           )}

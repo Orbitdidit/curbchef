@@ -18,23 +18,8 @@ export default function DropsNearYou() {
   if (activeDrops.length === 0) return null;
 
   return (
-    <div className="mt-6">
-      <div className="flex items-center justify-between px-5 mb-3">
-        <div className="flex items-center gap-2">
-          <span className="text-base">🪂</span>
-          <h2 className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>Drops Near You</h2>
-          <span className="text-[10px] font-black px-2 py-0.5 rounded-full"
-            style={{ background: 'rgba(253,89,30,0.15)', color: '#fd591e', border: '1px solid rgba(253,89,30,0.3)' }}>
-            {activeDrops.length} LIVE
-          </span>
-        </div>
-        <Link to="/deals" className="flex items-center gap-0.5 text-xs font-bold" style={{ color: '#77ffc8' }}>
-          See all <ChevronRight className="w-3.5 h-3.5" />
-        </Link>
-      </div>
-
-      <div className="flex gap-3 overflow-x-auto no-scrollbar"
-        style={{ paddingLeft: '20px', paddingRight: '20px' }}>
+    <div className="px-4">
+      <div className="flex gap-3 overflow-x-auto no-scrollbar pb-1">
         {activeDrops.map(drop => (
           <CurbDropCard key={drop.id} drop={drop} />
         ))}

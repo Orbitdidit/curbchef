@@ -11,7 +11,7 @@ import { useCallback, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 // Roots that map to each bottom-tab
-export const TAB_ROOTS = ['/', '/explore', '/live', '/deals', '/profile'];
+export const TAB_ROOTS = ['/', '/explore', '/search', '/profile'];
 
 function getTabRoot(pathname) {
   // Find the deepest matching root

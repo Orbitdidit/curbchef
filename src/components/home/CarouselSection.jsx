@@ -7,17 +7,19 @@ function SmallTruckCard({ truck, userLat, userLng }) {
   const distVal = (userLat && truck.latitude) ? distanceMiles(userLat, userLng, truck.latitude, truck.longitude) : null;
   const dist = distVal != null ? formatDist(distVal) : null;
 
+  const isHot = truck.status === 'open' && (truck.rating || 0) >= 4.5;
+
   return (
     <Link to={`/truck/${truck.id}`} className="flex-shrink-0 group" style={{ width: '160px' }}>
       <div
         className="rounded-2xl overflow-hidden"
         style={{
-          background: '#192123',
-          transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-          boxShadow: '0 2px 12px rgba(0,0,0,0.3)',
+          background: '#141414',
+          border: '1px solid rgba(255,255,255,0.04)',
+          transition: 'transform 0.2s ease',
         }}
-        onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.5)'; }}
-        onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.3)'; }}
+        onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
+        onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
       >
         {/* Image */}
         <div className="relative overflow-hidden" style={{ height: '110px' }}>
@@ -28,44 +30,37 @@ function SmallTruckCard({ truck, userLat, userLng }) {
           />
           <div
             className="absolute inset-0"
-            style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(13,21,23,0.9) 100%)' }}
+            style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.92) 100%)' }}
           />
-          {truck.is_live && (
-            <div
-              className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
-              style={{ background: 'rgba(255,59,48,0.9)', backdropFilter: 'blur(6px)' }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-              <span className="text-white text-[9px] font-black">LIVE</span>
-            </div>
-          )}
-          {truck.status === 'open' && !truck.is_live && (
-            <div
-              className="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[9px] font-black"
-              style={{ background: 'rgba(119,255,200,0.2)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.4)', backdropFilter: 'blur(6px)' }}
-            >
-              OPEN
-            </div>
-          )}
+          {/* Thermal badge */}
+          <div className="absolute top-2 right-2">
+            {truck.is_live ? (
+              <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold font-mono"
+                style={{ background: 'rgba(255,59,48,0.9)', color: 'white' }}>
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />LIVE
+              </span>
+            ) : isHot ? (
+              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold font-mono"
+                style={{ background: 'rgba(255,107,26,0.85)', color: 'white' }}>HOT</span>
+            ) : truck.status === 'open' ? (
+              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold font-mono"
+                style={{ background: 'rgba(0,245,212,0.15)', color: '#00F5D4', border: '1px solid rgba(0,245,212,0.3)' }}>WARM</span>
+            ) : null}
+          </div>
         </div>
 
         {/* Info */}
         <div className="px-3 pt-2 pb-3">
-          <p className="font-heading font-black text-sm leading-tight truncate" style={{ color: '#dff0e8' }}>{truck.name}</p>
-          {truck.description && (
-            <p className="text-[11px] mt-0.5 line-clamp-1" style={{ color: 'rgba(186,203,192,0.65)' }}>
-              {truck.description}
-            </p>
-          )}
-          <div className="flex items-center justify-between mt-2">
-            <div className="flex items-center gap-1">
-              <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-              <span className="text-xs font-bold" style={{ color: '#dff0e8' }}>{truck.rating?.toFixed(1) || '4.8'}</span>
+          <p className="font-heading font-bold text-sm leading-tight truncate" style={{ color: '#F5F0E8', letterSpacing: '-0.01em' }}>{truck.name}</p>
+          <div className="flex items-center justify-between mt-1.5">
+            <div className="flex items-center gap-0.5">
+              <Star className="w-3 h-3" style={{ fill: '#FFD60A', color: '#FFD60A' }} />
+              <span className="text-[11px] font-bold font-mono" style={{ color: '#F5F0E8' }}>{truck.rating?.toFixed(1) || '4.8'}</span>
             </div>
             {dist && (
-              <div className="flex items-center gap-1">
-                <MapPin className="w-2.5 h-2.5" style={{ color: '#bacbc0' }} />
-                <span className="text-[10px]" style={{ color: '#bacbc0' }}>{dist}</span>
+              <div className="flex items-center gap-0.5">
+                <MapPin className="w-2.5 h-2.5" style={{ color: '#6B665C' }} />
+                <span className="text-[10px] font-mono" style={{ color: '#6B665C' }}>{dist}</span>
               </div>
             )}
           </div>
@@ -80,31 +75,25 @@ export default function CarouselSection({ title, emoji, badge, trucks, seeAllHre
   if (!trucks || trucks.length === 0) return null;
 
   return (
-    <div className="mt-7">
-      <div className="flex items-center justify-between px-5 mb-3">
+    <div className="mt-6 mb-2">
+      <div className="flex items-center justify-between px-4 mb-3">
         <div className="flex items-center gap-2">
-          {badge === 'live' && (
-            <span
-              className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-              style={{ background: '#ff3b30', boxShadow: '0 0 8px #ff3b30', animation: 'pulse 1.5s ease-in-out infinite' }}
-            />
-          )}
-          <span className="text-base mr-0.5">{emoji}</span>
-          <h2 className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>{title}</h2>
+          {emoji && <span className="text-base">{emoji}</span>}
+          <h2 className="font-heading font-bold text-base" style={{ color: '#F5F0E8', letterSpacing: '-0.02em' }}>{title}</h2>
           {badge && badge !== 'live' && (
             <span
-              className="text-[9px] font-black px-2 py-0.5 rounded-full"
-              style={{ background: 'rgba(253,89,30,0.15)', color: '#fd591e', border: '1px solid rgba(253,89,30,0.3)' }}
+              className="text-[9px] font-bold px-2 py-0.5 rounded-full font-mono"
+              style={{ background: 'rgba(255,59,48,0.12)', color: '#FF3B30', border: '1px solid rgba(255,59,48,0.2)' }}
             >
               {badge}
             </span>
           )}
         </div>
-        <Link to={seeAllHref} className="flex items-center gap-0.5 text-xs font-bold" style={{ color: '#77ffc8' }}>
+        <Link to={seeAllHref} className="flex items-center gap-0.5 text-xs font-semibold" style={{ color: '#00F5D4' }}>
           See all <ChevronRight className="w-3.5 h-3.5" />
         </Link>
       </div>
-      <div className="flex gap-3 px-5 overflow-x-auto no-scrollbar pb-1">
+      <div className="flex gap-3 px-4 overflow-x-auto no-scrollbar pb-1">
         {trucks.map(truck => <SmallTruckCard key={truck.id} truck={truck} userLat={userLat} userLng={userLng} />)}
       </div>
     </div>
