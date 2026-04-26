@@ -35,35 +35,75 @@ function ClipBadge({ clip, isTruckCard }) {
   );
 }
 
+// Duration of the looping preview in seconds (4–8s feels snappy, entices clicks)
+const PREVIEW_DURATION = 6;
+
 function LiveCard({ clip, isActive, isTruckCard }) {
   const videoRef = useRef(null);
+  const loopTimerRef = useRef(null);
 
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    if (isActive) { v.currentTime = 0; v.play().catch(() => {}); }
-    else v.pause();
+
+    const clearLoop = () => { if (loopTimerRef.current) clearTimeout(loopTimerRef.current); };
+
+    if (isActive) {
+      v.currentTime = 0;
+      v.play().catch(() => {});
+
+      // After PREVIEW_DURATION seconds, loop back to start
+      const scheduleLoop = () => {
+        clearLoop();
+        loopTimerRef.current = setTimeout(() => {
+          v.currentTime = 0;
+          v.play().catch(() => {});
+          scheduleLoop();
+        }, PREVIEW_DURATION * 1000);
+      };
+      scheduleLoop();
+    } else {
+      v.pause();
+      clearLoop();
+    }
+
+    return clearLoop;
   }, [isActive]);
 
   return (
     <Link to="/live" className="block relative overflow-hidden flex-shrink-0 rounded-3xl"
       style={{ width: '100%', aspectRatio: '16/9' }}>
       {clip.video_url ? (
-        <video ref={videoRef} src={clip.video_url} poster={clip.poster_url || undefined}
+        <video
+          ref={videoRef}
+          src={clip.video_url}
+          poster={clip.poster_url || undefined}
           className="absolute inset-0 w-full h-full object-cover"
-          muted loop playsInline autoPlay={isActive} />
+          muted playsInline
+          preload="metadata"
+        />
       ) : (
         <img
           src={clip.image_url || clip.poster_url || clip.cover_image_url || 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=800'}
           alt={clip.title || clip.name}
           className="absolute inset-0 w-full h-full object-cover" />
       )}
+
       {/* Gradient overlay */}
       <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0) 35%, rgba(10,10,10,0.92) 100%)' }} />
 
       {/* Badge top-left */}
       <div className="absolute top-4 left-4">
         <ClipBadge clip={clip} isTruckCard={isTruckCard} />
+      </div>
+
+      {/* "Tap to watch" entice pill — bottom right */}
+      <div className="absolute top-4 right-4">
+        <div className="flex items-center gap-1 px-2.5 py-1 rounded-full"
+          style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)' }}>
+          <span className="text-[10px] font-black text-white tracking-wide">TAP FOR FULL</span>
+          <span className="text-[10px]">▶</span>
+        </div>
       </div>
 
       {/* Bottom info */}
@@ -73,9 +113,22 @@ function LiveCard({ clip, isActive, isTruckCard }) {
           {clip.truck_name || clip.name || 'Live Truck'}
         </p>
         <p className="text-white/70 text-sm font-medium">
-          {clip.title || clip.live_description || 'Tap to watch'}
+          {clip.title || clip.live_description || 'Tap to watch live →'}
         </p>
       </div>
+
+      {/* Subtle progress bar — resets every PREVIEW_DURATION secs */}
+      {isActive && clip.video_url && (
+        <div className="absolute bottom-0 left-0 right-0 h-0.5" style={{ background: 'rgba(255,255,255,0.12)' }}>
+          <div
+            className="h-full rounded-full"
+            style={{
+              background: '#00F5D4',
+              animation: `livePreviewProgress ${PREVIEW_DURATION}s linear infinite`,
+            }}
+          />
+        </div>
+      )}
     </Link>
   );
 }

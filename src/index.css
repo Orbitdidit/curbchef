@@ -184,6 +184,12 @@ button:active, a:active {
   animation: livePulse 1.4s ease-in-out infinite;
 }
 
+/* Live preview loop progress bar */
+@keyframes livePreviewProgress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
 /* Teal primary button */
 .btn-neon {
   background: #00F5D4;
