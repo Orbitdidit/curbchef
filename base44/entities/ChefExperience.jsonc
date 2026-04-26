@@ -1,0 +1,143 @@
+{
+  "name": "ChefExperience",
+  "type": "object",
+  "properties": {
+    "chef_name": {
+      "type": "string"
+    },
+    "chef_bio": {
+      "type": "string"
+    },
+    "profile_photo_url": {
+      "type": "string"
+    },
+    "owner_email": {
+      "type": "string"
+    },
+    "cuisine_specialties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "experience_types": {
+      "type": "array",
+      "description": "Types of experiences offered",
+      "items": {
+        "type": "string",
+        "enum": [
+          "private_dinner",
+          "anniversary_dinner",
+          "picnic_setup",
+          "wedding_catering",
+          "small_catering",
+          "crawfish_boil",
+          "seafood_boil",
+          "brunch",
+          "tasting_menu",
+          "birthday",
+          "corporate"
+        ]
+      }
+    },
+    "sample_menus": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price_per_person": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "starting_price": {
+      "type": "number",
+      "description": "Starting price per event (not per person)"
+    },
+    "price_per_person": {
+      "type": "number"
+    },
+    "booking_deposit": {
+      "type": "number",
+      "description": "Deposit amount to confirm booking"
+    },
+    "travel_fee_per_mile": {
+      "type": "number"
+    },
+    "service_area": {
+      "type": "string",
+      "description": "Cities or radius they serve"
+    },
+    "event_size_min": {
+      "type": "number",
+      "default": 2
+    },
+    "event_size_max": {
+      "type": "number",
+      "default": 50
+    },
+    "cancellation_policy": {
+      "type": "string"
+    },
+    "gallery": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Photo gallery URLs"
+    },
+    "food_safety_credentials": {
+      "type": "string"
+    },
+    "commercial_kitchen_proof_url": {
+      "type": "string"
+    },
+    "insurance_doc_url": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string",
+      "default": "Houston"
+    },
+    "rating": {
+      "type": "number"
+    },
+    "review_count": {
+      "type": "number",
+      "default": 0
+    },
+    "is_approved": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "verified",
+        "rejected",
+        "needs_review"
+      ],
+      "default": "pending"
+    },
+    "availability_notes": {
+      "type": "string",
+      "description": "General availability e.g. 'Weekends only, 2 weeks notice'"
+    }
+  },
+  "required": [
+    "chef_name",
+    "owner_email"
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "name": "ExperienceBooking",
+  "type": "object",
+  "properties": {
+    "chef_experience_id": {
+      "type": "string"
+    },
+    "chef_name": {
+      "type": "string"
+    },
+    "customer_email": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "customer_phone": {
+      "type": "string"
+    },
+    "experience_type": {
+      "type": "string",
+      "enum": [
+        "private_dinner",
+        "anniversary_dinner",
+        "picnic_setup",
+        "wedding_catering",
+        "small_catering",
+        "crawfish_boil",
+        "seafood_boil",
+        "brunch",
+        "tasting_menu",
+        "birthday",
+        "corporate"
+      ]
+    },
+    "event_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "event_time": {
+      "type": "string"
+    },
+    "guest_count": {
+      "type": "number"
+    },
+    "event_location": {
+      "type": "string"
+    },
+    "special_requests": {
+      "type": "string"
+    },
+    "selected_menu": {
+      "type": "string"
+    },
+    "estimated_total": {
+      "type": "number"
+    },
+    "deposit_paid": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "inquiry",
+        "pending_deposit",
+        "confirmed",
+        "completed",
+        "cancelled"
+      ],
+      "default": "inquiry"
+    },
+    "admin_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "customer_email",
+    "experience_type"
+  ]
+}

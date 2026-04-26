@@ -33,6 +33,7 @@ import PromoCard from '@/components/home/PromoCard';
 
 // Activity
 import ActivityFeed from '@/components/home/ActivityFeed';
+import ExperiencesTeaser from '@/components/home/ExperiencesTeaser';
 
 // Live carousel
 import LiveCarousel from '@/components/home/LiveCarousel';
@@ -174,6 +175,9 @@ export default function Home() {
       <div className="mt-6 mb-2">
         <PromoCard variant={1} />
       </div>
+
+      {/* Experiences teaser */}
+      <ExperiencesTeaser />
 
       {/* Activity feed — what's happening */}
       <ActivityFeed trucks={visibleTrucks} />

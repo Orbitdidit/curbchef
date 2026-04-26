@@ -42,6 +42,7 @@ import FoodConcierge from './pages/FoodConcierge';
 import TruckRadar from './pages/TruckRadar';
 import LandingPage from './pages/LandingPage';
 import Privacy from './pages/Privacy.jsx';
+import Experiences from './pages/Experiences.jsx';
 import Terms from './pages/Terms.jsx';
 import Support from './pages/Support.jsx';
 
@@ -142,6 +143,7 @@ const AuthenticatedApp = () => {
           <Route path="/vendor-portal" element={<VendorPortal />} />
           <Route path="/quiz" element={<UserQuiz />} />
 
+          <Route path="/experiences" element={<Experiences />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/support" element={<Support />} />
