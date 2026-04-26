@@ -23,19 +23,19 @@ export default function BottomNav() {
       className="fixed bottom-0 left-0 right-0 z-50 flex justify-center"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      <div className="w-full max-w-lg px-4 pb-3">
+      <div className="w-full max-w-lg px-6 pb-3">
         <div
-          className="flex items-center justify-around px-3 py-2 rounded-full"
+          className="flex items-center justify-around px-2 py-2"
           role="tablist"
           style={{
-            background: 'rgba(20,20,20,0.88)',
-            backdropFilter: 'blur(24px)',
-            border: '1px solid rgba(255,255,255,0.06)',
+            background: 'rgba(14,14,14,0.92)',
+            backdropFilter: 'blur(28px)',
+            border: '1px solid rgba(255,255,255,0.05)',
+            borderRadius: '20px',
           }}
         >
           {tabs.map(({ path, icon: Icon, label }) => {
             const active = path === '/' ? pathname === '/' : pathname.startsWith(path);
-
             return (
               <button
                 key={path}
@@ -48,23 +48,19 @@ export default function BottomNav() {
                 <div className="relative">
                   <Icon
                     className="w-5 h-5 transition-colors"
-                    style={{ color: active ? '#00F5D4' : '#6B665C' }}
-                    strokeWidth={active ? 2.5 : 1.8}
+                    style={{ color: active ? '#00F5D4' : '#3D3D3D' }}
+                    strokeWidth={active ? 2.2 : 1.6}
                     aria-hidden="true"
                   />
                   {path === '/' && cartCount > 0 && (
-                    <span
-                      className="absolute -top-1.5 -right-2 min-w-[16px] h-4 rounded-full flex items-center justify-center text-[9px] font-black text-white px-1"
-                      style={{ background: '#FF3B30' }}
-                    >
+                    <span className="absolute -top-1.5 -right-2 min-w-[16px] h-4 rounded-full flex items-center justify-center text-[9px] font-black text-white px-1"
+                      style={{ background: '#FF3B30' }}>
                       {cartCount}
                     </span>
                   )}
                 </div>
-                <span
-                  className="text-[10px] font-semibold transition-colors"
-                  style={{ color: active ? '#00F5D4' : '#6B665C' }}
-                >
+                <span className="text-[10px] font-medium transition-colors"
+                  style={{ color: active ? '#00F5D4' : '#3D3D3D' }}>
                   {label}
                 </span>
               </button>
