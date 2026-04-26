@@ -13,7 +13,7 @@ import { AssistantProvider } from '@/components/assistant/AssistantContext';
 import AssistantSheet from '@/components/assistant/AssistantSheet';
 
 import AppLayout from './components/layout/AppLayout';
-import Home from './pages/Home';
+import Home from './pages/Home.jsx';
 import LiveFeed from './pages/LiveFeed';
 import MapView from './pages/MapView';
 import TruckProfile from './pages/TruckProfile';

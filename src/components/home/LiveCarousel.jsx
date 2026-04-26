@@ -80,7 +80,7 @@ function LiveCard({ clip, isActive, isTruckCard }) {
   );
 }
 
-export default function LiveCarousel({ trucks }) {
+export default function LiveCarousel({ trucks = [] }) {
   const [active, setActive] = useState(0);
   const scrollRef = useRef(null);
 
