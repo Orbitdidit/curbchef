@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Star, MapPin, Clock } from 'lucide-react';
 import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
 import { useCloseCountdown } from '@/hooks/useCloseCountdown';
+import VendorTrustBadge from '@/components/shared/VendorTrustBadge.jsx';
 
 export default function TruckCard({ truck, rank }) {
   const { lat, lng } = useUserLocation();
@@ -88,6 +89,13 @@ export default function TruckCard({ truck, rank }) {
             )}
           </div>
         </div>
+
+        {/* Trust badge row */}
+        {truck.vendor_type && (
+          <div className="px-4 pt-2">
+            <VendorTrustBadge truck={truck} size="sm" />
+          </div>
+        )}
 
         {/* Footer row */}
         <div className="flex items-center justify-between px-4 py-3">

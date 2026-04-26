@@ -1,8 +1,23 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { CheckCircle, XCircle, Clock, ChevronDown, ChevronUp, Phone, Instagram } from 'lucide-react';
+import { CheckCircle, XCircle, Clock, ChevronDown, ChevronUp, Phone, Instagram, ShieldCheck, FileText } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+
+const VENDOR_TYPE_LABELS = {
+  food_truck:          '🚚 Food Truck',
+  food_trailer:        '🚛 Food Trailer',
+  licensed_popup:      '⛺ Licensed Pop-Up',
+  caterer_commercial:  '👨‍🍳 Commercial Kitchen',
+  cottage_goods:       '🏡 Cottage Goods',
+};
+
+const VERIFICATION_COLORS = {
+  pending:      { color: '#fbbf24', bg: 'rgba(251,191,36,0.1)' },
+  verified:     { color: '#77ffc8', bg: 'rgba(119,255,200,0.1)' },
+  rejected:     { color: '#ff3b30', bg: 'rgba(255,59,48,0.1)' },
+  needs_review: { color: '#fd591e', bg: 'rgba(253,89,30,0.1)' },
+};
 
 function ApplicationCard({ app, onApprove, onReject, isPending }) {
   const [expanded, setExpanded] = useState(false);
@@ -29,6 +44,12 @@ function ApplicationCard({ app, onApprove, onReject, isPending }) {
                 <p className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>{app.truck_name}</p>
                 <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>{app.owner_name} · {app.email}</p>
                 <p className="text-xs mt-0.5 capitalize" style={{ color: '#bacbc0' }}>{app.cuisine_type?.replace('_', ' ')} · {app.city}</p>
+                {app.vendor_type && (
+                  <span className="text-[10px] font-black px-2 py-0.5 rounded-full mt-1 inline-block"
+                    style={{ background: 'rgba(119,255,200,0.08)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.2)' }}>
+                    {VENDOR_TYPE_LABELS[app.vendor_type] || app.vendor_type}
+                  </span>
+                )}
               </div>
               <span className="text-[10px] font-black px-2.5 py-1 rounded-full flex-shrink-0"
                 style={{ background: statusStyle.bg, color: statusStyle.color, border: `1px solid ${statusStyle.border}` }}>
@@ -92,6 +113,47 @@ function ApplicationCard({ app, onApprove, onReject, isPending }) {
                   {app.food_images.map((url, i) => (
                     <img key={i} src={url} alt="food" className="w-20 h-20 rounded-xl object-cover flex-shrink-0" />
                   ))}
+                </div>
+              </div>
+            )}
+
+            {/* Permit & verification info */}
+            {(app.permit_doc_url || app.food_handler_cert_url || app.commissary_info || app.event_authorization_info) && (
+              <div>
+                <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: '#fbbf24' }}>PERMITS & VERIFICATION DOCS</p>
+                <div className="flex flex-col gap-2">
+                  {app.health_permit_status && (
+                    <div className="flex items-center gap-2">
+                      <ShieldCheck className="w-3.5 h-3.5" style={{ color: '#77ffc8' }} />
+                      <span className="text-xs" style={{ color: '#bacbc0' }}>Health Permit: <strong style={{ color: '#dff0e8' }}>{app.health_permit_status?.replace('_', ' ')}</strong></span>
+                    </div>
+                  )}
+                  {app.permit_doc_url && (
+                    <a href={app.permit_doc_url} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-xs py-2 px-3 rounded-xl"
+                      style={{ background: 'rgba(119,255,200,0.08)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.2)' }}>
+                      <FileText className="w-3.5 h-3.5" /> View Permit Document ↗
+                    </a>
+                  )}
+                  {app.food_handler_cert_url && (
+                    <a href={app.food_handler_cert_url} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-xs py-2 px-3 rounded-xl"
+                      style={{ background: 'rgba(119,255,200,0.08)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.2)' }}>
+                      <FileText className="w-3.5 h-3.5" /> View Food Handler Cert ↗
+                    </a>
+                  )}
+                  {app.commissary_info && (
+                    <div className="p-2 rounded-xl" style={{ background: '#0d1517' }}>
+                      <p className="text-[10px] font-bold mb-1" style={{ color: '#bacbc0' }}>COMMISSARY / KITCHEN</p>
+                      <p className="text-xs" style={{ color: '#dff0e8' }}>{app.commissary_info}</p>
+                    </div>
+                  )}
+                  {app.event_authorization_info && (
+                    <div className="p-2 rounded-xl" style={{ background: '#0d1517' }}>
+                      <p className="text-[10px] font-bold mb-1" style={{ color: '#bacbc0' }}>EVENT / LOCATION AUTH</p>
+                      <p className="text-xs" style={{ color: '#dff0e8' }}>{app.event_authorization_info}</p>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -172,6 +234,13 @@ export default function ApplicationsPanel() {
         total_orders: 0,
         stripe_onboarding_status: 'not_connected',
         vendor_plan: 'free',
+        vendor_type: app.vendor_type || 'food_truck',
+        verification_status: 'verified',
+        health_permit_status: app.health_permit_status || 'not_submitted',
+        permit_doc_url: app.permit_doc_url || '',
+        food_handler_cert_url: app.food_handler_cert_url || '',
+        commissary_info: app.commissary_info || '',
+        event_authorization_info: app.event_authorization_info || '',
       });
 
       // 2. Create MenuItem records from onboarding menu
