@@ -122,7 +122,7 @@ function ApplicationCard({ app, onApprove, onReject, isPending }) {
             style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 16px rgba(119,255,200,0.3)' }}
           >
             <CheckCircle className="w-4 h-4" />
-            Approve & Go Live
+            Approve Truck
           </button>
           <button
             onClick={() => onReject(app)}
@@ -150,56 +150,64 @@ export default function ApplicationsPanel() {
 
   const approveMutation = useMutation({
     mutationFn: async (app) => {
+      // 1. Create FoodTruck — approved but NOT live yet (vendor turns it on)
       const truck = await base44.entities.FoodTruck.create({
         name: app.truck_name,
-        cuisine_type: app.cuisine_type,
-        description: `${app.truck_name} — Houston's finest ${app.cuisine_type?.replace('_', ' ')}`,
+        cuisine_type: app.cuisine_type || 'fusion',
+        description: `${app.truck_name} — ${(app.cuisine_type || 'food').replace('_', ' ')} in ${app.city || 'Houston'}`,
         image_url: app.food_images?.[0] || app.truck_photo_url || '',
         cover_image_url: app.truck_photo_url || app.food_images?.[0] || '',
-        address: app.city,
-        city: 'Houston',
-        phone: app.phone,
+        address: app.city || 'Houston, TX',
+        city: app.city || 'Houston',
+        phone: app.phone || '',
         owner_email: app.email,
-        status: 'open',
+        latitude: app.latitude || null,
+        longitude: app.longitude || null,
+        status: 'closed',   // vendor opens it themselves
         is_approved: true,
-        is_live: false,
+        is_live: false,     // vendor goes live themselves
         rating: 5.0,
         review_count: 0,
         followers_count: 0,
         total_orders: 0,
         stripe_onboarding_status: 'not_connected',
+        vendor_plan: 'free',
       });
 
-      if (app.menu_items?.length) {
-        await Promise.all(app.menu_items.map((item, i) =>
+      // 2. Create MenuItem records from onboarding menu
+      const validItems = (app.menu_items || []).filter(m => m.name && m.price);
+      if (validItems.length) {
+        await Promise.all(validItems.map((item, i) =>
           base44.entities.MenuItem.create({
             truck_id: truck.id,
             name: item.name,
-            price: item.price,
+            price: parseFloat(item.price) || 0,
             category: 'mains',
             is_available: true,
             is_special: i === 0,
             image_url: app.food_images?.[i] || app.food_images?.[0] || '',
+            description: item.prep_time ? `Prep time: ${item.prep_time} min` : '',
           })
         ));
       }
 
+      // 3. Mark application approved
       await base44.entities.TruckOnboarding.update(app.id, { status: 'approved' });
 
-      // Send approval email to vendor
+      // 4. Send approval email only after truck + menu are created
       await base44.integrations.Core.SendEmail({
         to: app.email,
         subject: `🎉 ${app.truck_name} is approved on CurbChef!`,
-        body: `Hi ${app.owner_name},\n\nGreat news — your food truck "${app.truck_name}" has been approved on CurbChef!\n\nYou can now access your Vendor Dashboard to:\n• Go live and start accepting orders\n• Connect Stripe for payouts\n• Manage your menu\n\nVisit your dashboard at: https://www.curbchef.app/vendor\n\nSign in with the email address you used to apply (${app.email}).\n\nWelcome to CurbChef! 🚚🔥\n\nThe CurbChef Team`,
+        body: `Hi ${app.owner_name},\n\nGreat news — your food truck "${app.truck_name}" has been approved on CurbChef!\n\nSign in to your Vendor Dashboard to:\n• Connect Stripe to accept card payments (12% platform fee per order)\n• Turn your truck OPEN and GO LIVE to start receiving orders\n• Manage your menu and food photos\n\nDashboard: https://www.curbchef.app/vendor\n\nSign in with: ${app.email}\n\nWelcome to CurbChef! 🚚🔥\n\n— The CurbChef Team`,
       });
 
       return truck;
     },
-    onSuccess: (_, app) => {
+    onSuccess: (truck, app) => {
       qc.invalidateQueries({ queryKey: ['truck-applications'] });
       qc.invalidateQueries({ queryKey: ['admin-trucks'] });
       qc.invalidateQueries({ queryKey: ['trucks'] });
-      toast({ title: `✅ ${app.truck_name} approved!`, description: 'Truck is now live.', duration: 2000 });
+      toast({ title: `✅ ${app.truck_name} approved!`, description: 'Truck created. Approval email sent.', duration: 3000 });
     },
   });
 

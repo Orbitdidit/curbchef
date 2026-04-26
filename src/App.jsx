@@ -41,6 +41,9 @@ import FoodScan from './pages/FoodScan';
 import FoodConcierge from './pages/FoodConcierge';
 import TruckRadar from './pages/TruckRadar';
 import LandingPage from './pages/LandingPage';
+import Privacy from './pages/Privacy.jsx';
+import Terms from './pages/Terms.jsx';
+import Support from './pages/Support.jsx';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin, isAuthenticated } = useAuth();
@@ -138,6 +141,10 @@ const AuthenticatedApp = () => {
           <Route path="/onboard-truck" element={<OnboardTruck />} />
           <Route path="/vendor-portal" element={<VendorPortal />} />
           <Route path="/quiz" element={<UserQuiz />} />
+
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/support" element={<Support />} />
 
           <Route path="*" element={<PageNotFound />} />
         </Routes>

@@ -163,6 +163,13 @@ export default function Profile() {
           </div>
         )}
 
+        {/* Legal links */}
+        <div className="flex items-center justify-center gap-5 mb-5 pb-4" style={{ borderTop: '1px solid rgba(59,74,66,0.15)', paddingTop: '1rem' }}>
+          <Link to="/privacy" className="text-xs font-semibold" style={{ color: '#bacbc0' }}>Privacy</Link>
+          <Link to="/terms" className="text-xs font-semibold" style={{ color: '#bacbc0' }}>Terms</Link>
+          <Link to="/support" className="text-xs font-semibold" style={{ color: '#bacbc0' }}>Support</Link>
+        </div>
+
         {/* Sign out + delete */}
         <div className="flex flex-col gap-3 pb-6">
           <button onClick={() => base44.auth.logout('/')}

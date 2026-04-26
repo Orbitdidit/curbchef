@@ -14,6 +14,7 @@ export default function OnboardTruck() {
   const { toast } = useToast();
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const [form, setForm] = useState({
     truck_name: '', owner_name: '', phone: '', email: '', cuisine_type: '', instagram: '',
@@ -73,20 +74,22 @@ export default function OnboardTruck() {
   };
 
   const handleSubmit = async () => {
+    if (!form.truck_name || !form.owner_name || !form.email) {
+      toast({ title: 'Please fill in truck name, your name, and email.', variant: 'destructive' });
+      return;
+    }
     setSubmitting(true);
-    // Attach logged-in vendor's email so admin can link truck to their account
     const user = await base44.auth.me().catch(() => null);
     const vendorEmail = user?.email || form.email;
     await base44.entities.TruckOnboarding.create({
       ...form,
       email: vendorEmail,
-      menu_items: form.menu_items.filter(m => m.name),
+      menu_items: form.menu_items.filter(m => m.name && m.price),
       status: 'submitted',
       step_completed: 7,
     });
-    toast({ title: '🎉 Submitted! We\'ll review and approve shortly.', duration: 4000 });
-    navigate('/vendor-portal');
     setSubmitting(false);
+    setSubmitted(true);
   };
 
   const canNext = () => {
@@ -98,6 +101,47 @@ export default function OnboardTruck() {
   const inputClass = "w-full px-4 py-3 rounded-2xl text-sm font-medium outline-none";
   const inputStyle = { background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.35)' };
   const labelStyle = { color: '#bacbc0', fontSize: '11px', fontWeight: '700', letterSpacing: '0.08em' };
+
+  // Success screen
+  if (submitted) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#0d1517' }}>
+        <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-6"
+          style={{ background: 'linear-gradient(135deg,rgba(119,255,200,0.15),rgba(119,255,200,0.05))', border: '1px solid rgba(119,255,200,0.3)' }}>
+          <span className="text-4xl">🎉</span>
+        </div>
+        <h1 className="font-heading font-black text-3xl mb-3" style={{ color: '#dff0e8' }}>Application Submitted!</h1>
+        <p className="text-sm mb-2 max-w-sm" style={{ color: '#bacbc0' }}>
+          <span className="font-bold" style={{ color: '#77ffc8' }}>{form.truck_name}</span> is now under review by the CurbChef team.
+        </p>
+        <p className="text-sm mb-8 max-w-sm" style={{ color: '#bacbc0' }}>
+          We'll review your application and approve your truck within <strong style={{ color: '#dff0e8' }}>24 hours</strong>. You'll receive a confirmation email at <strong style={{ color: '#77ffc8' }}>{form.email}</strong>.
+        </p>
+        <div className="w-full max-w-sm space-y-3">
+          <div className="p-4 rounded-2xl text-left" style={{ background: '#192123', border: '1px solid rgba(119,255,200,0.12)' }}>
+            <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: '#77ffc8' }}>WHAT HAPPENS NEXT</p>
+            {[
+              '✅ CurbChef reviews your menu, photos & kitchen check',
+              '📧 You\'ll get an approval email within 24 hours',
+              '🔐 Log in to your vendor dashboard to connect Stripe & go live',
+            ].map((step, i) => (
+              <p key={i} className="text-xs mb-1.5" style={{ color: '#bacbc0' }}>{step}</p>
+            ))}
+          </div>
+          <button onClick={() => navigate('/')}
+            className="w-full py-4 rounded-full font-heading font-black text-base"
+            style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 24px rgba(119,255,200,0.35)' }}>
+            Back to CurbChef
+          </button>
+          <button onClick={() => base44.auth.redirectToLogin('/vendor-portal')}
+            className="w-full py-3 rounded-full font-heading font-black text-sm"
+            style={{ background: '#192123', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.2)' }}>
+            Sign In to Vendor Portal
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen" style={{ background: '#0d1517' }}>
