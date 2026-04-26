@@ -3,14 +3,22 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mic, Search, ChevronDown, Bell } from 'lucide-react';
+
+// Home sections
 import CategoryRow from '@/components/home/CategoryRow';
 import DropsNearYou from '@/components/home/DropsNearYou';
 import LiveCarousel from '@/components/home/LiveCarousel';
 import CarouselSection from '@/components/home/CarouselSection';
 import ActivityFeed from '@/components/home/ActivityFeed';
 import ExperiencesTeaser from '@/components/home/ExperiencesTeaser';
-import { addToCart } from '@/lib/cartStore';
-import { useToast } from '@/components/ui/use-toast';
+import FoodMoodRail from '@/components/home/FoodMoodRail';
+import FollowedTrucksRail from '@/components/home/FollowedTrucksRail';
+import QuickReorder from '@/components/home/QuickReorder';
+import FiveDollarSpecials from '@/components/home/FiveDollarSpecials';
+import MidVideoBlock from '@/components/home/MidVideoBlock';
+import CookinSection from '@/components/home/CookinSection';
+import PromoCard from '@/components/home/PromoCard';
+import AssistantHomeCard from '@/components/assistant/AssistantHomeCard';
 
 // ── Quick AI prompt chips ─────────────────────────────────────────────────────
 const AI_CHIPS = [
@@ -20,7 +28,7 @@ const AI_CHIPS = [
   { label: 'Open right now', emoji: '🟢' },
 ];
 
-// ── Featured hero card for the top truck ─────────────────────────────────────
+// ── Featured hero card ────────────────────────────────────────────────────────
 function HeroFoodCard({ trucks }) {
   const [idx, setIdx] = useState(0);
   const candidates = trucks.filter(t => t.status === 'open' || t.is_live).slice(0, 5);
@@ -35,8 +43,6 @@ function HeroFoodCard({ trucks }) {
       <Link to={`/truck/${truck.id}`}>
         <div className="relative rounded-3xl overflow-hidden" style={{ aspectRatio: '4/3' }}>
           <img src={img} alt={truck.name} className="absolute inset-0 w-full h-full object-cover" />
-
-          {/* gradient */}
           <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.0) 30%, rgba(10,10,10,0.88) 100%)' }} />
 
           {/* badges top-left */}
@@ -44,7 +50,7 @@ function HeroFoodCard({ trucks }) {
             {truck.is_live && (
               <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full"
                 style={{ background: 'rgba(255,59,48,0.9)', backdropFilter: 'blur(8px)' }}>
-                <span className="w-1.5 h-1.5 rounded-full bg-white" style={{ animation: 'livePulse 1.4s ease-in-out infinite' }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-white live-dot" />
                 <span className="text-white text-[10px] font-black tracking-widest">LIVE</span>
               </div>
             )}
@@ -61,7 +67,7 @@ function HeroFoodCard({ trucks }) {
             </div>
           </div>
 
-          {/* multi-dot indicator */}
+          {/* dot indicators */}
           {candidates.length > 1 && (
             <div className="absolute top-4 right-4 flex gap-1">
               {candidates.map((_, i) => (
@@ -90,15 +96,13 @@ function HeroFoodCard({ trucks }) {
               )}
             </div>
             <div className="flex items-center gap-2">
-              <Link to={`/truck/${truck.id}`}
-                onClick={e => e.stopPropagation()}
+              <Link to={`/truck/${truck.id}`} onClick={e => e.stopPropagation()}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-full font-heading font-black text-sm"
                 style={{ background: '#00F5D4', color: '#0A0A0A' }}>
                 Order Ahead →
               </Link>
               {truck.is_live && (
-                <Link to="/live"
-                  onClick={e => e.stopPropagation()}
+                <Link to="/live" onClick={e => e.stopPropagation()}
                   className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-bold text-sm"
                   style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)' }}>
                   ▶ Watch
@@ -112,7 +116,7 @@ function HeroFoodCard({ trucks }) {
   );
 }
 
-// ── Compact stats strip (moved lower on page) ─────────────────────────────────
+// ── Compact rewards strip ─────────────────────────────────────────────────────
 function CompactStatsStrip({ user }) {
   const { data: rewards } = useQuery({
     queryKey: ['rewards-me', user?.email],
@@ -124,7 +128,7 @@ function CompactStatsStrip({ user }) {
   if (!user) return null;
   return (
     <Link to="/rewards">
-      <div className="mx-4 mt-6 px-4 py-3 rounded-2xl flex items-center gap-3"
+      <div className="mx-4 px-4 py-3 rounded-2xl flex items-center gap-3"
         style={{ background: '#141414', border: '1px solid rgba(255,255,255,0.05)' }}>
         <span className="text-lg">🏆</span>
         <div className="flex-1">
@@ -141,7 +145,6 @@ function CompactStatsStrip({ user }) {
 // ── Main ───────────────────────────────────────────────────────────────────────
 export default function Home() {
   const navigate = useNavigate();
-  const { toast } = useToast();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -161,7 +164,6 @@ export default function Home() {
     ? visibleTrucks
     : visibleTrucks.filter(t => t.cuisine_type === selectedCategory);
 
-  const openTrucks = filteredTrucks.filter(t => t.status === 'open');
   const liveTrucks = filteredTrucks.filter(t => t.is_live);
   const nearbyTrucks = filteredTrucks.slice(0, 10);
 
@@ -170,17 +172,12 @@ export default function Home() {
     if (searchQuery.trim()) navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
   };
 
-  const h = new Date().getHours();
-  const greeting = h < 5 ? 'Still up?' : h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : h < 21 ? 'Good evening' : 'Late night craving?';
-  const firstName = user?.full_name?.split(' ')[0];
-
   return (
     <div className="min-h-screen pb-28" style={{ background: '#0A0A0A' }}>
 
       {/* ── 1. TOP BAR ── */}
       <div className="px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-3">
         <div className="flex items-center justify-between">
-          {/* Logo + location */}
           <div>
             <p className="font-heading font-black text-xl" style={{ color: '#F5F0E8' }}>
               Curb<span style={{ color: '#00F5D4' }}>Chef</span>
@@ -191,11 +188,10 @@ export default function Home() {
               <ChevronDown className="w-3 h-3" style={{ color: '#6B665C' }} />
             </div>
           </div>
-          {/* Right icons */}
           <div className="flex items-center gap-2">
             <button className="w-9 h-9 rounded-xl flex items-center justify-center relative"
               style={{ background: '#141414' }}>
-              <Bell className="w-4.5 h-4.5" style={{ color: '#A39E94' }} />
+              <Bell className="w-4 h-4" style={{ color: '#A39E94' }} />
               <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full" style={{ background: '#FF3B30' }} />
             </button>
             <Link to="/search" className="w-9 h-9 rounded-xl flex items-center justify-center"
@@ -219,9 +215,7 @@ export default function Home() {
               className="flex-1 bg-transparent text-sm outline-none"
               style={{ color: '#F5F0E8' }}
             />
-            <button type="button" className="flex-shrink-0">
-              <Mic className="w-4 h-4" style={{ color: '#6B665C' }} />
-            </button>
+            <button type="button"><Mic className="w-4 h-4" style={{ color: '#6B665C' }} /></button>
           </div>
         </form>
       </div>
@@ -246,20 +240,32 @@ export default function Home() {
       {/* ── 5. FEATURED HERO CARD ── */}
       <HeroFoodCard trucks={visibleTrucks} />
 
+      {/* ── QUICK REORDER (if returning user) ── */}
+      <QuickReorder user={user} />
+
+      {/* ── FOOD MOOD RAIL ── */}
+      <div className="mt-5">
+        <FoodMoodRail />
+      </div>
+
+      {/* ── FOLLOWED TRUCKS ── */}
+      <FollowedTrucksRail user={user} trucks={visibleTrucks} />
+
       {/* ── 6. CURB DROPS ── */}
       <div className="mt-8">
         <div className="flex items-center justify-between px-4 mb-3">
-          <h2 className="font-heading font-black text-lg flex items-center gap-2" style={{ color: '#F5F0E8' }}>
-            ⚡ Curb Drops
-          </h2>
+          <h2 className="font-heading font-black text-lg" style={{ color: '#F5F0E8' }}>⚡ Curb Drops</h2>
           <Link to="/deals" className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#6B665C' }}>Flash Deals</Link>
         </div>
         <DropsNearYou />
       </div>
 
+      {/* ── $5 SPECIALS ── */}
+      <FiveDollarSpecials trucks={visibleTrucks} />
+
       {/* ── 7. NEARBY NOW ── */}
       {nearbyTrucks.length > 0 && (
-        <div className="mt-8">
+        <div className="mt-4">
           <CarouselSection title="Nearby Now" emoji="📍" trucks={nearbyTrucks} seeAllHref="/explore" />
         </div>
       )}
@@ -268,7 +274,7 @@ export default function Home() {
       <div className="mt-8">
         <div className="flex items-center justify-between px-4 mb-3">
           <h2 className="font-heading font-black text-lg flex items-center gap-2" style={{ color: '#F5F0E8' }}>
-            <span className="w-2 h-2 rounded-full inline-block" style={{ background: '#FF3B30', animation: 'livePulse 1.4s ease-in-out infinite' }} />
+            <span className="w-2 h-2 rounded-full inline-block live-dot" style={{ background: '#FF3B30' }} />
             Live & Featured
           </h2>
           <Link to="/live" className="text-xs font-semibold" style={{ color: '#00F5D4' }}>Watch all →</Link>
@@ -276,15 +282,34 @@ export default function Home() {
         <LiveCarousel trucks={liveTrucks} />
       </div>
 
-      {/* ── 9. COMPACT STATS (not at top) ── */}
-      <CompactStatsStrip user={user} />
+      {/* ── MID VIDEO BLOCK ── */}
+      <MidVideoBlock />
+
+      {/* ── COOKIN' SECTION (animated fire cards) ── */}
+      <CookinSection />
+
+      {/* ── AI ASSISTANT CARD ── */}
+      <div className="px-4 mt-8">
+        <AssistantHomeCard />
+      </div>
+
+      {/* ── PROMO CARDS ── */}
+      <div className="mt-6 flex flex-col gap-3">
+        <PromoCard variant={0} />
+        <PromoCard variant={1} />
+      </div>
 
       {/* ── EXPERIENCES ── */}
       <div className="mt-8">
         <ExperiencesTeaser />
       </div>
 
-      {/* ── ACTIVITY ── */}
+      {/* ── COMPACT STATS / REWARDS ── */}
+      <div className="mt-8">
+        <CompactStatsStrip user={user} />
+      </div>
+
+      {/* ── ACTIVITY FEED ── */}
       <div className="mt-8">
         <ActivityFeed trucks={visibleTrucks} />
       </div>
