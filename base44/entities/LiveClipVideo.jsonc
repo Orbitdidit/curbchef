@@ -5,6 +5,10 @@
     "title": {
       "type": "string"
     },
+    "truck_id": {
+      "type": "string",
+      "description": "Reference to FoodTruck"
+    },
     "truck_name": {
       "type": "string"
     },
@@ -13,6 +17,21 @@
     },
     "poster_url": {
       "type": "string"
+    },
+    "vendor_caption": {
+      "type": "string",
+      "description": "What's happening at the truck"
+    },
+    "recorded_at": {
+      "type": "string",
+      "description": "ISO datetime when the clip was recorded"
+    },
+    "duration_seconds": {
+      "type": "number"
+    },
+    "view_count": {
+      "type": "number",
+      "default": 0
     },
     "sort_order": {
       "type": "number",
@@ -25,6 +44,7 @@
   },
   "required": [
     "title",
-    "video_url"
+    "video_url",
+    "truck_id"
   ]
 }

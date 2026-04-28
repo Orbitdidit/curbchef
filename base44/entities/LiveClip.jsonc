@@ -19,6 +19,16 @@
       "type": "string",
       "description": "Clip thumbnail / food image"
     },
+    "video_url": {
+      "type": "string",
+      "description": "Video URL if recorded via Go Live"
+    },
+    "poster_url": {
+      "type": "string"
+    },
+    "vendor_caption": {
+      "type": "string"
+    },
     "likes": {
       "type": "number",
       "default": 0
@@ -30,6 +40,10 @@
     "is_live": {
       "type": "boolean",
       "default": false
+    },
+    "expires_at": {
+      "type": "string",
+      "description": "ISO datetime when live status expires (15 min after posting)"
     }
   },
   "required": [

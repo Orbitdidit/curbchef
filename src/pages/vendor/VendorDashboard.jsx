@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Settings, Video, ShoppingBag, Map, BarChart3, Users, DollarSign, ChevronLeft, Pencil, Zap } from 'lucide-react';
+import { Settings, Video, ShoppingBag, Map, BarChart3, Users, DollarSign, ChevronLeft, Pencil, Zap, Camera } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import DashboardDave from '@/components/vendor/DashboardDave';
 import StripeConnectButton from '@/components/vendor/StripeConnectButton';
@@ -138,22 +138,23 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         <LaunchReadinessCard truck={truck} menuItems={menuItems} />
 
         {/* Go Live CTA */}
-        {!truck.is_live && (
-          <button
-            id="tour-go-live"
-            onClick={() => updateTruck.mutate({ is_live: true, status: 'open' })}
-            className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl mb-5 font-heading font-black text-base"
-            style={{
-              background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
-              color: '#003826',
-              boxShadow: '0 0 24px rgba(119,255,200,0.35)',
-            }}
-          >
-            <Video className="w-5 h-5" />
-            GO LIVE
-            <span className="text-xs font-semibold opacity-70 ml-1">Connect with 1.2K nearby foodies</span>
-          </button>
-        )}
+        <Link
+          id="tour-go-live"
+          to="/vendor/go-live"
+          className="w-full flex items-center justify-center gap-3 py-5 rounded-2xl mb-5 font-heading font-black text-lg active:scale-95 transition-transform"
+          style={{
+            background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
+            color: '#003826',
+            boxShadow: '0 0 32px rgba(119,255,200,0.45)',
+          }}
+        >
+          <span className="relative flex items-center justify-center w-6 h-6">
+            <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping" style={{ background: '#FF3B30' }} />
+            <span className="relative w-3 h-3 rounded-full" style={{ background: '#FF3B30' }} />
+          </span>
+          <Camera className="w-6 h-6" />
+          📹 Go Live from Truck
+        </Link>
 
         {/* Plan badge + Drop Tokens */}
         <div className="flex gap-2 mb-3">

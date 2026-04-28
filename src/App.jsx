@@ -36,6 +36,7 @@ import Profile from './pages/Profile.jsx';
 import VendorPortal from './pages/VendorPortal';
 import VendorPlans from './pages/vendor/VendorPlans';
 import VendorProfile from './pages/vendor/VendorProfile';
+import GoLive from './pages/vendor/GoLive';
 import LaunchDashboard from './pages/admin/LaunchDashboard';
 import FoodScan from './pages/FoodScan';
 import FoodConcierge from './pages/FoodConcierge';
@@ -130,6 +131,7 @@ const AuthenticatedApp = () => {
           <Route path="/vendor/menu" element={<VendorMenu />} />
           <Route path="/vendor/plans" element={<VendorPlans />} />
           <Route path="/vendor/profile" element={<VendorProfile />} />
+          <Route path="/vendor/go-live" element={<GoLive />} />
 
           {/* Admin */}
           <Route path="/admin" element={<AdminDashboard />} />
