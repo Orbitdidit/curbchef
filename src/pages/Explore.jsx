@@ -150,7 +150,7 @@ export default function Explore() {
 
   const { data: trucks = [], isLoading } = useQuery({
     queryKey: ['trucks-explore'],
-    queryFn: () => base44.entities.FoodTruck.filter({ is_approved: true }),
+    queryFn: () => base44.entities.FoodTruck.filter({ is_approved: true, launch_ready: true }),
   });
 
   const filtered = useMemo(() => {

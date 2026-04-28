@@ -155,7 +155,7 @@ export default function Home() {
 
   const { data: trucks = [] } = useQuery({
     queryKey: ['trucks-home'],
-    queryFn: () => base44.entities.FoodTruck.filter({ is_approved: true }, '-rating', 50),
+    queryFn: () => base44.entities.FoodTruck.filter({ is_approved: true, launch_ready: true }, '-rating', 50),
     refetchInterval: 60000,
   });
 

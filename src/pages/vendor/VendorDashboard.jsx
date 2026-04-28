@@ -11,6 +11,7 @@ import DropTokenCounter from '@/components/vendor/DropTokenCounter';
 import CreateCurbDropModal from '@/components/drops/CreateCurbDropModal';
 import TodaysHours from '@/components/vendor/TodaysHours';
 import ReliabilityCard from '@/components/vendor/ReliabilityCard';
+import LaunchReadinessCard from '@/components/vendor/LaunchReadinessCard';
 
 function VendorDashboardInner({ truck: initialTruck, user }) {
   const qc = useQueryClient();
@@ -116,6 +117,9 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
             </button>
           </div>
         </div>
+
+        {/* Launch Readiness Card */}
+        <LaunchReadinessCard truck={truck} menuItems={menuItems} />
 
         {/* Go Live CTA */}
         {!truck.is_live && (

@@ -54,6 +54,11 @@ export default function AdminDashboard() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-trucks'] }),
   });
 
+  const toggleLaunchOverride = useMutation({
+    mutationFn: ({ id, override }) => base44.entities.FoodTruck.update(id, { launch_ready_override: override, launch_ready: override }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-trucks'] }),
+  });
+
   const { data: pendingApplications = [] } = useQuery({
     queryKey: ['pending-applications-count'],
     queryFn: () => base44.entities.TruckOnboarding.filter({ status: 'submitted' }),
@@ -375,6 +380,37 @@ export default function AdminDashboard() {
                 </div>
               );
             })}
+          </div>
+        </div>
+
+        {/* Admin: Launch Ready Override */}
+        <div className="mt-2">
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#fbbf24' }}>LAUNCH READY OVERRIDE</p>
+          <p className="text-xs mb-3" style={{ color: '#bacbc0' }}>Manually mark trucks as launch-ready (bypasses the 8-step checklist).</p>
+          <div className="flex flex-col gap-2 mb-5">
+            {trucks.filter(t => t.is_approved).map(truck => (
+              <div key={truck.id} className="flex items-center gap-3 px-4 py-3 rounded-xl"
+                style={{ background: '#192123', border: truck.launch_ready_override ? '1px solid rgba(251,191,36,0.3)' : '1px solid transparent' }}>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold truncate" style={{ color: '#dff0e8' }}>{truck.name}</p>
+                  <p className="text-[10px]" style={{ color: truck.launch_ready ? '#77ffc8' : '#bacbc0' }}>
+                    {truck.launch_ready ? '✓ Launch Ready' : '○ Not Ready'}
+                    {truck.launch_ready_override ? ' (admin override)' : ''}
+                  </p>
+                </div>
+                <button
+                  onClick={() => toggleLaunchOverride.mutate({ id: truck.id, override: !truck.launch_ready_override })}
+                  className="relative w-12 h-6 rounded-full flex-shrink-0 transition-all"
+                  style={{
+                    background: truck.launch_ready_override ? 'linear-gradient(135deg,#fbbf24,#f59e0b)' : '#2e3638',
+                    boxShadow: truck.launch_ready_override ? '0 0 10px rgba(251,191,36,0.35)' : 'none',
+                  }}
+                >
+                  <div className="absolute top-0.5 w-5 h-5 rounded-full bg-white transition-all"
+                    style={{ left: truck.launch_ready_override ? 'calc(100% - 22px)' : '2px' }} />
+                </button>
+              </div>
+            ))}
           </div>
         </div>
 

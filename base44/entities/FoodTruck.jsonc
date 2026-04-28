@@ -30,6 +30,55 @@
         "fusion-sliders"
       ]
     },
+    "vendor_type": {
+      "type": "string",
+      "enum": [
+        "food_truck",
+        "food_trailer",
+        "licensed_popup",
+        "caterer_commercial",
+        "cottage_goods"
+      ],
+      "default": "food_truck",
+      "description": "Type of vendor operation"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "verified",
+        "rejected",
+        "needs_review"
+      ],
+      "default": "pending",
+      "description": "Admin verification status for vendor type"
+    },
+    "health_permit_status": {
+      "type": "string",
+      "enum": [
+        "not_submitted",
+        "pending",
+        "approved",
+        "expired"
+      ],
+      "default": "not_submitted"
+    },
+    "permit_doc_url": {
+      "type": "string",
+      "description": "Health/operating permit document URL"
+    },
+    "food_handler_cert_url": {
+      "type": "string",
+      "description": "Food handler certification document URL"
+    },
+    "commissary_info": {
+      "type": "string",
+      "description": "Commercial kitchen / commissary name and address"
+    },
+    "event_authorization_info": {
+      "type": "string",
+      "description": "Event or location authorization details"
+    },
     "image_url": {
       "type": "string"
     },
@@ -118,6 +167,16 @@
       "type": "boolean",
       "default": false,
       "description": "True for demo/example trucks \u2014 exclude from analytics and live/nearby feeds"
+    },
+    "launch_ready": {
+      "type": "boolean",
+      "default": false,
+      "description": "True when all 8 launch readiness checks pass (or admin override)"
+    },
+    "launch_ready_override": {
+      "type": "boolean",
+      "default": false,
+      "description": "Admin override: mark as launch ready regardless of checks"
     },
     "tags": {
       "type": "array",
