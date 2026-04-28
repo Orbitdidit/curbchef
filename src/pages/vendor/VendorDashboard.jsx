@@ -12,6 +12,7 @@ import CreateCurbDropModal from '@/components/drops/CreateCurbDropModal';
 import TodaysHours from '@/components/vendor/TodaysHours';
 import ReliabilityCard from '@/components/vendor/ReliabilityCard';
 import LaunchReadinessCard from '@/components/vendor/LaunchReadinessCard';
+import VendorTipsSection from '@/components/vendor/VendorTipsSection';
 
 function VendorDashboardInner({ truck: initialTruck, user }) {
   const qc = useQueryClient();
@@ -282,6 +283,9 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
             </button>
           ))}
         </div>
+
+        {/* Vendor Tips */}
+        <VendorTipsSection user={user} />
 
         {/* Quick Actions */}
         <div className="mb-5">

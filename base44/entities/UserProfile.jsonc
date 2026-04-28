@@ -50,6 +50,14 @@
     "referral_count": {
       "type": "number",
       "default": 0
+    },
+    "dismissed_tips": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of VendorTip IDs the vendor has dismissed",
+      "default": []
     }
   },
   "required": [
