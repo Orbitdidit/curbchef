@@ -7,6 +7,7 @@ import VendorGate from '@/components/vendor/VendorGate';
 import MediaUpload from '@/components/shared/MediaUpload';
 import CoverMediaUploader from '@/components/vendor/CoverMediaUploader';
 import { useToast } from '@/components/ui/use-toast';
+import { RotateCcw } from 'lucide-react';
 
 const CUISINE_OPTIONS = ['tacos','burgers','bbq','seafood','asian','fusion','desserts','vegan','pizza','soul_food'];
 
@@ -94,10 +95,27 @@ function MenuAvailabilityToggle({ truckId }) {
   );
 }
 
-function VendorProfileInner({ truck }) {
+function VendorProfileInner({ truck, user }) {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const { toast } = useToast();
+
+  const { data: profileData = [] } = useQuery({
+    queryKey: ['user-profile-tour', user?.email],
+    queryFn: () => base44.entities.UserProfile.filter({ user_email: user.email }),
+    enabled: !!user?.email,
+  });
+  const profile = profileData[0] || null;
+
+  const handleReplayTour = async () => {
+    if (profile) {
+      await base44.entities.UserProfile.update(profile.id, { tour_completed: false });
+    } else if (user?.email) {
+      await base44.entities.UserProfile.create({ user_email: user.email, tour_completed: false });
+    }
+    qc.invalidateQueries({ queryKey: ['user-profile-tour', user?.email] });
+    toast({ title: '🎬 Tour reset! Head back to the dashboard.', duration: 3000 });
+  };
   const [activeTab, setActiveTab] = useState('description');
   const [form, setForm] = useState({
     name: truck.name || '',
@@ -219,6 +237,19 @@ function VendorProfileInner({ truck }) {
                 <option value="full_delivery" disabled>📦 Full Delivery (coming soon)</option>
               </select>
             </div>
+            {/* Replay Tour */}
+            <div className="pt-2 border-t" style={{ borderColor: 'rgba(59,74,66,0.2)' }}>
+              <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: '#bacbc0' }}>SETTINGS</p>
+              <button
+                onClick={handleReplayTour}
+                className="flex items-center gap-2 px-4 py-3 rounded-2xl text-sm font-bold w-full"
+                style={{ background: '#192123', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }}
+              >
+                <RotateCcw className="w-4 h-4" style={{ color: '#77ffc8' }} />
+                Replay Welcome Tour
+              </button>
+            </div>
+
             {form.delivery_mode !== 'pickup_only' && (
               <div className="flex gap-3">
                 <div className="flex-1">

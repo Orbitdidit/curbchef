@@ -58,6 +58,11 @@
       },
       "description": "Array of VendorTip IDs the vendor has dismissed",
       "default": []
+    },
+    "tour_completed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the vendor has completed the welcome tour"
     }
   },
   "required": [

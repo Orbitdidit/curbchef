@@ -13,11 +13,26 @@ import TodaysHours from '@/components/vendor/TodaysHours';
 import ReliabilityCard from '@/components/vendor/ReliabilityCard';
 import LaunchReadinessCard from '@/components/vendor/LaunchReadinessCard';
 import VendorTipsSection from '@/components/vendor/VendorTipsSection';
+import WelcomeTour from '@/components/vendor/WelcomeTour';
 
 function VendorDashboardInner({ truck: initialTruck, user }) {
   const qc = useQueryClient();
   const { toast } = useToast();
   const [showDropModal, setShowDropModal] = useState(false);
+  const [showTour, setShowTour] = useState(false);
+
+  const { data: profileData = [] } = useQuery({
+    queryKey: ['user-profile-tour', user?.email],
+    queryFn: () => base44.entities.UserProfile.filter({ user_email: user.email }),
+    enabled: !!user?.email,
+  });
+  const profile = profileData[0] || null;
+
+  useEffect(() => {
+    if (profileData.length > 0 && !profile?.tour_completed) {
+      setShowTour(true);
+    }
+  }, [profileData]);
 
   const { data: trucks = [initialTruck] } = useQuery({
     queryKey: ['vendor-truck'],
@@ -125,6 +140,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         {/* Go Live CTA */}
         {!truck.is_live && (
           <button
+            id="tour-go-live"
             onClick={() => updateTruck.mutate({ is_live: true, status: 'open' })}
             className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl mb-5 font-heading font-black text-base"
             style={{
@@ -155,6 +171,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         </div>
 
         {/* Curb Drop Token Counter + Create Drop */}
+        <div id="tour-curb-drops">
         <DropTokenCounter truck={truck} />
         <button
           onClick={() => setShowDropModal(true)}
@@ -173,10 +190,13 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
           }
         </button>
 
+        </div>
+
         {/* Reliability Score Card */}
         <ReliabilityCard truck={truck} />
 
         {/* Today's Hours */}
+        <div id="tour-hours">
         <TodaysHours
           truck={truck}
           onUpdate={async (data) => {
@@ -192,6 +212,8 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
             return updateTruck.mutate(data);
           }}
         />
+
+        </div>
 
         {/* Stripe Connect */}
         <div className="mb-5">
@@ -318,7 +340,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         <DashboardDave truck={truck} menuItems={menuItems} />
 
         {/* Right column on desktop — Active Orders */}
-        <div className="lg:pt-0">
+        <div id="tour-orders" className="lg:pt-0">
           <div className="flex items-center justify-between mb-3">
             <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>
               ACTIVE ORDERS ({activeOrders.length})
@@ -369,6 +391,15 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
       {/* Create Drop Modal */}
       {showDropModal && (
         <CreateCurbDropModal truck={truck} onClose={() => setShowDropModal(false)} />
+      )}
+
+      {/* Welcome Tour */}
+      {showTour && (
+        <WelcomeTour
+          user={user}
+          profile={profile}
+          onComplete={() => setShowTour(false)}
+        />
       )}
     </div>
   );
