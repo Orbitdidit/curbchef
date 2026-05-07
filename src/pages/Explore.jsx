@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Search, Star, MapPin, Clock, LayoutGrid, List, AlignJustify, SlidersHorizontal } from 'lucide-react';
 import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
 import AssistantFAB from '@/components/assistant/AssistantFAB';
@@ -11,6 +11,7 @@ const FILTERS = [
   { id: 'live', label: '🔴 Live' },
   { id: 'open', label: '🟢 Open Now' },
   { id: 'near', label: '📍 Near Me' },
+  { id: 'by_park', label: '🏛️ By Park' },
   { id: 'tacos', label: '🌮 Tacos' },
   { id: 'bbq', label: '🔥 BBQ' },
   { id: 'burgers', label: '🍔 Burgers' },
@@ -147,8 +148,10 @@ function SectionHeader({ title, emoji }) {
 }
 
 export default function Explore() {
+  const [searchParams] = useSearchParams();
+  const initialFilter = searchParams.get('park') ? 'by_park' : 'all';
   const [query, setQuery] = useState('');
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState(initialFilter);
   const [sort, setSort] = useState('default');
   const [view, setView] = useState('list'); // list | grid | compact
   const [showSort, setShowSort] = useState(false);
@@ -158,6 +161,12 @@ export default function Explore() {
     queryKey: ['trucks-explore'],
     queryFn: () => base44.entities.FoodTruck.filter({ is_approved: true }),
     select: (data) => data.filter(t => t.status === 'open' || t.is_sample),
+  });
+
+  const { data: parks = [] } = useQuery({
+    queryKey: ['explore-parks'],
+    queryFn: () => base44.entities.TruckPark.filter({ is_active: true }, '-featured_order', 20),
+    enabled: filter === 'by_park',
   });
 
   const filtered = useMemo(() => {
@@ -281,11 +290,56 @@ export default function Explore() {
       </div>
 
       <div className="px-5 pt-5">
-        {isLoading ? (
+        {/* By Park view */}
+        {filter === 'by_park' && (
+          <div className="flex flex-col gap-6 mb-6">
+            {parks.map(park => {
+              const parkTrucks = trucks.filter(t => t.truck_park_id === park.id);
+              return (
+                <div key={park.id}>
+                  <Link to={`/parks/${park.slug}`} className="flex items-center gap-3 mb-2.5">
+                    <img src={park.hero_image_url || 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200'}
+                      alt={park.name} className="w-10 h-10 rounded-xl object-cover flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>{park.name}</p>
+                      <p className="text-xs" style={{ color: '#bacbc0' }}>{parkTrucks.length} trucks · {park.address?.split(',')[0]}</p>
+                    </div>
+                    <span className="text-xs font-bold" style={{ color: '#00F5D4' }}>View →</span>
+                  </Link>
+                  {parkTrucks.length > 0 ? (
+                    <div className="flex flex-col gap-2">
+                      {parkTrucks.map(t => <TruckCard key={t.id} truck={t} view="list" />)}
+                    </div>
+                  ) : (
+                    <p className="text-xs py-3 px-4 rounded-xl" style={{ color: '#6B665C', background: '#0d1517' }}>
+                      No trucks currently listed at this park.
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+            {/* Trucks not in a park */}
+            {(() => {
+              const parkIds = new Set(parks.map(p => p.id));
+              const unparked = trucks.filter(t => !t.truck_park_id || !parkIds.has(t.truck_park_id));
+              if (!unparked.length) return null;
+              return (
+                <div>
+                  <p className="font-heading font-bold text-sm mb-2.5" style={{ color: '#dff0e8' }}>🚚 Independent Trucks</p>
+                  <div className="flex flex-col gap-2">
+                    {unparked.map(t => <TruckCard key={t.id} truck={t} view="list" />)}
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+        )}
+
+        {filter !== 'by_park' && isLoading ? (
           <div className="flex flex-col gap-3">
             {[1,2,3,4].map(i => <div key={i} className="h-20 rounded-2xl animate-pulse" style={{ background: '#192123' }} />)}
           </div>
-        ) : isSearching ? (
+        ) : filter !== 'by_park' && isSearching ? (
           <div>
             <p className="text-xs mb-3" style={{ color: '#bacbc0' }}>{filtered.length} trucks</p>
             {view === 'grid' ? (

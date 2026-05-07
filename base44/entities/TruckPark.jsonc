@@ -1,0 +1,116 @@
+{
+  "name": "TruckPark",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Park name, e.g. Truck Yard Heights"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly identifier"
+    },
+    "description": {
+      "type": "string",
+      "description": "Vibe and story of the park"
+    },
+    "address": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string",
+      "default": "Houston"
+    },
+    "state": {
+      "type": "string",
+      "default": "TX"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "hero_image_url": {
+      "type": "string",
+      "description": "Main park photo"
+    },
+    "gallery_media": {
+      "type": "array",
+      "description": "Up to 8 photos/videos",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "image",
+              "video"
+            ]
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "amenities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "e.g. covered seating, live music, dog friendly, family friendly, alcohol, WiFi, restrooms"
+    },
+    "operating_hours": {
+      "type": "object",
+      "description": "Days as keys, hours as values"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "instagram": {
+      "type": "string"
+    },
+    "park_owner_email": {
+      "type": "string",
+      "description": "For partnership management"
+    },
+    "featured_order": {
+      "type": "number",
+      "default": 0,
+      "description": "Admin pin order for featured parks"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "is_sample": {
+      "type": "boolean",
+      "default": false,
+      "description": "Demo park for vendor onboarding"
+    },
+    "total_trucks": {
+      "type": "number",
+      "default": 0,
+      "description": "Denormalized count of member trucks"
+    },
+    "avg_rating": {
+      "type": "number",
+      "description": "Calculated from member trucks"
+    }
+  },
+  "required": [
+    "name",
+    "slug",
+    "address",
+    "latitude",
+    "longitude"
+  ]
+}

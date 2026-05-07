@@ -19,6 +19,7 @@ import MidVideoBlock from '@/components/home/MidVideoBlock';
 import CookinSection from '@/components/home/CookinSection';
 import PromoCard from '@/components/home/PromoCard';
 import AssistantHomeCard from '@/components/assistant/AssistantHomeCard';
+import TruckParksRail from '@/components/home/TruckParksRail';
 
 // ── Quick AI prompt chips ─────────────────────────────────────────────────────
 const AI_CHIPS = [
@@ -309,6 +310,9 @@ export default function Home() {
       <div className="mt-8">
         <CompactStatsStrip user={user} />
       </div>
+
+      {/* ── TRUCK PARKS ── */}
+      <TruckParksRail />
 
       {/* ── ACTIVITY FEED ── */}
       <div className="mt-8">

@@ -285,6 +285,20 @@
     "last_punctuality_check": {
       "type": "string",
       "description": "ISO datetime of last nightly check"
+    },
+    "truck_park_id": {
+      "type": "string",
+      "description": "Links truck to a TruckPark if they're a member"
+    },
+    "truck_park_member_status": {
+      "type": "string",
+      "enum": [
+        "permanent",
+        "regular",
+        "rotating",
+        "guest"
+      ],
+      "description": "How often the truck is at the park"
     }
   },
   "required": [

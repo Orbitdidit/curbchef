@@ -6,6 +6,7 @@ import { Settings, Bell, Users, Radio, AlertTriangle, Layout, ChevronLeft, Rocke
 import { useNavigate } from 'react-router-dom';
 import AdminQuickAddTruck from '@/components/admin/AdminQuickAddTruck';
 import ApplicationsPanel from '@/components/admin/ApplicationsPanel';
+import AdminParksPanel from '@/components/admin/AdminParksPanel';
 import { useToast } from '@/components/ui/use-toast';
 
 // 🔒 ADD YOUR ADMIN EMAIL(S) HERE
@@ -127,10 +128,11 @@ export default function AdminDashboard() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 pb-0">
+        <div className="flex gap-2 pb-0 overflow-x-auto no-scrollbar">
           {[
             { id: 'overview', label: 'Overview' },
             { id: 'applications', label: 'Applications', badge: pendingApplications.length },
+            { id: 'parks', label: '🏛️ Parks' },
           ].map(tab => (
             <button
               key={tab.id}
@@ -157,6 +159,13 @@ export default function AdminDashboard() {
       {activeTab === 'applications' && (
         <div className="px-5 pt-5 pb-16 lg:max-w-5xl lg:mx-auto">
           <ApplicationsPanel />
+        </div>
+      )}
+
+      {/* Parks Tab */}
+      {activeTab === 'parks' && (
+        <div className="px-5 pt-5 pb-16 lg:max-w-5xl lg:mx-auto">
+          <AdminParksPanel />
         </div>
       )}
 
