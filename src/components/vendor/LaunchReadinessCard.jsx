@@ -91,7 +91,7 @@ export default function LaunchReadinessCard({ truck, menuItems, onLaunchReadyCha
   const total = 8;
   const pct = Math.round((passed / total) * 100);
   const allPassed = passed === total;
-  const isLaunchReady = allPassed || !!truck.launch_ready_override;
+  const isLaunchReady = allPassed || !!truck.launch_ready_override || !!truck.is_sample;
 
   // Auto-update launch_ready on the truck whenever checks change
   useEffect(() => {

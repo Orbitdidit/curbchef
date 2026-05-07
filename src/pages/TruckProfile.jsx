@@ -64,6 +64,19 @@ export default function TruckProfile() {
   const handleAddToCart = (e, item) => {
     e.preventDefault();
     e.stopPropagation();
+    if (truck?.is_sample) {
+      toast({
+        title: '🚫 This is a demo truck!',
+        description: 'Sign up your real food truck to start receiving orders.',
+        duration: 4000,
+        action: (
+          <a href="/onboard-truck" className="text-xs font-black underline" style={{ color: '#00F5D4' }}>
+            Onboard My Truck →
+          </a>
+        ),
+      });
+      return;
+    }
     addToCart({ ...item, item_id: item.id, quantity: 1 }, id, truck?.name);
     toast({ title: `${item.name} added`, description: `$${item.price?.toFixed(2)}`, duration: 1500 });
   };
@@ -270,9 +283,16 @@ export default function TruckProfile() {
           </div>
           <div className="flex flex-col items-center justify-center py-3 px-2 rounded-2xl" style={{ background: '#0d1517' }}>
             <p className="text-[9px] font-bold tracking-widest mb-1" style={{ color: 'rgba(186,203,192,0.5)' }}>STATUS</p>
-            <p className="font-heading font-black text-sm" style={{ color: isOpen ? '#77ffc8' : '#bacbc0' }}>
-              {isOpen ? 'Open' : 'Closed'}
-            </p>
+            {truck.is_sample ? (
+              <span className="font-heading font-black text-xs px-2 py-0.5 rounded-full"
+                style={{ background: 'rgba(251,191,36,0.2)', color: '#fbbf24', border: '1px solid rgba(251,191,36,0.4)' }}>
+                DEMO
+              </span>
+            ) : (
+              <p className="font-heading font-black text-sm" style={{ color: isOpen ? '#77ffc8' : '#bacbc0' }}>
+                {isOpen ? 'Open' : 'Closed'}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -532,24 +552,34 @@ export default function TruckProfile() {
       {/* ── STICKY ORDER CTA ── */}
       <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-5 pb-6 pt-3"
         style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(13,21,23,0.98) 40%)' }}>
-        <Link to="/cart" className="w-full max-w-lg">
-          <button
-            className="w-full flex items-center justify-center gap-2.5 py-4 rounded-full font-heading font-black text-base transition-all active:scale-95"
-            style={{
-              background: isOpen ? 'linear-gradient(135deg,#77ffc8 0%,#00e6a7 100%)' : '#2e3638',
-              color: isOpen ? '#003826' : '#bacbc0',
-              boxShadow: isOpen ? '0 0 28px rgba(119,255,200,0.4), 0 8px 32px rgba(0,0,0,0.4)' : 'none',
-            }}>
-            <ShoppingBag className="w-5 h-5" />
-            <span className="flex-1 text-center">{isOpen ? 'Order From This Truck' : 'Truck is Closed'}</span>
-            {isOpen && totalCartCount > 0 && (
-              <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black"
-                style={{ background: 'rgba(0,56,38,0.35)' }}>
-                {totalCartCount}
-              </span>
-            )}
-          </button>
-        </Link>
+        {truck.is_sample ? (
+          <a href="/onboard-truck" className="w-full max-w-lg">
+            <button className="w-full flex items-center justify-center gap-2.5 py-4 rounded-full font-heading font-black text-base transition-all active:scale-95"
+              style={{ background: 'linear-gradient(135deg,#fbbf24,#f59e0b)', color: '#1a0f00', boxShadow: '0 0 24px rgba(251,191,36,0.4)' }}>
+              <span>⭐</span>
+              <span className="flex-1 text-center">Onboard My Truck →</span>
+            </button>
+          </a>
+        ) : (
+          <Link to="/cart" className="w-full max-w-lg">
+            <button
+              className="w-full flex items-center justify-center gap-2.5 py-4 rounded-full font-heading font-black text-base transition-all active:scale-95"
+              style={{
+                background: isOpen ? 'linear-gradient(135deg,#77ffc8 0%,#00e6a7 100%)' : '#2e3638',
+                color: isOpen ? '#003826' : '#bacbc0',
+                boxShadow: isOpen ? '0 0 28px rgba(119,255,200,0.4), 0 8px 32px rgba(0,0,0,0.4)' : 'none',
+              }}>
+              <ShoppingBag className="w-5 h-5" />
+              <span className="flex-1 text-center">{isOpen ? 'Order From This Truck' : 'Truck is Closed'}</span>
+              {isOpen && totalCartCount > 0 && (
+                <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black"
+                  style={{ background: 'rgba(0,56,38,0.35)' }}>
+                  {totalCartCount}
+                </span>
+              )}
+            </button>
+          </Link>
+        )}
       </div>
 
       <style>{`

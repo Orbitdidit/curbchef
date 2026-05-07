@@ -46,7 +46,10 @@ function TruckCard({ truck, view }) {
             </div>
           )}
           <div className="absolute bottom-2 left-2">
-            {truck.status === 'open' && (
+            {truck.is_sample ? (
+              <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full"
+                style={{ background: 'rgba(251,191,36,0.9)', color: '#1a0f00' }}>DEMO</span>
+            ) : truck.status === 'open' && (
               <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full"
                 style={{ background: 'rgba(119,255,200,0.9)', color: '#003826' }}>OPEN</span>
             )}
@@ -100,7 +103,10 @@ function TruckCard({ truck, view }) {
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 mb-0.5">
           <p className="font-heading font-bold text-sm truncate" style={{ color: '#dff0e8' }}>{truck.name}</p>
-          {truck.status === 'open' && (
+          {truck.is_sample ? (
+            <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full flex-shrink-0"
+              style={{ background: 'rgba(251,191,36,0.15)', color: '#fbbf24' }}>DEMO</span>
+          ) : truck.status === 'open' && (
             <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full flex-shrink-0"
               style={{ background: 'rgba(119,255,200,0.15)', color: '#77ffc8' }}>OPEN</span>
           )}
@@ -150,7 +156,8 @@ export default function Explore() {
 
   const { data: trucks = [], isLoading } = useQuery({
     queryKey: ['trucks-explore'],
-    queryFn: () => base44.entities.FoodTruck.filter({ is_approved: true, launch_ready: true }),
+    queryFn: () => base44.entities.FoodTruck.filter({ is_approved: true }),
+    select: (data) => data.filter(t => t.status === 'open' || t.is_sample),
   });
 
   const filtered = useMemo(() => {

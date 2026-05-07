@@ -34,6 +34,14 @@ export default function Cart() {
   const total = subtotal + serviceFee + taxAmt + tipAmt;
 
   const handlePlace = async () => {
+    if (truck?.is_sample) {
+      toast({
+        title: '🚫 This is a demo truck!',
+        description: 'Sign up your real food truck to start receiving orders.',
+        duration: 4000,
+      });
+      return;
+    }
     setPlacing(true);
     const code = Math.random().toString(36).substring(2, 6).toUpperCase();
 
