@@ -1,0 +1,43 @@
+{
+  "name": "ErrorLog",
+  "type": "object",
+  "properties": {
+    "error_message": {
+      "type": "string",
+      "description": "The error message"
+    },
+    "error_stack": {
+      "type": "string",
+      "description": "Stack trace or additional details"
+    },
+    "page_url": {
+      "type": "string",
+      "description": "URL where the error occurred"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email of user who encountered the error"
+    },
+    "context": {
+      "type": "string",
+      "description": "Additional context about what the user was doing"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "default": "medium"
+    },
+    "is_resolved": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "error_message"
+  ]
+}
