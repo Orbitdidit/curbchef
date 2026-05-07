@@ -435,6 +435,26 @@ export default function Profile() {
           <Link to="/support" className="text-xs font-semibold" style={{ color: '#6B665C' }}>Support</Link>
         </div>
 
+        {/* Report a Bug */}
+        <button
+          onClick={() => {
+            const msg = window.prompt('Describe the bug or issue:');
+            if (msg?.trim()) {
+              base44.entities.ErrorLog.create({
+                error_message: msg.trim(),
+                page_url: window.location.href,
+                user_email: user?.email || 'unknown',
+                context: 'User-submitted bug report',
+                severity: 'medium',
+              }).then(() => alert('Thanks! Bug reported. We\'ll look into it.'));
+            }
+          }}
+          className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-xs font-bold"
+          style={{ background: 'rgba(255,59,48,0.06)', color: '#FF3B30', border: '1px solid rgba(255,59,48,0.15)' }}
+        >
+          🐛 Report a Bug
+        </button>
+
         {/* Sign out + delete */}
         <div className="flex flex-col gap-3 pb-4">
           <button onClick={() => base44.auth.logout('/')}

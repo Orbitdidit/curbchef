@@ -160,14 +160,15 @@ export default function Home() {
     refetchInterval: 60000,
   });
 
-  // Show trucks that are open OR sample demos; exclude non-launch-ready non-samples
-  const visibleTrucks = trucks.filter(t => t.status === 'open' || t.is_sample);
+  // Show trucks that are open OR sample demos (sample trucks always show regardless of status)
+  const visibleTrucks = trucks.filter(t => t.is_sample || t.status === 'open');
   const filteredTrucks = selectedCategory === 'all'
     ? visibleTrucks
     : visibleTrucks.filter(t => t.cuisine_type === selectedCategory);
 
   const liveTrucks = filteredTrucks.filter(t => t.is_live);
   const nearbyTrucks = filteredTrucks.slice(0, 10);
+  const noTrucksVisible = visibleTrucks.length === 0;
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -239,8 +240,25 @@ export default function Home() {
         <CategoryRow selected={selectedCategory} onChange={setSelectedCategory} />
       </div>
 
+      {/* ── EMPTY STATE fallback ── */}
+      {noTrucksVisible && (
+        <div className="mx-4 mt-4 rounded-3xl p-8 text-center"
+          style={{ background: '#141414', border: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="text-5xl mb-4">🚚</div>
+          <p className="font-heading font-black text-xl mb-2" style={{ color: '#F5F0E8' }}>
+            We're populating Houston's best food trucks.
+          </p>
+          <p className="text-sm mb-6" style={{ color: '#A39E94' }}>Check back hourly — new trucks are joining daily!</p>
+          <Link to="/onboard-truck"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-heading font-black text-sm"
+            style={{ background: 'linear-gradient(135deg,#00F5D4,#00e6a7)', color: '#0A0A0A' }}>
+            Join the Waitlist →
+          </Link>
+        </div>
+      )}
+
       {/* ── 5. FEATURED HERO CARD ── */}
-      <HeroFoodCard trucks={visibleTrucks} />
+      {!noTrucksVisible && <HeroFoodCard trucks={visibleTrucks} />}
 
       {/* ── QUICK REORDER (if returning user) ── */}
       <QuickReorder user={user} />

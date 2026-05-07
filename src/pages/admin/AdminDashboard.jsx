@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Settings, Bell, Users, Radio, AlertTriangle, Layout, ChevronLeft, Rocket } from 'lucide-react';
+import { Settings, Bell, Users, Radio, AlertTriangle, Layout, ChevronLeft, Rocket, CheckCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AdminQuickAddTruck from '@/components/admin/AdminQuickAddTruck';
 import ApplicationsPanel from '@/components/admin/ApplicationsPanel';
@@ -54,6 +54,39 @@ export default function AdminDashboard() {
     mutationFn: (id) => base44.entities.FoodTruck.update(id, { is_approved: true }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-trucks'] }),
   });
+
+  const approveAllPending = useMutation({
+    mutationFn: async () => {
+      const pending = trucks.filter(t => !t.is_approved);
+      await Promise.all(pending.map(t => base44.entities.FoodTruck.update(t.id, { is_approved: true, launch_ready_override: true, launch_ready: true, status: 'open' })));
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin-trucks'] });
+      toast({ title: `✅ All pending trucks approved!` });
+    },
+  });
+
+  const setLaunchMode = useMutation({
+    mutationFn: async (mode) => {
+      const existing = await base44.entities.HomepageConfig.filter({ key: 'launch_mode' });
+      if (existing.length > 0) {
+        await base44.entities.HomepageConfig.update(existing[0].id, { headline: mode });
+      } else {
+        await base44.entities.HomepageConfig.create({ key: 'launch_mode', label: 'Launch Mode', headline: mode });
+      }
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['launch-mode'] });
+      toast({ title: '🚀 Launch mode updated!' });
+    },
+  });
+
+  const { data: launchModeConfig = [] } = useQuery({
+    queryKey: ['launch-mode'],
+    queryFn: () => base44.entities.HomepageConfig.filter({ key: 'launch_mode' }),
+    enabled: isAdmin,
+  });
+  const currentLaunchMode = launchModeConfig[0]?.headline || 'waitlist';
 
   const toggleLaunchOverride = useMutation({
     mutationFn: ({ id, override }) => base44.entities.FoodTruck.update(id, { launch_ready_override: override, launch_ready: override }),
@@ -341,6 +374,59 @@ export default function AdminDashboard() {
             ))}
           </div>
         </div>
+
+        {/* Stripe TEST MODE banner */}
+        <div className="mt-5 p-4 rounded-2xl flex items-center gap-3"
+          style={{ background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.35)' }}>
+          <span className="text-[10px] font-black px-2 py-1 rounded-full flex-shrink-0" style={{ background: 'rgba(251,191,36,0.2)', color: '#fbbf24' }}>
+            ⚠️ TEST MODE
+          </span>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-bold" style={{ color: '#fbbf24' }}>No real payments are being processed.</p>
+            <a href="/support" className="text-[10px] underline" style={{ color: 'rgba(251,191,36,0.6)' }}>
+              How to switch to live mode →
+            </a>
+          </div>
+        </div>
+
+        {/* Launch Mode toggle */}
+        <div className="mt-5 p-4 rounded-2xl" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>LAUNCH MODE</p>
+          <div className="flex gap-2">
+            {[
+              { id: 'waitlist', label: '🚫 Waitlist', desc: 'Closed — landing page only' },
+              { id: 'soft_launch', label: '🔒 Soft Launch', desc: 'Beta users only' },
+              { id: 'public', label: '🌍 Public', desc: 'Open to everyone' },
+            ].map(m => (
+              <button key={m.id} onClick={() => setLaunchMode.mutate(m.id)}
+                className="flex-1 py-2.5 px-2 rounded-xl text-[10px] font-black transition-all text-center"
+                style={currentLaunchMode === m.id
+                  ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }
+                  : { background: '#0d1517', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }
+                }>
+                {m.label}
+              </button>
+            ))}
+          </div>
+          <p className="text-[10px] mt-2" style={{ color: '#6B665C' }}>
+            Current: <span style={{ color: '#77ffc8' }}>{currentLaunchMode}</span>
+          </p>
+        </div>
+
+        {/* Approve All Pending */}
+        {pendingTrucks.length > 0 && (
+          <div className="mt-5">
+            <button
+              onClick={() => approveAllPending.mutate()}
+              disabled={approveAllPending.isPending}
+              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-heading font-black text-sm transition-all"
+              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', opacity: approveAllPending.isPending ? 0.6 : 1 }}
+            >
+              <CheckCheck className="w-4 h-4" />
+              Approve All {pendingTrucks.length} Pending Trucks
+            </button>
+          </div>
+        )}
 
         {/* Payment mode indicator */}
         {orders.some(o => o.is_test_payment) && (
