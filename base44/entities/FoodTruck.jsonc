@@ -178,6 +178,11 @@
       "default": false,
       "description": "Admin override: mark as launch ready regardless of checks"
     },
+    "truck_card_taps": {
+      "type": "number",
+      "default": 0,
+      "description": "Landing page sneak peek card tap counter (analytics)"
+    },
     "tags": {
       "type": "array",
       "items": {

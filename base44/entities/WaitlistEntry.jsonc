@@ -27,6 +27,18 @@
       "type": "string",
       "description": "ISO datetime of signup"
     },
+    "signup_source": {
+      "type": "string",
+      "enum": [
+        "hero",
+        "truck_peek",
+        "drops_peek",
+        "perks",
+        "vendor_section",
+        "sticky_cta"
+      ],
+      "description": "Which section drove the waitlist signup"
+    },
     "notified_launch": {
       "type": "boolean",
       "default": false,

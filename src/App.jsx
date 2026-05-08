@@ -42,7 +42,7 @@ import LaunchDashboard from './pages/admin/LaunchDashboard';
 import FoodScan from './pages/FoodScan';
 import FoodConcierge from './pages/FoodConcierge';
 import TruckRadar from './pages/TruckRadar';
-import LandingPage from './pages/LandingPage';
+import LandingPage from './pages/LandingPage.jsx';
 import Privacy from './pages/Privacy.jsx';
 import Experiences from './pages/Experiences.jsx';
 import Terms from './pages/Terms.jsx';
