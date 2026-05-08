@@ -13,6 +13,7 @@ import { AssistantProvider } from '@/components/assistant/AssistantContext';
 import AssistantSheet from '@/components/assistant/AssistantSheet';
 
 import AppLayout from './components/layout/AppLayout';
+import AdminPreviewPill from './components/admin/AdminPreviewPill';
 import Home from './pages/Home.jsx';
 import LiveFeed from './pages/LiveFeed';
 import MapView from './pages/MapView';
@@ -50,11 +51,12 @@ import Parks from './pages/Parks.jsx';
 import ParkProfile from './pages/ParkProfile.jsx';
 
 const AuthenticatedApp = () => {
-  const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin, isAuthenticated } = useAuth();
+  const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin, isAuthenticated, user } = useAuth();
   const location = useLocation();
 
   // Fetch launch_mode config (public — no auth needed)
   const [launchMode, setLaunchMode] = React.useState(null);
+  const [betaEmails, setBetaEmails] = React.useState(null);
   React.useEffect(() => {
     base44.entities.HomepageConfig.filter({ key: 'launch_mode' })
       .then(rows => {
@@ -62,9 +64,12 @@ const AuthenticatedApp = () => {
         setLaunchMode(mode);
       })
       .catch(() => setLaunchMode('waitlist'));
+    base44.entities.BetaUser.filter({ is_active: true }, null, 200)
+      .then(rows => setBetaEmails(new Set(rows.map(r => r.email?.toLowerCase()))))
+      .catch(() => setBetaEmails(new Set()));
   }, []);
 
-  if (isLoadingPublicSettings || isLoadingAuth || launchMode === null) {
+  if (isLoadingPublicSettings || isLoadingAuth || launchMode === null || betaEmails === null) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-3">
@@ -88,10 +93,25 @@ const AuthenticatedApp = () => {
     }
   }
 
+  // Admin bypass: admins always get through the gate
+  const isAdmin = isAuthenticated && user?.role === 'admin';
+  const isBetaUser = isAuthenticated && betaEmails?.has(user?.email?.toLowerCase());
+
   // Waitlist gate: unauthenticated + root path + waitlist mode → LandingPage
   // /onboard-truck is always public
   const isOnboardRoute = location.pathname === '/onboard-truck';
-  const showLanding = launchMode === 'waitlist' && !isAuthenticated && !isOnboardRoute;
+
+  // Gate logic: admins bypass always; beta users bypass in soft_launch; public = no gate
+  const gateApplies = launchMode === 'waitlist' ? !isAdmin
+    : launchMode === 'soft_launch' ? !isAdmin && !isBetaUser
+    : false; // public = no gate
+
+  const showLanding = gateApplies && !isAuthenticated && !isOnboardRoute;
+
+  if (gateApplies && isAuthenticated && !isOnboardRoute) {
+    // Authenticated but not allowed through gate → show landing
+    return <LandingPage />;
+  }
 
   if (showLanding && location.pathname === '/') {
     return <LandingPage />;
@@ -107,6 +127,7 @@ const AuthenticatedApp = () => {
         transition={{ duration: 0.2, ease: 'easeInOut' }}
         style={{ minHeight: '100dvh' }}
       >
+        {isAdmin && <AdminPreviewPill />}
         <Routes location={location}>
           {/* Customer routes with bottom nav */}
           <Route element={<AppLayout />}>

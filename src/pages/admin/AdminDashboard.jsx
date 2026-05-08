@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import AdminQuickAddTruck from '@/components/admin/AdminQuickAddTruck';
 import ApplicationsPanel from '@/components/admin/ApplicationsPanel';
 import AdminParksPanel from '@/components/admin/AdminParksPanel';
+import BetaUsersPanel from '@/components/admin/BetaUsersPanel';
 import { useToast } from '@/components/ui/use-toast';
 
 // 🔒 ADD YOUR ADMIN EMAIL(S) HERE
@@ -166,6 +167,7 @@ export default function AdminDashboard() {
             { id: 'overview', label: 'Overview' },
             { id: 'applications', label: 'Applications', badge: pendingApplications.length },
             { id: 'parks', label: '🏛️ Parks' },
+            { id: 'beta', label: '🔒 Beta Users' },
           ].map(tab => (
             <button
               key={tab.id}
@@ -199,6 +201,19 @@ export default function AdminDashboard() {
       {activeTab === 'parks' && (
         <div className="px-5 pt-5 pb-16 lg:max-w-5xl lg:mx-auto">
           <AdminParksPanel />
+        </div>
+      )}
+
+      {/* Beta Users Tab */}
+      {activeTab === 'beta' && (
+        <div className="px-5 pt-5 pb-16 lg:max-w-5xl lg:mx-auto">
+          <div className="mb-4 p-4 rounded-2xl" style={{ background: 'rgba(119,255,200,0.05)', border: '1px solid rgba(119,255,200,0.15)' }}>
+            <p className="text-xs font-bold mb-1" style={{ color: '#77ffc8' }}>Soft Launch Gate</p>
+            <p className="text-xs" style={{ color: '#bacbc0' }}>
+              Users added here can access the app when Gate Mode is set to <strong style={{ color: '#fbbf24' }}>Soft Launch</strong>. Admins always bypass the gate.
+            </p>
+          </div>
+          <BetaUsersPanel adminEmail={adminUser?.email} />
         </div>
       )}
 

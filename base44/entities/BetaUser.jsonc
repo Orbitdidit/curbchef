@@ -1,0 +1,30 @@
+{
+  "name": "BetaUser",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "Beta user email address"
+    },
+    "added_by": {
+      "type": "string",
+      "description": "Admin who added this user"
+    },
+    "added_date": {
+      "type": "string",
+      "description": "ISO datetime when the user was added"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional notes about this beta user"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this user can access the app in Soft Launch mode"
+    }
+  },
+  "required": [
+    "email"
+  ]
+}
