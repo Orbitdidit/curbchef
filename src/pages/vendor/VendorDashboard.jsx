@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Settings, Video, ShoppingBag, Map, BarChart3, Users, DollarSign, ChevronLeft, Pencil, Zap, Camera } from 'lucide-react';
+import { Settings, Video, ShoppingBag, Map, BarChart3, Users, DollarSign, ChevronLeft, Pencil, Zap, Camera, Shield } from 'lucide-react';
+import VerifiedBadge from '@/components/shared/VerifiedBadge';
 import { useToast } from '@/components/ui/use-toast';
 import DashboardDave from '@/components/vendor/DashboardDave';
 import StripeConnectButton from '@/components/vendor/StripeConnectButton';
@@ -105,7 +106,20 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         {/* Truck identity */}
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h1 className="font-heading font-black text-xl" style={{ color: '#dff0e8' }}>{truck.name}</h1>
+            <div className="flex items-center gap-2">
+              <h1 className="font-heading font-black text-xl" style={{ color: '#dff0e8' }}>{truck.name}</h1>
+              {truck.verified_status
+                ? <VerifiedBadge size="md" />
+                : (
+                  <Link to="/vendor/verification">
+                    <span className="text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-1"
+                      style={{ background: 'rgba(251,191,36,0.1)', color: '#fbbf24', border: '1px solid rgba(251,191,36,0.25)' }}>
+                      <Shield className="w-2.5 h-2.5" /> Get Verified
+                    </span>
+                  </Link>
+                )
+              }
+            </div>
             <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>
               @{truck.slug || truck.name.toLowerCase().replace(/\s/g, '')} • {truck.cuisine_type?.replace('_', ' ')}
             </p>

@@ -38,6 +38,7 @@ import VendorPortal from './pages/VendorPortal';
 import VendorPlans from './pages/vendor/VendorPlans';
 import VendorProfile from './pages/vendor/VendorProfile';
 import GoLive from './pages/vendor/GoLive';
+import VendorVerification from './pages/vendor/VendorVerification';
 import LaunchDashboard from './pages/admin/LaunchDashboard';
 import VerificationQueue from './pages/admin/VerificationQueue';
 import FoodScan from './pages/FoodScan';
@@ -156,6 +157,7 @@ const AuthenticatedApp = () => {
           <Route path="/vendor/plans" element={<VendorPlans />} />
           <Route path="/vendor/profile" element={<VendorProfile />} />
           <Route path="/vendor/go-live" element={<GoLive />} />
+          <Route path="/vendor/verification" element={<VendorVerification />} />
 
           {/* Admin */}
           <Route path="/admin" element={<AdminDashboard />} />
