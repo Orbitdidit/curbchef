@@ -30,6 +30,44 @@
         "other"
       ]
     },
+    "vendor_type": {
+      "type": "string",
+      "enum": [
+        "food_truck",
+        "food_trailer",
+        "licensed_popup",
+        "caterer_commercial",
+        "cottage_goods"
+      ],
+      "default": "food_truck",
+      "description": "Type of vendor operation"
+    },
+    "health_permit_status": {
+      "type": "string",
+      "enum": [
+        "not_submitted",
+        "pending",
+        "approved",
+        "expired"
+      ],
+      "default": "not_submitted"
+    },
+    "permit_doc_url": {
+      "type": "string",
+      "description": "Health/operating permit document URL"
+    },
+    "food_handler_cert_url": {
+      "type": "string",
+      "description": "Food handler certification document URL"
+    },
+    "commissary_info": {
+      "type": "string",
+      "description": "Commercial kitchen / commissary name and address (required for Caterer/Commercial Kitchen type)"
+    },
+    "event_authorization_info": {
+      "type": "string",
+      "description": "Event or location authorization details (for pop-ups/tents)"
+    },
     "instagram": {
       "type": "string"
     },
@@ -101,11 +139,59 @@
     "step_completed": {
       "type": "number",
       "default": 0
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "verified",
+        "rejected",
+        "needs_review"
+      ],
+      "default": "pending"
+    },
+    "admin_notes": {
+      "type": "string",
+      "description": "Internal admin notes on verification"
     }
   },
   "required": [
     "truck_name",
     "owner_name",
     "email"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "data.email": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
 }
