@@ -39,6 +39,7 @@ import VendorPlans from './pages/vendor/VendorPlans';
 import VendorProfile from './pages/vendor/VendorProfile';
 import GoLive from './pages/vendor/GoLive';
 import LaunchDashboard from './pages/admin/LaunchDashboard';
+import VerificationQueue from './pages/admin/VerificationQueue';
 import FoodScan from './pages/FoodScan';
 import FoodConcierge from './pages/FoodConcierge';
 import TruckRadar from './pages/TruckRadar';
@@ -160,6 +161,7 @@ const AuthenticatedApp = () => {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/homepage" element={<HomepageCMS />} />
           <Route path="/admin/launch" element={<LaunchDashboard />} />
+          <Route path="/admin/verification" element={<VerificationQueue />} />
           <Route path="/scan" element={<FoodScan />} />
           <Route path="/radar" element={<TruckRadar />} />
           <Route path="/concierge" element={<FoodConcierge />} />

@@ -53,6 +53,31 @@
       "default": "pending",
       "description": "Admin verification status for vendor type"
     },
+    "verified_status": {
+      "type": "boolean",
+      "default": false,
+      "description": "True when admin has fully verified this truck"
+    },
+    "verification_date": {
+      "type": "string",
+      "description": "ISO timestamp when truck was verified by admin"
+    },
+    "verification_notes": {
+      "type": "string",
+      "description": "Admin-only internal notes about verification (rejection reasons, requests, etc.)"
+    },
+    "business_license_url": {
+      "type": "string",
+      "description": "Business license document URL uploaded by vendor"
+    },
+    "health_cert_url": {
+      "type": "string",
+      "description": "Health certificate document URL uploaded by vendor"
+    },
+    "owner_id_url": {
+      "type": "string",
+      "description": "Owner government ID document URL \u2014 admin-visible only"
+    },
     "health_permit_status": {
       "type": "string",
       "enum": [
