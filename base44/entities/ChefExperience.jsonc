@@ -142,17 +142,24 @@
   ],
   "rls": {
     "create": {
-      "user_condition": {
-        "isAuthenticated": true
-      }
+      "$or": [
+        {
+          "data.owner_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
     },
     "read": {
       "$or": [
         {
-          "data.is_approved": true
+          "data.owner_email": "{{user.email}}"
         },
         {
-          "data.owner_email": "{{user.email}}"
+          "data.is_approved": true
         },
         {
           "user_condition": {
