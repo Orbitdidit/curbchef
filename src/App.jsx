@@ -51,6 +51,7 @@ import Terms from './pages/Terms.jsx';
 import Support from './pages/Support.jsx';
 import Parks from './pages/Parks.jsx';
 import ParkProfile from './pages/ParkProfile.jsx';
+import TopItems from './pages/TopItems.jsx';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin, isAuthenticated, user } = useAuth();
@@ -178,6 +179,7 @@ const AuthenticatedApp = () => {
           <Route path="/support" element={<Support />} />
           <Route path="/parks" element={<Parks />} />
           <Route path="/parks/:slug" element={<ParkProfile />} />
+          <Route path="/top-items" element={<TopItems />} />
 
           <Route path="*" element={<PageNotFound />} />
         </Routes>
