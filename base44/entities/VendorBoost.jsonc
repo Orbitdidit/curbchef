@@ -39,9 +39,19 @@
   ],
   "rls": {
     "create": {
-      "user_condition": {
-        "role": "admin"
-      }
+      "$or": [
+        {
+          "base44.entities.FoodTruck.filter": {
+            "id": "data.truck_id",
+            "data.owner_email": "{{user.email}}"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
     },
     "read": {
       "$or": [
@@ -62,14 +72,34 @@
       ]
     },
     "update": {
-      "user_condition": {
-        "role": "admin"
-      }
+      "$or": [
+        {
+          "base44.entities.FoodTruck.filter": {
+            "id": "data.truck_id",
+            "data.owner_email": "{{user.email}}"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
     },
     "delete": {
-      "user_condition": {
-        "role": "admin"
-      }
+      "$or": [
+        {
+          "base44.entities.FoodTruck.filter": {
+            "id": "data.truck_id",
+            "data.owner_email": "{{user.email}}"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
     }
   }
 }
