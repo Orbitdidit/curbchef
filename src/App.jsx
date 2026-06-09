@@ -44,7 +44,6 @@ import VerificationQueue from './pages/admin/VerificationQueue';
 import FoodScan from './pages/FoodScan';
 import FoodConcierge from './pages/FoodConcierge';
 import TruckRadar from './pages/TruckRadar';
-import LandingPage from './pages/LandingPage.jsx';
 import Privacy from './pages/Privacy.jsx';
 import Experiences from './pages/Experiences.jsx';
 import Terms from './pages/Terms.jsx';
@@ -55,26 +54,48 @@ import TopItems from './pages/TopItems.jsx';
 import VendorOnboarding from './pages/vendor/VendorOnboarding';
 import NotApproved from './pages/NotApproved.jsx';
 
+const SPLASH_URL = 'https://curbchef.app';
+
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin, isAuthenticated, user } = useAuth();
   const location = useLocation();
 
-  // Fetch launch_mode config (public — no auth needed)
+  // Fetch launch_mode, beta users, and approved trucks for the signed-in user
   const [launchMode, setLaunchMode] = React.useState(null);
-  const [betaEmails, setBetaEmails] = React.useState(null);
+  const [isApproved, setIsApproved] = React.useState(null); // null = loading
+
   React.useEffect(() => {
     base44.entities.HomepageConfig.filter({ key: 'launch_mode' })
-      .then(rows => {
-        const mode = rows[0]?.headline || 'waitlist';
-        setLaunchMode(mode);
-      })
+      .then(rows => setLaunchMode(rows[0]?.headline || 'waitlist'))
       .catch(() => setLaunchMode('waitlist'));
-    base44.entities.BetaUser.filter({ is_active: true }, null, 200)
-      .then(rows => setBetaEmails(new Set(rows.map(r => r.email?.toLowerCase()))))
-      .catch(() => setBetaEmails(new Set()));
   }, []);
 
-  if (isLoadingPublicSettings || isLoadingAuth || launchMode === null || betaEmails === null) {
+  React.useEffect(() => {
+    // Only run approval check once we know auth state
+    if (isLoadingAuth) return;
+
+    if (!isAuthenticated || !user) {
+      setIsApproved(false);
+      return;
+    }
+
+    // Admin always approved
+    if (user.role === 'admin') { setIsApproved(true); return; }
+
+    const email = user.email?.toLowerCase();
+
+    // Check BetaUser OR approved FoodTruck
+    Promise.all([
+      base44.entities.BetaUser.filter({ email, is_active: true }),
+      base44.entities.FoodTruck.filter({ owner_email: user.email, is_approved: true }),
+    ]).then(([betaRows, truckRows]) => {
+      setIsApproved(betaRows.length > 0 || truckRows.length > 0);
+    }).catch(() => setIsApproved(false));
+  }, [isLoadingAuth, isAuthenticated, user]);
+
+  const loading = isLoadingPublicSettings || isLoadingAuth || launchMode === null || isApproved === null;
+
+  if (loading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-3">
@@ -89,37 +110,27 @@ const AuthenticatedApp = () => {
     if (authError.type === 'user_not_registered') {
       return <UserNotRegisteredError />;
     } else if (authError.type === 'auth_required') {
-      // In waitlist mode, show landing instead of redirecting to login
-      if (launchMode === 'waitlist' && location.pathname === '/') {
-        return <LandingPage />;
-      }
-      navigateToLogin();
+      // Not signed in → send to Netlify splash
+      window.location.replace(SPLASH_URL);
       return null;
     }
   }
 
-  // Admin bypass: admins always get through the gate
   const isAdmin = isAuthenticated && user?.role === 'admin';
-  const isBetaUser = isAuthenticated && betaEmails?.has(user?.email?.toLowerCase());
-
-  // Waitlist gate: unauthenticated + root path + waitlist mode → LandingPage
-  // /onboard-truck is always public
   const isOnboardRoute = location.pathname === '/onboard-truck';
 
-  // Gate logic: admins bypass always; beta users bypass in soft_launch; public = no gate
-  const gateApplies = launchMode === 'waitlist' ? !isAdmin
-    : launchMode === 'soft_launch' ? !isAdmin && !isBetaUser
-    : false; // public = no gate
+  // Gate only applies when not in public mode
+  const gateApplies = launchMode !== 'public';
 
-  const showLanding = gateApplies && !isAuthenticated && !isOnboardRoute;
-
-  if (gateApplies && isAuthenticated && !isOnboardRoute) {
-    // Authenticated but not approved — show friendly "you're on the waitlist" screen
-    return <NotApproved />;
+  // Not signed in + gate applies → Netlify splash
+  if (gateApplies && !isAuthenticated && !isOnboardRoute) {
+    window.location.replace(SPLASH_URL);
+    return null;
   }
 
-  if (showLanding && location.pathname === '/') {
-    return <LandingPage />;
+  // Signed in but not approved → friendly waitlist screen
+  if (gateApplies && isAuthenticated && !isApproved && !isOnboardRoute) {
+    return <NotApproved />;
   }
 
   return (
@@ -136,7 +147,7 @@ const AuthenticatedApp = () => {
         <Routes location={location}>
           {/* Customer routes with bottom nav */}
           <Route element={<AppLayout />}>
-            <Route path="/" element={showLanding ? <LandingPage /> : <Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/map" element={<MapView />} />
             <Route path="/deals" element={<Deals />} />

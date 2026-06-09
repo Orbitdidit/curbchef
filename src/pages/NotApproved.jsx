@@ -13,12 +13,19 @@ export default function NotApproved() {
       <p className="text-sm mb-8 max-w-xs leading-relaxed" style={{ color: '#bacbc0' }}>
         CurbChef is currently in early access. We'll notify you the moment your spot opens up.
       </p>
-      <button
-        onClick={() => base44.auth.logout('/')}
-        className="px-6 py-3 rounded-full text-sm font-bold"
-        style={{ background: 'rgba(255,255,255,0.06)', color: '#bacbc0', border: '1px solid rgba(255,255,255,0.1)' }}
+      <a
+        href="https://curbchef.app"
+        className="px-8 py-3.5 rounded-full font-heading font-black text-sm mb-4"
+        style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 20px rgba(119,255,200,0.3)' }}
       >
-        Sign Out
+        Back to curbchef.app
+      </a>
+      <button
+        onClick={() => base44.auth.logout('https://curbchef.app')}
+        className="px-6 py-2 rounded-full text-sm font-semibold"
+        style={{ color: '#6B665C' }}
+      >
+        Sign out
       </button>
     </div>
   );
