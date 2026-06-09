@@ -54,7 +54,8 @@ export default function StripeConnectButton({ truck, onStatusUpdate }) {
       refresh_url: `${origin}/vendor`,
     });
     if (res.data?.url) {
-      window.location.href = res.data.url;
+      // Must open in a new top-level tab — Stripe blocks iframe embedding (X-Frame-Options)
+      window.open(res.data.url, '_blank', 'noopener,noreferrer');
     }
     setLoading(false);
   };
