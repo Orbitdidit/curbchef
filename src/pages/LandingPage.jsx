@@ -149,6 +149,8 @@ export default function LandingPage() {
   const [modalSource, setModalSource] = useState(null); // null = closed, string = open with source
   const [modalResult, setModalResult] = useState(null);
 
+  const handleSignIn = () => base44.auth.redirectToLogin(window.location.pathname);
+
   const { data: configs = [] } = useQuery({
     queryKey: ['homepage_config'],
     queryFn: () => base44.entities.HomepageConfig.list(),
@@ -173,7 +175,7 @@ export default function LandingPage() {
     <div className="min-h-screen pb-24" style={{ background: '#0d1517' }}>
 
       {/* ── HERO ── */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden" style={{ position: 'relative' }}>
         {heroConfig?.video_url ? (
           <video className="absolute inset-0 w-full h-full object-cover"
             src={heroConfig.video_url} autoPlay loop muted playsInline
@@ -184,6 +186,16 @@ export default function LandingPage() {
         <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(13,21,23,0.55) 0%, rgba(13,21,23,0.82) 60%, rgba(13,21,23,1) 100%)' }} />
 
         <div className="relative z-10 flex flex-col items-center text-center px-6 pt-20 pb-16 w-full max-w-lg mx-auto">
+          {/* Sign In button — top right for approved users */}
+          <div className="absolute top-4 right-5 z-20">
+            <button
+              onClick={handleSignIn}
+              className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all"
+              style={{ background: 'rgba(255,255,255,0.08)', color: '#dff0e8', border: '1px solid rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)' }}>
+              Sign In
+            </button>
+          </div>
+
           <div className="flex items-center gap-2.5 mb-8">
             <div className="w-10 h-10 rounded-full flex items-center justify-center"
               style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', boxShadow: '0 0 24px rgba(119,255,200,0.5)' }}>
