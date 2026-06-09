@@ -52,6 +52,8 @@ import Support from './pages/Support.jsx';
 import Parks from './pages/Parks.jsx';
 import ParkProfile from './pages/ParkProfile.jsx';
 import TopItems from './pages/TopItems.jsx';
+import VendorOnboarding from './pages/vendor/VendorOnboarding';
+import NotApproved from './pages/NotApproved.jsx';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin, isAuthenticated, user } = useAuth();
@@ -112,8 +114,8 @@ const AuthenticatedApp = () => {
   const showLanding = gateApplies && !isAuthenticated && !isOnboardRoute;
 
   if (gateApplies && isAuthenticated && !isOnboardRoute) {
-    // Authenticated but not allowed through gate → show landing
-    return <LandingPage />;
+    // Authenticated but not approved — show friendly "you're on the waitlist" screen
+    return <NotApproved />;
   }
 
   if (showLanding && location.pathname === '/') {
@@ -159,6 +161,7 @@ const AuthenticatedApp = () => {
           <Route path="/vendor/profile" element={<VendorProfile />} />
           <Route path="/vendor/go-live" element={<GoLive />} />
           <Route path="/vendor/verification" element={<VendorVerification />} />
+          <Route path="/vendor/onboarding" element={<VendorOnboarding />} />
 
           {/* Admin */}
           <Route path="/admin" element={<AdminDashboard />} />

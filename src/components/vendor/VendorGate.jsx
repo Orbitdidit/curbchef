@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { useNavigate } from 'react-router-dom';
 import { Truck, LogIn } from 'lucide-react';
 
 /**
@@ -12,6 +13,7 @@ import { Truck, LogIn } from 'lucide-react';
  * If truck found → render children with truck passed as prop
  */
 export default function VendorGate({ children }) {
+  const navigate = useNavigate();
   const [state, setState] = useState('loading'); // loading | no_auth | no_truck | ready
   const [user, setUser] = useState(null);
   const [truck, setTruck] = useState(null);
@@ -23,7 +25,13 @@ export default function VendorGate({ children }) {
       setUser(u);
       const trucks = await base44.entities.FoodTruck.filter({ owner_email: u.email });
       if (!trucks?.length) { setState('no_truck'); return; }
-      setTruck(trucks[0]);
+      const t = trucks[0];
+      setTruck(t);
+      // First-time vendor: redirect to onboarding if not completed
+      if (!t.onboarding_completed && window.location.pathname === '/vendor') {
+        navigate('/vendor/onboarding', { replace: true });
+        return;
+      }
       setState('ready');
     })();
   }, []);
