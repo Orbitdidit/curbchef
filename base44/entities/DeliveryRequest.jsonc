@@ -15,58 +15,5 @@
   "required": [
     "truck_id",
     "truck_name"
-  ],
-  "rls": {
-    "create": {
-      "data.user_email": "{{user.email}}"
-    },
-    "read": {
-      "$or": [
-        {
-          "data.user_email": "{{user.email}}"
-        },
-        {
-          "base44.entities.FoodTruck.filter": {
-            "id": "data.truck_id",
-            "data.owner_email": "{{user.email}}"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        }
-      ]
-    },
-    "update": {
-      "$or": [
-        {
-          "base44.entities.FoodTruck.filter": {
-            "id": "data.truck_id",
-            "data.owner_email": "{{user.email}}"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        }
-      ]
-    },
-    "delete": {
-      "$or": [
-        {
-          "base44.entities.FoodTruck.filter": {
-            "id": "data.truck_id",
-            "data.owner_email": "{{user.email}}"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        }
-      ]
-    }
-  }
+  ]
 }
