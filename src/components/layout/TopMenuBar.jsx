@@ -32,17 +32,28 @@ export default function TopMenuBar() {
 
   return (
     <>
-      {/* Trigger button — 44×44 minimum touch target */}
-      <button
-        onClick={() => setOpen(true)}
-        aria-label="Open menu"
-        aria-haspopup="dialog"
-        aria-expanded={open}
-        className="w-11 h-11 rounded-xl flex items-center justify-center transition-all"
-        style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}
-      >
-        <Menu className="w-4 h-4" style={{ color: '#bacbc0' }} aria-hidden="true" />
-      </button>
+      {/* Trigger area: Sign In button (unauthenticated) + hamburger */}
+      <div className="flex items-center gap-2">
+        {!user && (
+          <button
+            onClick={() => base44.auth.redirectToLogin(window.location.pathname)}
+            className="px-4 py-2 rounded-full text-sm font-bold transition-all"
+            style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}
+          >
+            Sign In
+          </button>
+        )}
+        <button
+          onClick={() => setOpen(true)}
+          aria-label="Open menu"
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          className="w-11 h-11 rounded-xl flex items-center justify-center transition-all"
+          style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}
+        >
+          <Menu className="w-4 h-4" style={{ color: '#bacbc0' }} aria-hidden="true" />
+        </button>
+      </div>
 
       {/* Overlay */}
       {open && (
