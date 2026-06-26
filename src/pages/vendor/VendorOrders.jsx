@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Bell, Search, Clock, DollarSign, Plus, Phone } from 'lucide-react';
+import { ChevronLeft, Bell } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import OrderEtaBadge from '@/components/vendor/OrderEtaBadge';
 
@@ -70,18 +70,14 @@ function OrderCard({ order, advance }) {
         ))}
       </div>
 
-      <div className="flex gap-2">
-        <button
-          onClick={() => advance.mutate(order)}
-          className="flex-1 py-3 rounded-2xl font-heading font-black text-sm"
-          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 14px rgba(119,255,200,0.3)' }}
-        >
-          {BTN_LABEL[order.status]}
-        </button>
-        <button className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: '#2e3638' }}>
-          <Phone className="w-4 h-4" style={{ color: '#bacbc0' }} />
-        </button>
-      </div>
+      <button
+        onClick={() => advance.mutate(order)}
+        disabled={advance.isPending}
+        className="w-full py-3 rounded-2xl font-heading font-black text-sm"
+        style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 14px rgba(119,255,200,0.3)', opacity: advance.isPending ? 0.6 : 1 }}
+      >
+        {BTN_LABEL[order.status]}
+      </button>
     </div>
   );
 }
@@ -116,7 +112,16 @@ export default function VendorOrders() {
   });
 
   const advance = useMutation({
-    mutationFn: (order) => base44.entities.Order.update(order.id, { status: NEXT[order.status] }),
+    mutationFn: async (order) => {
+      const nextStatus = NEXT[order.status];
+      await base44.entities.Order.update(order.id, { status: nextStatus });
+      // Notify the customer on key transitions (fire-and-forget)
+      if (nextStatus === 'ready') {
+        base44.functions.invoke('sendOrderReadyEmail', { order_id: order.id }).catch(() => {});
+      } else if (nextStatus === 'picked_up') {
+        base44.functions.invoke('sendOrderPickedUpEmail', { order_id: order.id }).catch(() => {});
+      }
+    },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['vendor-orders'] }),
   });
 
@@ -187,18 +192,13 @@ export default function VendorOrders() {
             <h1 className="font-heading font-bold text-base" style={{ color: '#dff0e8' }}>Order Queue</h1>
           </div>
         </div>
-        <div className="flex gap-2">
-          <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-            <Search className="w-4 h-4" style={{ color: '#bacbc0' }} />
-          </button>
-          <button className="w-9 h-9 rounded-xl flex items-center justify-center relative" style={{ background: '#192123' }}>
-            <Bell className="w-4 h-4" style={{ color: '#bacbc0' }} />
-            {newCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-black text-white" style={{ background: '#fd591e' }}>
-                {newCount}
-              </span>
-            )}
-          </button>
+        <div className="relative w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
+          <Bell className="w-4 h-4" style={{ color: '#bacbc0' }} />
+          {newCount > 0 && (
+            <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-black text-white" style={{ background: '#fd591e' }}>
+              {newCount}
+            </span>
+          )}
         </div>
       </div>
 
@@ -251,17 +251,9 @@ export default function VendorOrders() {
             <p className="text-[10px] font-bold tracking-wide" style={{ color: '#bacbc0' }}>QUEUE TIME</p>
             <p className="font-heading font-black text-2xl" style={{ color: '#dff0e8' }}>18 min</p>
           </div>
-          <div className="text-center p-3 rounded-2xl flex items-center justify-between px-4" style={{ background: '#192123' }}>
-            <div>
-              <p className="text-[10px] font-bold tracking-wide" style={{ color: '#bacbc0' }}>HOURLY REVENUE</p>
-              <p className="font-heading font-black text-2xl" style={{ color: '#77ffc8' }}>${Math.round(totalRevToday)}</p>
-            </div>
-            <button
-              className="w-10 h-10 rounded-full flex items-center justify-center"
-              style={{ background: '#fd591e', boxShadow: '0 0 12px rgba(253,89,30,0.4)' }}
-            >
-              <Plus className="w-5 h-5 text-white" />
-            </button>
+          <div className="text-center p-3 rounded-2xl" style={{ background: '#192123' }}>
+            <p className="text-[10px] font-bold tracking-wide" style={{ color: '#bacbc0' }}>REVENUE TODAY</p>
+            <p className="font-heading font-black text-2xl" style={{ color: '#77ffc8' }}>${Math.round(totalRevToday)}</p>
           </div>
         </div>
       </div>

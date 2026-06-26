@@ -14,12 +14,13 @@ Deno.serve(async (req) => {
   const { truck_id, items, subtotal, tip, pickup_time, pickup_code, payment_method, success_url, cancel_url } = body;
 
   // Get the truck to find their Stripe account
-  const truck = await base44.entities.FoodTruck.get(truck_id);
-  if (!truck) return Response.json({ error: 'Truck not found' }, { status: 404 });
+  const truck = await base44.entities.FoodTruck.get(truck_id).catch(() => null);
+  if (!truck) return Response.json({ error: 'Truck not found' }, { status: 200 });
 
   if (!truck.stripe_account_id || truck.stripe_onboarding_status !== 'payouts_enabled') {
-    // Fallback: create order without Stripe payment (truck not connected yet)
-    return Response.json({ error: 'Vendor payment not set up', truck_not_connected: true }, { status: 422 });
+    // Fallback: signal the frontend to create a pay-at-pickup order.
+    // Return 200 so the SDK doesn't throw — the frontend reads truck_not_connected.
+    return Response.json({ error: 'Vendor payment not set up', truck_not_connected: true }, { status: 200 });
   }
 
   const taxAmount = Number((subtotal * 0.0825).toFixed(2)); // 8.25% sales tax
@@ -69,50 +70,55 @@ Deno.serve(async (req) => {
     quantity: 1,
   });
 
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
-    line_items: lineItems,
-    mode: 'payment',
-    success_url: success_url || `${req.headers.get('origin')}/order/{CHECKOUT_SESSION_ID}`,
-    cancel_url: cancel_url || `${req.headers.get('origin')}/cart`,
-    payment_intent_data: {
-      application_fee_amount: platformFeeAmount,
-      transfer_data: { destination: truck.stripe_account_id },
-    },
-    metadata: {
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: lineItems,
+      mode: 'payment',
+      success_url: success_url || `${req.headers.get('origin')}/order/{CHECKOUT_SESSION_ID}`,
+      cancel_url: cancel_url || `${req.headers.get('origin')}/cart`,
+      payment_intent_data: {
+        application_fee_amount: platformFeeAmount,
+        transfer_data: { destination: truck.stripe_account_id },
+      },
+      metadata: {
+        truck_id,
+        truck_name: truck.name,
+        customer_email: user.email,
+        customer_name: user.full_name,
+        pickup_code,
+        pickup_time: pickup_time || 'ASAP',
+        platform: 'curbchef',
+        is_test: IS_TEST ? 'true' : 'false',
+      },
+    });
+
+    // Pre-create the order record in "pending_payment" status
+    const vendorNetAmount = grossAmount - (platformFeeAmount / 100);
+    const order = await base44.asServiceRole.entities.Order.create({
       truck_id,
       truck_name: truck.name,
       customer_email: user.email,
       customer_name: user.full_name,
-      pickup_code,
+      items,
+      subtotal,
+      tax: taxAmount,
+      tip: tip || 0,
+      total: grossAmount,
+      gross_amount: grossAmount,
+      platform_fee_amount: platformFeeAmount / 100,
+      vendor_net_amount: vendorNetAmount,
+      stripe_checkout_session_id: session.id,
+      status: 'pending_payment',
       pickup_time: pickup_time || 'ASAP',
-      platform: 'curbchef',
-      is_test: IS_TEST ? 'true' : 'false',
-    },
-  });
+      pickup_code,
+      payment_method: 'card',
+      is_test_payment: IS_TEST,
+    });
 
-  // Pre-create the order record in "pending_payment" status
-  const vendorNetAmount = grossAmount - (platformFeeAmount / 100);
-  const order = await base44.asServiceRole.entities.Order.create({
-    truck_id,
-    truck_name: truck.name,
-    customer_email: user.email,
-    customer_name: user.full_name,
-    items,
-    subtotal,
-    tax: taxAmount,
-    tip: tip || 0,
-    total: grossAmount,
-    gross_amount: grossAmount,
-    platform_fee_amount: platformFeeAmount / 100,
-    vendor_net_amount: vendorNetAmount,
-    stripe_checkout_session_id: session.id,
-    status: 'pending_payment',
-    pickup_time: pickup_time || 'ASAP',
-    pickup_code,
-    payment_method: 'card',
-    is_test_payment: IS_TEST,
-  });
-
-  return Response.json({ checkout_url: session.url, session_id: session.id, order_id: order.id, is_test: IS_TEST });
+    return Response.json({ checkout_url: session.url, session_id: session.id, order_id: order.id, is_test: IS_TEST });
+  } catch (err) {
+    // Return 200 so the SDK surfaces our message instead of a generic 500 throw
+    return Response.json({ error: err.message || 'Checkout failed' }, { status: 200 });
+  }
 });
