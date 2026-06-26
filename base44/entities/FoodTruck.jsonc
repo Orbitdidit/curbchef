@@ -208,6 +208,16 @@
       "default": 0,
       "description": "Landing page sneak peek card tap counter (analytics)"
     },
+    "onboarding_completed": {
+      "type": "boolean",
+      "default": false,
+      "description": "True when vendor has completed the step-by-step onboarding wizard"
+    },
+    "onboarding_step": {
+      "type": "number",
+      "default": 1,
+      "description": "Current step the vendor is on in the onboarding wizard (1-7)"
+    },
     "tags": {
       "type": "array",
       "items": {

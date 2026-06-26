@@ -35,11 +35,10 @@ export default function OnboardingAssistantPanel({ truck, currentStep, onClose }
     const context = `You are a friendly onboarding guide for CurbChef, a Houston food truck platform. ${STEP_CONTEXT[currentStep] || ''} Truck name: ${truck?.name || 'unknown'}. Keep answers short and helpful.`;
 
     const res = await base44.integrations.Core.InvokeLLM({
-      prompt: text,
-      system_prompt: context,
+      prompt: `${context}\n\nVendor question: ${text}`,
     });
 
-    setMessages(prev => [...prev, { role: 'assistant', content: res.result || res }]);
+    setMessages(prev => [...prev, { role: 'assistant', content: typeof res === 'string' ? res : (res.result || JSON.stringify(res)) }]);
     setLoading(false);
   };
 

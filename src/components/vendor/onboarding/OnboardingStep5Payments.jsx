@@ -10,7 +10,12 @@ export default function OnboardingStep5Payments({ truck }) {
 
   const handleConnect = async () => {
     setLoading(true);
-    const res = await base44.functions.invoke('stripeConnect', { truck_id: truck.id });
+    const res = await base44.functions.invoke('stripeConnect', {
+      action: 'create_account_link',
+      truck_id: truck.id,
+      return_url: `${window.location.origin}/vendor/onboarding`,
+      refresh_url: `${window.location.origin}/vendor/onboarding`,
+    });
     if (res.data?.url) window.open(res.data.url, '_blank');
     setLoading(false);
   };
