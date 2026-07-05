@@ -72,8 +72,9 @@ Deno.serve(async (req) => {
         const vendorTrucks = await base44.asServiceRole.entities.FoodTruck.filter({ id: vendorOrder.truck_id });
         const vendorTruck = vendorTrucks[0];
         if (vendorTruck?.owner_email) {
-          const platformFee = (vendorOrder.total || 0) * 0.12;
-          const vendorNet = (vendorOrder.total || 0) - platformFee;
+          // Use the exact amounts stored on the Order (fee = 12% of subtotal, computed at checkout)
+          const platformFee = vendorOrder.platform_fee_amount || 0;
+          const vendorNet = vendorOrder.vendor_net_amount || 0;
           const itemsHtml = (vendorOrder.items || []).map(item =>
             `<tr>
               <td style="padding:10px 16px;font-size:13px;color:#F5F0E8;">${item.quantity}× ${item.name}</td>

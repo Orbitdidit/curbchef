@@ -71,8 +71,11 @@ Deno.serve(async (req) => {
   }
   subtotal = Number(subtotal.toFixed(2));
 
+  // Sanitize tip — block negative or non-numeric values
+  const safeTip = Math.max(0, Number(tip) || 0);
+
   const taxAmount = Number((subtotal * 0.0825).toFixed(2)); // 8.25% sales tax
-  const grossAmount = Number((subtotal + (tip || 0) + 1.50 + taxAmount).toFixed(2));
+  const grossAmount = Number((subtotal + safeTip + 1.50 + taxAmount).toFixed(2));
   const platformFeeAmount = Math.round(subtotal * PLATFORM_FEE_PERCENT * 100); // in cents
   const grossCents = Math.round(grossAmount * 100);
 
@@ -87,12 +90,12 @@ Deno.serve(async (req) => {
   }));
 
   // Add tip as a line item if present
-  if (tip > 0) {
+  if (safeTip > 0) {
     lineItems.push({
       price_data: {
         currency: 'usd',
         product_data: { name: 'Tip for crew' },
-        unit_amount: Math.round(tip * 100),
+        unit_amount: Math.round(safeTip * 100),
       },
       quantity: 1,
     });
@@ -151,7 +154,7 @@ Deno.serve(async (req) => {
       items: verifiedItems,
       subtotal,
       tax: taxAmount,
-      tip: tip || 0,
+      tip: safeTip,
       total: grossAmount,
       gross_amount: grossAmount,
       platform_fee_amount: platformFeeAmount / 100,
