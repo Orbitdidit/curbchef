@@ -257,8 +257,25 @@ export default function Home() {
         </div>
       )}
 
+      {/* ── LIVE & FEATURED (moved up top for eye-popping motion) ── */}
+      <div className="mt-5">
+        <div className="flex items-center justify-between px-4 mb-3">
+          <h2 className="font-heading font-black text-lg flex items-center gap-2" style={{ color: '#F5F0E8' }}>
+            <span className="w-2 h-2 rounded-full inline-block live-dot" style={{ background: '#FF3B30' }} />
+            Live & Featured
+          </h2>
+          <Link to="/live" className="text-xs font-semibold" style={{ color: '#00F5D4' }}>Watch all →</Link>
+        </div>
+        <LiveCarousel trucks={liveTrucks} />
+      </div>
+
+      {/* ── REAL FOOD. REAL TRUCKS. video block (moved up top) ── */}
+      <div className="mt-6">
+        <MidVideoBlock />
+      </div>
+
       {/* ── 5. FEATURED HERO CARD ── */}
-      {!noTrucksVisible && <HeroFoodCard trucks={visibleTrucks} />}
+      {!noTrucksVisible && <div className="mt-6"><HeroFoodCard trucks={visibleTrucks} /></div>}
 
       {/* ── QUICK REORDER (if returning user) ── */}
       <QuickReorder user={user} />
@@ -289,21 +306,6 @@ export default function Home() {
           <CarouselSection title="Nearby Now" emoji="📍" trucks={nearbyTrucks} seeAllHref="/explore" />
         </div>
       )}
-
-      {/* ── 8. LIVE & FEATURED ── */}
-      <div className="mt-8">
-        <div className="flex items-center justify-between px-4 mb-3">
-          <h2 className="font-heading font-black text-lg flex items-center gap-2" style={{ color: '#F5F0E8' }}>
-            <span className="w-2 h-2 rounded-full inline-block live-dot" style={{ background: '#FF3B30' }} />
-            Live & Featured
-          </h2>
-          <Link to="/live" className="text-xs font-semibold" style={{ color: '#00F5D4' }}>Watch all →</Link>
-        </div>
-        <LiveCarousel trucks={liveTrucks} />
-      </div>
-
-      {/* ── MID VIDEO BLOCK ── */}
-      <MidVideoBlock />
 
       {/* ── COOKIN' SECTION (animated fire cards) ── */}
       <CookinSection />
