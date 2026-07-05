@@ -26,8 +26,13 @@ Deno.serve(async (req) => {
     if (type === 'token_pack' && truck_id) {
       const truck = await base44.asServiceRole.entities.FoodTruck.get(truck_id);
       if (truck) {
+        // Idempotency: skip if this session's tokens were already added
+        if (truck.processed_session_id === session.id) {
+          return Response.json({ received: true, duplicate: true });
+        }
         await base44.asServiceRole.entities.FoodTruck.update(truck_id, {
           drop_tokens: (truck.drop_tokens || 0) + parseInt(tokens_to_add || '3'),
+          processed_session_id: session.id,
         });
       }
       return Response.json({ received: true });
@@ -35,6 +40,13 @@ Deno.serve(async (req) => {
 
     // Find the pre-created order by session id
     const orders = await base44.asServiceRole.entities.Order.filter({ stripe_checkout_session_id: session.id });
+
+    // Idempotency: if the order is already 'placed', this is a duplicate webhook.
+    // Skip ALL side effects (stats, emails, loyalty points).
+    if (orders.length > 0 && orders[0].status === 'placed') {
+      return Response.json({ received: true, duplicate: true });
+    }
+
     if (orders.length > 0) {
       await base44.asServiceRole.entities.Order.update(orders[0].id, {
         status: 'placed',

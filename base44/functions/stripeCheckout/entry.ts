@@ -11,7 +11,7 @@ Deno.serve(async (req) => {
   if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
   const body = await req.json().catch(() => ({}));
-  const { truck_id, items, subtotal, tip, pickup_time, pickup_code, payment_method, success_url, cancel_url } = body;
+  const { truck_id, items, tip, pickup_time, pickup_code, payment_method, success_url, cancel_url } = body;
 
   // Get the truck to find their Stripe account
   const truck = await base44.entities.FoodTruck.get(truck_id).catch(() => null);
@@ -23,17 +23,65 @@ Deno.serve(async (req) => {
     return Response.json({ error: 'Vendor payment not set up', truck_not_connected: true }, { status: 200 });
   }
 
+  // ── SERVER-SIDE PRICE VERIFICATION ──
+  // Never trust client-supplied prices. Fetch each item's real price from
+  // the MenuItem entity and recompute the subtotal from scratch.
+  if (!Array.isArray(items) || items.length === 0) {
+    return Response.json({ error: 'Invalid cart item' }, { status: 200 });
+  }
+
+  const verifiedItems = [];
+  let subtotal = 0;
+  for (const item of items) {
+    if (!item?.item_id) {
+      return Response.json({ error: 'Invalid cart item' }, { status: 200 });
+    }
+    const menuItem = await base44.asServiceRole.entities.MenuItem.get(item.item_id).catch(() => null);
+    if (!menuItem) {
+      return Response.json({ error: 'Invalid cart item' }, { status: 200 });
+    }
+
+    const quantity = Math.max(1, parseInt(item.quantity) || 1);
+    const realPrice = Number(menuItem.price) || 0;
+
+    // Verify add-ons against the MenuItem's real add_ons list
+    const verifiedAddOns = [];
+    if (Array.isArray(item.add_ons) && item.add_ons.length > 0) {
+      const realAddOns = Array.isArray(menuItem.add_ons) ? menuItem.add_ons : [];
+      for (const addOn of item.add_ons) {
+        const match = realAddOns.find(a => a.name === addOn?.name);
+        if (!match) {
+          return Response.json({ error: 'Invalid cart item' }, { status: 200 });
+        }
+        verifiedAddOns.push({ name: match.name, price: Number(match.price) || 0 });
+      }
+    }
+
+    const addOnsTotal = verifiedAddOns.reduce((s, a) => s + a.price, 0);
+    const lineTotal = (realPrice + addOnsTotal) * quantity;
+    subtotal += lineTotal;
+
+    verifiedItems.push({
+      item_id: menuItem.id,
+      name: menuItem.name,
+      price: realPrice,
+      quantity,
+      add_ons: verifiedAddOns,
+    });
+  }
+  subtotal = Number(subtotal.toFixed(2));
+
   const taxAmount = Number((subtotal * 0.0825).toFixed(2)); // 8.25% sales tax
   const grossAmount = Number((subtotal + (tip || 0) + 1.50 + taxAmount).toFixed(2));
   const platformFeeAmount = Math.round(subtotal * PLATFORM_FEE_PERCENT * 100); // in cents
   const grossCents = Math.round(grossAmount * 100);
 
-  // Build line items for Stripe
-  const lineItems = items.map(item => ({
+  // Build line items for Stripe from the verified items
+  const lineItems = verifiedItems.map(item => ({
     price_data: {
       currency: 'usd',
       product_data: { name: `${item.quantity}x ${item.name}` },
-      unit_amount: Math.round(item.price * 100),
+      unit_amount: Math.round((item.price + item.add_ons.reduce((s, a) => s + a.price, 0)) * 100),
     },
     quantity: item.quantity,
   }));
@@ -100,7 +148,7 @@ Deno.serve(async (req) => {
       truck_name: truck.name,
       customer_email: user.email,
       customer_name: user.full_name,
-      items,
+      items: verifiedItems,
       subtotal,
       tax: taxAmount,
       tip: tip || 0,

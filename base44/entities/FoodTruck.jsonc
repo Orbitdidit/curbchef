@@ -243,6 +243,10 @@
       ],
       "default": "not_connected"
     },
+    "processed_session_id": {
+      "type": "string",
+      "description": "Last Stripe checkout session id processed for a token pack purchase \u2014 used for webhook idempotency"
+    },
     "vendor_plan": {
       "type": "string",
       "enum": [
