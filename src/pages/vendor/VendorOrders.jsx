@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { ChevronLeft, Bell } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import OrderEtaBadge from '@/components/vendor/OrderEtaBadge';
+import { parseServerDate } from '@/lib/timeUtils';
 
 function etaMinsLeft(order) {
   if (!order.customer_eta_set_at || order.customer_eta_minutes == null) return null;
@@ -40,7 +41,7 @@ function OrderCard({ order, advance }) {
         <div className="text-right">
           <p className="text-[10px] font-bold" style={{ color: '#bacbc0' }}>RECEIVED</p>
           <p className="text-xs font-semibold" style={{ color: '#dff0e8' }}>
-            {new Date(order.created_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            {parseServerDate(order.created_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </p>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ChevronLeft, MapPin, Phone, Copy, Check } from 'lucide-react';
 import CustomerEtaCard from '@/components/order/CustomerEtaCard';
 import { useToast } from '@/components/ui/use-toast';
+import { parseServerDate, formatLocalTime } from '@/lib/timeUtils';
 
 const STEPS = [
   { key: 'placed', label: 'Confirmed' },
@@ -67,13 +68,13 @@ export default function OrderDetail() {
   const stepIdx = STEPS.findIndex(s => s.key === order.status);
 
   // Dynamic ready estimate: placed time + ~15 min
-  const placedAt = order.created_date ? new Date(order.created_date) : new Date();
+  const placedAt = parseServerDate(order.created_date);
   const readyAt = new Date(placedAt.getTime() + 15 * 60000);
   const readyLabel = order.status === 'ready'
     ? 'Ready now!'
     : order.status === 'picked_up'
     ? 'Completed'
-    : `Est. ready ${readyAt.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`;
+    : `Est. ready ${formatLocalTime(readyAt)}`;
 
   return (
     <div className="min-h-screen dot-bg" style={{ background: '#0A0A0A' }}>
@@ -184,6 +185,14 @@ export default function OrderDetail() {
                 <span className="text-xs" style={{ color: '#A39E94' }}>${order.tax?.toFixed(2)}</span>
               </div>
             )}
+            <div className="flex justify-between px-4 py-2">
+              <span className="text-xs" style={{ color: '#A39E94' }}>Service Fee</span>
+              <span className="text-xs" style={{ color: '#A39E94' }}>$1.50</span>
+            </div>
+            <div className="flex justify-between px-4 py-2">
+              <span className="text-xs" style={{ color: '#A39E94' }}>Tip</span>
+              <span className="text-xs" style={{ color: '#A39E94' }}>${(order.tip || 0).toFixed(2)}</span>
+            </div>
             <div className="flex justify-between px-4 py-3" style={{ borderTop: '1px solid rgba(59,74,66,0.3)' }}>
               <span className="font-heading font-bold" style={{ color: '#F5F0E8' }}>Total</span>
               <span className="font-heading font-bold" style={{ color: '#00F5D4' }}>${order.total?.toFixed(2)}</span>
