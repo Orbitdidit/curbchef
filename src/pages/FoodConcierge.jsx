@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Send, Flame } from 'lucide-react';
+import { ChevronLeft, Send, Flame, Sparkles } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 const STARTER_PROMPTS = [
@@ -139,7 +139,7 @@ export default function FoodConcierge() {
         style={{ paddingBottom: '160px' }}>
         {messages.length === 0 && (
           <div className="text-center pt-8">
-            <p className="text-4xl mb-3"></p>
+            <Sparkles className="w-10 h-10 mb-3 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
             <p className="font-display text-lg mb-1" style={{ color: 'var(--cc-ink)' }}>
               What are you craving?
             </p>

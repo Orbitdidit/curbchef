@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useNavigate, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getCart, subscribe, getCartTotal, clearCart } from '@/lib/cartStore';
-import { ChevronLeft, Truck, ExternalLink } from 'lucide-react';
+import { ChevronLeft, Truck, ExternalLink, ShoppingBag } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import AssistantNudge from '@/components/assistant/AssistantNudge';
 
@@ -116,7 +116,7 @@ export default function Cart() {
   if (!cart.items?.length) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-8 text-center dot-bg" style={{ background: 'var(--cc-black)' }}>
-        <div className="text-6xl mb-4"></div>
+        <ShoppingBag className="w-14 h-14 mb-4 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
         <h2 className="font-display text-xl mb-2" style={{ color: 'var(--cc-cream)' }}>Your bag is empty</h2>
         <p className="text-sm mb-8" style={{ color: 'var(--cc-ink-muted)' }}>Add items from a truck to get started</p>
         <Link to="/">

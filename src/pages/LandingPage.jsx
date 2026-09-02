@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Copy, Check, Flame } from 'lucide-react';
+import { Copy, Check, Flame, Truck } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 import TruckPeekSection from '@/components/landing/TruckPeekSection';
@@ -212,7 +212,7 @@ export default function LandingPage() {
           <div ref={formRef} className="w-full">
             {heroResult ? (
               <div className="p-6 rounded-3xl text-center" style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border:'1px solid rgba(var(--cc-accent-rgb),0.3)' }}>
-                <div className="text-5xl mb-3"></div>
+                <Truck className="w-12 h-12 mb-3 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
                 <p className="font-display text-2xl mb-1" style={{ color: 'var(--cc-accent)'}}>You're #{heroResult.position} in line!</p>
                 <p className="text-sm" style={{ color: 'var(--cc-ink-dim)'}}>We'll text & email you the moment CurbChef goes live.</p>
                 <ReferralSuccess email={heroResult.email} />
@@ -277,7 +277,7 @@ export default function LandingPage() {
           <div className="w-full max-w-md p-8 rounded-3xl text-center"
             style={{ background: 'var(--cc-bg-1)', border:'1px solid rgba(var(--cc-accent-rgb),0.3)' }}
             onClick={e => e.stopPropagation()}>
-            <div className="text-5xl mb-3"></div>
+            <Truck className="w-12 h-12 mb-3 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
             <p className="font-display text-2xl mb-2" style={{ color: 'var(--cc-accent)'}}>You're #{modalResult.position} in line!</p>
             <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)'}}>We'll notify you the moment CurbChef goes live.</p>
             <button onClick={() => setModalResult(null)}

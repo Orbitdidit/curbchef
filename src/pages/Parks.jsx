@@ -172,7 +172,7 @@ export default function Parks() {
 
         {filtered.length === 0 && !isLoading && (
           <div className="text-center py-16">
-            <p className="text-4xl mb-3"></p>
+            <MapPin className="w-10 h-10 mb-3 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
             <p className="font-display" style={{ color: 'var(--cc-ink)' }}>No parks match this filter</p>
             <button onClick={() => setFilter('all')} className="mt-3 text-sm font-semibold" style={{ color: 'var(--cc-accent-2)' }}>
               Show all parks

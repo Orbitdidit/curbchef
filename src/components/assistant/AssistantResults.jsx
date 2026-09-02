@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAssistant } from './AssistantContext';
-import { Star, MapPin, ChevronRight, RotateCcw } from 'lucide-react';
+import { Star, MapPin, ChevronRight, RotateCcw, SearchX } from 'lucide-react';
 import { formatDist } from '@/lib/geoUtils';
 
 export default function AssistantResults() {
@@ -11,7 +11,7 @@ export default function AssistantResults() {
   if (results.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center px-6 py-12 text-center">
-        <span className="text-5xl mb-4"></span>
+        <SearchX className="w-12 h-12 mb-4 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
         <h3 className="font-display text-lg mb-1" style={{ color: 'var(--cc-ink)' }}>
           No matches found
         </h3>

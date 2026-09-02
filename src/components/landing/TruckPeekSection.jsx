@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Star, Lock } from 'lucide-react';
+import { Star, Lock, Truck } from 'lucide-react';
 
 function TruckModal({ truck, onClose, onJoin }) {
   return (
@@ -11,7 +11,7 @@ function TruckModal({ truck, onClose, onJoin }) {
       <div className="w-full max-w-md rounded-3xl p-6 pb-8"
         style={{ background: 'var(--cc-bg-1)', border:'1px solid rgba(var(--cc-accent-rgb),0.2)' }}
         onClick={e => e.stopPropagation()}>
-        <div className="text-4xl mb-3 text-center"></div>
+        <Truck className="w-10 h-10 mb-3 text-center mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
         <h3 className="font-display text-xl text-center mb-2" style={{ color: 'var(--cc-ink)' }}>
           Want to order from {truck.name}?
         </h3>

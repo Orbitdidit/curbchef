@@ -6,8 +6,7 @@ import { useCloseCountdown } from '@/hooks/useCloseCountdown';
 import ReliabilityBadge from '@/components/shared/ReliabilityBadge';
 import {
   ChevronLeft, Share2, Star, Clock, Plus, Minus, Play,
-  UserPlus, UserCheck, MapPin, ShoppingBag, Flame, Radio, Zap
-} from 'lucide-react';
+  UserPlus, UserCheck, MapPin, ShoppingBag, Flame, Radio, Zap, UtensilsCrossed } from 'lucide-react';
 import DeliveryBadge from '@/components/truck/DeliveryBadge';
 import CoverMediaCarousel from '@/components/truck/CoverMediaCarousel';
 import { getCart, addToCart, updateQuantity, subscribe as subscribeCart } from '@/lib/cartStore';
@@ -432,7 +431,7 @@ export default function TruckProfile() {
 
             {menuItems.length === 0 && (
               <div className="text-center py-16">
-                <p className="text-4xl mb-3"></p>
+                <UtensilsCrossed className="w-10 h-10 mb-3 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
                 <p className="font-display text-base mb-1" style={{ color: 'var(--cc-ink)' }}>Menu coming soon</p>
                 <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Check back later</p>
               </div>
@@ -445,7 +444,7 @@ export default function TruckProfile() {
           <div>
             {specials.length === 0 ? (
               <div className="text-center py-16">
-                <p className="text-4xl mb-3"></p>
+                <UtensilsCrossed className="w-10 h-10 mb-3 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
                 <p className="font-display text-base mb-1" style={{ color: 'var(--cc-ink)' }}>No specials right now</p>
                 <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Check back soon</p>
               </div>
@@ -493,7 +492,7 @@ export default function TruckProfile() {
           <div>
             {clips.length === 0 ? (
               <div className="text-center py-16">
-                <div className="text-4xl mb-3"></div>
+                <UtensilsCrossed className="w-10 h-10 mb-3 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
                 <p className="font-display text-base mb-1" style={{ color: 'var(--cc-ink)' }}>No clips yet</p>
                 <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Check back when they go live</p>
               </div>

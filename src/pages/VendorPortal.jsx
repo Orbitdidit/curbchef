@@ -173,7 +173,7 @@ export default function VendorPortal() {
           <>
             {/* Hero */}
             <div className="text-center mb-8">
-              <div className="text-5xl mb-3"></div>
+              <Truck className="w-12 h-12 mb-3 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
               <h1 className="font-display text-2xl mb-2" style={{ color: 'var(--cc-ink)'}}>
                 {user ? `Hey ${user.full_name?.split('')[0]}!` : 'Own a Food Truck?'}
               </h1>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, MapPin, Upload, Plus, Trash2, Check, Flame } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MapPin, Upload, Plus, Trash2, Check, Flame, Truck } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import OnboardingGuideChat from '@/components/onboarding/OnboardingGuideChat';
 import PermitsStep from '@/components/onboarding/PermitsStep';
@@ -124,7 +124,7 @@ export default function OnboardTruck() {
       <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: 'var(--cc-bg-0)' }}>
         <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-6"
           style={{ background: 'linear-gradient(135deg,rgba(var(--cc-accent-rgb),0.15),rgba(var(--cc-accent-rgb),0.05))', border:'1px solid rgba(var(--cc-accent-rgb),0.3)' }}>
-          <span className="text-4xl"></span>
+          <Truck className="w-10 h-10 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
         </div>
         <h1 className="font-display text-3xl mb-3" style={{ color: 'var(--cc-ink)' }}>Application Submitted!</h1>
         <p className="text-sm mb-2 max-w-sm" style={{ color: 'var(--cc-ink-dim)' }}>

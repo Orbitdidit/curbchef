@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { useQueryClient } from '@tanstack/react-query';
-import { X, ArrowLeft, ArrowRight } from 'lucide-react';
+import { X, ArrowLeft, ArrowRight, Truck } from 'lucide-react';
 
 const STEPS = [
   { id:'welcome', type:'modal'},
@@ -155,7 +155,7 @@ function ModalStep({ content, onNext, onSkip, isLast, firstName, stepIndex, tota
       >
         {isLast ? (
           <>
-            <div className="text-5xl mb-4"></div>
+            <Truck className="w-12 h-12 mb-4 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
             <p className="font-display text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>{content.title}</p>
             <p className="text-sm leading-relaxed mb-2" style={{ color: 'var(--cc-ink-dim)' }}>{content.body}</p>
             {content.sub && <p className="text-xs mb-6" style={{ color: 'var(--cc-ink-faint)' }}>{content.sub}</p>}
@@ -167,7 +167,7 @@ function ModalStep({ content, onNext, onSkip, isLast, firstName, stepIndex, tota
           </>
         ) : (
           <>
-            <div className="text-5xl mb-4"></div>
+            <Truck className="w-12 h-12 mb-4 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
             <p className="font-display text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>
               Welcome to CurbChef, {firstName}!
             </p>

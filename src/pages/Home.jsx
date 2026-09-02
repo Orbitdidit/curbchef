@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mic, Search, ChevronDown, Bell } from 'lucide-react';
+import { Mic, Search, ChevronDown, Bell, Truck } from 'lucide-react';
 
 // Home sections
 import CategoryRow from '@/components/home/CategoryRow';
@@ -227,7 +227,7 @@ export default function Home() {
       {/* ── EMPTY STATE fallback ── */}
       {noTrucksVisible && (
         <div className="mx-4 mt-4 rounded-3xl p-8 text-center" style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.06)'}}>
-          <div className="text-5xl mb-4"></div>
+          <Truck className="w-12 h-12 mb-4 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
           <p className="font-display text-xl mb-2" style={{ color:'var(--cc-cream)'}}>
             We're populating Houston's best food trucks.
           </p>
