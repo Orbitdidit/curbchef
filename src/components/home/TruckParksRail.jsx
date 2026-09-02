@@ -7,7 +7,7 @@ import { Truck, Star } from 'lucide-react';
 function ParkMiniCard({ park }) {
   return (
     <Link to={`/parks/${park.slug}`}
-      className="flex-shrink-0 w-52 rounded-2xl overflow-hidden active:scale-[0.97] transition-transform" style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.06)'}}>
+      className="flex-shrink-0 w-52 rounded-2xl overflow-hidden active:scale-[0.97] transition-transform" style={{ background:'var(--cc-cream-card)', border:'1px solid rgba(255,255,255,0.06)'}}>
       <div className="relative" style={{ height:'110px'}}>
         <img src={park.hero_image_url ||'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400'}
           alt={park.name} className="w-full h-full object-cover"/>
@@ -18,13 +18,13 @@ function ParkMiniCard({ park }) {
       </div>
       <div className="px-3 py-2.5 flex items-center justify-between">
         <div className="flex items-center gap-1.5">
-          <Truck className="w-3 h-3" style={{ color:'var(--cc-accent-2)'}} />
-          <span className="text-xs font-bold" style={{ color:'var(--cc-accent-2)'}}>{park.total_trucks || 0} trucks</span>
+          <Truck className="w-3 h-3" style={{ color:'var(--cc-teal-on-cream)'}} />
+          <span className="text-xs font-bold" style={{ color:'var(--cc-teal-on-cream)'}}>{park.total_trucks || 0} trucks</span>
         </div>
         {park.avg_rating && (
           <div className="flex items-center gap-1">
             <Star className="w-3 h-3 fill-yellow-400 text-yellow-400"/>
-            <span className="text-xs font-bold" style={{ color:'var(--cc-ink-muted)'}}>{park.avg_rating.toFixed(1)}</span>
+            <span className="text-xs font-bold" style={{ color:'var(--cc-on-cream-muted)'}}>{park.avg_rating.toFixed(1)}</span>
           </div>
         )}
       </div>
@@ -43,10 +43,10 @@ export default function TruckParksRail() {
   return (
     <div className="mt-8">
       <div className="flex items-center justify-between px-4 mb-3">
-        <h2 className="font-display text-lg" style={{ color:'var(--cc-cream)'}}>
+        <h2 className="font-display text-lg" style={{ color:'var(--cc-on-cream)'}}>
            Houston's Hottest Truck Parks
         </h2>
-        <Link to="/parks" className="text-xs font-semibold" style={{ color:'var(--cc-accent-2)'}}>
+        <Link to="/parks" className="text-xs font-semibold" style={{ color:'var(--cc-teal-on-cream)'}}>
           Explore All →
         </Link>
       </div>
