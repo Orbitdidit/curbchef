@@ -1,3 +1,4 @@
+import { MapPinOff } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
@@ -24,7 +25,7 @@ export default function PageNotFound({}) {
             <div className="max-w-md w-full">
                 <div className="text-center space-y-6">
                     <div className="space-y-2">
-                        <div className="text-6xl mb-2"></div>
+                        <MapPinOff className="w-14 h-14 mb-2 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
                         <h1 className="text-7xl font-display text-muted-foreground/30">404</h1>
                     </div>
                     
