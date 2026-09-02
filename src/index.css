@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -251,4 +251,10 @@ button:active, a:active {
 }
 .btn-neon:hover {
   background: #1ffcdc;
+}
+/* CurbChef display type — condensed caps for headlines, prices, buttons */
+.font-display {
+  font-family: 'Bebas Neue', 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: 0.02em;
+  font-weight: 400;
 }

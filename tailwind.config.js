@@ -5,6 +5,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        display: ['Bebas Neue', 'Plus Jakarta Sans', 'sans-serif'],
         heading: ['Plus Jakarta Sans', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
@@ -118,6 +119,7 @@ module.exports = {
     'bg-neon-mint', 'text-neon-mint',
     'bg-surface-high', 'bg-surface-container', 'bg-surface-dim', 'bg-surface-variant',
     'font-mono',
+    'font-display',
   ],
   plugins: [require("tailwindcss-animate")],
 }
