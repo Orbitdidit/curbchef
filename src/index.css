@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -45,6 +45,18 @@
     --cc-yellow: #F5A623;      /* B: #F5A623               */
 
     --cc-cta: #E8442A;
+    --cc-cta-hover: #F5A623;
+
+    /* Cream ramp — light sections, lifted from the Claude Design comp */
+    --cc-cream-card: #FEFBF3;
+    --cc-cream-0: #F7F2E7;
+    --cc-cream-1: #F0E8D5;
+    --cc-cream-2: #EDE5D2;
+    --cc-cream-3: #E7DFCB;
+    --cc-cream-4: #E6DDC7;
+    --cc-cream-5: #DCD3BE;
+    --cc-on-cream: #16161A;
+    --cc-on-cream-muted: #5C5A54;
     --cc-on-cta: #FFF3EF;
     --cc-teal-on-cream: #2E8A85;
 
@@ -255,6 +267,45 @@ button:active, a:active {
 /* CurbChef display type — condensed caps for headlines, prices, buttons */
 .font-display {
   font-family: 'Bebas Neue', 'Plus Jakarta Sans', sans-serif;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   font-weight: 400;
 }
+.font-display.tracking-tight-display { letter-spacing: 0.02em; }
+
+/* Eyebrow / metadata label — mono, wide, muted */
+.cc-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cc-ink-muted);
+}
+.cc-eyebrow-teal { color: var(--cc-accent); }
+.cc-eyebrow-warm { color: var(--cc-cta); }
+
+/* Primary CTA — always a full pill, never a soft rect */
+.cc-cta {
+  background: var(--cc-cta);
+  color: var(--cc-on-cta);
+  border-radius: 999px;
+  padding: 14px 26px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 19px;
+  letter-spacing: 0.06em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  cursor: pointer;
+}
+.cc-cta-sm { padding: 11px 18px; font-size: 16px; }
+
+/* Cream section surfaces */
+.cc-cream-section { background: var(--cc-cream-0); color: var(--cc-on-cream); }
+.cc-cream-card {
+  background: var(--cc-cream-card);
+  border: 1px solid var(--cc-cream-3);
+  border-radius: 14px;
+}
+.cc-price { font-family: 'Bebas Neue', sans-serif; color: var(--cc-cta); letter-spacing: 0.02em; }

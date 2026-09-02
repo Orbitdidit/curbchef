@@ -8,7 +8,7 @@ module.exports = {
         display: ['Bebas Neue', 'Plus Jakarta Sans', 'sans-serif'],
         heading: ['Plus Jakarta Sans', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        mono: ['IBM Plex Mono', 'JetBrains Mono', 'monospace'],
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -120,6 +120,11 @@ module.exports = {
     'bg-surface-high', 'bg-surface-container', 'bg-surface-dim', 'bg-surface-variant',
     'font-mono',
     'font-display',
+    'cc-price',
+    'cc-cream-card',
+    'cc-cream-section',
+    'cc-cta',
+    'cc-eyebrow',
   ],
   plugins: [require("tailwindcss-animate")],
 }
