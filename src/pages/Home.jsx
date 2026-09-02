@@ -1,25 +1,25 @@
-import React, { useState } from'react';
-import { base44 } from'@/api/base44Client';
-import { useQuery } from'@tanstack/react-query';
-import { Link, useNavigate } from'react-router-dom';
-import { Mic, Search, ChevronDown, Bell } from'lucide-react';
+import React, { useState } from 'react';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
+import { Link, useNavigate } from 'react-router-dom';
+import { Mic, Search, ChevronDown, Bell } from 'lucide-react';
 
 // Home sections
-import CategoryRow from'@/components/home/CategoryRow';
-import DropsNearYou from'@/components/home/DropsNearYou';
-import LiveCarousel from'@/components/home/LiveCarousel';
-import CarouselSection from'@/components/home/CarouselSection';
-import ActivityFeed from'@/components/home/ActivityFeed';
-import ExperiencesTeaser from'@/components/home/ExperiencesTeaser';
-import FoodMoodRail from'@/components/home/FoodMoodRail';
-import FollowedTrucksRail from'@/components/home/FollowedTrucksRail';
-import QuickReorder from'@/components/home/QuickReorder';
-import FiveDollarSpecials from'@/components/home/FiveDollarSpecials';
-import MidVideoBlock from'@/components/home/MidVideoBlock';
-import CookinSection from'@/components/home/CookinSection';
-import PromoCard from'@/components/home/PromoCard';
-import AssistantHomeCard from'@/components/assistant/AssistantHomeCard';
-import TruckParksRail from'@/components/home/TruckParksRail';
+import CategoryRow from '@/components/home/CategoryRow';
+import DropsNearYou from '@/components/home/DropsNearYou';
+import LiveCarousel from '@/components/home/LiveCarousel';
+import CarouselSection from '@/components/home/CarouselSection';
+import ActivityFeed from '@/components/home/ActivityFeed';
+import ExperiencesTeaser from '@/components/home/ExperiencesTeaser';
+import FoodMoodRail from '@/components/home/FoodMoodRail';
+import FollowedTrucksRail from '@/components/home/FollowedTrucksRail';
+import QuickReorder from '@/components/home/QuickReorder';
+import FiveDollarSpecials from '@/components/home/FiveDollarSpecials';
+import MidVideoBlock from '@/components/home/MidVideoBlock';
+import CookinSection from '@/components/home/CookinSection';
+import PromoCard from '@/components/home/PromoCard';
+import AssistantHomeCard from '@/components/assistant/AssistantHomeCard';
+import TruckParksRail from '@/components/home/TruckParksRail';
 
 // ── Quick AI prompt chips ─────────────────────────────────────────────────────
 const AI_CHIPS = [
@@ -42,25 +42,25 @@ function HeroFoodCard({ trucks }) {
   return (
     <div className="mx-4 mt-4">
       <Link to={`/truck/${truck.id}`}>
-        <div className="relative rounded-3xl overflow-hidden"style={{ aspectRatio:'4/3'}}>
+        <div className="relative rounded-3xl overflow-hidden" style={{ aspectRatio:'4/3'}}>
           <img src={img} alt={truck.name} className="absolute inset-0 w-full h-full object-cover"/>
-          <div className="absolute inset-0"style={{ background:'linear-gradient(180deg, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.0) 30%, rgba(10,10,10,0.88) 100%)'}} />
+          <div className="absolute inset-0" style={{ background:'linear-gradient(180deg, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.0) 30%, rgba(10,10,10,0.88) 100%)'}} />
 
           {/* badges top-left */}
           <div className="absolute top-4 left-4 flex items-center gap-2">
             {truck.is_live && (
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full"style={{ background:'rgba(var(--cc-warm-red-rgb),0.9)', backdropFilter:'blur(8px)'}}>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background:'rgba(var(--cc-warm-red-rgb),0.9)', backdropFilter:'blur(8px)'}}>
                 <span className="w-1.5 h-1.5 rounded-full bg-white live-dot"/>
                 <span className="text-white text-[10px] font-black tracking-widest">LIVE</span>
               </div>
             )}
             {truck.status ==='open'&& !truck.is_live && (
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full"style={{ background:'rgba(0,0,0,0.55)', backdropFilter:'blur(8px)', border:'1px solid rgba(0,245,212,0.3)'}}>
-                <span className="w-1.5 h-1.5 rounded-full"style={{ background:'var(--cc-accent-2)'}} />
-                <span className="text-[10px] font-black"style={{ color:'var(--cc-accent-2)'}}>OPEN</span>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background:'rgba(0,0,0,0.55)', backdropFilter:'blur(8px)', border:'1px solid rgba(0,245,212,0.3)'}}>
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background:'var(--cc-accent-2)'}} />
+                <span className="text-[10px] font-black" style={{ color:'var(--cc-accent-2)'}}>OPEN</span>
               </div>
             )}
-            <div className="flex items-center gap-1 px-2.5 py-1 rounded-full"style={{ background:'rgba(0,0,0,0.55)', backdropFilter:'blur(8px)'}}>
+            <div className="flex items-center gap-1 px-2.5 py-1 rounded-full" style={{ background:'rgba(0,0,0,0.55)', backdropFilter:'blur(8px)'}}>
               <span className="text-[10px] font-bold text-white">~{truck.delivery_eta ||'15 min'}</span>
             </div>
           </div>
@@ -70,34 +70,34 @@ function HeroFoodCard({ trucks }) {
             <div className="absolute top-4 right-4 flex gap-1">
               {candidates.map((_, i) => (
                 <button key={i} onClick={e => { e.preventDefault(); setIdx(i); }}
-                  className="rounded-full transition-all"style={{ width: i === idx % candidates.length ? 16 : 5, height: 5, background: i === idx % candidates.length ?'var(--cc-accent-2)':'rgba(255,255,255,0.3)'}} />
+                  className="rounded-full transition-all" style={{ width: i === idx % candidates.length ? 16 : 5, height: 5, background: i === idx % candidates.length ?'var(--cc-accent-2)':'rgba(255,255,255,0.3)'}} />
               ))}
             </div>
           )}
 
           {/* bottom info */}
           <div className="absolute bottom-0 left-0 right-0 p-5">
-            <p className="font-display text-2xl text-white leading-tight mb-1"style={{ textShadow:'0 2px 12px rgba(0,0,0,0.7)'}}>
+            <p className="font-display text-2xl text-white leading-tight mb-1" style={{ textShadow:'0 2px 12px rgba(0,0,0,0.7)'}}>
               {truck.name}
             </p>
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-full"style={{ background:'rgba(0,245,212,0.18)', color:'var(--cc-accent-2)', border:'1px solid rgba(0,245,212,0.2)'}}>
+              <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ background:'rgba(0,245,212,0.18)', color:'var(--cc-accent-2)', border:'1px solid rgba(0,245,212,0.2)'}}>
                 {truck.cuisine_type?.replace('_','')}
               </span>
               {truck.rating && (
-                <span className="text-xs font-semibold"style={{ color:'rgba(255,255,255,0.6)'}}>
+                <span className="text-xs font-semibold" style={{ color:'rgba(255,255,255,0.6)'}}>
                    {truck.rating.toFixed(1)} · {truck.city ||'Houston'}
                 </span>
               )}
             </div>
             <div className="flex items-center gap-2">
               <Link to={`/truck/${truck.id}`} onClick={e => e.stopPropagation()}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full font-display text-sm"style={{ background:'var(--cc-accent-2)', color:'var(--cc-black)'}}>
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full font-display text-sm" style={{ background:'var(--cc-accent-2)', color:'var(--cc-black)'}}>
                 Order Ahead →
               </Link>
               {truck.is_live && (
-                <Link to="/live"onClick={e => e.stopPropagation()}
-                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-bold text-sm"style={{ background:'rgba(255,255,255,0.1)', color:'#fff', border:'1px solid rgba(255,255,255,0.2)', backdropFilter:'blur(8px)'}}>
+                <Link to="/live" onClick={e => e.stopPropagation()}
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-bold text-sm" style={{ background:'rgba(255,255,255,0.1)', color:'#fff', border:'1px solid rgba(255,255,255,0.2)', backdropFilter:'blur(8px)'}}>
                   ▶ Watch
                 </Link>
               )}
@@ -121,14 +121,14 @@ function CompactStatsStrip({ user }) {
   if (!user) return null;
   return (
     <Link to="/rewards">
-      <div className="mx-4 px-4 py-3 rounded-2xl flex items-center gap-3"style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.05)'}}>
+      <div className="mx-4 px-4 py-3 rounded-2xl flex items-center gap-3" style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.05)'}}>
         <span className="text-lg"></span>
         <div className="flex-1">
-          <span className="text-xs font-black"style={{ color:'var(--cc-accent-2)'}}>{points.toLocaleString()} pts</span>
-          <span className="text-xs mx-2"style={{ color:'var(--cc-ink-faint)'}}>·</span>
-          <span className="text-xs font-semibold capitalize"style={{ color:'var(--cc-ink-muted)'}}>{tier} tier</span>
+          <span className="text-xs font-black" style={{ color:'var(--cc-accent-2)'}}>{points.toLocaleString()} pts</span>
+          <span className="text-xs mx-2" style={{ color:'var(--cc-ink-faint)'}}>·</span>
+          <span className="text-xs font-semibold capitalize" style={{ color:'var(--cc-ink-muted)'}}>{tier} tier</span>
         </div>
-        <span className="text-xs font-semibold"style={{ color:'var(--cc-ink-faint)'}}>View rewards →</span>
+        <span className="text-xs font-semibold" style={{ color:'var(--cc-ink-faint)'}}>View rewards →</span>
       </div>
     </Link>
   );
@@ -166,28 +166,28 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen pb-28"style={{ background:'var(--cc-black)'}}>
+    <div className="min-h-screen pb-28" style={{ background:'var(--cc-black)'}}>
 
       {/* ── 1. TOP BAR ── */}
       <div className="px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-3">
         <div className="flex items-center justify-between">
           <div>
-            <p className="font-display text-xl"style={{ color:'var(--cc-cream)'}}>
+            <p className="font-display text-xl" style={{ color:'var(--cc-cream)'}}>
               Curb<span style={{ color:'var(--cc-accent-2)'}}>Chef</span>
             </p>
             <div className="flex items-center gap-1 mt-0.5">
-              <span className="text-xs"style={{ color:'var(--cc-ink-faint)'}}></span>
-              <span className="text-xs font-semibold"style={{ color:'var(--cc-ink-muted)'}}>Houston, TX</span>
-              <ChevronDown className="w-3 h-3"style={{ color:'var(--cc-ink-faint)'}} />
+              <span className="text-xs" style={{ color:'var(--cc-ink-faint)'}}></span>
+              <span className="text-xs font-semibold" style={{ color:'var(--cc-ink-muted)'}}>Houston, TX</span>
+              <ChevronDown className="w-3 h-3" style={{ color:'var(--cc-ink-faint)'}} />
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <button className="w-9 h-9 rounded-xl flex items-center justify-center relative"style={{ background:'var(--cc-surface)'}}>
-              <Bell className="w-4 h-4"style={{ color:'var(--cc-ink-muted)'}} />
-              <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full"style={{ background:'var(--cc-warm-red)'}} />
+            <button className="w-9 h-9 rounded-xl flex items-center justify-center relative" style={{ background:'var(--cc-surface)'}}>
+              <Bell className="w-4 h-4" style={{ color:'var(--cc-ink-muted)'}} />
+              <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full" style={{ background:'var(--cc-warm-red)'}} />
             </button>
-            <Link to="/search"className="w-9 h-9 rounded-xl flex items-center justify-center"style={{ background:'var(--cc-surface)'}}>
-              <Search className="w-4 h-4"style={{ color:'var(--cc-ink-muted)'}} />
+            <Link to="/search" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background:'var(--cc-surface)'}}>
+              <Search className="w-4 h-4" style={{ color:'var(--cc-ink-muted)'}} />
             </Link>
           </div>
         </div>
@@ -196,14 +196,14 @@ export default function Home() {
       {/* ── 2. AI SEARCH BAR ── */}
       <div className="px-4 mt-1">
         <form onSubmit={handleSearch}>
-          <div className="flex items-center gap-3 px-4 py-3.5 rounded-2xl"style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.06)'}}>
-            <Search className="w-4 h-4 flex-shrink-0"style={{ color:'var(--cc-ink-faint)'}} />
+          <div className="flex items-center gap-3 px-4 py-3.5 rounded-2xl" style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.06)'}}>
+            <Search className="w-4 h-4 flex-shrink-0" style={{ color:'var(--cc-ink-faint)'}} />
             <input
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              placeholder="What's Cookin', chef?"className="flex-1 bg-transparent text-sm outline-none"style={{ color:'var(--cc-cream)'}}
+              placeholder="What's Cookin', chef?" className="flex-1 bg-transparent text-sm outline-none" style={{ color:'var(--cc-cream)'}}
             />
-            <button type="button"><Mic className="w-4 h-4"style={{ color:'var(--cc-ink-faint)'}} /></button>
+            <button type="button"><Mic className="w-4 h-4" style={{ color:'var(--cc-ink-faint)'}} /></button>
           </div>
         </form>
       </div>
@@ -213,7 +213,7 @@ export default function Home() {
         {AI_CHIPS.map(chip => (
           <button key={chip.label}
             onClick={() => navigate(`/search?q=${encodeURIComponent(chip.label)}`)}
-            className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"style={{ background:'var(--cc-surface)', color:'var(--cc-ink-muted)', border:'1px solid rgba(255,255,255,0.06)', whiteSpace:'nowrap'}}>
+            className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold" style={{ background:'var(--cc-surface)', color:'var(--cc-ink-muted)', border:'1px solid rgba(255,255,255,0.06)', whiteSpace:'nowrap'}}>
             <span>{chip.emoji}</span> {chip.label}
           </button>
         ))}
@@ -226,13 +226,13 @@ export default function Home() {
 
       {/* ── EMPTY STATE fallback ── */}
       {noTrucksVisible && (
-        <div className="mx-4 mt-4 rounded-3xl p-8 text-center"style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.06)'}}>
+        <div className="mx-4 mt-4 rounded-3xl p-8 text-center" style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.06)'}}>
           <div className="text-5xl mb-4"></div>
-          <p className="font-display text-xl mb-2"style={{ color:'var(--cc-cream)'}}>
+          <p className="font-display text-xl mb-2" style={{ color:'var(--cc-cream)'}}>
             We're populating Houston's best food trucks.
           </p>
-          <p className="text-sm mb-6"style={{ color:'var(--cc-ink-muted)'}}>Check back hourly — new trucks are joining daily!</p>
-          <Link to="/onboard-truck"className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-display text-sm"style={{ background:'linear-gradient(135deg,var(--cc-accent-2),var(--cc-accent-3))', color:'var(--cc-black)'}}>
+          <p className="text-sm mb-6" style={{ color:'var(--cc-ink-muted)'}}>Check back hourly — new trucks are joining daily!</p>
+          <Link to="/onboard-truck" className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-display text-sm" style={{ background:'linear-gradient(135deg,var(--cc-accent-2),var(--cc-accent-3))', color:'var(--cc-black)'}}>
             Join the Waitlist →
           </Link>
         </div>
@@ -241,11 +241,11 @@ export default function Home() {
       {/* ── LIVE & FEATURED (moved up top for eye-popping motion) ── */}
       <div className="mt-5">
         <div className="flex items-center justify-between px-4 mb-3">
-          <h2 className="font-display text-lg flex items-center gap-2"style={{ color:'var(--cc-cream)'}}>
-            <span className="w-2 h-2 rounded-full inline-block live-dot"style={{ background:'var(--cc-warm-red)'}} />
+          <h2 className="font-display text-lg flex items-center gap-2" style={{ color:'var(--cc-cream)'}}>
+            <span className="w-2 h-2 rounded-full inline-block live-dot" style={{ background:'var(--cc-warm-red)'}} />
             Live & Featured
           </h2>
-          <Link to="/live"className="text-xs font-semibold"style={{ color:'var(--cc-accent-2)'}}>Watch all →</Link>
+          <Link to="/live" className="text-xs font-semibold" style={{ color:'var(--cc-accent-2)'}}>Watch all →</Link>
         </div>
         <LiveCarousel trucks={liveTrucks} />
       </div>
@@ -272,8 +272,8 @@ export default function Home() {
       {/* ── 6. CURB DROPS ── */}
       <div className="mt-8">
         <div className="flex items-center justify-between px-4 mb-3">
-          <h2 className="font-display text-lg"style={{ color:'var(--cc-cream)'}}> Curb Drops</h2>
-          <Link to="/deals"className="text-xs font-semibold tracking-widest uppercase"style={{ color:'var(--cc-ink-faint)'}}>Flash Deals</Link>
+          <h2 className="font-display text-lg" style={{ color:'var(--cc-cream)'}}> Curb Drops</h2>
+          <Link to="/deals" className="text-xs font-semibold tracking-widest uppercase" style={{ color:'var(--cc-ink-faint)'}}>Flash Deals</Link>
         </div>
         <DropsNearYou />
       </div>
@@ -284,11 +284,11 @@ export default function Home() {
       {/* ── 7. NEARBY NOW ── */}
       {nearbyTrucks.length > 0 && (
         <div className="mt-4">
-          <CarouselSection title="Nearby Now"emoji=""trucks={nearbyTrucks} seeAllHref="/explore"/>
+          <CarouselSection title="Nearby Now" emoji="" trucks={nearbyTrucks} seeAllHref="/explore"/>
         </div>
       )}
 
-      {/* ── COOKIN'SECTION (animated fire cards) ── */}
+      {/* ── COOKIN' SECTION (animated fire cards) ── */}
       <CookinSection />
 
       {/* ── AI ASSISTANT CARD ── */}

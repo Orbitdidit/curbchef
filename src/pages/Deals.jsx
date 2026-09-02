@@ -1,9 +1,9 @@
-import React, { useState } from'react';
-import { base44 } from'@/api/base44Client';
-import { useQuery } from'@tanstack/react-query';
-import { Link } from'react-router-dom';
-import { Zap, Clock, Tag, Star, ChevronRight } from'lucide-react';
-import CurbDropCard from'@/components/drops/CurbDropCard';
+import React, { useState } from 'react';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
+import { Zap, Clock, Tag, Star, ChevronRight } from 'lucide-react';
+import CurbDropCard from '@/components/drops/CurbDropCard';
 
 const FEATURED_DEALS = [
   {
@@ -74,16 +74,16 @@ export default function Deals() {
   const liveDrops = allDrops.filter(d => new Date(d.expires_at) > new Date());
 
   return (
-    <div className="min-h-screen pb-32"style={{ background:'var(--cc-bg-0)'}}>
+    <div className="min-h-screen pb-32" style={{ background:'var(--cc-bg-0)'}}>
       {/* Header */}
-      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-20"style={{ background:'rgba(13,21,23,0.95)', backdropFilter:'blur(20px)', borderBottom:'1px solid rgba(var(--cc-line-rgb),0.12)'}}>
+      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-20" style={{ background:'rgba(13,21,23,0.95)', backdropFilter:'blur(20px)', borderBottom:'1px solid rgba(var(--cc-line-rgb),0.12)'}}>
         <div className="flex items-center justify-between mb-1">
-          <h1 className="font-display text-xl"style={{ color:'var(--cc-ink)'}}>Deals</h1>
-          <span className="text-[10px] font-black px-3 py-1 rounded-full"style={{ background:'rgba(var(--cc-warm-rgb),0.15)', color:'var(--cc-warm)', border:'1px solid rgba(var(--cc-warm-rgb),0.3)'}}>
+          <h1 className="font-display text-xl" style={{ color:'var(--cc-ink)'}}>Deals</h1>
+          <span className="text-[10px] font-black px-3 py-1 rounded-full" style={{ background:'rgba(var(--cc-warm-rgb),0.15)', color:'var(--cc-warm)', border:'1px solid rgba(var(--cc-warm-rgb),0.3)'}}>
              {FEATURED_DEALS.length + LIMITED.length + (liveDrops?.length || 0)} ACTIVE
           </span>
         </div>
-        <p className="text-xs"style={{ color:'var(--cc-ink-dim)'}}>Exclusive drops for CurbChef fans</p>
+        <p className="text-xs" style={{ color:'var(--cc-ink-dim)'}}>Exclusive drops for CurbChef fans</p>
       </div>
 
       {/*  Live Curb Drops section */}
@@ -92,13 +92,13 @@ export default function Deals() {
           <div className="flex items-center justify-between px-5 mb-3">
             <div className="flex items-center gap-2">
               <span className="text-base"></span>
-              <h2 className="font-display text-base"style={{ color:'var(--cc-ink)'}}>Live Curb Drops</h2>
-              <span className="text-[10px] font-black px-2 py-0.5 rounded-full"style={{ background:'rgba(var(--cc-warm-rgb),0.15)', color:'var(--cc-warm)', border:'1px solid rgba(var(--cc-warm-rgb),0.3)'}}>
+              <h2 className="font-display text-base" style={{ color:'var(--cc-ink)'}}>Live Curb Drops</h2>
+              <span className="text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background:'rgba(var(--cc-warm-rgb),0.15)', color:'var(--cc-warm)', border:'1px solid rgba(var(--cc-warm-rgb),0.3)'}}>
                 {liveDrops.length} LIVE
               </span>
             </div>
           </div>
-          <div className="flex gap-3 overflow-x-auto no-scrollbar"style={{ paddingLeft:'20px', paddingRight:'20px'}}>
+          <div className="flex gap-3 overflow-x-auto no-scrollbar" style={{ paddingLeft:'20px', paddingRight:'20px'}}>
             {liveDrops.map(drop => (
               <CurbDropCard key={drop.id} drop={drop} />
             ))}
@@ -116,7 +116,7 @@ export default function Deals() {
             { id:'limited', label:'⏰ Limited Time'},
           ].map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
-              className="px-4 py-2 rounded-full text-sm font-bold flex-shrink-0 transition-all"style={tab === t.id
+              className="px-4 py-2 rounded-full text-sm font-bold flex-shrink-0 transition-all" style={tab === t.id
                 ? { background:'linear-gradient(135deg,var(--cc-warm),var(--cc-warm-3))', color:'#fff', boxShadow:'0 0 14px rgba(var(--cc-warm-rgb),0.35)'}
                 : { background:'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.25)'}
               }>
@@ -129,17 +129,17 @@ export default function Deals() {
         {tab ==='featured'&& (
           <div className="flex flex-col gap-5">
             {FEATURED_DEALS.map(deal => (
-              <div key={deal.id} className="rounded-3xl overflow-hidden"style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-warm-rgb),0.15)'}}>
-                <div className="relative"style={{ height:'180px'}}>
+              <div key={deal.id} className="rounded-3xl overflow-hidden" style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-warm-rgb),0.15)'}}>
+                <div className="relative" style={{ height:'180px'}}>
                   <img src={deal.img} alt={deal.title} className="w-full h-full object-cover"/>
-                  <div className="absolute inset-0"style={{ background:'linear-gradient(180deg,rgba(13,21,23,0.1) 0%,rgba(13,21,23,0.9) 100%)'}} />
+                  <div className="absolute inset-0" style={{ background:'linear-gradient(180deg,rgba(13,21,23,0.1) 0%,rgba(13,21,23,0.9) 100%)'}} />
                   <div className="absolute top-3 left-3">
-                    <span className="text-[10px] font-black px-2.5 py-1 rounded-full"style={{ background: deal.badgeColor, color: deal.badgeText }}>
+                    <span className="text-[10px] font-black px-2.5 py-1 rounded-full" style={{ background: deal.badgeColor, color: deal.badgeText }}>
                       {deal.badge}
                     </span>
                   </div>
                   <div className="absolute top-3 right-3">
-                    <span className="font-display text-xl px-3 py-1.5 rounded-xl"style={{ background:'rgba(13,21,23,0.8)', color:'var(--cc-warm)', backdropFilter:'blur(8px)'}}>
+                    <span className="font-display text-xl px-3 py-1.5 rounded-xl" style={{ background:'rgba(13,21,23,0.8)', color:'var(--cc-warm)', backdropFilter:'blur(8px)'}}>
                       {deal.discount}
                     </span>
                   </div>
@@ -150,14 +150,14 @@ export default function Deals() {
                 </div>
                 <div className="p-4 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4"style={{ color:'var(--cc-warm)'}} />
-                    <span className="text-xs font-bold"style={{ color:'var(--cc-ink-dim)'}}>{deal.expiry}</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full font-bold"style={{ background:'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.3)'}}>
+                    <Clock className="w-4 h-4" style={{ color:'var(--cc-warm)'}} />
+                    <span className="text-xs font-bold" style={{ color:'var(--cc-ink-dim)'}}>{deal.expiry}</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full font-bold" style={{ background:'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.3)'}}>
                       Code: {deal.code}
                     </span>
                   </div>
                   <Link to="/">
-                    <button className="px-4 py-2 rounded-full font-display text-xs transition-all active:scale-95"style={{ background:'linear-gradient(135deg,var(--cc-warm),var(--cc-warm-3))', color:'#fff', boxShadow:'0 0 12px rgba(var(--cc-warm-rgb),0.3)'}}>
+                    <button className="px-4 py-2 rounded-full font-display text-xs transition-all active:scale-95" style={{ background:'linear-gradient(135deg,var(--cc-warm),var(--cc-warm-3))', color:'#fff', boxShadow:'0 0 12px rgba(var(--cc-warm-rgb),0.3)'}}>
                       Claim →
                     </button>
                   </Link>
@@ -168,21 +168,21 @@ export default function Deals() {
             {/* Deals from real trucks */}
             {trucks.length > 0 && (
               <div className="mt-2">
-                <p className="text-[10px] font-bold tracking-widest mb-3"style={{ color:'var(--cc-accent)'}}>DEALS FROM NEARBY TRUCKS</p>
+                <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color:'var(--cc-accent)'}}>DEALS FROM NEARBY TRUCKS</p>
                 <div className="flex flex-col gap-3">
                   {trucks.slice(0, 4).map(truck => (
                     <Link key={truck.id} to={`/truck/${truck.id}`}>
-                      <div className="flex items-center gap-3 p-3.5 rounded-2xl"style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.15)'}}>
+                      <div className="flex items-center gap-3 p-3.5 rounded-2xl" style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.15)'}}>
                         <img src={truck.image_url ||'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=200'}
                           alt={truck.name} className="w-14 h-14 rounded-xl object-cover flex-shrink-0"/>
                         <div className="flex-1 min-w-0">
-                          <p className="font-heading font-bold text-sm truncate"style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
-                          <p className="text-xs capitalize mt-0.5"style={{ color:'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')} · Special today</p>
-                          <span className="text-[9px] font-black px-2 py-0.5 rounded-full mt-1 inline-block"style={{ background:'rgba(var(--cc-accent-rgb),0.12)', color:'var(--cc-accent)'}}>
+                          <p className="font-heading font-bold text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
+                          <p className="text-xs capitalize mt-0.5" style={{ color:'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')} · Special today</p>
+                          <span className="text-[9px] font-black px-2 py-0.5 rounded-full mt-1 inline-block" style={{ background:'rgba(var(--cc-accent-rgb),0.12)', color:'var(--cc-accent)'}}>
                             VIEW MENU
                           </span>
                         </div>
-                        <ChevronRight className="w-4 h-4 flex-shrink-0"style={{ color:'var(--cc-ink-dim)'}} />
+                        <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color:'var(--cc-ink-dim)'}} />
                       </div>
                     </Link>
                   ))}
@@ -195,21 +195,21 @@ export default function Deals() {
         {/* UNDER $10 TAB */}
         {tab ==='under10'&& (
           <div>
-            <p className="text-xs mb-4"style={{ color:'var(--cc-ink-dim)'}}>Great food that won't break the bank </p>
+            <p className="text-xs mb-4" style={{ color:'var(--cc-ink-dim)'}}>Great food that won't break the bank </p>
             <div className="grid grid-cols-2 gap-3">
               {UNDER_10.map(item => (
-                <div key={item.id} className="rounded-2xl overflow-hidden"style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.15)'}}>
-                  <div className="relative"style={{ height:'120px'}}>
+                <div key={item.id} className="rounded-2xl overflow-hidden" style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.15)'}}>
+                  <div className="relative" style={{ height:'120px'}}>
                     <img src={item.img} alt={item.name} className="w-full h-full object-cover"/>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"/>
                     <div className="absolute bottom-2 left-2">
-                      <span className="font-display text-base"style={{ color:'var(--cc-accent)'}}>{item.price}</span>
+                      <span className="font-display text-base" style={{ color:'var(--cc-accent)'}}>{item.price}</span>
                     </div>
                   </div>
                   <div className="p-3">
-                    <p className="font-heading font-bold text-sm leading-tight"style={{ color:'var(--cc-ink)'}}>{item.name}</p>
-                    <p className="text-xs mt-0.5"style={{ color:'var(--cc-ink-dim)'}}>{item.truck}</p>
-                    <button className="mt-2 w-full py-2 rounded-full text-xs font-bold"style={{ background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)'}}>
+                    <p className="font-heading font-bold text-sm leading-tight" style={{ color:'var(--cc-ink)'}}>{item.name}</p>
+                    <p className="text-xs mt-0.5" style={{ color:'var(--cc-ink-dim)'}}>{item.truck}</p>
+                    <button className="mt-2 w-full py-2 rounded-full text-xs font-bold" style={{ background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)'}}>
                       Add to Cart
                     </button>
                   </div>
@@ -222,13 +222,13 @@ export default function Deals() {
         {/* LIMITED TIME TAB */}
         {tab ==='limited'&& (
           <div className="flex flex-col gap-4">
-            <p className="text-xs"style={{ color:'var(--cc-ink-dim)'}}>These deals disappear fast. Tap in now </p>
+            <p className="text-xs" style={{ color:'var(--cc-ink-dim)'}}>These deals disappear fast. Tap in now </p>
             {LIMITED.map(deal => (
-              <div key={deal.id} className="rounded-3xl overflow-hidden"style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-warm-rgb),0.2)'}}>
-                <div className="relative"style={{ height:'160px'}}>
+              <div key={deal.id} className="rounded-3xl overflow-hidden" style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-warm-rgb),0.2)'}}>
+                <div className="relative" style={{ height:'160px'}}>
                   <img src={deal.img} alt={deal.title} className="w-full h-full object-cover"/>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 to-transparent"/>
-                  <div className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full"style={{ background:'rgba(var(--cc-warm-rgb),0.9)', backdropFilter:'blur(8px)'}}>
+                  <div className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full" style={{ background:'rgba(var(--cc-warm-rgb),0.9)', backdropFilter:'blur(8px)'}}>
                     <Clock className="w-3 h-3 text-white"/>
                     <span className="text-[10px] font-black text-white">{deal.timeLeft}</span>
                   </div>
@@ -238,12 +238,12 @@ export default function Deals() {
                         <p className="font-display text-lg text-white leading-tight">{deal.title}</p>
                         <p className="text-white/60 text-xs">{deal.truck}</p>
                       </div>
-                      <span className="font-display text-xl"style={{ color:'var(--cc-warm)'}}>{deal.discount}</span>
+                      <span className="font-display text-xl" style={{ color:'var(--cc-warm)'}}>{deal.discount}</span>
                     </div>
                   </div>
                 </div>
                 <div className="px-4 pb-4 pt-3">
-                  <button className="w-full py-3 rounded-full font-display text-sm transition-all active:scale-95"style={{ background:'linear-gradient(135deg,var(--cc-warm),var(--cc-warm-3))', color:'#fff', boxShadow:'0 0 16px rgba(var(--cc-warm-rgb),0.35)'}}>
+                  <button className="w-full py-3 rounded-full font-display text-sm transition-all active:scale-95" style={{ background:'linear-gradient(135deg,var(--cc-warm),var(--cc-warm-3))', color:'#fff', boxShadow:'0 0 16px rgba(var(--cc-warm-rgb),0.35)'}}>
                     <Zap className="w-4 h-4 inline mr-1.5"/>
                     Grab This Deal
                   </button>

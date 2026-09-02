@@ -1,5 +1,5 @@
-import React from'react';
-import { Link } from'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const PROMOS = [
   {
@@ -43,7 +43,7 @@ export default function PromoCard({ variant = 0 }) {
     <div className="px-5">
       <Link to={p.href}>
         <div
-          className="rounded-2xl flex items-center gap-4 px-4 py-4"style={{
+          className="rounded-2xl flex items-center gap-4 px-4 py-4" style={{
             background: p.grad,
             border: p.border,
             boxShadow: p.glow,
@@ -55,21 +55,21 @@ export default function PromoCard({ variant = 0 }) {
         >
           {/* Icon */}
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0"style={{ background:'rgba(255,255,255,0.05)', border: p.border }}
+            className="w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0" style={{ background:'rgba(255,255,255,0.05)', border: p.border }}
           >
             {p.icon}
           </div>
 
           {/* Text */}
           <div className="flex-1 min-w-0">
-            <p className="text-[9px] font-black tracking-widest mb-0.5"style={{ color: p.tagColor }}>{p.tag}</p>
-            <p className="font-display text-sm leading-snug"style={{ color:'var(--cc-ink)'}}>{p.headline}</p>
-            <p className="text-[11px] mt-0.5"style={{ color:'rgba(186,203,192,0.65)'}}>{p.sub}</p>
+            <p className="text-[9px] font-black tracking-widest mb-0.5" style={{ color: p.tagColor }}>{p.tag}</p>
+            <p className="font-display text-sm leading-snug" style={{ color:'var(--cc-ink)'}}>{p.headline}</p>
+            <p className="text-[11px] mt-0.5" style={{ color:'rgba(186,203,192,0.65)'}}>{p.sub}</p>
           </div>
 
           {/* CTA */}
           <div
-            className="px-3 py-1.5 rounded-full text-[11px] font-black flex-shrink-0 whitespace-nowrap"style={{ background: p.ctaBg, color: p.ctaColor, border: p.ctaBorder }}
+            className="px-3 py-1.5 rounded-full text-[11px] font-black flex-shrink-0 whitespace-nowrap" style={{ background: p.ctaBg, color: p.ctaColor, border: p.ctaBorder }}
           >
             {p.cta} →
           </div>

@@ -1,10 +1,10 @@
-import React, { useState, useMemo } from'react';
-import { base44 } from'@/api/base44Client';
-import { useQuery } from'@tanstack/react-query';
-import { useNavigate } from'react-router-dom';
-import { ChevronLeft, Search as SearchIcon } from'lucide-react';
-import { Input } from'@/components/ui/input';
-import TruckCard from'../components/home/TruckCard';
+import React, { useState, useMemo } from 'react';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, Search as SearchIcon } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import TruckCard from '../components/home/TruckCard';
 
 export default function Search() {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ export default function Search() {
           <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground"/>
           <Input
             autoFocus
-            placeholder="Search trucks, cuisines..."value={query}
+            placeholder="Search trucks, cuisines..." value={query}
             onChange={e => setQuery(e.target.value)}
             className="pl-10 bg-secondary border-0 rounded-xl h-10"/>
         </div>

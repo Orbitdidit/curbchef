@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from'react';
-import { Link } from'react-router-dom';
-import { base44 } from'@/api/base44Client';
-import { useQuery } from'@tanstack/react-query';
+import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 
 /**
  * Determines the content label based on clip source:
@@ -10,7 +10,7 @@ import { useQuery } from'@tanstack/react-query';
 function ClipBadge({ clip, isTruckCard }) {
   if (!isTruckCard && clip.is_live) {
     return (
-      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"style={{ background:'rgba(var(--cc-warm-red-rgb),0.9)', backdropFilter:'blur(8px)'}}>
+      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full" style={{ background:'rgba(var(--cc-warm-red-rgb),0.9)', backdropFilter:'blur(8px)'}}>
         <span className="w-2 h-2 rounded-full bg-white animate-pulse"/>
         <span className="text-white text-[11px] font-bold font-mono tracking-widest">LIVE FEED</span>
       </div>
@@ -18,13 +18,13 @@ function ClipBadge({ clip, isTruckCard }) {
   }
   if (isTruckCard) {
     return (
-      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"style={{ background:'rgba(var(--cc-warm-rgb),0.85)', backdropFilter:'blur(8px)'}}>
+      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full" style={{ background:'rgba(var(--cc-warm-rgb),0.85)', backdropFilter:'blur(8px)'}}>
         <span className="text-white text-[11px] font-black tracking-widest"> COOKING NOW</span>
       </div>
     );
   }
   return (
-    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"style={{ background:'rgba(13,21,23,0.75)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,0.15)'}}>
+    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full" style={{ background:'rgba(13,21,23,0.75)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,0.15)'}}>
       <span className="text-white text-[11px] font-black tracking-widest"> FEATURED CLIP</span>
     </div>
   );
@@ -66,7 +66,7 @@ function LiveCard({ clip, isActive, isTruckCard }) {
   }, [isActive]);
 
   return (
-    <Link to="/live"className="block relative overflow-hidden flex-shrink-0 rounded-3xl"style={{ width:'100%', aspectRatio:'16/9'}}>
+    <Link to="/live" className="block relative overflow-hidden flex-shrink-0 rounded-3xl" style={{ width:'100%', aspectRatio:'16/9'}}>
       {clip.video_url ? (
         <video
           ref={videoRef}
@@ -82,7 +82,7 @@ function LiveCard({ clip, isActive, isTruckCard }) {
       )}
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0"style={{ background:'linear-gradient(180deg, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0) 35%, rgba(10,10,10,0.92) 100%)'}} />
+      <div className="absolute inset-0" style={{ background:'linear-gradient(180deg, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0) 35%, rgba(10,10,10,0.92) 100%)'}} />
 
       {/* Badge top-left */}
       <div className="absolute top-4 left-4">
@@ -91,7 +91,7 @@ function LiveCard({ clip, isActive, isTruckCard }) {
 
       {/*"Tap to watch"entice pill — bottom right */}
       <div className="absolute top-4 right-4">
-        <div className="flex items-center gap-1 px-2.5 py-1 rounded-full"style={{ background:'rgba(0,0,0,0.5)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,0.15)'}}>
+        <div className="flex items-center gap-1 px-2.5 py-1 rounded-full" style={{ background:'rgba(0,0,0,0.5)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,0.15)'}}>
           <span className="text-[10px] font-black text-white tracking-wide">TAP FOR FULL</span>
           <span className="text-[10px]">▶</span>
         </div>
@@ -99,7 +99,7 @@ function LiveCard({ clip, isActive, isTruckCard }) {
 
       {/* Bottom info */}
       <div className="absolute bottom-0 left-0 right-0 p-5">
-        <p className="font-display text-xl text-white leading-tight mb-1"style={{ textShadow:'0 2px 10px rgba(0,0,0,0.8)'}}>
+        <p className="font-display text-xl text-white leading-tight mb-1" style={{ textShadow:'0 2px 10px rgba(0,0,0,0.8)'}}>
           {clip.truck_name || clip.name ||'Live Truck'}
         </p>
         <p className="text-white/70 text-sm font-medium">
@@ -109,9 +109,9 @@ function LiveCard({ clip, isActive, isTruckCard }) {
 
       {/* Subtle progress bar — resets every PREVIEW_DURATION secs */}
       {isActive && clip.video_url && (
-        <div className="absolute bottom-0 left-0 right-0 h-0.5"style={{ background:'rgba(255,255,255,0.12)'}}>
+        <div className="absolute bottom-0 left-0 right-0 h-0.5" style={{ background:'rgba(255,255,255,0.12)'}}>
           <div
-            className="h-full rounded-full"style={{
+            className="h-full rounded-full" style={{
               background:'var(--cc-accent-2)',
               animation: `livePreviewProgress ${PREVIEW_DURATION}s linear infinite`,
             }}
@@ -150,14 +150,14 @@ export default function LiveCarousel({ trucks = [] }) {
     <div>
       {/* Horizontal card carousel */}
       <div ref={scrollRef}
-        className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory"style={{ paddingLeft:'20px', paddingRight:'20px', scrollPaddingLeft:'20px'}}
+        className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory" style={{ paddingLeft:'20px', paddingRight:'20px', scrollPaddingLeft:'20px'}}
         onScroll={e => {
           const el = e.currentTarget;
           const i = Math.round(el.scrollLeft / (el.offsetWidth + 12));
           if (i !== active) setActive(i);
         }}>
         {clips.map((clip, i) => (
-          <div key={clip.id} className="flex-shrink-0 snap-center"style={{ width: clips.length === 1 ?'calc(100%)':'calc(100% - 48px)'}}>
+          <div key={clip.id} className="flex-shrink-0 snap-center" style={{ width: clips.length === 1 ?'calc(100%)':'calc(100% - 48px)'}}>
             <LiveCard clip={clip} isActive={i === active} isTruckCard={clip._isTruckCard} />
           </div>
         ))}
@@ -168,7 +168,7 @@ export default function LiveCarousel({ trucks = [] }) {
         <div className="flex items-center justify-center gap-1.5 mt-3">
           {clips.map((_, i) => (
             <button key={i} onClick={() => goTo(i)}
-              className="rounded-full transition-all duration-300"style={{
+              className="rounded-full transition-all duration-300" style={{
                 width: i === active ? 20 : 6,
                 height: 6,
                 background: i === active ?'var(--cc-accent-2)':'rgba(255,255,255,0.15)',

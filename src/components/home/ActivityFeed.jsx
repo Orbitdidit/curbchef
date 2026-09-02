@@ -1,6 +1,6 @@
-import React from'react';
-import { Link } from'react-router-dom';
-import { Flame, Star, UserPlus, ShoppingBag } from'lucide-react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Flame, Star, UserPlus, ShoppingBag } from 'lucide-react';
 
 // Generates a contextual activity feed from real app data
 export default function ActivityFeed({ trucks, orders = [] }) {
@@ -53,21 +53,21 @@ export default function ActivityFeed({ trucks, orders = [] }) {
 
   return (
     <div className="px-5 mt-6">
-      <p className="text-[10px] font-black tracking-widest mb-3"style={{ color:'rgba(186,203,192,0.5)'}}>WHAT'S HAPPENING</p>
-      <div className="flex flex-col gap-0 rounded-2xl overflow-hidden"style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.2)'}}>
+      <p className="text-[10px] font-black tracking-widest mb-3" style={{ color:'rgba(186,203,192,0.5)'}}>WHAT'S HAPPENING</p>
+      <div className="flex flex-col gap-0 rounded-2xl overflow-hidden" style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.2)'}}>
         {events.slice(0, 4).map((ev, i) => {
           const Icon = ev.icon;
           return (
             <Link key={ev.id} to={ev.href}>
-              <div className="flex items-center gap-3 px-4 py-3.5 transition-colors active:bg-white/5"style={{ borderBottom: i < events.slice(0, 4).length - 1 ?'1px solid rgba(var(--cc-line-rgb),0.12)':'none'}}>
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"style={{ background: ev.iconBg }}>
-                  <Icon className="w-4 h-4"style={{ color: ev.iconColor }} />
+              <div className="flex items-center gap-3 px-4 py-3.5 transition-colors active:bg-white/5" style={{ borderBottom: i < events.slice(0, 4).length - 1 ?'1px solid rgba(var(--cc-line-rgb),0.12)':'none'}}>
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: ev.iconBg }}>
+                  <Icon className="w-4 h-4" style={{ color: ev.iconColor }} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm leading-snug"style={{ color:'var(--cc-ink-dim)'}}>{ev.text}</p>
-                  <p className="text-xs mt-0.5 truncate"style={{ color:'rgba(186,203,192,0.5)'}}>{ev.sub}</p>
+                  <p className="text-sm leading-snug" style={{ color:'var(--cc-ink-dim)'}}>{ev.text}</p>
+                  <p className="text-xs mt-0.5 truncate" style={{ color:'rgba(186,203,192,0.5)'}}>{ev.sub}</p>
                 </div>
-                <span className="text-[10px] font-bold flex-shrink-0"style={{ color:'rgba(186,203,192,0.35)'}}>{ev.time}</span>
+                <span className="text-[10px] font-bold flex-shrink-0" style={{ color:'rgba(186,203,192,0.35)'}}>{ev.time}</span>
               </div>
             </Link>
           );

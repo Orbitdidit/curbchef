@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from'react';
-import { Link } from'react-router-dom';
-import { MapPin, Play } from'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { MapPin, Play } from 'lucide-react';
 
 // Ember particle — pure CSS, no canvas, ultra-lightweight
 function EmberParticle({ style }) {
   return (
     <div
-      className="absolute rounded-full pointer-events-none"style={{
+      className="absolute rounded-full pointer-events-none" style={{
         width: Math.random() * 4 + 2 +'px',
         height: Math.random() * 4 + 2 +'px',
         background: `rgba(${Math.random() > 0.5 ?'253,89,30':'255,180,60'},${Math.random() * 0.5 + 0.2})`,
@@ -41,7 +41,7 @@ const CARDS = [
   },
   {
     id:'chefs',
-    headline:"CHEFS\nCOOKIN'UP",
+    headline:"CHEFS\nCOOKIN' UP",
     sub:'Fresh drops all day. Don\'t sleep.',
     cta1: { label:'See What\'s Hot', to:'/'},
     cta2: null,
@@ -80,9 +80,9 @@ export default function CookinSection() {
       {/* Section header */}
       <div className="flex items-center gap-2 mb-3">
         <span className="text-base"></span>
-        <h2 className="font-display text-base"style={{ color:'var(--cc-ink)'}}>Cookin'on CurbChef</h2>
+        <h2 className="font-display text-base" style={{ color:'var(--cc-ink)'}}>Cookin'on CurbChef</h2>
         <span
-          className="text-[10px] font-black px-2 py-0.5 rounded-full ml-auto"style={{ background:'rgba(var(--cc-warm-rgb),0.15)', color:'var(--cc-warm)', border:'1px solid rgba(var(--cc-warm-rgb),0.3)'}}
+          className="text-[10px] font-black px-2 py-0.5 rounded-full ml-auto" style={{ background:'rgba(var(--cc-warm-rgb),0.15)', color:'var(--cc-warm)', border:'1px solid rgba(var(--cc-warm-rgb),0.3)'}}
         >
           LIVE CULTURE
         </span>
@@ -90,7 +90,7 @@ export default function CookinSection() {
 
       {/* Main card */}
       <div
-        className="relative rounded-3xl overflow-hidden"style={{
+        className="relative rounded-3xl overflow-hidden" style={{
           minHeight:'220px',
           background: `${card.bg}, var(--cc-bg-0)`,
           border:'1px solid rgba(var(--cc-warm-rgb),0.2)',
@@ -102,7 +102,7 @@ export default function CookinSection() {
           {EMBERS.map(e => (
             <div
               key={e.id}
-              className="absolute rounded-full"style={{
+              className="absolute rounded-full" style={{
                 left: e.left,
                 bottom:'-8px',
                 width: e.size +'px',
@@ -117,33 +117,33 @@ export default function CookinSection() {
 
         {/* Grill mark texture overlay */}
         <div
-          className="absolute inset-0 pointer-events-none"style={{
+          className="absolute inset-0 pointer-events-none" style={{
             backgroundImage:'repeating-linear-gradient(0deg, rgba(var(--cc-warm-rgb),0.03) 0px, rgba(var(--cc-warm-rgb),0.03) 2px, transparent 2px, transparent 28px)',
           }}
         />
 
         {/* Heat distortion shimmer */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none"style={{
+          className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none" style={{
             background:'linear-gradient(0deg, rgba(var(--cc-warm-rgb),0.08) 0%, transparent 100%)',
             animation:'shimmerPulse 2.5s ease-in-out infinite',
           }}
         />
 
         {/* Content */}
-        <div className="relative z-10 p-6 flex flex-col justify-between"style={{ minHeight:'220px'}}>
+        <div className="relative z-10 p-6 flex flex-col justify-between" style={{ minHeight:'220px'}}>
           <div className="text-4xl">{card.emoji}</div>
           <div className="mt-auto">
             <h3
-              className="font-display leading-tight mb-2 whitespace-pre-line"style={{ color:'#ffffff', fontSize:'clamp(1.5rem,6vw,2rem)', textShadow:'0 2px 20px rgba(var(--cc-warm-rgb),0.3)'}}
+              className="font-display leading-tight mb-2 whitespace-pre-line" style={{ color:'#ffffff', fontSize:'clamp(1.5rem,6vw,2rem)', textShadow:'0 2px 20px rgba(var(--cc-warm-rgb),0.3)'}}
             >
               {card.headline}
             </h3>
-            <p className="text-sm mb-4"style={{ color:'rgba(255,255,255,0.65)'}}>{card.sub}</p>
+            <p className="text-sm mb-4" style={{ color:'rgba(255,255,255,0.65)'}}>{card.sub}</p>
             <div className="flex gap-3">
               <Link to={card.cta1.to}>
                 <button
-                  className="px-5 py-2.5 rounded-full font-display text-sm transition-all active:scale-95"style={{
+                  className="px-5 py-2.5 rounded-full font-display text-sm transition-all active:scale-95" style={{
                     background:'linear-gradient(135deg, var(--cc-warm), var(--cc-warm-3))',
                     color:'#fff',
                     boxShadow:'0 0 18px rgba(var(--cc-warm-rgb),0.45)',
@@ -155,7 +155,7 @@ export default function CookinSection() {
               {card.cta2 && (
                 <Link to={card.cta2.to}>
                   <button
-                    className="px-5 py-2.5 rounded-full font-display text-sm transition-all active:scale-95"style={{
+                    className="px-5 py-2.5 rounded-full font-display text-sm transition-all active:scale-95" style={{
                       background:'rgba(255,255,255,0.1)',
                       color:'#fff',
                       border:'1px solid rgba(255,255,255,0.2)',
@@ -176,7 +176,7 @@ export default function CookinSection() {
             <button
               key={i}
               onClick={() => { setActive(i); clearInterval(timerRef.current); }}
-              className="rounded-full transition-all"style={{
+              className="rounded-full transition-all" style={{
                 width: i === active ?'20px':'6px',
                 height:'6px',
                 background: i === active ?'var(--cc-warm)':'rgba(255,255,255,0.3)',

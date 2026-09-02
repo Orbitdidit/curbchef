@@ -1,11 +1,11 @@
-import React, { useCallback } from'react';
-import { base44 } from'@/api/base44Client';
-import { useQuery, useQueryClient } from'@tanstack/react-query';
-import { Link } from'react-router-dom';
-import { Package, ChefHat, CheckCircle, QrCode, ChevronRight, Star } from'lucide-react';
-import { usePullToRefresh } from'@/hooks/usePullToRefresh';
-import PullIndicator from'@/components/layout/PullIndicator';
-import AssistantNudge from'@/components/assistant/AssistantNudge';
+import React, { useCallback } from 'react';
+import { base44 } from '@/api/base44Client';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
+import { Package, ChefHat, CheckCircle, QrCode, ChevronRight, Star } from 'lucide-react';
+import { usePullToRefresh } from '@/hooks/usePullToRefresh';
+import PullIndicator from '@/components/layout/PullIndicator';
+import AssistantNudge from '@/components/assistant/AssistantNudge';
 
 const statusConfig = {
   placed: { icon: Package, label:'Order Placed', color:'text-chart-4', step: 1 },
@@ -41,28 +41,28 @@ export default function Orders() {
   const pastOrders = orders.filter(o => ['picked_up','cancelled'].includes(o.status));
 
   return (
-    <div className="min-h-screen pb-32"style={{ background:'var(--cc-bg-0)'}}>
+    <div className="min-h-screen pb-32" style={{ background:'var(--cc-bg-0)'}}>
       <PullIndicator pullDist={pullDist} refreshing={refreshing} />
 
       {/* Header */}
-      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-10"style={{ background:'rgba(13,21,23,0.93)', backdropFilter:'blur(20px)', borderBottom:'1px solid rgba(var(--cc-line-rgb),0.12)'}}>
-        <h1 className="font-display text-xl"style={{ color:'var(--cc-ink)'}}>Orders</h1>
+      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-10" style={{ background:'rgba(13,21,23,0.93)', backdropFilter:'blur(20px)', borderBottom:'1px solid rgba(var(--cc-line-rgb),0.12)'}}>
+        <h1 className="font-display text-xl" style={{ color:'var(--cc-ink)'}}>Orders</h1>
       </div>
 
       <div className="px-5 pt-5">
       {isLoading ? (
         <div className="flex items-center justify-center h-40">
-          <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin"style={{ borderColor:'var(--cc-accent) transparent transparent transparent'}} />
+          <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor:'var(--cc-accent) transparent transparent transparent'}} />
         </div>
       ) : orders.length === 0 ? (
         <div>
           {/* Empty hero */}
           <div className="text-center py-10">
             <div className="text-5xl mb-3"></div>
-            <h2 className="font-display text-xl mb-1"style={{ color:'var(--cc-ink)'}}>No orders yet</h2>
-            <p className="text-sm mb-5"style={{ color:'var(--cc-ink-dim)'}}>Find a truck and start your first order</p>
+            <h2 className="font-display text-xl mb-1" style={{ color:'var(--cc-ink)'}}>No orders yet</h2>
+            <p className="text-sm mb-5" style={{ color:'var(--cc-ink-dim)'}}>Find a truck and start your first order</p>
             <Link to="/">
-              <button className="px-8 py-3.5 rounded-full font-display text-sm"style={{ background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 20px rgba(var(--cc-accent-rgb),0.3)'}}>
+              <button className="px-8 py-3.5 rounded-full font-display text-sm" style={{ background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 20px rgba(var(--cc-accent-rgb),0.3)'}}>
                 Browse Trucks Near You
               </button>
             </Link>
@@ -74,24 +74,24 @@ export default function Orders() {
           {/* Nearby truck suggestions */}
           {nearbyTrucks.length > 0 && (
             <div className="mt-4">
-              <p className="text-[10px] font-bold tracking-widest mb-3"style={{ color:'var(--cc-accent)'}}>TRUCKS NEAR YOU</p>
+              <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color:'var(--cc-accent)'}}>TRUCKS NEAR YOU</p>
               <div className="flex flex-col gap-3">
                 {nearbyTrucks.map(truck => (
                   <Link key={truck.id} to={`/truck/${truck.id}`}>
-                    <div className="flex items-center gap-3 p-3 rounded-2xl"style={{ background:'var(--cc-bg-2)'}}>
+                    <div className="flex items-center gap-3 p-3 rounded-2xl" style={{ background:'var(--cc-bg-2)'}}>
                       <img src={truck.image_url ||'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=200'}
                         alt={truck.name} className="w-14 h-14 rounded-xl object-cover flex-shrink-0"/>
                       <div className="flex-1 min-w-0">
-                        <p className="font-heading font-bold text-sm truncate"style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
-                        <p className="text-xs capitalize"style={{ color:'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')} • 15–20 min</p>
+                        <p className="font-heading font-bold text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
+                        <p className="text-xs capitalize" style={{ color:'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')} • 15–20 min</p>
                         <div className="flex items-center gap-1 mt-0.5">
                           <Star className="w-3 h-3 fill-yellow-400 text-yellow-400"/>
-                          <span className="text-xs font-bold"style={{ color:'var(--cc-ink)'}}>{truck.rating?.toFixed(1) ||'4.8'}</span>
-                          {truck.status ==='open'&& <span className="ml-1 text-[10px] font-bold"style={{ color:'var(--cc-accent)'}}>● OPEN</span>}
+                          <span className="text-xs font-bold" style={{ color:'var(--cc-ink)'}}>{truck.rating?.toFixed(1) ||'4.8'}</span>
+                          {truck.status ==='open'&& <span className="ml-1 text-[10px] font-bold" style={{ color:'var(--cc-accent)'}}>● OPEN</span>}
                         </div>
                       </div>
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"style={{ background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))'}}>
-                        <ChevronRight className="w-4 h-4"style={{ color:'var(--cc-accent-deep)'}} />
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))'}}>
+                        <ChevronRight className="w-4 h-4" style={{ color:'var(--cc-accent-deep)'}} />
                       </div>
                     </div>
                   </Link>
@@ -104,7 +104,7 @@ export default function Orders() {
         <>
           {activeOrders.length > 0 && (
             <div className="mb-6">
-              <h2 className="font-heading font-bold text-xs tracking-widest mb-3"style={{ color:'var(--cc-accent)'}}>ACTIVE ORDERS</h2>
+              <h2 className="font-heading font-bold text-xs tracking-widest mb-3" style={{ color:'var(--cc-accent)'}}>ACTIVE ORDERS</h2>
               <div className="space-y-3">
                 {activeOrders.map(order => {
                   const config = statusConfig[order.status];
@@ -148,7 +148,7 @@ export default function Orders() {
 
           {pastOrders.length > 0 && (
             <div>
-              <h2 className="font-heading font-bold text-xs tracking-widest mb-3 mt-6"style={{ color:'var(--cc-ink-dim)'}}>PAST ORDERS</h2>
+              <h2 className="font-heading font-bold text-xs tracking-widest mb-3 mt-6" style={{ color:'var(--cc-ink-dim)'}}>PAST ORDERS</h2>
               <div className="space-y-2">
                 {pastOrders.map(order => (
                   <div key={order.id} className="bg-secondary/50 rounded-2xl p-3.5 flex items-center justify-between">

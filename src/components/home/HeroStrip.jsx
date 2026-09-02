@@ -1,4 +1,4 @@
-import React from'react';
+import React from 'react';
 
 export default function HeroStrip({ liveTrucks, openTrucks, trucks }) {
   const stats = [
@@ -13,15 +13,15 @@ export default function HeroStrip({ liveTrucks, openTrucks, trucks }) {
         {stats.map((s, i) => (
           <div
             key={i}
-            className="flex-1 rounded-2xl p-3 flex flex-col items-center text-center"style={{
+            className="flex-1 rounded-2xl p-3 flex flex-col items-center text-center" style={{
               background:'var(--cc-bg-2)',
               border: `1px solid ${s.glow}`,
               boxShadow: `0 0 16px ${s.glow}`,
             }}
           >
             <span className="text-xl mb-1">{s.emoji}</span>
-            <p className="font-display text-sm leading-tight"style={{ color: s.color }}>{s.label}</p>
-            <p className="text-[10px] font-medium mt-0.5"style={{ color:'var(--cc-ink-dim)'}}>{s.sub}</p>
+            <p className="font-display text-sm leading-tight" style={{ color: s.color }}>{s.label}</p>
+            <p className="text-[10px] font-medium mt-0.5" style={{ color:'var(--cc-ink-dim)'}}>{s.sub}</p>
           </div>
         ))}
       </div>

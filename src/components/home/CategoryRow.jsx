@@ -1,4 +1,4 @@
-import React from'react';
+import React from 'react';
 
 const CATEGORIES = [
   { id:'all', label:'All Eats', emoji:''},
@@ -21,7 +21,7 @@ export default function CategoryRow({ selected, onChange }) {
           <button
             key={cat.id}
             onClick={() => onChange(cat.id)}
-            className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold transition-all duration-200 whitespace-nowrap"style={{
+            className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold transition-all duration-200 whitespace-nowrap" style={{
               background: isActive ?'var(--cc-accent-2)':'var(--cc-surface-3)',
               color: isActive ?'var(--cc-black)':'var(--cc-ink-muted)',
               border: isActive ?'none':'1px solid rgba(255,255,255,0.06)',

@@ -1,10 +1,10 @@
-import React, { useState, useMemo } from'react';
-import { base44 } from'@/api/base44Client';
-import { useQuery } from'@tanstack/react-query';
-import { Link, useSearchParams } from'react-router-dom';
-import { Search, Star, MapPin, Clock, LayoutGrid, List, AlignJustify, SlidersHorizontal } from'lucide-react';
-import { useUserLocation, distanceMiles, formatDist } from'@/lib/geoUtils';
-import AssistantFAB from'@/components/assistant/AssistantFAB';
+import React, { useState, useMemo } from 'react';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
+import { Link, useSearchParams } from 'react-router-dom';
+import { Search, Star, MapPin, Clock, LayoutGrid, List, AlignJustify, SlidersHorizontal } from 'lucide-react';
+import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
+import AssistantFAB from '@/components/assistant/AssistantFAB';
 
 const FILTERS = [
   { id:'all', label:'All'},
@@ -33,31 +33,31 @@ function TruckCard({ truck, view }) {
 
   if (view ==='grid') {
     return (
-      <Link to={`/truck/${truck.id}`} className="block rounded-2xl overflow-hidden active:opacity-80"style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.15)'}}>
-        <div className="relative"style={{ height:'120px'}}>
+      <Link to={`/truck/${truck.id}`} className="block rounded-2xl overflow-hidden active:opacity-80" style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.15)'}}>
+        <div className="relative" style={{ height:'120px'}}>
           <img src={truck.image_url ||'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=300'}
             alt={truck.name} className="w-full h-full object-cover"/>
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"/>
           {truck.is_live && (
-            <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full"style={{ background:'rgba(var(--cc-warm-red-rgb),0.9)'}}>
+            <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full" style={{ background:'rgba(var(--cc-warm-red-rgb),0.9)'}}>
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"/>
               <span className="text-[9px] font-black text-white">LIVE</span>
             </div>
           )}
           <div className="absolute bottom-2 left-2">
             {truck.is_sample ? (
-              <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full"style={{ background:'rgba(251,191,36,0.9)', color:'#1a0f00'}}>DEMO</span>
+              <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full" style={{ background:'rgba(251,191,36,0.9)', color:'#1a0f00'}}>DEMO</span>
             ) : truck.status ==='open'&& (
-              <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full"style={{ background:'rgba(var(--cc-accent-rgb),0.9)', color:'var(--cc-accent-deep)'}}>OPEN</span>
+              <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full" style={{ background:'rgba(var(--cc-accent-rgb),0.9)', color:'var(--cc-accent-deep)'}}>OPEN</span>
             )}
           </div>
         </div>
         <div className="p-2.5">
-          <p className="font-heading font-bold text-xs truncate"style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
+          <p className="font-heading font-bold text-xs truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
           <div className="flex items-center gap-1.5 mt-1">
             <Star className="w-3 h-3 fill-yellow-400 text-yellow-400"/>
-            <span className="text-[10px] font-bold"style={{ color:'var(--cc-ink)'}}>{truck.rating?.toFixed(1) ||'4.8'}</span>
-            {dist && <span className="text-[10px]"style={{ color:'var(--cc-ink-dim)'}}>· {dist}</span>}
+            <span className="text-[10px] font-bold" style={{ color:'var(--cc-ink)'}}>{truck.rating?.toFixed(1) ||'4.8'}</span>
+            {dist && <span className="text-[10px]" style={{ color:'var(--cc-ink-dim)'}}>· {dist}</span>}
           </div>
         </div>
       </Link>
@@ -66,17 +66,17 @@ function TruckCard({ truck, view }) {
 
   if (view ==='compact') {
     return (
-      <Link to={`/truck/${truck.id}`} className="flex items-center gap-3 py-2.5 active:opacity-80"style={{ borderBottom:'1px solid rgba(var(--cc-line-rgb),0.12)'}}>
+      <Link to={`/truck/${truck.id}`} className="flex items-center gap-3 py-2.5 active:opacity-80" style={{ borderBottom:'1px solid rgba(var(--cc-line-rgb),0.12)'}}>
         <img src={truck.image_url ||'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=100'}
           alt={truck.name} className="w-10 h-10 rounded-xl object-cover flex-shrink-0"/>
         <div className="flex-1 min-w-0">
-          <p className="font-heading font-bold text-sm truncate"style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
-          <p className="text-xs capitalize"style={{ color:'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')}</p>
+          <p className="font-heading font-bold text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
+          <p className="text-xs capitalize" style={{ color:'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')}</p>
         </div>
         <div className="flex items-center gap-1 flex-shrink-0">
           <Star className="w-3 h-3 fill-yellow-400 text-yellow-400"/>
-          <span className="text-xs font-bold"style={{ color:'var(--cc-ink)'}}>{truck.rating?.toFixed(1) ||'4.8'}</span>
-          {truck.is_live && <span className="ml-1 text-[9px] font-black px-1.5 py-0.5 rounded-full"style={{ background:'var(--cc-warm-red)', color:'white'}}>LIVE</span>}
+          <span className="text-xs font-bold" style={{ color:'var(--cc-ink)'}}>{truck.rating?.toFixed(1) ||'4.8'}</span>
+          {truck.is_live && <span className="ml-1 text-[9px] font-black px-1.5 py-0.5 rounded-full" style={{ background:'var(--cc-warm-red)', color:'white'}}>LIVE</span>}
         </div>
       </Link>
     );
@@ -84,45 +84,45 @@ function TruckCard({ truck, view }) {
 
   // list (default)
   return (
-    <Link to={`/truck/${truck.id}`} className="flex items-center gap-3 p-3 rounded-2xl active:opacity-80 transition-opacity"style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.15)'}}>
+    <Link to={`/truck/${truck.id}`} className="flex items-center gap-3 p-3 rounded-2xl active:opacity-80 transition-opacity" style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.15)'}}>
       <div className="relative flex-shrink-0">
         <img src={truck.image_url ||'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=200'}
           alt={truck.name} className="w-16 h-16 rounded-xl object-cover"/>
         {truck.is_live && (
-          <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center"style={{ background:'var(--cc-warm-red)'}}>
+          <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center" style={{ background:'var(--cc-warm-red)'}}>
             <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"/>
           </div>
         )}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 mb-0.5">
-          <p className="font-heading font-bold text-sm truncate"style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
+          <p className="font-heading font-bold text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
           {truck.is_sample ? (
-            <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full flex-shrink-0"style={{ background:'rgba(251,191,36,0.15)', color:'var(--cc-amber)'}}>DEMO</span>
+            <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full flex-shrink-0" style={{ background:'rgba(251,191,36,0.15)', color:'var(--cc-amber)'}}>DEMO</span>
           ) : truck.status ==='open'&& (
-            <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full flex-shrink-0"style={{ background:'rgba(var(--cc-accent-rgb),0.15)', color:'var(--cc-accent)'}}>OPEN</span>
+            <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full flex-shrink-0" style={{ background:'rgba(var(--cc-accent-rgb),0.15)', color:'var(--cc-accent)'}}>OPEN</span>
           )}
         </div>
-        <p className="text-xs capitalize mb-1"style={{ color:'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')}</p>
+        <p className="text-xs capitalize mb-1" style={{ color:'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')}</p>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-0.5">
             <Star className="w-3 h-3 fill-yellow-400 text-yellow-400"/>
-            <span className="text-xs font-bold"style={{ color:'var(--cc-ink)'}}>{truck.rating?.toFixed(1) ||'4.8'}</span>
+            <span className="text-xs font-bold" style={{ color:'var(--cc-ink)'}}>{truck.rating?.toFixed(1) ||'4.8'}</span>
           </div>
           {dist && (
             <div className="flex items-center gap-0.5">
-              <MapPin className="w-3 h-3"style={{ color:'var(--cc-ink-dim)'}} />
-              <span className="text-xs"style={{ color:'var(--cc-ink-dim)'}}>{dist}</span>
+              <MapPin className="w-3 h-3" style={{ color:'var(--cc-ink-dim)'}} />
+              <span className="text-xs" style={{ color:'var(--cc-ink-dim)'}}>{dist}</span>
             </div>
           )}
           <div className="flex items-center gap-0.5">
-            <Clock className="w-3 h-3"style={{ color:'var(--cc-ink-dim)'}} />
-            <span className="text-xs"style={{ color:'var(--cc-ink-dim)'}}>15–20 min</span>
+            <Clock className="w-3 h-3" style={{ color:'var(--cc-ink-dim)'}} />
+            <span className="text-xs" style={{ color:'var(--cc-ink-dim)'}}>15–20 min</span>
           </div>
         </div>
       </div>
-      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"style={{ background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))'}}>
-        <span className="text-xs font-black"style={{ color:'var(--cc-accent-deep)'}}>→</span>
+      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))'}}>
+        <span className="text-xs font-black" style={{ color:'var(--cc-accent-deep)'}}>→</span>
       </div>
     </Link>
   );
@@ -132,7 +132,7 @@ function SectionHeader({ title, emoji }) {
   return (
     <div className="flex items-center gap-2 mb-3">
       <span>{emoji}</span>
-      <h2 className="font-display text-sm"style={{ color:'var(--cc-ink)'}}>{title}</h2>
+      <h2 className="font-display text-sm" style={{ color:'var(--cc-ink)'}}>{title}</h2>
     </div>
   );
 }
@@ -201,32 +201,32 @@ export default function Explore() {
   ];
 
   return (
-    <div className="min-h-screen pb-32"style={{ background:'var(--cc-bg-0)'}}>
+    <div className="min-h-screen pb-32" style={{ background:'var(--cc-bg-0)'}}>
       <AssistantFAB />
       {/* Sticky header */}
-      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-3 sticky top-0 z-20"style={{ background:'rgba(13,21,23,0.95)', backdropFilter:'blur(20px)', borderBottom:'1px solid rgba(var(--cc-line-rgb),0.12)'}}>
+      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-3 sticky top-0 z-20" style={{ background:'rgba(13,21,23,0.95)', backdropFilter:'blur(20px)', borderBottom:'1px solid rgba(var(--cc-line-rgb),0.12)'}}>
         <div className="flex items-center justify-between mb-3">
-          <h1 className="font-display text-xl"style={{ color:'var(--cc-ink)'}}>Explore</h1>
+          <h1 className="font-display text-xl" style={{ color:'var(--cc-ink)'}}>Explore</h1>
           <div className="flex items-center gap-2">
             {/* Map button */}
             <Link to="/map">
-              <div className="px-3 py-1.5 rounded-xl flex items-center gap-1.5 text-xs font-bold"style={{ background:'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.25)'}}>
+              <div className="px-3 py-1.5 rounded-xl flex items-center gap-1.5 text-xs font-bold" style={{ background:'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.25)'}}>
                 <MapPin className="w-3.5 h-3.5"/>Map
               </div>
             </Link>
             {/* Sort */}
             <div className="relative">
               <button onClick={() => setShowSort(s => !s)}
-                className="px-3 py-1.5 rounded-xl flex items-center gap-1.5 text-xs font-bold"style={{ background: sort !=='default'?'rgba(var(--cc-accent-rgb),0.12)':'var(--cc-bg-2)', color: sort !=='default'?'var(--cc-accent)':'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.25)'}}>
+                className="px-3 py-1.5 rounded-xl flex items-center gap-1.5 text-xs font-bold" style={{ background: sort !=='default'?'rgba(var(--cc-accent-rgb),0.12)':'var(--cc-bg-2)', color: sort !=='default'?'var(--cc-accent)':'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.25)'}}>
                 <SlidersHorizontal className="w-3.5 h-3.5"/>Sort
               </button>
               {showSort && (
                 <>
-                  <div className="fixed inset-0 z-40"onClick={() => setShowSort(false)} />
-                  <div className="absolute right-0 top-full mt-1 z-50 rounded-2xl overflow-hidden shadow-xl"style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.3)', minWidth:'140px'}}>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowSort(false)} />
+                  <div className="absolute right-0 top-full mt-1 z-50 rounded-2xl overflow-hidden shadow-xl" style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.3)', minWidth:'140px'}}>
                     {SORTS.map(s => (
                       <button key={s.id} onClick={() => { setSort(s.id); setShowSort(false); }}
-                        className="w-full text-left px-4 py-2.5 text-xs font-semibold"style={{ color: sort === s.id ?'var(--cc-accent)':'var(--cc-ink)', background: sort === s.id ?'rgba(var(--cc-accent-rgb),0.07)':'transparent'}}>
+                        className="w-full text-left px-4 py-2.5 text-xs font-semibold" style={{ color: sort === s.id ?'var(--cc-accent)':'var(--cc-ink)', background: sort === s.id ?'rgba(var(--cc-accent-rgb),0.07)':'transparent'}}>
                         {s.label}
                       </button>
                     ))}
@@ -238,11 +238,11 @@ export default function Explore() {
         </div>
 
         {/* Search bar */}
-        <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl mb-3"style={{ background:'#080f11', border:'1px solid rgba(var(--cc-line-rgb),0.25)'}}>
-          <Search className="w-4 h-4 flex-shrink-0"style={{ color:'var(--cc-ink-dim)'}} />
+        <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl mb-3" style={{ background:'#080f11', border:'1px solid rgba(var(--cc-line-rgb),0.25)'}}>
+          <Search className="w-4 h-4 flex-shrink-0" style={{ color:'var(--cc-ink-dim)'}} />
           <input value={query} onChange={e => setQuery(e.target.value)}
-            placeholder="Tacos, brisket, ramen..."className="flex-1 bg-transparent text-sm outline-none"style={{ color:'var(--cc-ink)'}} />
-          {query && <button onClick={() => setQuery('')} className="text-xs"style={{ color:'var(--cc-ink-dim)'}}></button>}
+            placeholder="Tacos, brisket, ramen..." className="flex-1 bg-transparent text-sm outline-none" style={{ color:'var(--cc-ink)'}} />
+          {query && <button onClick={() => setQuery('')} className="text-xs" style={{ color:'var(--cc-ink-dim)'}}></button>}
         </div>
 
         {/* Filter pills + view toggle row */}
@@ -250,7 +250,7 @@ export default function Explore() {
           <div className="flex gap-2 overflow-x-auto no-scrollbar flex-1 pb-1">
             {FILTERS.map(f => (
               <button key={f.id} onClick={() => setFilter(f.id)}
-                className="px-3.5 py-1.5 rounded-full text-xs font-bold flex-shrink-0 transition-all"style={filter === f.id
+                className="px-3.5 py-1.5 rounded-full text-xs font-bold flex-shrink-0 transition-all" style={filter === f.id
                   ? { background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)'}
                   : { background:'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.25)'}
                 }>
@@ -259,11 +259,11 @@ export default function Explore() {
             ))}
           </div>
           {/* View toggle */}
-          <div className="flex items-center gap-1 flex-shrink-0 p-1 rounded-xl"style={{ background:'var(--cc-bg-2)'}}>
+          <div className="flex items-center gap-1 flex-shrink-0 p-1 rounded-xl" style={{ background:'var(--cc-bg-2)'}}>
             {viewIcons.map(({ id, Icon }) => (
               <button key={id} onClick={() => setView(id)}
-                className="w-7 h-7 rounded-lg flex items-center justify-center transition-all"style={{ background: view === id ?'rgba(var(--cc-accent-rgb),0.15)':'transparent'}}>
-                <Icon className="w-3.5 h-3.5"style={{ color: view === id ?'var(--cc-accent)':'var(--cc-ink-dim)'}} />
+                className="w-7 h-7 rounded-lg flex items-center justify-center transition-all" style={{ background: view === id ?'rgba(var(--cc-accent-rgb),0.15)':'transparent'}}>
+                <Icon className="w-3.5 h-3.5" style={{ color: view === id ?'var(--cc-accent)':'var(--cc-ink-dim)'}} />
               </button>
             ))}
           </div>
@@ -282,17 +282,17 @@ export default function Explore() {
                     <img src={park.hero_image_url ||'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200'}
                       alt={park.name} className="w-10 h-10 rounded-xl object-cover flex-shrink-0"/>
                     <div className="flex-1 min-w-0">
-                      <p className="font-heading font-bold text-sm"style={{ color:'var(--cc-ink)'}}>{park.name}</p>
-                      <p className="text-xs"style={{ color:'var(--cc-ink-dim)'}}>{parkTrucks.length} trucks · {park.address?.split(',')[0]}</p>
+                      <p className="font-heading font-bold text-sm" style={{ color:'var(--cc-ink)'}}>{park.name}</p>
+                      <p className="text-xs" style={{ color:'var(--cc-ink-dim)'}}>{parkTrucks.length} trucks · {park.address?.split(',')[0]}</p>
                     </div>
-                    <span className="text-xs font-bold"style={{ color:'var(--cc-accent-2)'}}>View →</span>
+                    <span className="text-xs font-bold" style={{ color:'var(--cc-accent-2)'}}>View →</span>
                   </Link>
                   {parkTrucks.length > 0 ? (
                     <div className="flex flex-col gap-2">
                       {parkTrucks.map(t => <TruckCard key={t.id} truck={t} view="list"/>)}
                     </div>
                   ) : (
-                    <p className="text-xs py-3 px-4 rounded-xl"style={{ color:'var(--cc-ink-faint)', background:'var(--cc-bg-0)'}}>
+                    <p className="text-xs py-3 px-4 rounded-xl" style={{ color:'var(--cc-ink-faint)', background:'var(--cc-bg-0)'}}>
                       No trucks currently listed at this park.
                     </p>
                   )}
@@ -306,7 +306,7 @@ export default function Explore() {
               if (!unparked.length) return null;
               return (
                 <div>
-                  <p className="font-heading font-bold text-sm mb-2.5"style={{ color:'var(--cc-ink)'}}> Independent Trucks</p>
+                  <p className="font-heading font-bold text-sm mb-2.5" style={{ color:'var(--cc-ink)'}}> Independent Trucks</p>
                   <div className="flex flex-col gap-2">
                     {unparked.map(t => <TruckCard key={t.id} truck={t} view="list"/>)}
                   </div>
@@ -318,11 +318,11 @@ export default function Explore() {
 
         {filter !=='by_park'&& isLoading ? (
           <div className="flex flex-col gap-3">
-            {[1,2,3,4].map(i => <div key={i} className="h-20 rounded-2xl animate-pulse"style={{ background:'var(--cc-bg-2)'}} />)}
+            {[1,2,3,4].map(i => <div key={i} className="h-20 rounded-2xl animate-pulse" style={{ background:'var(--cc-bg-2)'}} />)}
           </div>
         ) : filter !=='by_park'&& isSearching ? (
           <div>
-            <p className="text-xs mb-3"style={{ color:'var(--cc-ink-dim)'}}>{filtered.length} trucks</p>
+            <p className="text-xs mb-3" style={{ color:'var(--cc-ink-dim)'}}>{filtered.length} trucks</p>
             {view ==='grid'? (
               <div className="grid grid-cols-2 gap-3">
                 {filtered.map(t => <TruckCard key={t.id} truck={t} view="grid"/>)}
@@ -337,8 +337,8 @@ export default function Explore() {
             {filtered.length === 0 && (
               <div className="text-center py-16">
                 <p className="text-4xl mb-3"></p>
-                <p className="font-heading font-bold"style={{ color:'var(--cc-ink)'}}>No trucks found</p>
-                <p className="text-sm mt-1"style={{ color:'var(--cc-ink-dim)'}}>Try a different search</p>
+                <p className="font-heading font-bold" style={{ color:'var(--cc-ink)'}}>No trucks found</p>
+                <p className="text-sm mt-1" style={{ color:'var(--cc-ink-dim)'}}>Try a different search</p>
               </div>
             )}
           </div>
@@ -346,32 +346,32 @@ export default function Explore() {
           <div className="flex flex-col gap-8">
             {liveTrucks.length > 0 && (
               <div>
-                <SectionHeader title="Live Right Now"emoji=""/>
+                <SectionHeader title="Live Right Now" emoji=""/>
                 <div className="flex flex-col gap-3">
                   {liveTrucks.map(t => <TruckCard key={t.id} truck={t} view={view} />)}
                 </div>
               </div>
             )}
             <div>
-              <SectionHeader title="Trending"emoji=""/>
+              <SectionHeader title="Trending" emoji=""/>
               <div className={view ==='grid'?'grid grid-cols-2 gap-3': view ==='compact'?'':'flex flex-col gap-3'}>
                 {trucks.slice(0, 5).map(t => <TruckCard key={t.id} truck={t} view={view} />)}
               </div>
             </div>
             <div>
-              <SectionHeader title="Near Me"emoji=""/>
+              <SectionHeader title="Near Me" emoji=""/>
               <div className={view ==='grid'?'grid grid-cols-2 gap-3': view ==='compact'?'':'flex flex-col gap-3'}>
                 {nearby.map(t => <TruckCard key={t.id} truck={t} view={view} />)}
               </div>
             </div>
             <div>
-              <SectionHeader title="Top Rated"emoji=""/>
+              <SectionHeader title="Top Rated" emoji=""/>
               <div className={view ==='grid'?'grid grid-cols-2 gap-3': view ==='compact'?'':'flex flex-col gap-3'}>
                 {topRated.map(t => <TruckCard key={t.id} truck={t} view={view} />)}
               </div>
             </div>
             <div>
-              <SectionHeader title="New on CurbChef"emoji=""/>
+              <SectionHeader title="New on CurbChef" emoji=""/>
               <div className={view ==='grid'?'grid grid-cols-2 gap-3': view ==='compact'?'':'flex flex-col gap-3'}>
                 {newTrucks.map(t => <TruckCard key={t.id} truck={t} view={view} />)}
               </div>
