@@ -48,7 +48,7 @@ function ClipCard({ clip, isActive, liked, saved, onLike, onSave }) {
   const thumbUrl = clip.image_url || clip.poster_url || 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=800';
 
   return (
-    <div className="relative flex-shrink-0" style={{ height: '100dvh', scrollSnapAlign: 'start' }}>
+    <div className="relative flex-shrink-0" style={{ height: '100dvh', scrollSnapAlign:'start' }}>
       {/* Background media */}
       {mediaUrl ? (
         <video
@@ -73,15 +73,15 @@ function ClipCard({ clip, isActive, liked, saved, onLike, onSave }) {
       <div className="absolute top-[max(1rem,env(safe-area-inset-top))] left-4 flex items-center gap-2">
         {isLive && (
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-            style={{ background: 'rgba(var(--cc-warm-red-rgb),0.9)', backdropFilter: 'blur(8px)' }}>
+            style={{ background: 'rgba(var(--cc-warm-red-rgb),0.9)', backdropFilter:'blur(8px)' }}>
             <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
             <span className="text-white text-[11px] font-black tracking-widest">LIVE</span>
           </div>
         )}
         {clip.vendor_caption && !isLive && (
           <div className="px-3 py-1.5 rounded-full"
-            style={{ background: 'rgba(13,21,23,0.65)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.12)' }}>
-            <span className="text-white text-[11px] font-bold">🎬 CLIP</span>
+            style={{ background: 'rgba(13,21,23,0.65)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,0.12)' }}>
+            <span className="text-white text-[11px] font-bold"> CLIP</span>
           </div>
         )}
       </div>
@@ -90,7 +90,7 @@ function ClipCard({ clip, isActive, liked, saved, onLike, onSave }) {
       {mediaUrl && (
         <button onClick={() => setMuted(m => !m)}
           className="absolute top-[max(1rem,env(safe-area-inset-top))] right-4 w-10 h-10 rounded-full flex items-center justify-center"
-          style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)' }}>
+          style={{ background: 'rgba(0,0,0,0.5)', backdropFilter:'blur(8px)' }}>
           {muted
             ? <VolumeX className="w-5 h-5 text-white" />
             : <Volume2 className="w-5 h-5 text-white" />
@@ -104,21 +104,21 @@ function ClipCard({ clip, isActive, liked, saved, onLike, onSave }) {
         {/* Follow avatar */}
         <div className="flex flex-col items-center gap-1">
           <div className="w-12 h-12 rounded-full overflow-hidden border-2"
-            style={{ borderColor: 'var(--cc-accent)', boxShadow: '0 0 12px rgba(var(--cc-accent-rgb),0.4)' }}>
+            style={{ borderColor: 'var(--cc-accent)', boxShadow:'0 0 12px rgba(var(--cc-accent-rgb),0.4)' }}>
             <img src={clip.truck_image || thumbUrl} alt={clip.truck_name} className="w-full h-full object-cover" />
           </div>
           <button onClick={toggleFollow} disabled={isPending}
             className="w-7 h-7 rounded-full flex items-center justify-center -mt-2.5"
             style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', minWidth: 28, minHeight: 28 }}>
-            <span className="text-[9px] font-black" style={{ color: 'var(--cc-accent-deep)' }}>{isFollowing ? '✓' : '+'}</span>
+            <span className="text-[9px] font-black" style={{ color: 'var(--cc-accent-deep)'}}>{isFollowing ?'':'+'}</span>
           </button>
         </div>
 
         {/* Like */}
         <button onClick={onLike} className="flex flex-col items-center gap-1">
           <div className="w-12 h-12 rounded-full flex items-center justify-center"
-            style={{ background: liked ? 'rgba(var(--cc-warm-rgb),0.3)' : 'rgba(13,21,23,0.6)', backdropFilter: 'blur(8px)' }}>
-            <Heart className="w-6 h-6" style={{ color: liked ? 'var(--cc-warm)' : 'white' }} fill={liked ? 'var(--cc-warm)' : 'none'} />
+            style={{ background: liked ? 'rgba(var(--cc-warm-rgb),0.3)':'rgba(13,21,23,0.6)', backdropFilter:'blur(8px)' }}>
+            <Heart className="w-6 h-6" style={{ color: liked ? 'var(--cc-warm)':'white'}} fill={liked ?'var(--cc-warm)':'none'} />
           </div>
           <span className="text-white text-xs font-bold">{((clip.likes || 0) + (liked ? 1 : 0)).toLocaleString()}</span>
         </button>
@@ -126,7 +126,7 @@ function ClipCard({ clip, isActive, liked, saved, onLike, onSave }) {
         {/* Share */}
         <button onClick={handleShare} className="flex flex-col items-center gap-1">
           <div className="w-12 h-12 rounded-full flex items-center justify-center"
-            style={{ background: 'rgba(13,21,23,0.6)', backdropFilter: 'blur(8px)' }}>
+            style={{ background: 'rgba(13,21,23,0.6)', backdropFilter:'blur(8px)' }}>
             <Share2 className="w-6 h-6 text-white" />
           </div>
           <span className="text-white text-xs font-bold">Share</span>
@@ -135,8 +135,8 @@ function ClipCard({ clip, isActive, liked, saved, onLike, onSave }) {
         {/* Save */}
         <button onClick={onSave} className="flex flex-col items-center gap-1">
           <div className="w-12 h-12 rounded-full flex items-center justify-center"
-            style={{ background: saved ? 'rgba(var(--cc-accent-rgb),0.2)' : 'rgba(13,21,23,0.6)', backdropFilter: 'blur(8px)' }}>
-            <Bookmark className="w-6 h-6" style={{ color: saved ? 'var(--cc-accent)' : 'white' }} fill={saved ? 'var(--cc-accent)' : 'none'} />
+            style={{ background: saved ? 'rgba(var(--cc-accent-rgb),0.2)':'rgba(13,21,23,0.6)', backdropFilter:'blur(8px)' }}>
+            <Bookmark className="w-6 h-6" style={{ color: saved ? 'var(--cc-accent)':'white'}} fill={saved ?'var(--cc-accent)':'none'} />
           </div>
         </button>
       </div>
@@ -158,10 +158,10 @@ function ClipCard({ clip, isActive, liked, saved, onLike, onSave }) {
           <button onClick={toggleFollow} disabled={isPending}
             className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold flex-shrink-0"
             style={isFollowing
-              ? { background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.4)' }
-              : { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }
+              ? { background: 'rgba(var(--cc-accent-rgb),0.12)', color:'var(--cc-accent)', border:'1px solid rgba(var(--cc-accent-rgb),0.4)' }
+              : { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)' }
             }>
-            {isFollowing ? <><UserCheck className="w-3 h-3" />Following</> : <><UserPlus className="w-3 h-3" />Follow</>}
+            {isFollowing ? <><UserCheck className="w-3 h-3"/>Following</> : <><UserPlus className="w-3 h-3" />Follow</>}
           </button>
         </div>
 
@@ -173,9 +173,9 @@ function ClipCard({ clip, isActive, liked, saved, onLike, onSave }) {
 
         {/* Reaction chips */}
         <div className="flex gap-2 mb-4 overflow-x-auto no-scrollbar">
-          {['Looks tasty! 🔥', "Chef's kiss! 🤌", 'Extra spicy!'].map(r => (
+          {['Looks tasty!', "Chef's kiss! ", 'Extra spicy!'].map(r => (
             <button key={r} className="px-3 py-1.5 rounded-full text-xs font-semibold flex-shrink-0"
-              style={{ background: 'rgba(13,21,23,0.7)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)', backdropFilter: 'blur(8px)' }}>
+              style={{ background: 'rgba(13,21,23,0.7)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.4)', backdropFilter:'blur(8px)' }}>
               {r}
             </button>
           ))}
@@ -184,7 +184,7 @@ function ClipCard({ clip, isActive, liked, saved, onLike, onSave }) {
         {/* CTA */}
         <Link to={`/truck/${clip.truck_id}`}>
           <button className="w-full py-4 rounded-full font-display text-base flex items-center justify-center gap-2"
-            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.4)' }}>
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 24px rgba(var(--cc-accent-rgb),0.4)' }}>
             <ShoppingBag className="w-5 h-5" />
             ORDER FROM THIS TRUCK
           </button>
@@ -282,10 +282,10 @@ export default function LiveFeed() {
   return (
     <div ref={containerRef}
       className="h-screen overflow-y-scroll no-scrollbar"
-      style={{ background: 'var(--cc-bg-0)', scrollSnapType: 'y mandatory' }}>
+      style={{ background: 'var(--cc-bg-0)', scrollSnapType:'y mandatory' }}>
       {/* Close */}
       <Link to="/" className="fixed top-[max(1rem,env(safe-area-inset-top))] left-4 z-50 w-11 h-11 rounded-xl flex items-center justify-center"
-        style={{ background: 'rgba(13,21,23,0.7)', backdropFilter: 'blur(10px)' }}>
+        style={{ background: 'rgba(13,21,23,0.7)', backdropFilter:'blur(10px)' }}>
         <X className="w-5 h-5 text-white" />
       </Link>
 

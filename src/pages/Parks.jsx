@@ -6,12 +6,12 @@ import { MapPin, Star, Truck, Music, Dog, Baby, Wine, ChevronRight } from 'lucid
 import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
 
 const AMENITY_FILTERS = [
-  { id: 'all', label: 'All Parks' },
-  { id: 'live music', label: '🎵 Live Music' },
-  { id: 'family friendly', label: '👨‍👩‍👧 Family' },
-  { id: 'dog friendly', label: '🐕 Dog Friendly' },
-  { id: 'alcohol', label: '🍺 Bar' },
-  { id: 'covered seating', label: '⛱️ Covered' },
+  { id: 'all', label:'All Parks' },
+  { id: 'live music', label:'Live Music' },
+  { id: 'family friendly', label:'Family' },
+  { id: 'dog friendly', label:'Dog Friendly' },
+  { id: 'alcohol', label:'Bar' },
+  { id: 'covered seating', label:'Covered' },
 ];
 
 function ParkCard({ park, featured = false }) {
@@ -21,14 +21,14 @@ function ParkCard({ park, featured = false }) {
   if (featured) {
     return (
       <Link to={`/parks/${park.slug}`} className="block flex-shrink-0 w-72 rounded-3xl overflow-hidden active:scale-[0.98] transition-transform"
-        style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.25)' }}>
+        style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.25)' }}>
         <div className="relative" style={{ height: '180px' }}>
           <img src={park.hero_image_url || 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600'}
             alt={park.name} className="w-full h-full object-cover" />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg,transparent 40%,rgba(0,0,0,0.85) 100%)' }} />
           {park.is_featured && (
             <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-black"
-              style={{ background: 'rgba(0,245,212,0.9)', color: 'var(--cc-black)' }}>⭐ FEATURED</div>
+              style={{ background: 'rgba(0,245,212,0.9)', color:'var(--cc-black)' }}> FEATURED</div>
           )}
           <div className="absolute bottom-3 left-3 right-3">
             <p className="font-display text-white text-lg leading-tight">{park.name}</p>
@@ -56,7 +56,7 @@ function ParkCard({ park, featured = false }) {
             <div className="flex flex-wrap gap-1">
               {park.amenities.slice(0, 3).map(a => (
                 <span key={a} className="text-[10px] px-2 py-0.5 rounded-full font-semibold"
-                  style={{ background: 'rgba(0,245,212,0.08)', color: 'var(--cc-accent-2)', border: '1px solid rgba(0,245,212,0.15)' }}>
+                  style={{ background: 'rgba(0,245,212,0.08)', color:'var(--cc-accent-2)', border:'1px solid rgba(0,245,212,0.15)' }}>
                   {a}
                 </span>
               ))}
@@ -69,7 +69,7 @@ function ParkCard({ park, featured = false }) {
 
   return (
     <Link to={`/parks/${park.slug}`} className="flex gap-3 p-3.5 rounded-2xl active:scale-[0.99] transition-transform"
-      style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+      style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
       <img src={park.hero_image_url || 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300'}
         alt={park.name} className="w-20 h-20 rounded-xl object-cover flex-shrink-0" />
       <div className="flex-1 min-w-0">
@@ -84,14 +84,14 @@ function ParkCard({ park, featured = false }) {
         </div>
         <div className="flex items-center gap-1 mt-0.5 mb-1.5">
           <MapPin className="w-3 h-3 flex-shrink-0" style={{ color: 'var(--cc-ink-dim)' }} />
-          <span className="text-xs truncate" style={{ color: 'var(--cc-ink-dim)' }}>{park.address?.split(',')[0]}</span>
+          <span className="text-xs truncate" style={{ color: 'var(--cc-ink-dim)'}}>{park.address?.split(',')[0]}</span>
           {dist && <span className="text-xs flex-shrink-0" style={{ color: 'var(--cc-ink-faint)' }}>· {dist}</span>}
         </div>
         <div className="flex items-center gap-2">
           <span className="text-[10px] font-bold" style={{ color: 'var(--cc-accent-2)' }}>{park.total_trucks || 0} trucks</span>
           {park.amenities?.slice(0, 2).map(a => (
             <span key={a} className="text-[10px] px-1.5 py-0.5 rounded-full"
-              style={{ background: 'rgba(0,245,212,0.07)', color: 'var(--cc-accent-2)' }}>{a}</span>
+              style={{ background: 'rgba(0,245,212,0.07)', color:'var(--cc-accent-2)' }}>{a}</span>
           ))}
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function Parks() {
       <div className="px-4 pt-[max(1.25rem,env(safe-area-inset-top))] pb-5"
         style={{ background: 'linear-gradient(180deg,#0d1a0f 0%,var(--cc-black) 100%)' }}>
         <p className="font-display text-2xl" style={{ color: 'var(--cc-cream)' }}>
-          Houston's Best <span style={{ color: 'var(--cc-accent-2)' }}>Truck Parks</span> 🏛️
+          Houston's Best <span style={{ color:'var(--cc-accent-2)' }}>Truck Parks</span> 
         </p>
         <p className="text-sm mt-1" style={{ color: 'var(--cc-ink-muted)' }}>
           Where the trucks gather. Where the magic happens.
@@ -133,7 +133,7 @@ export default function Parks() {
       {featured.length > 0 && (
         <div className="mb-6">
           <div className="flex items-center justify-between px-4 mb-3">
-            <h2 className="font-display text-sm" style={{ color: 'var(--cc-accent-2)' }}>⭐ FEATURED PARKS</h2>
+            <h2 className="font-display text-sm" style={{ color: 'var(--cc-accent-2)' }}> FEATURED PARKS</h2>
           </div>
           <div className="flex gap-3 overflow-x-auto no-scrollbar px-4 pb-1">
             {featured.map(p => <ParkCard key={p.id} park={p} featured />)}
@@ -147,8 +147,8 @@ export default function Parks() {
           <button key={f.id} onClick={() => setFilter(f.id)}
             className="px-3.5 py-1.5 rounded-full text-xs font-bold flex-shrink-0 transition-all"
             style={filter === f.id
-              ? { background: 'linear-gradient(135deg,var(--cc-accent-2),var(--cc-accent-3))', color: 'var(--cc-black)' }
-              : { background: 'var(--cc-surface)', color: 'var(--cc-ink-muted)', border: '1px solid rgba(255,255,255,0.06)' }
+              ? { background: 'linear-gradient(135deg,var(--cc-accent-2),var(--cc-accent-3))', color:'var(--cc-black)' }
+              : { background: 'var(--cc-surface)', color:'var(--cc-ink-muted)', border:'1px solid rgba(255,255,255,0.06)' }
             }>
             {f.label}
           </button>
@@ -158,7 +158,7 @@ export default function Parks() {
       {/* All Parks */}
       <div className="px-4">
         <p className="text-xs font-bold mb-3" style={{ color: 'var(--cc-ink-faint)' }}>
-          {filtered.length} {filter === 'all' ? 'parks' : 'parks with this vibe'}
+          {filtered.length} {filter === 'all'?'parks':'parks with this vibe'}
         </p>
         {isLoading ? (
           <div className="flex flex-col gap-3">
@@ -172,7 +172,7 @@ export default function Parks() {
 
         {filtered.length === 0 && !isLoading && (
           <div className="text-center py-16">
-            <p className="text-4xl mb-3">🏛️</p>
+            <p className="text-4xl mb-3"></p>
             <p className="font-display" style={{ color: 'var(--cc-ink)' }}>No parks match this filter</p>
             <button onClick={() => setFilter('all')} className="mt-3 text-sm font-semibold" style={{ color: 'var(--cc-accent-2)' }}>
               Show all parks

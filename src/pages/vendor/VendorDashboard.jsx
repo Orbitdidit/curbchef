@@ -56,14 +56,14 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
     enabled: !!truck?.id,
   });
 
-  const activeOrders = orders.filter(o => ['placed', 'preparing'].includes(o.status));
+  const activeOrders = orders.filter(o => ['placed','preparing'].includes(o.status));
 
   // Show success toast if returning from token pack purchase
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (params.get('token_pack') === 'success') {
-      toast({ title: '🎟️ Token Pack added! +3 drops this week.', duration: 4000 });
-      window.history.replaceState({}, '', '/vendor');
+    if (params.get('token_pack') ==='success') {
+      toast({ title: 'Token Pack added! +3 drops this week.', duration: 4000 });
+      window.history.replaceState({}, '','/vendor');
       qc.invalidateQueries({ queryKey: ['vendor-truck'] });
     }
   }, []);
@@ -113,7 +113,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
                 : (
                   <Link to="/vendor/verification">
                     <span className="text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-1"
-                      style={{ background: 'rgba(251,191,36,0.1)', color: 'var(--cc-amber)', border: '1px solid rgba(251,191,36,0.25)' }}>
+                      style={{ background: 'rgba(251,191,36,0.1)', color:'var(--cc-amber)', border:'1px solid rgba(251,191,36,0.25)' }}>
                       <Shield className="w-2.5 h-2.5" /> Get Verified
                     </span>
                   </Link>
@@ -121,27 +121,27 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
               }
             </div>
             <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>
-              @{truck.slug || truck.name.toLowerCase().replace(/\s/g, '')} • {truck.cuisine_type?.replace('_', ' ')}
+              @{truck.slug || truck.name.toLowerCase().replace(/\s/g, '')} • {truck.cuisine_type?.replace('_','')}
             </p>
           </div>
           {/* Go Live toggle */}
           <div className="flex flex-col items-end gap-1">
-            <p className="text-[10px] font-bold" style={{ color: truck.is_live ? 'var(--cc-accent)' : 'var(--cc-ink-dim)' }}>
-              {truck.is_live ? 'LIVE NOW' : 'GO LIVE'}
+            <p className="text-[10px] font-bold" style={{ color: truck.is_live ? 'var(--cc-accent)':'var(--cc-ink-dim)' }}>
+              {truck.is_live ? 'LIVE NOW':'GO LIVE'}
             </p>
             <button
               onClick={() => updateTruck.mutate({ is_live: !truck.is_live })}
               className="relative w-14 h-7 rounded-full transition-all"
               style={{
-                background: truck.is_live ? 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' : 'var(--cc-bg-2)',
-                boxShadow: truck.is_live ? '0 0 12px rgba(var(--cc-accent-rgb),0.4)' : 'none',
+                background: truck.is_live ? 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))':'var(--cc-bg-2)',
+                boxShadow: truck.is_live ? '0 0 12px rgba(var(--cc-accent-rgb),0.4)':'none',
               }}
             >
               <div
                 className="absolute top-0.5 w-6 h-6 rounded-full transition-all"
                 style={{
                   background: '#fff',
-                  left: truck.is_live ? 'calc(100% - 26px)' : '2px',
+                  left: truck.is_live ? 'calc(100% - 26px)':'2px',
                 }}
               />
             </button>
@@ -153,9 +153,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
 
         {/* Go Live CTA */}
         <Link
-          id="tour-go-live"
-          to="/vendor/go-live"
-          className="w-full flex items-center justify-center gap-3 py-5 rounded-2xl mb-5 font-display text-lg active:scale-95 transition-transform"
+          id="tour-go-live" to="/vendor/go-live" className="w-full flex items-center justify-center gap-3 py-5 rounded-2xl mb-5 font-display text-lg active:scale-95 transition-transform"
           style={{
             background: 'linear-gradient(135deg, var(--cc-accent) 0%, var(--cc-accent-3) 100%)',
             color: 'var(--cc-accent-deep)',
@@ -167,16 +165,16 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
             <span className="relative w-3 h-3 rounded-full" style={{ background: 'var(--cc-warm-red)' }} />
           </span>
           <Camera className="w-6 h-6" />
-          📹 Go Live from Truck
+           Go Live from Truck
         </Link>
 
         {/* Plan badge + Drop Tokens */}
         <div className="flex gap-2 mb-3">
           <Link to="/vendor/plans" className="flex-1 flex items-center justify-between px-4 py-3 rounded-2xl"
-            style={{ background: 'rgba(var(--cc-accent-rgb),0.06)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
+            style={{ background: 'rgba(var(--cc-accent-rgb),0.06)', border:'1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
             <div>
               <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-ink-dim)' }}>YOUR PLAN</p>
-              <p className="font-display text-sm capitalize" style={{ color: 'var(--cc-accent)' }}>{truck.vendor_plan || 'Free'}</p>
+              <p className="font-display text-sm capitalize" style={{ color: 'var(--cc-accent)'}}>{truck.vendor_plan ||'Free'}</p>
             </div>
             <div className="flex items-center gap-1.5">
               <Zap className="w-3.5 h-3.5" style={{ color: 'var(--cc-accent)' }} />
@@ -193,12 +191,11 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
           className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl mb-5 font-display text-sm transition-all active:scale-95"
           style={{
             background: (truck.drop_tokens ?? 0) > 0
-              ? 'linear-gradient(135deg,rgba(var(--cc-warm-rgb),0.15),rgba(var(--cc-warm-rgb),0.08))'
-              : 'var(--cc-bg-2)',
-            color: (truck.drop_tokens ?? 0) > 0 ? 'var(--cc-warm)' : 'var(--cc-ink-dim)',
-            border: `1px solid ${(truck.drop_tokens ?? 0) > 0 ? 'rgba(var(--cc-warm-rgb),0.35)' : 'rgba(var(--cc-line-rgb),0.2)'}`,
+              ? 'linear-gradient(135deg,rgba(var(--cc-warm-rgb),0.15),rgba(var(--cc-warm-rgb),0.08))':'var(--cc-bg-2)',
+            color: (truck.drop_tokens ?? 0) > 0 ? 'var(--cc-warm)':'var(--cc-ink-dim)',
+            border: `1px solid ${(truck.drop_tokens ?? 0) > 0 ? 'rgba(var(--cc-warm-rgb),0.35)':'rgba(var(--cc-line-rgb),0.2)'}`,
           }}>
-          🪂 Create Curb Drop
+           Create Curb Drop
           {(truck.drop_tokens ?? 0) > 0
             ? <span className="text-xs font-semibold opacity-70 ml-1">— 1 token</span>
             : <span className="text-xs opacity-50 ml-1">— no tokens</span>
@@ -240,11 +237,11 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
 
         {/* Earnings breakdown — only shown if Stripe connected */}
         {truck.stripe_onboarding_status === 'payouts_enabled' && (
-          <div className="mb-5 p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-accent-rgb),0.1)' }}>
+          <div className="mb-5 p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-accent-rgb),0.1)' }}>
             <div className="flex items-center gap-2 mb-3">
               <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-accent)' }}>EARNINGS BREAKDOWN</p>
               {orders.some(o => o.is_test_payment) && (
-                <span className="text-[9px] font-black px-2 py-0.5 rounded-full" style={{ background: 'rgba(251,191,36,0.15)', color: 'var(--cc-amber)' }}>TEST MODE</span>
+                <span className="text-[9px] font-black px-2 py-0.5 rounded-full" style={{ background: 'rgba(251,191,36,0.15)', color:'var(--cc-amber)' }}>TEST MODE</span>
               )}
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -256,7 +253,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
               ].map(({ label, value, highlight }) => (
                 <div key={label} className="p-3 rounded-xl" style={{ background: 'var(--cc-bg-0)' }}>
                   <p className="text-[10px] font-bold tracking-wide mb-1" style={{ color: 'var(--cc-ink-dim)' }}>{label}</p>
-                  <p className="font-display text-base" style={{ color: highlight ? 'var(--cc-accent)' : 'var(--cc-ink)' }}>{value}</p>
+                  <p className="font-display text-base" style={{ color: highlight ? 'var(--cc-accent)':'var(--cc-ink)' }}>{value}</p>
                 </div>
               ))}
             </div>
@@ -266,8 +263,8 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         {/* Stats */}
         <div className="mb-5">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-accent)' }}>TODAY'S STATS</p>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)' }}>
+            <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-accent)'}}>TODAY'S STATS</p>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color:'var(--cc-accent)' }}>
               REAL-TIME
             </span>
           </div>
@@ -287,7 +284,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
 
         {/* Status toggle */}
         <div className="flex gap-2 mb-5">
-          {['open', 'closed', 'sold_out'].map(s => (
+          {['open','closed','sold_out'].map(s => (
             <button
               key={s}
               onClick={() => {
@@ -305,18 +302,14 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
               className="flex-1 py-2.5 rounded-xl text-xs font-bold uppercase transition-all"
               style={truck.status === s
                 ? {
-                  background: s === 'open'
-                    ? 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))'
-                    : s === 'sold_out'
-                    ? 'rgba(var(--cc-warm-rgb),0.2)'
-                    : 'var(--cc-bg-3)',
-                  color: s === 'open' ? 'var(--cc-accent-deep)' : s === 'sold_out' ? 'var(--cc-warm)' : 'var(--cc-ink-dim)',
-                  boxShadow: s === 'open' ? '0 0 12px rgba(var(--cc-accent-rgb),0.25)' : 'none',
+                  background: s === 'open'?'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))': s ==='sold_out'?'rgba(var(--cc-warm-rgb),0.2)':'var(--cc-bg-3)',
+                  color: s === 'open'?'var(--cc-accent-deep)': s ==='sold_out'?'var(--cc-warm)':'var(--cc-ink-dim)',
+                  boxShadow: s === 'open'?'0 0 12px rgba(var(--cc-accent-rgb),0.25)':'none',
                 }
-                : { background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }
+                : { background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)' }
               }
             >
-              {s.replace('_', ' ')}
+              {s.replace('_','')}
             </button>
           ))}
         </div>
@@ -329,9 +322,9 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
           <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: 'var(--cc-accent)' }}>QUICK ACTIONS</p>
           <div className="grid grid-cols-3 gap-3">
             {[
-              { label: 'Edit Menu', icon: ShoppingBag, to: '/vendor/menu' },
-              { label: 'Edit Profile', icon: Pencil, to: '/vendor/profile' },
-              { label: 'Plans & Boosts', icon: Zap, to: '/vendor/plans' },
+              { label: 'Edit Menu', icon: ShoppingBag, to:'/vendor/menu' },
+              { label: 'Edit Profile', icon: Pencil, to:'/vendor/profile' },
+              { label: 'Plans & Boosts', icon: Zap, to:'/vendor/plans' },
             ].map(({ label, icon: Icon, to }) => (
               <Link
                 key={label}
@@ -363,13 +356,13 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
             <Link to="/vendor/orders" className="text-xs font-semibold" style={{ color: 'var(--cc-accent)' }}>View history</Link>
           </div>
           {activeOrders.length === 0 ? (
-            <div className="py-8 text-center" style={{ background: 'var(--cc-bg-2)', borderRadius: '1rem' }}>
+            <div className="py-8 text-center" style={{ background: 'var(--cc-bg-2)', borderRadius:'1rem' }}>
               <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>No active orders</p>
             </div>
           ) : (
             <div className="flex flex-col gap-3">
               {activeOrders.slice(0, 3).map(order => (
-                <div key={order.id} className="p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+                <div key={order.id} className="p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <span className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>
@@ -378,23 +371,22 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
                       <span
                         className="text-[10px] font-bold px-2 py-0.5 rounded-full"
                         style={{
-                          background: order.status === 'placed' ? 'rgba(var(--cc-accent-rgb),0.15)' : 'rgba(var(--cc-warm-rgb),0.15)',
-                          color: order.status === 'placed' ? 'var(--cc-accent)' : 'var(--cc-warm)',
+                          background: order.status === 'placed'?'rgba(var(--cc-accent-rgb),0.15)':'rgba(var(--cc-warm-rgb),0.15)',
+                          color: order.status === 'placed'?'var(--cc-accent)':'var(--cc-warm)',
                         }}
                       >
                         {order.status.toUpperCase()}
                       </span>
                     </div>
                     <Link
-                      to="/vendor/orders"
-                      className="py-1.5 px-4 rounded-full text-xs font-bold"
-                      style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}
+                      to="/vendor/orders" className="py-1.5 px-4 rounded-full text-xs font-bold"
+                      style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)' }}
                     >
-                      {order.status === 'placed' ? 'ACCEPT' : 'READY'}
+                      {order.status === 'placed'?'ACCEPT':'READY'}
                     </Link>
                   </div>
                   <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>
-                    {order.items?.map(i => `${i.quantity}x ${i.name}`).join(', ')}
+                    {order.items?.map(i => `${i.quantity}x ${i.name}`).join(',')}
                   </p>
                 </div>
               ))}

@@ -12,13 +12,12 @@ import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
 delete L.Icon.Default.prototype._getIconUrl;
 
 function makeTruckIcon(isLive, isSelected) {
-  const bg = isLive ? 'var(--cc-warm-red)' : isSelected ? 'var(--cc-accent)' : 'var(--cc-bg-2)';
-  const border = isLive ? '#ff6b60' : isSelected ? 'var(--cc-accent-3)' : '#3b4a42';
+  const bg = isLive ? 'var(--cc-warm-red)': isSelected ?'var(--cc-accent)':'var(--cc-bg-2)';
+  const border = isLive ? '#ff6b60': isSelected ?'var(--cc-accent-3)':'#3b4a42';
   const shadow = isLive
     ? '0 0 16px rgba(var(--cc-warm-red-rgb),0.7)'
     : isSelected
-    ? '0 0 16px rgba(var(--cc-accent-rgb),0.6)'
-    : '0 4px 12px rgba(0,0,0,0.5)';
+    ? '0 0 16px rgba(var(--cc-accent-rgb),0.6)':'0 4px 12px rgba(0,0,0,0.5)';
   const size = isSelected ? 44 : 36;
   return new L.DivIcon({
     html: `<div style="
@@ -30,7 +29,7 @@ function makeTruckIcon(isLive, isSelected) {
       box-shadow:${shadow};
       border:2px solid ${border};
       transition:all 0.2s ease;
-    ">🚚</div>`,
+    "></div>`,
     className: '',
     iconSize: [size, size],
     iconAnchor: [size / 2, size / 2],
@@ -45,14 +44,14 @@ function RecenterButton({ userLat, userLng }) {
     <button
       onClick={() => map.setView([userLat, userLng], 14)}
       className="absolute bottom-36 right-4 z-[1000] w-11 h-11 rounded-2xl flex items-center justify-center shadow-xl"
-      style={{ background: 'rgba(13,21,23,0.92)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)', backdropFilter: 'blur(12px)' }}
+      style={{ background: 'rgba(13,21,23,0.92)', border:'1px solid rgba(var(--cc-accent-rgb),0.3)', backdropFilter:'blur(12px)' }}
     >
       <Navigation className="w-5 h-5" style={{ color: 'var(--cc-accent)' }} />
     </button>
   );
 }
 
-const FILTERS = ['All', 'Live', 'Open Now', 'Tacos', 'BBQ', 'Near Me'];
+const FILTERS = ['All','Live','Open Now','Tacos','BBQ','Near Me'];
 
 export default function MapView() {
   const navigate = useNavigate();
@@ -71,9 +70,9 @@ export default function MapView() {
 
   const filteredTrucks = trucks.filter(truck => {
     if (activeFilter === 'Live') return truck.is_live;
-    if (activeFilter === 'Open Now') return truck.status === 'open';
-    if (activeFilter === 'Tacos') return truck.cuisine_type === 'tacos';
-    if (activeFilter === 'BBQ') return truck.cuisine_type === 'bbq';
+    if (activeFilter === 'Open Now') return truck.status ==='open';
+    if (activeFilter === 'Tacos') return truck.cuisine_type ==='tacos';
+    if (activeFilter === 'BBQ') return truck.cuisine_type ==='bbq';
     if (activeFilter === 'Near Me') {
       if (!userLat || !truck.latitude) return true;
       return distanceMiles(userLat, userLng, truck.latitude, truck.longitude) <= 5;
@@ -114,13 +113,12 @@ export default function MapView() {
       {/* ── Top bar ── */}
       <div
         className="absolute top-0 left-0 right-0 z-[1000] px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-3"
-        style={{ background: 'linear-gradient(180deg, rgba(13,21,23,0.95) 0%, rgba(13,21,23,0.0) 100%)', pointerEvents: 'none' }}
+        style={{ background: 'linear-gradient(180deg, rgba(13,21,23,0.95) 0%, rgba(13,21,23,0.0) 100%)', pointerEvents:'none' }}
       >
         <div className="flex items-center gap-3 mb-3" style={{ pointerEvents: 'all' }}>
           <Link
-            to="/"
-            className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0"
-            style={{ background: 'rgba(13,21,23,0.88)', border: '1px solid rgba(var(--cc-line-rgb),0.4)', backdropFilter: 'blur(12px)' }}
+            to="/" className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0"
+            style={{ background: 'rgba(13,21,23,0.88)', border:'1px solid rgba(var(--cc-line-rgb),0.4)', backdropFilter:'blur(12px)' }}
           >
             <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
           </Link>
@@ -128,16 +126,16 @@ export default function MapView() {
           <button
             onClick={() => navigate('/radar')}
             className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0"
-            style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', border: '1px solid rgba(var(--cc-accent-rgb),0.35)', backdropFilter: 'blur(12px)' }}
+            style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', border:'1px solid rgba(var(--cc-accent-rgb),0.35)', backdropFilter:'blur(12px)' }}
             title="Truck Radar AR"
           >
             <Crosshair className="w-5 h-5" style={{ color: 'var(--cc-accent)' }} />
           </button>
           <div
             className="flex-1 flex items-center gap-2 px-4 py-2.5 rounded-2xl"
-            style={{ background: 'rgba(13,21,23,0.88)', border: '1px solid rgba(var(--cc-line-rgb),0.35)', backdropFilter: 'blur(12px)' }}
+            style={{ background: 'rgba(13,21,23,0.88)', border:'1px solid rgba(var(--cc-line-rgb),0.35)', backdropFilter:'blur(12px)' }}
           >
-            <span className="w-2 h-2 rounded-full" style={{ background: 'var(--cc-accent)', boxShadow: '0 0 6px var(--cc-accent)' }} />
+            <span className="w-2 h-2 rounded-full" style={{ background: 'var(--cc-accent)', boxShadow:'0 0 6px var(--cc-accent)' }} />
             <span className="text-sm font-semibold" style={{ color: 'var(--cc-ink)' }}>
               <span style={{ color: 'var(--cc-accent)' }}>{openCount}</span> trucks open near you
             </span>
@@ -157,9 +155,9 @@ export default function MapView() {
                 style={
                   isActive
                     ? {
-                        background: f === 'Live' ? 'rgba(var(--cc-warm-red-rgb),0.9)' : 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))',
-                        color: f === 'Live' ? 'white' : 'var(--cc-accent-deep)',
-                        boxShadow: f === 'Live' ? '0 0 14px rgba(var(--cc-warm-red-rgb),0.5)' : '0 0 14px rgba(var(--cc-accent-rgb),0.35)',
+                        background: f === 'Live'?'rgba(var(--cc-warm-red-rgb),0.9)':'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))',
+                        color: f === 'Live'?'white':'var(--cc-accent-deep)',
+                        boxShadow: f === 'Live'?'0 0 14px rgba(var(--cc-warm-red-rgb),0.5)':'0 0 14px rgba(var(--cc-accent-rgb),0.35)',
                       }
                     : {
                         background: 'rgba(13,21,23,0.85)',
@@ -243,9 +241,9 @@ export default function MapView() {
                     className="rounded-3xl overflow-hidden transition-all duration-200"
                     style={{
                       background: 'rgba(13,21,23,0.97)',
-                      border: isActive ? '1px solid rgba(var(--cc-accent-rgb),0.35)' : '1px solid rgba(var(--cc-line-rgb),0.25)',
+                      border: isActive ? '1px solid rgba(var(--cc-accent-rgb),0.35)':'1px solid rgba(var(--cc-line-rgb),0.25)',
                       backdropFilter: 'blur(24px)',
-                      boxShadow: isActive ? '0 12px 48px rgba(0,0,0,0.7), 0 0 28px rgba(var(--cc-accent-rgb),0.1)' : '0 8px 32px rgba(0,0,0,0.5)',
+                      boxShadow: isActive ? '0 12px 48px rgba(0,0,0,0.7), 0 0 28px rgba(var(--cc-accent-rgb),0.1)':'0 8px 32px rgba(0,0,0,0.5)',
                       opacity: isActive ? 1 : 0.75,
                     }}
                   >
@@ -266,12 +264,12 @@ export default function MapView() {
                       </div>
                       <div className="flex-1 px-4 pt-3 pb-2 min-w-0">
                         <p className="font-display text-base leading-tight mb-0.5" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
-                        <p className="text-xs capitalize mb-2" style={{ color: 'var(--cc-ink-dim)' }}>{truck.cuisine_type?.replace('_', ' ')}</p>
+                        <p className="text-xs capitalize mb-2" style={{ color: 'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')}</p>
                         <div className="flex gap-2">
                           {[
-                            { label: 'WAIT TIME', value: '~12 min' },
-                            { label: 'DISTANCE', value: dist != null ? `${dist.toFixed(1)} mi` : '—' },
-                            { label: 'STATUS', value: truck.status === 'open' ? 'Open' : 'Closed', color: truck.status === 'open' ? 'var(--cc-accent)' : 'var(--cc-ink-dim)' },
+                            { label: 'WAIT TIME', value:'~12 min' },
+                            { label: 'DISTANCE', value: dist != null ? `${dist.toFixed(1)} mi` :'—' },
+                            { label: 'STATUS', value: truck.status ==='open'?'Open':'Closed', color: truck.status ==='open'?'var(--cc-accent)':'var(--cc-ink-dim)' },
                           ].map(({ label, value, color }) => (
                             <div key={label} className="flex flex-col items-center px-2 py-1.5 rounded-xl flex-1"
                               style={{ background: 'var(--cc-bg-0)' }}>
@@ -285,7 +283,7 @@ export default function MapView() {
                     <div className="flex gap-2.5 px-4 pb-4 pt-2">
                       <Link to={`/truck/${truck.id}`} className="flex-1">
                         <button className="w-full py-3 rounded-full font-display text-sm"
-                          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 16px rgba(var(--cc-accent-rgb),0.3)' }}>
+                          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 16px rgba(var(--cc-accent-rgb),0.3)' }}>
                           View Menu
                         </button>
                       </Link>
@@ -294,8 +292,8 @@ export default function MapView() {
                           if (truck.latitude) window.open(`https://www.google.com/maps/dir/?api=1&destination=${truck.latitude},${truck.longitude}`, '_blank');
                         }}
                         className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full font-display text-sm"
-                        style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
-                        🚶 Directions
+                        style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}>
+                         Directions
                       </button>
                     </div>
                   </div>
@@ -315,7 +313,7 @@ export default function MapView() {
                     }
                   }}
                   className="rounded-full transition-all duration-300"
-                  style={{ width: i === carouselIndex ? 20 : 6, height: 6, background: i === carouselIndex ? 'var(--cc-accent)' : 'rgba(186,203,192,0.3)' }}
+                  style={{ width: i === carouselIndex ? 20 : 6, height: 6, background: i === carouselIndex ? 'var(--cc-accent)':'rgba(186,203,192,0.3)' }}
                 />
               ))}
             </div>
@@ -327,7 +325,7 @@ export default function MapView() {
       {mappedTrucks.length > 0 && !selected && (
         <button
           className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[1000] px-5 py-3 rounded-full font-display text-sm"
-          style={{ background: 'rgba(13,21,23,0.92)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)', color: 'var(--cc-accent)', backdropFilter: 'blur(12px)' }}
+          style={{ background: 'rgba(13,21,23,0.92)', border:'1px solid rgba(var(--cc-accent-rgb),0.3)', color:'var(--cc-accent)', backdropFilter:'blur(12px)' }}
           onClick={() => selectTruckAtIndex(0)}
         >
           {openCount} trucks nearby — tap to explore

@@ -12,17 +12,13 @@ const PLANS = [
     label: 'Free',
     price: '$0',
     period: '/mo',
-    icon: '🚚',
+    icon: '',
     color: 'var(--cc-ink-dim)',
     bg: 'rgba(186,203,192,0.08)',
     border: 'rgba(186,203,192,0.2)',
     credits: 0,
     features: [
-      'Basic truck listing',
-      'Accept orders (12% commission)',
-      'Menu management',
-      'Order queue',
-      'Stripe payouts',
+      'Basic truck listing','Accept orders (12% commission)','Menu management','Order queue','Stripe payouts',
     ],
   },
   {
@@ -30,17 +26,13 @@ const PLANS = [
     label: 'Standard',
     price: '$29',
     period: '/mo',
-    icon: '⭐',
+    icon: '',
     color: 'var(--cc-accent)',
     bg: 'rgba(var(--cc-accent-rgb),0.08)',
     border: 'rgba(var(--cc-accent-rgb),0.25)',
     credits: 5,
     features: [
-      'Everything in Free',
-      'Sales analytics dashboard',
-      'Menu item highlights',
-      'Customer insights',
-      '5 boost credits / month',
+      'Everything in Free','Sales analytics dashboard','Menu item highlights','Customer insights','5 boost credits / month',
     ],
   },
   {
@@ -48,19 +40,14 @@ const PLANS = [
     label: 'Plus',
     price: '$59',
     period: '/mo',
-    icon: '🔥',
+    icon: '',
     color: 'var(--cc-warm)',
     bg: 'rgba(var(--cc-warm-rgb),0.08)',
     border: 'rgba(var(--cc-warm-rgb),0.3)',
     credits: 15,
     badge: 'POPULAR',
     features: [
-      'Everything in Standard',
-      'Featured in Explore results',
-      'Priority in search',
-      'Upload promo clips',
-      '15 boost credits / month',
-      'Priority support',
+      'Everything in Standard','Featured in Explore results','Priority in search','Upload promo clips','15 boost credits / month','Priority support',
     ],
   },
   {
@@ -68,28 +55,23 @@ const PLANS = [
     label: 'Premium',
     price: '$99',
     period: '/mo',
-    icon: '👑',
+    icon: '',
     color: 'var(--cc-amber)',
     bg: 'rgba(251,191,36,0.08)',
     border: 'rgba(251,191,36,0.3)',
     credits: 30,
     features: [
-      'Everything in Plus',
-      'Homepage featured placement',
-      'Guaranteed Live top slot',
-      'Featured Deals placement',
-      '30 boost credits / month',
-      'Dedicated account manager',
+      'Everything in Plus','Homepage featured placement','Guaranteed Live top slot','Featured Deals placement','30 boost credits / month','Dedicated account manager',
     ],
   },
 ];
 
 const BOOSTS = [
-  { id: 'homepage_featured', label: 'Homepage Featured', desc: 'Appear in the Hero section on the homepage', credits: 5, emoji: '🏠' },
-  { id: 'explore_top', label: 'Top Explore Placement', desc: 'Pin to top of the Explore page for 24h', credits: 3, emoji: '🔍' },
-  { id: 'live_top', label: 'Live Section Top', desc: 'Featured first in the Live Now carousel', credits: 3, emoji: '🔴' },
-  { id: 'deals_featured', label: 'Featured Deal', desc: 'Appear in the Deals section for 48h', credits: 2, emoji: '💰' },
-  { id: 'promo_boost', label: 'Promo Boost', desc: 'Boosted visibility across all feed sections for 12h', credits: 1, emoji: '⚡' },
+  { id: 'homepage_featured', label:'Homepage Featured', desc:'Appear in the Hero section on the homepage', credits: 5, emoji:'' },
+  { id: 'explore_top', label:'Top Explore Placement', desc:'Pin to top of the Explore page for 24h', credits: 3, emoji:'' },
+  { id: 'live_top', label:'Live Section Top', desc:'Featured first in the Live Now carousel', credits: 3, emoji:'' },
+  { id: 'deals_featured', label:'Featured Deal', desc:'Appear in the Deals section for 48h', credits: 2, emoji:'' },
+  { id: 'promo_boost', label:'Promo Boost', desc:'Boosted visibility across all feed sections for 12h', credits: 1, emoji:'' },
 ];
 
 function VendorPlansInner({ truck, user }) {
@@ -126,7 +108,7 @@ function VendorPlansInner({ truck, user }) {
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['vendor-truck'] });
-      toast({ title: 'Boost activated! 🚀', duration: 2000 });
+      toast({ title: 'Boost activated!', duration: 2000 });
     },
     onError: (err) => toast({ title: err.message, variant: 'destructive', duration: 2000 }),
   });
@@ -137,7 +119,7 @@ function VendorPlansInner({ truck, user }) {
     <div className="min-h-screen pb-16" style={{ background: 'var(--cc-bg-0)' }}>
       {/* Header */}
       <div className="flex items-center gap-3 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-20"
-        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.12)' }}>
+        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter:'blur(20px)', borderBottom:'1px solid rgba(var(--cc-line-rgb),0.12)' }}>
         <button onClick={() => navigate('/vendor')} className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </button>
@@ -149,12 +131,12 @@ function VendorPlansInner({ truck, user }) {
 
       {/* Tabs */}
       <div className="flex gap-1 px-5 pt-5 mb-5">
-        {[{ id: 'plans', label: 'Monthly Plans' }, { id: 'boosts', label: 'Boost Credits' }].map(tab => (
+        {[{ id: 'plans', label:'Monthly Plans'}, { id:'boosts', label:'Boost Credits' }].map(tab => (
           <button key={tab.id} onClick={() => setActiveTab(tab.id)}
             className="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all"
             style={activeTab === tab.id
-              ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }
-              : { background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }}>
+              ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)' }
+              : { background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)' }}>
             {tab.label}
           </button>
         ))}
@@ -173,7 +155,7 @@ function VendorPlansInner({ truck, user }) {
                   style={{ background: plan.bg, border: `1px solid ${plan.border}` }}>
                   {plan.badge && (
                     <div className="absolute top-4 right-4 text-[10px] font-black px-2.5 py-1 rounded-full"
-                      style={{ background: 'rgba(var(--cc-warm-rgb),0.2)', color: 'var(--cc-warm)', border: '1px solid rgba(var(--cc-warm-rgb),0.4)' }}>
+                      style={{ background: 'rgba(var(--cc-warm-rgb),0.2)', color:'var(--cc-warm)', border:'1px solid rgba(var(--cc-warm-rgb),0.4)' }}>
                       {plan.badge}
                     </div>
                   )}
@@ -189,7 +171,7 @@ function VendorPlansInner({ truck, user }) {
                   </div>
                   {plan.credits > 0 && (
                     <div className="flex items-center gap-2 px-3 py-2 rounded-xl mb-4"
-                      style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
+                      style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border:'1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
                       <Zap className="w-3.5 h-3.5" style={{ color: 'var(--cc-accent)' }} />
                       <span className="text-xs font-bold" style={{ color: 'var(--cc-accent)' }}>{plan.credits} boost credits / month</span>
                     </div>
@@ -204,15 +186,15 @@ function VendorPlansInner({ truck, user }) {
                   </div>
                   {isActive ? (
                     <div className="w-full py-3 rounded-full text-center font-display text-sm"
-                      style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }}>
-                      ✓ Current Plan
+                      style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color:'var(--cc-accent)', border:'1px solid rgba(var(--cc-accent-rgb),0.3)' }}>
+                       Current Plan
                     </div>
                   ) : (
                     <button
                       onClick={() => updateTruck.mutate({ vendor_plan: plan.id })}
                       disabled={updateTruck.isPending}
                       className="w-full py-3 rounded-full font-display text-sm transition-all active:scale-95"
-                      style={{ background: `${plan.color}`, color: plan.id === 'standard' ? 'var(--cc-accent-deep)' : '#000' }}>
+                      style={{ background: `${plan.color}`, color: plan.id === 'standard'?'var(--cc-accent-deep)':'#000' }}>
                       {updateTruck.isPending ? 'Updating...' : `Switch to ${plan.label}`}
                     </button>
                   )}
@@ -225,7 +207,7 @@ function VendorPlansInner({ truck, user }) {
         {activeTab === 'boosts' && (
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between px-4 py-3 rounded-2xl"
-              style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
+              style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border:'1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
               <div>
                 <p className="text-xs font-bold" style={{ color: 'var(--cc-ink-dim)' }}>AVAILABLE CREDITS</p>
                 <p className="font-display text-3xl" style={{ color: 'var(--cc-accent)' }}>{truck.boost_credits || 0}</p>
@@ -237,7 +219,7 @@ function VendorPlansInner({ truck, user }) {
               const canAfford = (truck.boost_credits || 0) >= boost.credits;
               return (
                 <div key={boost.id} className="p-4 rounded-2xl flex items-center gap-4"
-                  style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+                  style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
                   <span className="text-2xl flex-shrink-0">{boost.emoji}</span>
                   <div className="flex-1 min-w-0">
                     <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>{boost.label}</p>
@@ -248,8 +230,8 @@ function VendorPlansInner({ truck, user }) {
                     disabled={!canAfford || applyBoost.isPending}
                     className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-black transition-all"
                     style={canAfford
-                      ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }
-                      : { background: 'var(--cc-bg-3)', color: 'var(--cc-ink-dim)', opacity: 0.5 }}>
+                      ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)' }
+                      : { background: 'var(--cc-bg-3)', color:'var(--cc-ink-dim)', opacity: 0.5 }}>
                     <Zap className="w-3 h-3" />{boost.credits}
                   </button>
                 </div>

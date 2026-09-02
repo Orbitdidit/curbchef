@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 /**
  * Returns a live closing-status label for a truck, recalculated every minute.
  * Returns: { label, variant }
- * variant: 'normal' | 'soon' | 'last_call' | 'cutoff' | 'closed'
+ * variant: 'normal'|'soon'|'last_call'|'cutoff'|'closed'
  */
 export function useCloseCountdown(truck) {
   const [result, setResult] = useState(() => compute(truck));
@@ -26,11 +26,11 @@ function parseTimeToday(timeStr) {
 }
 
 function fmt12(date) {
-  return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+  return date.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit', hour12: true });
 }
 
 function compute(truck) {
-  if (!truck) return { label: '', variant: 'closed' };
+  if (!truck) return { label: '', variant:'closed' };
 
   const now = new Date();
   const closeTime = parseTimeToday(truck.scheduled_close_time);
@@ -38,36 +38,36 @@ function compute(truck) {
   const cutoffMins = truck.order_cutoff_minutes ?? 15;
 
   // Truck is manually closed
-  if (truck.status === 'closed' || truck.status === 'sold_out') {
+  if (truck.status === 'closed'|| truck.status ==='sold_out') {
     if (openTime && openTime > now) {
       return { label: `Opens today at ${fmt12(openTime)}`, variant: 'closed' };
     }
     if (openTime) {
       return { label: `Opens tomorrow at ${fmt12(openTime)}`, variant: 'closed' };
     }
-    return { label: 'Closed', variant: 'closed' };
+    return { label: 'Closed', variant:'closed' };
   }
 
   // No close time set — just show open
   if (!closeTime) {
-    return { label: 'Open', variant: 'normal' };
+    return { label: 'Open', variant:'normal' };
   }
 
   const minsUntilClose = (closeTime - now) / 60_000;
 
   // Past close time
   if (minsUntilClose <= 0) {
-    return { label: 'Closed for today', variant: 'closed' };
+    return { label: 'Closed for today', variant:'closed' };
   }
 
   // Past order cutoff (cutoffMins before close)
   if (minsUntilClose <= cutoffMins) {
-    return { label: 'No longer taking orders', variant: 'cutoff' };
+    return { label: 'No longer taking orders', variant:'cutoff' };
   }
 
   // Last call: under 30 min
   if (minsUntilClose <= 30) {
-    return { label: `🔔 Last orders in ${Math.ceil(minsUntilClose)} min`, variant: 'last_call' };
+    return { label: ` Last orders in ${Math.ceil(minsUntilClose)} min`, variant: 'last_call' };
   }
 
   // Closing in under 2 hrs
@@ -77,7 +77,7 @@ function compute(truck) {
     const parts = [];
     if (h > 0) parts.push(`${h}h`);
     if (m > 0) parts.push(`${m}m`);
-    return { label: `Closes in ${parts.join(' ')}`, variant: 'soon' };
+    return { label: `Closes in ${parts.join('')}`, variant:'soon' };
   }
 
   // More than 2 hrs

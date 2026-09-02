@@ -27,13 +27,12 @@ function ConfidenceRing({ pct }) {
   const r = 28;
   const circ = 2 * Math.PI * r;
   const dash = (pct / 100) * circ;
-  const color = pct >= 75 ? 'var(--cc-accent)' : pct >= 50 ? 'var(--cc-amber)' : 'var(--cc-warm)';
+  const color = pct >= 75 ? 'var(--cc-accent)': pct >= 50 ?'var(--cc-amber)':'var(--cc-warm)';
   return (
     <div className="relative w-16 h-16 flex items-center justify-center flex-shrink-0">
       <svg width="64" height="64" className="-rotate-90">
         <circle cx="32" cy="32" r={r} stroke="var(--cc-bg-3)" strokeWidth="5" fill="none" />
-        <circle cx="32" cy="32" r={r} stroke={color} strokeWidth="5" fill="none"
-          strokeDasharray={`${dash} ${circ}`} strokeLinecap="round"
+        <circle cx="32" cy="32" r={r} stroke={color} strokeWidth="5" fill="none" strokeDasharray={`${dash} ${circ}`} strokeLinecap="round"
           style={{ transition: 'stroke-dasharray 1s ease' }} />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
@@ -86,17 +85,16 @@ export default function FoodScan() {
   // Fallback to any open trucks  
   const suggestedTrucks = matchedTrucks.length > 0
     ? matchedTrucks
-    : trucks.filter(t => t.status === 'open' && (t.cuisine_type === 'vegan' || t.cuisine_type === 'fusion')).slice(0, 3);
+    : trucks.filter(t => t.status === 'open'&& (t.cuisine_type ==='vegan'|| t.cuisine_type ==='fusion')).slice(0, 3);
 
   const healthColor = result
-    ? result.health_score >= 7 ? 'var(--cc-accent)' : result.health_score >= 4 ? 'var(--cc-amber)' : 'var(--cc-warm)'
-    : 'var(--cc-ink-dim)';
+    ? result.health_score >= 7 ? 'var(--cc-accent)': result.health_score >= 4 ?'var(--cc-amber)':'var(--cc-warm)':'var(--cc-ink-dim)';
 
   return (
     <div className="min-h-screen pb-32" style={{ background: 'var(--cc-bg-0)' }}>
       {/* Header */}
       <div className="flex items-center gap-3 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-10"
-        style={{ background: 'rgba(13,21,23,0.96)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
+        style={{ background: 'rgba(13,21,23,0.96)', backdropFilter:'blur(20px)', borderBottom:'1px solid rgba(var(--cc-line-rgb),0.15)' }}>
         <button onClick={() => navigate(-1)}
           className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
@@ -106,7 +104,7 @@ export default function FoodScan() {
           <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>AI-powered calorie & macro analysis</p>
         </div>
         <div className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-          style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
+          style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', border:'1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
           <Zap className="w-3 h-3" style={{ color: 'var(--cc-accent)' }} />
           <span className="text-[10px] font-black" style={{ color: 'var(--cc-accent)' }}>AI</span>
         </div>
@@ -122,27 +120,27 @@ export default function FoodScan() {
               <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 60%, rgba(13,21,23,0.8) 100%)' }} />
               {(uploading || analyzing) && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-3"
-                  style={{ background: 'rgba(13,21,23,0.7)', backdropFilter: 'blur(8px)' }}>
+                  style={{ background: 'rgba(13,21,23,0.7)', backdropFilter:'blur(8px)' }}>
                   <div className="w-10 h-10 border-3 border-t-transparent rounded-full animate-spin"
                     style={{ borderColor: 'var(--cc-accent) transparent transparent transparent', borderWidth: 3 }} />
                   <p className="font-display text-sm" style={{ color: 'var(--cc-accent)' }}>
-                    {uploading ? 'Uploading...' : 'Analyzing with AI...'}
+                    {uploading ? 'Uploading...':'Analyzing with AI...'}
                   </p>
                 </div>
               )}
               {/* Replace button */}
               <button onClick={() => { setPreview(null); setResult(null); }}
                 className="absolute bottom-3 right-3 px-4 py-2 rounded-full text-xs font-black"
-                style={{ background: 'rgba(13,21,23,0.85)', color: 'var(--cc-ink-dim)', backdropFilter: 'blur(8px)' }}>
+                style={{ background: 'rgba(13,21,23,0.85)', color:'var(--cc-ink-dim)', backdropFilter:'blur(8px)' }}>
                 Try another →
               </button>
             </div>
           ) : (
             <div onClick={() => fileRef.current?.click()}
               className="rounded-3xl flex flex-col items-center justify-center gap-4 cursor-pointer transition-all"
-              style={{ aspectRatio: '4/3', background: 'var(--cc-bg-2)', border: '2px dashed rgba(var(--cc-accent-rgb),0.2)' }}>
+              style={{ aspectRatio: '4/3', background:'var(--cc-bg-2)', border:'2px dashed rgba(var(--cc-accent-rgb),0.2)' }}>
               <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
-                style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
+                style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border:'1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
                 <Camera className="w-7 h-7" style={{ color: 'var(--cc-accent)' }} />
               </div>
               <div className="text-center">
@@ -162,7 +160,7 @@ export default function FoodScan() {
         </div>
 
         {error && (
-          <div className="flex items-center gap-2 p-4 rounded-2xl" style={{ background: 'rgba(var(--cc-warm-red-rgb),0.1)', border: '1px solid rgba(var(--cc-warm-red-rgb),0.2)' }}>
+          <div className="flex items-center gap-2 p-4 rounded-2xl" style={{ background: 'rgba(var(--cc-warm-red-rgb),0.1)', border:'1px solid rgba(var(--cc-warm-red-rgb),0.2)' }}>
             <AlertCircle className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--cc-warm-red)' }} />
             <p className="text-sm" style={{ color: 'var(--cc-warm-red)' }}>{error}</p>
           </div>
@@ -173,15 +171,15 @@ export default function FoodScan() {
           <>
             {/* Food name + confidence */}
             <div className="flex items-center gap-4 p-5 rounded-3xl"
-              style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+              style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
               <ConfidenceRing pct={result.confidence} />
               <div className="flex-1">
                 <p className="font-display text-xl leading-tight" style={{ color: 'var(--cc-ink)' }}>{result.food_name}</p>
                 <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{result.portion_size}</p>
                 <div className="flex items-center gap-1.5 mt-2">
                   <span className="text-[10px] font-black px-2 py-0.5 rounded-full"
-                    style={{ background: result.confidence >= 75 ? 'rgba(var(--cc-accent-rgb),0.12)' : 'rgba(251,191,36,0.12)', color: result.confidence >= 75 ? 'var(--cc-accent)' : 'var(--cc-amber)' }}>
-                    {result.confidence >= 75 ? 'HIGH CONFIDENCE' : result.confidence >= 50 ? 'MODERATE' : 'LOW CONFIDENCE'}
+                    style={{ background: result.confidence >= 75 ? 'rgba(var(--cc-accent-rgb),0.12)':'rgba(251,191,36,0.12)', color: result.confidence >= 75 ?'var(--cc-accent)':'var(--cc-amber)' }}>
+                    {result.confidence >= 75 ? 'HIGH CONFIDENCE': result.confidence >= 50 ?'MODERATE':'LOW CONFIDENCE'}
                   </span>
                 </div>
               </div>
@@ -190,13 +188,13 @@ export default function FoodScan() {
             {/* Calorie spotlight */}
             <div className="flex gap-3">
               <div className="flex-1 flex flex-col items-center justify-center py-5 rounded-3xl"
-                style={{ background: 'linear-gradient(135deg,rgba(var(--cc-warm-rgb),0.12),rgba(var(--cc-warm-rgb),0.06))', border: '1px solid rgba(var(--cc-warm-rgb),0.2)' }}>
+                style={{ background: 'linear-gradient(135deg,rgba(var(--cc-warm-rgb),0.12),rgba(var(--cc-warm-rgb),0.06))', border:'1px solid rgba(var(--cc-warm-rgb),0.2)' }}>
                 <Flame className="w-6 h-6 mb-1" style={{ color: 'var(--cc-warm)' }} />
                 <p className="font-display text-4xl" style={{ color: 'var(--cc-warm)' }}>{result.calories}</p>
                 <p className="text-xs font-bold mt-0.5" style={{ color: 'rgba(186,203,192,0.6)' }}>CALORIES</p>
               </div>
               <div className="flex-1 flex flex-col items-center justify-center py-5 rounded-3xl"
-                style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+                style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
                 <TrendingUp className="w-6 h-6 mb-1" style={{ color: healthColor }} />
                 <p className="font-display text-4xl" style={{ color: healthColor }}>{result.health_score}<span className="text-lg">/10</span></p>
                 <p className="text-xs font-bold mt-0.5" style={{ color: 'rgba(186,203,192,0.6)' }}>HEALTH SCORE</p>
@@ -205,7 +203,7 @@ export default function FoodScan() {
 
             {/* Macros */}
             <div className="p-5 rounded-3xl flex flex-col gap-4"
-              style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+              style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
               <p className="text-[10px] font-black tracking-widest" style={{ color: 'rgba(186,203,192,0.5)' }}>MACROS BREAKDOWN</p>
               <MacroBar label="Protein" value={result.macros?.protein_g || 0} max={60} color="var(--cc-accent)" icon={Beef} />
               <MacroBar label="Carbs" value={result.macros?.carbs_g || 0} max={100} color="var(--cc-amber)" icon={Wheat} />
@@ -216,7 +214,7 @@ export default function FoodScan() {
             {/* Health notes */}
             {result.health_notes && (
               <div className="p-4 rounded-2xl flex items-start gap-3"
-                style={{ background: 'rgba(var(--cc-accent-rgb),0.06)', border: '1px solid rgba(var(--cc-accent-rgb),0.12)' }}>
+                style={{ background: 'rgba(var(--cc-accent-rgb),0.06)', border:'1px solid rgba(var(--cc-accent-rgb),0.12)' }}>
                 <Leaf className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: 'var(--cc-accent)' }} />
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--cc-ink-dim)' }}>{result.health_notes}</p>
               </div>
@@ -224,14 +222,14 @@ export default function FoodScan() {
 
             {/* Healthier alternatives */}
             {result.healthier_alternatives?.length > 0 && (
-              <div className="p-5 rounded-3xl" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+              <div className="p-5 rounded-3xl" style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
                 <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: 'rgba(186,203,192,0.5)' }}>HEALTHIER ALTERNATIVES</p>
                 <div className="flex flex-col gap-2">
                   {result.healthier_alternatives.map((alt, i) => (
                     <div key={i} className="flex items-center gap-2.5">
                       <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-sm"
                         style={{ background: 'rgba(var(--cc-accent-rgb),0.1)' }}>
-                        {['🥗', '🍱', '🥙'][i] || '🍽️'}
+                        {['','',''][i] ||''}
                       </div>
                       <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>{alt}</p>
                     </div>
@@ -242,7 +240,7 @@ export default function FoodScan() {
 
             {/* Nearby trucks suggestion */}
             {suggestedTrucks.length > 0 && (
-              <div className="p-5 rounded-3xl" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+              <div className="p-5 rounded-3xl" style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
                 <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: 'rgba(186,203,192,0.5)' }}>
                   FIND SOMETHING SIMILAR NEARBY
                 </p>
@@ -250,21 +248,21 @@ export default function FoodScan() {
                   {suggestedTrucks.map(truck => (
                     <Link key={truck.id} to={`/truck/${truck.id}`}
                       className="flex items-center gap-3 p-3 rounded-2xl"
-                      style={{ background: 'var(--cc-bg-0)', border: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
+                      style={{ background: 'var(--cc-bg-0)', border:'1px solid rgba(var(--cc-line-rgb),0.15)' }}>
                       <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0" style={{ background: 'var(--cc-bg-3)' }}>
                         {truck.image_url
                           ? <img src={truck.image_url} alt={truck.name} className="w-full h-full object-cover" />
-                          : <div className="w-full h-full flex items-center justify-center text-xl">🚚</div>
+                          : <div className="w-full h-full flex items-center justify-center text-xl"></div>
                         }
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-display text-sm truncate" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
-                        <p className="text-xs capitalize" style={{ color: 'var(--cc-ink-dim)' }}>{truck.cuisine_type?.replace('_', ' ')}</p>
+                        <p className="text-xs capitalize" style={{ color: 'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')}</p>
                       </div>
                       <div className="flex flex-col items-end gap-1">
                         <span className="text-[10px] font-black px-2 py-0.5 rounded-full"
-                          style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)' }}>OPEN</span>
-                        <span className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>⭐ {truck.rating?.toFixed(1) || '4.9'}</span>
+                          style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', color:'var(--cc-accent)' }}>OPEN</span>
+                        <span className="text-[10px]" style={{ color: 'var(--cc-ink-dim)'}}> {truck.rating?.toFixed(1) ||'4.9'}</span>
                       </div>
                     </Link>
                   ))}

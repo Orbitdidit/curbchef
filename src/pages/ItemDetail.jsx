@@ -6,7 +6,7 @@ import { ChevronLeft, Heart, Star, Minus, Plus } from 'lucide-react';
 import { addToCart as addItemToCart, getCart, updateQuantity } from '@/lib/cartStore';
 import { useToast } from '@/components/ui/use-toast';
 
-const SPICE = ['Mild', 'Medium', 'High'];
+const SPICE = ['Mild','Medium','High'];
 
 export default function ItemDetail() {
   const { id: truckId, itemId } = useParams();
@@ -92,13 +92,13 @@ export default function ItemDetail() {
           <button
             onClick={() => navigate(-1)}
             className="w-9 h-9 rounded-xl flex items-center justify-center"
-            style={{ background: 'rgba(13,21,23,0.7)', backdropFilter: 'blur(10px)' }}
+            style={{ background: 'rgba(13,21,23,0.7)', backdropFilter:'blur(10px)' }}
           >
             <ChevronLeft className="w-5 h-5 text-white" />
           </button>
           <button
             className="w-9 h-9 rounded-xl flex items-center justify-center"
-            style={{ background: 'rgba(13,21,23,0.7)', backdropFilter: 'blur(10px)' }}
+            style={{ background: 'rgba(13,21,23,0.7)', backdropFilter:'blur(10px)' }}
           >
             <Heart className="w-4.5 h-4.5 text-white" />
           </button>
@@ -107,7 +107,7 @@ export default function ItemDetail() {
         {/* Border glow on selected item */}
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{ border: '2px solid rgba(var(--cc-accent-rgb),0.1)', borderRadius: 'inherit' }}
+          style={{ border: '2px solid rgba(var(--cc-accent-rgb),0.1)', borderRadius:'inherit' }}
         />
       </div>
 
@@ -136,9 +136,9 @@ export default function ItemDetail() {
           {item.is_special && (
             <span
               className="text-[10px] font-black px-2.5 py-1 rounded-full"
-              style={{ background: 'rgba(var(--cc-warm-rgb),0.15)', color: 'var(--cc-warm)', border: '1px solid rgba(var(--cc-warm-rgb),0.3)' }}
+              style={{ background: 'rgba(var(--cc-warm-rgb),0.15)', color:'var(--cc-warm)', border:'1px solid rgba(var(--cc-warm-rgb),0.3)' }}
             >
-              ★ TRENDING
+               TRENDING
             </span>
           )}
         </div>
@@ -148,7 +148,7 @@ export default function ItemDetail() {
         {/* Spice Level — only shown when vendor enabled it AND category/tags support it */}
         {item.has_spice_option && (
           item.category === 'mains' ||
-          item.tags?.some(t => ['spicy', 'hot'].includes(t.toLowerCase()))
+          item.tags?.some(t => ['spicy','hot'].includes(t.toLowerCase()))
         ) && (
           <div className="mb-6">
             <div className="flex items-center justify-between mb-3">
@@ -162,8 +162,8 @@ export default function ItemDetail() {
                   onClick={() => setSpice(prev => prev === s ? null : s)}
                   className="flex-1 py-2.5 rounded-full text-sm font-bold transition-all"
                   style={spice === s
-                    ? { background: 'var(--cc-warm)', color: 'white', boxShadow: '0 0 12px rgba(var(--cc-warm-rgb),0.4)' }
-                    : { background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }
+                    ? { background: 'var(--cc-warm)', color:'white', boxShadow:'0 0 12px rgba(var(--cc-warm-rgb),0.4)' }
+                    : { background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }
                   }
                 >
                   {s}
@@ -187,22 +187,22 @@ export default function ItemDetail() {
                     className="flex items-center gap-3 p-3.5 rounded-2xl transition-all"
                     style={{
                       background: 'var(--cc-bg-2)',
-                      border: selected ? '1px solid rgba(var(--cc-accent-rgb),0.4)' : '1px solid transparent',
+                      border: selected ? '1px solid rgba(var(--cc-accent-rgb),0.4)':'1px solid transparent',
                     }}
                   >
                     <div
                       className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 text-sm"
-                      style={{ background: selected ? 'rgba(var(--cc-accent-rgb),0.12)' : 'var(--cc-bg-3)' }}
+                      style={{ background: selected ? 'rgba(var(--cc-accent-rgb),0.12)':'var(--cc-bg-3)' }}
                     >
-                      🍴
+                      
                     </div>
                     <span className="flex-1 text-sm font-semibold text-left" style={{ color: 'var(--cc-ink)' }}>{addon.name}</span>
                     <span className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>+${addon.price?.toFixed(2)}</span>
                     <div
                       className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-all"
                       style={{
-                        background: selected ? 'var(--cc-accent)' : 'var(--cc-bg-3)',
-                        border: selected ? 'none' : '1.5px solid rgba(var(--cc-line-rgb),0.4)',
+                        background: selected ? 'var(--cc-accent)':'var(--cc-bg-3)',
+                        border: selected ? 'none':'1.5px solid rgba(var(--cc-line-rgb),0.4)',
                       }}
                     >
                       {selected && (
@@ -225,7 +225,7 @@ export default function ItemDetail() {
               <span
                 key={tag}
                 className="text-xs font-bold px-3 py-1 rounded-full"
-                style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}
+                style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', color:'var(--cc-accent)', border:'1px solid rgba(var(--cc-accent-rgb),0.2)' }}
               >
                 {tag}
               </span>
@@ -237,7 +237,7 @@ export default function ItemDetail() {
       {/* Sticky bottom: qty + add to cart */}
       <div
         className="fixed bottom-0 left-0 right-0 flex justify-center px-5 pb-6 pt-4 z-50"
-        style={{ background: 'rgba(13,21,23,0.97)', backdropFilter: 'blur(16px)' }}
+        style={{ background: 'rgba(13,21,23,0.97)', backdropFilter:'blur(16px)' }}
       >
         <div className="w-full max-w-lg flex items-center gap-3">
           {/* Qty control */}
@@ -272,7 +272,7 @@ export default function ItemDetail() {
               boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.4)',
             }}
           >
-            <span>{isInCart ? 'Update Cart' : 'Add to Cart'}</span>
+            <span>{isInCart ? 'Update Cart':'Add to Cart'}</span>
             <span>${total.toFixed(2)}</span>
           </button>
         </div>

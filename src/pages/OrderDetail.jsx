@@ -8,17 +8,17 @@ import { useToast } from '@/components/ui/use-toast';
 import { parseServerDate, formatLocalTime } from '@/lib/timeUtils';
 
 const STEPS = [
-  { key: 'placed', label: 'Confirmed' },
-  { key: 'preparing', label: 'Preparing' },
-  { key: 'ready', label: 'Ready' },
-  { key: 'picked_up', label: 'Pickup' },
+  { key: 'placed', label:'Confirmed' },
+  { key: 'preparing', label:'Preparing' },
+  { key: 'ready', label:'Ready' },
+  { key: 'picked_up', label:'Pickup' },
 ];
 
 const STATUS_LABELS = {
   placed: 'Order Confirmed',
   preparing: 'Preparing Your Feast',
-  ready: 'Ready for Pickup! 🎉',
-  picked_up: 'Enjoy! 😋',
+  ready: 'Ready for Pickup!',
+  picked_up: 'Enjoy!',
   pending_payment: 'Payment Pending...',
 };
 
@@ -70,10 +70,7 @@ export default function OrderDetail() {
   // Dynamic ready estimate: placed time + ~15 min
   const placedAt = parseServerDate(order.created_date);
   const readyAt = new Date(placedAt.getTime() + 15 * 60000);
-  const readyLabel = order.status === 'ready'
-    ? 'Ready now!'
-    : order.status === 'picked_up'
-    ? 'Completed'
+  const readyLabel = order.status === 'ready'?'Ready now!': order.status ==='picked_up'?'Completed'
     : `Est. ready ${formatLocalTime(readyAt)}`;
 
   return (
@@ -100,11 +97,11 @@ export default function OrderDetail() {
         {/* Progress tracker */}
         <div className="relative flex items-center justify-between mb-8">
           <div className="absolute h-1 rounded-full"
-            style={{ left: '12px', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'var(--cc-surface)' }} />
+            style={{ left: '12px', right:'12px', top:'50%', transform:'translateY(-50%)', background:'var(--cc-surface)' }} />
           <div className="absolute h-1 rounded-full transition-all duration-700"
             style={{
-              left: '12px', top: '50%', transform: 'translateY(-50%)',
-              width: stepIdx <= 0 ? '0%' : stepIdx === 1 ? '33%' : stepIdx === 2 ? '66%' : '100%',
+              left: '12px', top:'50%', transform:'translateY(-50%)',
+              width: stepIdx <= 0 ? '0%': stepIdx === 1 ?'33%': stepIdx === 2 ?'66%':'100%',
               background: 'linear-gradient(90deg, var(--cc-accent-2), var(--cc-accent-3))',
               boxShadow: '0 0 8px rgba(var(--cc-accent-rgb),0.5)',
             }} />
@@ -115,9 +112,9 @@ export default function OrderDetail() {
               <div key={step.key} className="flex flex-col items-center gap-1.5 relative z-10">
                 <div className="w-6 h-6 rounded-full flex items-center justify-center transition-all"
                   style={{
-                    background: done || active ? 'linear-gradient(135deg, var(--cc-accent-2), var(--cc-accent-3))' : 'var(--cc-surface)',
-                    border: !done && !active ? '2px solid rgba(var(--cc-line-rgb),0.4)' : 'none',
-                    boxShadow: active ? '0 0 12px rgba(var(--cc-accent-rgb),0.5)' : 'none',
+                    background: done || active ? 'linear-gradient(135deg, var(--cc-accent-2), var(--cc-accent-3))':'var(--cc-surface)',
+                    border: !done && !active ? '2px solid rgba(var(--cc-line-rgb),0.4)':'none',
+                    boxShadow: active ? '0 0 12px rgba(var(--cc-accent-rgb),0.5)':'none',
                   }}>
                   {(done || active) && (
                     <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none">
@@ -125,7 +122,7 @@ export default function OrderDetail() {
                     </svg>
                   )}
                 </div>
-                <span className="text-[10px] font-semibold" style={{ color: done || active ? 'var(--cc-accent-2)' : 'var(--cc-ink-muted)' }}>
+                <span className="text-[10px] font-semibold" style={{ color: done || active ? 'var(--cc-accent-2)':'var(--cc-ink-muted)' }}>
                   {step.label}
                 </span>
               </div>
@@ -137,23 +134,23 @@ export default function OrderDetail() {
         {order.pickup_code && (
           <button onClick={handleCopyCode}
             className="w-full p-6 rounded-3xl text-center mb-5 active:scale-95 transition-all"
-            style={{ background: 'var(--cc-surface)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
+            style={{ background: 'var(--cc-surface)', border:'1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
             <p className="text-xs font-bold tracking-widest mb-3" style={{ color: 'var(--cc-ink-muted)' }}>YOUR PICKUP CODE</p>
             <p className="font-display text-5xl tracking-widest"
-              style={{ color: 'var(--cc-accent-2)', textShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.5)' }}>
+              style={{ color: 'var(--cc-accent-2)', textShadow:'0 0 20px rgba(var(--cc-accent-rgb),0.5)' }}>
               {order.pickup_code}
             </p>
             <div className="flex items-center justify-center gap-1.5 mt-3">
               {copied ? <Check className="w-3.5 h-3.5" style={{ color: 'var(--cc-accent-2)' }} /> : <Copy className="w-3.5 h-3.5" style={{ color: 'var(--cc-ink-muted)' }} />}
               <p className="text-xs" style={{ color: 'var(--cc-ink-muted)' }}>
-                {copied ? 'Copied!' : 'Tap to copy · Show to vendor at window'}
+                {copied ? 'Copied!':'Tap to copy · Show to vendor at window'}
               </p>
             </div>
           </button>
         )}
 
         {/* ETA Card */}
-        {order.status !== 'pending_payment' && order.status !== 'picked_up' && (
+        {order.status !== 'pending_payment'&& order.status !=='picked_up' && (
           <CustomerEtaCard order={order} truck={truck} />
         )}
 
@@ -164,7 +161,7 @@ export default function OrderDetail() {
           </div>
           <div className="flex-1">
             <p className="font-display text-sm" style={{ color: 'var(--cc-cream)' }}>{order.truck_name}</p>
-            <p className="text-xs" style={{ color: 'var(--cc-ink-muted)' }}>{truck?.address || truck?.city || 'Houston, TX'}</p>
+            <p className="text-xs" style={{ color: 'var(--cc-ink-muted)'}}>{truck?.address || truck?.city ||'Houston, TX'}</p>
           </div>
         </div>
 
@@ -174,7 +171,7 @@ export default function OrderDetail() {
           <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--cc-surface)' }}>
             {order.items?.map((item, i) => (
               <div key={i} className="flex justify-between px-4 py-3"
-                style={{ borderBottom: i < order.items.length - 1 ? '1px solid rgba(var(--cc-line-rgb),0.2)' : 'none' }}>
+                style={{ borderBottom: i < order.items.length - 1 ? '1px solid rgba(var(--cc-line-rgb),0.2)':'none' }}>
                 <span className="text-sm" style={{ color: 'var(--cc-ink-muted)' }}>{item.quantity}x {item.name}</span>
                 <span className="text-sm font-semibold" style={{ color: 'var(--cc-cream)' }}>${(item.price * item.quantity).toFixed(2)}</span>
               </div>
@@ -203,10 +200,10 @@ export default function OrderDetail() {
 
       {/* Contact Truck CTA */}
       <div className="fixed bottom-0 left-0 right-0 flex justify-center px-5 pb-6 pt-4 z-50"
-        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(16px)' }}>
+        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter:'blur(16px)' }}>
         <button onClick={() => setShowContact(true)}
           className="w-full max-w-lg flex items-center justify-center gap-2 py-4 rounded-full font-display text-sm"
-          style={{ background: 'linear-gradient(135deg, var(--cc-accent-2) 0%, var(--cc-accent-3) 100%)', color: 'var(--cc-black)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.35)' }}>
+          style={{ background: 'linear-gradient(135deg, var(--cc-accent-2) 0%, var(--cc-accent-3) 100%)', color:'var(--cc-black)', boxShadow:'0 0 20px rgba(var(--cc-accent-rgb),0.35)' }}>
           <Phone className="w-4 h-4" />
           Contact Truck
         </button>
@@ -214,9 +211,9 @@ export default function OrderDetail() {
 
       {/* Contact Modal */}
       {showContact && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}
+        <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.7)', backdropFilter:'blur(8px)' }}
           onClick={() => setShowContact(false)}>
-          <div className="w-full max-w-lg rounded-t-3xl p-6 pb-10" style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-line-rgb),0.25)' }}
+          <div className="w-full max-w-lg rounded-t-3xl p-6 pb-10" style={{ background: 'var(--cc-bg-1)', border:'1px solid rgba(var(--cc-line-rgb),0.25)' }}
             onClick={e => e.stopPropagation()}>
             <h2 className="font-display text-lg mb-1" style={{ color: 'var(--cc-cream)' }}>Contact {order.truck_name}</h2>
             <p className="text-xs mb-5" style={{ color: 'var(--cc-ink-muted)' }}>Order #{order.pickup_code}</p>
@@ -224,7 +221,7 @@ export default function OrderDetail() {
               {truck?.phone ? (
                 <a href={`tel:${truck.phone}`}
                   className="flex items-center gap-3 p-4 rounded-2xl active:scale-95 transition-all"
-                  style={{ background: 'linear-gradient(135deg,rgba(var(--cc-accent-rgb),0.1),rgba(var(--cc-accent-rgb),0.05))', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
+                  style={{ background: 'linear-gradient(135deg,rgba(var(--cc-accent-rgb),0.1),rgba(var(--cc-accent-rgb),0.05))', border:'1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(var(--cc-accent-rgb),0.12)' }}>
                     <Phone className="w-5 h-5" style={{ color: 'var(--cc-accent-2)' }} />
                   </div>
@@ -235,15 +232,15 @@ export default function OrderDetail() {
                 </a>
               ) : (
                 <div className="p-4 rounded-2xl" style={{ background: 'var(--cc-surface)' }}>
-                  <p className="text-sm font-bold mb-1" style={{ color: 'var(--cc-cream)' }}>📍 Pickup location</p>
-                  <p className="text-xs" style={{ color: 'var(--cc-ink-muted)' }}>{truck?.address || 'Find the truck at its listed location'}</p>
+                  <p className="text-sm font-bold mb-1" style={{ color: 'var(--cc-cream)' }}> Pickup location</p>
+                  <p className="text-xs" style={{ color: 'var(--cc-ink-muted)'}}>{truck?.address ||'Find the truck at its listed location'}</p>
                   <p className="text-xs mt-2" style={{ color: 'var(--cc-ink-muted)' }}>Show your pickup code <span className="font-black" style={{ color: 'var(--cc-accent-2)' }}>{order.pickup_code}</span> at the window.</p>
                 </div>
               )}
             </div>
             <button onClick={() => setShowContact(false)}
               className="w-full py-3.5 rounded-full font-display text-sm"
-              style={{ background: 'var(--cc-bg-3)', color: 'var(--cc-ink-muted)' }}>Close</button>
+              style={{ background: 'var(--cc-bg-3)', color:'var(--cc-ink-muted)' }}>Close</button>
           </div>
         </div>
       )}

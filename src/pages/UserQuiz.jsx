@@ -8,34 +8,34 @@ const STEPS = [
     key: 'favorite_foods',
     question: "What's your go-to street food?",
     multi: true,
-    options: ['🌮 Tacos', '🍔 Burgers', '🔥 BBQ', '🍣 Asian', '🍕 Pizza', '🥗 Vegan', '🦞 Seafood', '🍰 Desserts'],
+    options: ['Tacos','Burgers','BBQ','Asian','Pizza','Vegan','Seafood','Desserts'],
   },
   {
     key: 'spice_level',
     question: 'How do you handle heat?',
     multi: false,
-    options: ['😊 Mild', '🌶 Medium', '🔥 Hot', '💀 Fire'],
-    values: ['mild', 'medium', 'hot', 'fire'],
+    options: ['Mild','Medium','Hot','Fire'],
+    values: ['mild','medium','hot','fire'],
   },
   {
     key: 'vibe',
     question: "What's your vibe?",
     multi: false,
-    options: ['⚡ Quick Bite', '🌙 Late Night', '🥦 Healthy', '🍲 Comfort Food'],
-    values: ['quick_bite', 'late_night', 'healthy', 'comfort'],
+    options: ['Quick Bite','Late Night','Healthy','Comfort Food'],
+    values: ['quick_bite','late_night','healthy','comfort'],
   },
   {
     key: 'max_distance_miles',
     question: 'How far will you go for good food?',
     multi: false,
-    options: ['🚶 1 mile', '🚗 3 miles', '🛻 5 miles', '🗺️ Anywhere'],
+    options: ['1 mile','3 miles','5 miles','Anywhere'],
     values: [1, 3, 5, 50],
   },
   {
     key: 'notifications_enabled',
     question: 'Want live alerts when trucks are near?',
     multi: false,
-    options: ['🔔 Yes, notify me!', '🔕 No thanks'],
+    options: ['Yes, notify me!','No thanks'],
     values: [true, false],
   },
 ];
@@ -106,8 +106,8 @@ export default function UserQuiz() {
             <button key={opt} onClick={() => select(i, opt)}
               className="flex items-center justify-center text-center py-5 px-3 rounded-2xl font-bold text-sm transition-all"
               style={isSelected(i, opt)
-                ? { background: 'linear-gradient(135deg,rgba(var(--cc-accent-rgb),0.15),rgba(0,230,167,0.1))', color: 'var(--cc-accent)', border: '1.5px solid rgba(var(--cc-accent-rgb),0.5)' }
-                : { background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.25)' }
+                ? { background: 'linear-gradient(135deg,rgba(var(--cc-accent-rgb),0.15),rgba(0,230,167,0.1))', color:'var(--cc-accent)', border:'1.5px solid rgba(var(--cc-accent-rgb),0.5)' }
+                : { background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.25)' }
               }>
               {opt}
             </button>
@@ -119,19 +119,19 @@ export default function UserQuiz() {
           {step < STEPS.length - 1 && current.multi && (
             <button onClick={() => setStep(s => s + 1)}
               className="flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-display text-base"
-              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.35)' }}>
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 20px rgba(var(--cc-accent-rgb),0.35)' }}>
               Next <ChevronRight className="w-5 h-5" />
             </button>
           )}
           {step === STEPS.length - 1 && (
             <button onClick={handleFinish} disabled={saving}
               className="flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-display text-base"
-              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.35)' }}>
-              {saving ? 'Saving...' : '🚀 Let\'s Eat!'}
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 20px rgba(var(--cc-accent-rgb),0.35)' }}>
+              {saving ? 'Saving...':' Let\'s Eat!'}
             </button>
           )}
           <button onClick={() => step < STEPS.length - 1 ? setStep(s => s + 1) : handleFinish()}
-            className="px-5 py-4 rounded-full text-sm font-semibold" style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }}>
+            className="px-5 py-4 rounded-full text-sm font-semibold" style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)' }}>
             Skip
           </button>
         </div>

@@ -25,9 +25,9 @@ function OrderCard({ order, advance }) {
   const minsLeft = etaMinsLeft(order);
   let borderColor = 'rgba(var(--cc-line-rgb),0.2)';
   let bg = 'var(--cc-bg-2)';
-  if (arrived) { borderColor = 'rgba(var(--cc-accent-rgb),0.5)'; bg = 'rgba(var(--cc-accent-rgb),0.04)'; }
-  else if (minsLeft !== null && minsLeft <= 5) { borderColor = 'rgba(var(--cc-warm-rgb),0.6)'; bg = 'rgba(var(--cc-warm-rgb),0.04)'; }
-  else if (minsLeft !== null && minsLeft <= 10) { borderColor = 'rgba(251,191,36,0.5)'; bg = 'rgba(251,191,36,0.03)'; }
+  if (arrived) { borderColor = 'rgba(var(--cc-accent-rgb),0.5)'; bg ='rgba(var(--cc-accent-rgb),0.04)'; }
+  else if (minsLeft !== null && minsLeft <= 5) { borderColor = 'rgba(var(--cc-warm-rgb),0.6)'; bg ='rgba(var(--cc-warm-rgb),0.04)'; }
+  else if (minsLeft !== null && minsLeft <= 10) { borderColor = 'rgba(251,191,36,0.5)'; bg ='rgba(251,191,36,0.03)'; }
 
   return (
     <div className="p-4 rounded-3xl" style={{ background: bg, border: `1px solid ${borderColor}` }}>
@@ -54,7 +54,7 @@ function OrderCard({ order, advance }) {
 
       <div className="flex items-center gap-2 mb-3">
         <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-          style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)' }}>
+          style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', color:'var(--cc-accent)' }}>
           {order.customer_name?.charAt(0) || 'C'}
         </div>
         <p className="text-sm font-semibold" style={{ color: 'var(--cc-ink)' }}>{order.customer_name || order.customer_email}</p>
@@ -75,7 +75,7 @@ function OrderCard({ order, advance }) {
         onClick={() => advance.mutate(order)}
         disabled={advance.isPending}
         className="w-full py-3 rounded-2xl font-display text-sm"
-        style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 14px rgba(var(--cc-accent-rgb),0.3)', opacity: advance.isPending ? 0.6 : 1 }}
+        style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 14px rgba(var(--cc-accent-rgb),0.3)', opacity: advance.isPending ? 0.6 : 1 }}
       >
         {BTN_LABEL[order.status]}
       </button>
@@ -84,13 +84,13 @@ function OrderCard({ order, advance }) {
 }
 
 const STATUS_TABS = [
-  { key: 'placed', label: 'New' },
-  { key: 'preparing', label: 'Preparing' },
-  { key: 'ready', label: 'Ready' },
+  { key: 'placed', label:'New' },
+  { key: 'preparing', label:'Preparing' },
+  { key: 'ready', label:'Ready' },
 ];
 
-const NEXT = { placed: 'preparing', preparing: 'ready', ready: 'picked_up' };
-const BTN_LABEL = { placed: 'Prepare Order', preparing: 'Mark as Ready', ready: 'Picked Up' };
+const NEXT = { placed: 'preparing', preparing:'ready', ready:'picked_up' };
+const BTN_LABEL = { placed: 'Prepare Order', preparing:'Mark as Ready', ready:'Picked Up' };
 
 export default function VendorOrders() {
   const qc = useQueryClient();
@@ -134,20 +134,20 @@ export default function VendorOrders() {
 
   const totalRevToday = orders.reduce((s, o) => s + (o.total || 0), 0);
 
-  // 🔔 New order notification — sound + browser alert
+  //  New order notification — sound + browser alert
   const { toast } = useToast();
   const prevNewCount = useRef(newCount);
 
-  // 🔔 Customer arrived notification
+  //  Customer arrived notification
   const prevArrivedIds = useRef(new Set());
   useEffect(() => {
     const arrivedOrders = orders.filter(o => o.customer_eta_type === 'arrived');
     arrivedOrders.forEach(o => {
       if (!prevArrivedIds.current.has(o.id)) {
         const code = o.pickup_code || o.id.slice(-4).toUpperCase();
-        toast({ title: `👋 Customer ${code} has arrived!`, description: 'Their order should be ready for pickup.', duration: 8000 });
-        if ('Notification' in window && Notification.permission === 'granted') {
-          new Notification(`CurbChef — Customer Arrived 👋`, { body: `Customer #${code} has arrived for pickup` });
+        toast({ title: ` Customer ${code} has arrived!`, description: 'Their order should be ready for pickup.', duration: 8000 });
+        if ('Notification'in window && Notification.permission ==='granted') {
+          new Notification(`CurbChef — Customer Arrived `, { body: `Customer #${code} has arrived for pickup` });
         }
       }
     });
@@ -155,7 +155,7 @@ export default function VendorOrders() {
   }, [orders]);
 
   useEffect(() => {
-    if ('Notification' in window && Notification.permission === 'default') {
+    if ('Notification'in window && Notification.permission ==='default') {
       Notification.requestPermission();
     }
   }, []);
@@ -174,9 +174,9 @@ export default function VendorOrders() {
         osc.start(ctx.currentTime);
         osc.stop(ctx.currentTime + 0.4);
       } catch (e) {}
-      toast({ title: '🔔 New order!', description: `${newCount} order(s) waiting to be accepted`, duration: 5000 });
-      if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification('CurbChef — New Order! 🚐', { body: `You have ${newCount} new order(s) waiting` });
+      toast({ title: 'New order!', description: `${newCount} order(s) waiting to be accepted`, duration: 5000 });
+      if ('Notification'in window && Notification.permission ==='granted') {
+        new Notification('CurbChef — New Order!', { body: `You have ${newCount} new order(s) waiting` });
       }
     }
     prevNewCount.current = newCount;
@@ -211,15 +211,15 @@ export default function VendorOrders() {
             onClick={() => setActiveTab(tab.key)}
             className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold transition-all"
             style={activeTab === tab.key
-              ? { background: tab.key === 'placed' ? 'var(--cc-warm)' : 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: tab.key === 'placed' ? 'white' : 'var(--cc-accent-deep)', boxShadow: tab.key === 'placed' ? '0 0 12px rgba(var(--cc-warm-rgb),0.4)' : '0 0 12px rgba(var(--cc-accent-rgb),0.3)' }
-              : { background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }
+              ? { background: tab.key === 'placed'?'var(--cc-warm)':'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: tab.key ==='placed'?'white':'var(--cc-accent-deep)', boxShadow: tab.key ==='placed'?'0 0 12px rgba(var(--cc-warm-rgb),0.4)':'0 0 12px rgba(var(--cc-accent-rgb),0.3)' }
+              : { background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)' }
             }
           >
             {tab.label}
             {countMap[tab.key] > 0 && (
               <span
                 className="text-[10px] font-black px-1.5 rounded-full"
-                style={{ background: activeTab === tab.key ? 'rgba(0,0,0,0.2)' : 'var(--cc-bg-3)', color: activeTab === tab.key ? 'currentColor' : 'var(--cc-ink-dim)' }}
+                style={{ background: activeTab === tab.key ? 'rgba(0,0,0,0.2)':'var(--cc-bg-3)', color: activeTab === tab.key ?'currentColor':'var(--cc-ink-dim)' }}
               >
                 {countMap[tab.key]}
               </span>
@@ -232,7 +232,7 @@ export default function VendorOrders() {
       <div className="px-5 flex flex-col gap-4 pb-10">
         {tabOrders.length === 0 ? (
           <div className="py-16 text-center">
-            <p className="text-4xl mb-2">✅</p>
+            <p className="text-4xl mb-2"></p>
             <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>No {activeTab} orders</p>
           </div>
         ) : (
@@ -245,7 +245,7 @@ export default function VendorOrders() {
       {/* Footer stats */}
       <div
         className="fixed bottom-0 left-0 right-0 flex justify-center px-5 pb-4 pt-3 z-50"
-        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(16px)' }}
+        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter:'blur(16px)' }}
       >
         <div className="w-full max-w-lg grid grid-cols-2 gap-4">
           <div className="text-center p-3 rounded-2xl" style={{ background: 'var(--cc-bg-2)' }}>

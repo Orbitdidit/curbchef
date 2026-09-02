@@ -83,12 +83,12 @@ export default function VendorOnboarding() {
   if (!truck) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: 'var(--cc-bg-0)' }}>
-        <div className="text-5xl mb-4">🚚</div>
+        <div className="text-5xl mb-4"></div>
         <p className="font-display text-xl mb-2" style={{ color: 'var(--cc-ink)' }}>No truck found</p>
         <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Ask your CurbChef contact to link your account to a truck.</p>
         <button onClick={() => navigate('/vendor-portal')}
           className="px-6 py-3 rounded-full font-bold text-sm"
-          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)' }}>
           Go to Vendor Portal
         </button>
       </div>
@@ -103,7 +103,7 @@ export default function VendorOnboarding() {
     <div className="min-h-screen pb-32" style={{ background: 'var(--cc-bg-0)' }}>
       {/* Sticky header with progress */}
       <div className="sticky top-0 z-20 px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4"
-        style={{ background: 'rgba(13,21,23,0.97)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+        style={{ background: 'rgba(13,21,23,0.97)', backdropFilter:'blur(12px)', borderBottom:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
         <div className="flex items-center gap-3 mb-3 max-w-lg mx-auto">
           {step > 1 && (
             <button onClick={goPrev} className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -112,7 +112,7 @@ export default function VendorOnboarding() {
             </button>
           )}
           <div className="flex-1">
-            <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>Set Up Your Truck 🚚</p>
+            <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>Set Up Your Truck </p>
             <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>
               Step {step} of {STEPS.length} · {pct}% complete
               {!currentStepInfo.required && <span style={{ color: 'var(--cc-ink-faint)' }}> · Optional</span>}
@@ -120,7 +120,7 @@ export default function VendorOnboarding() {
           </div>
           <button onClick={() => setShowAssistant(true)}
             className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold"
-            style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
+            style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color:'var(--cc-accent)', border:'1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
             <MessageCircle className="w-3.5 h-3.5" /> Help
           </button>
         </div>
@@ -129,15 +129,15 @@ export default function VendorOnboarding() {
         <div className="max-w-lg mx-auto">
           <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: 'var(--cc-bg-2)' }}>
             <div className="h-full rounded-full transition-all duration-500"
-              style={{ width: `${pct}%`, background: 'linear-gradient(90deg,var(--cc-accent),var(--cc-accent-3))', boxShadow: '0 0 6px rgba(var(--cc-accent-rgb),0.4)' }} />
+              style={{ width: `${pct}%`, background: 'linear-gradient(90deg,var(--cc-accent),var(--cc-accent-3))', boxShadow:'0 0 6px rgba(var(--cc-accent-rgb),0.4)' }} />
           </div>
           <div className="flex justify-between mt-2 px-0.5">
             {STEPS.map(s => (
               <button key={s.id} onClick={() => { setStep(s.id); window.scrollTo(0, 0); }}>
                 <div className="w-3 h-3 rounded-full transition-all"
                   style={{
-                    background: s.id < step ? 'var(--cc-accent)' : s.id === step ? 'var(--cc-accent-2)' : 'var(--cc-bg-3)',
-                    boxShadow: s.id === step ? '0 0 6px rgba(var(--cc-accent-rgb),0.6)' : 'none',
+                    background: s.id < step ? 'var(--cc-accent)': s.id === step ?'var(--cc-accent-2)':'var(--cc-bg-3)',
+                    boxShadow: s.id === step ? '0 0 6px rgba(var(--cc-accent-rgb),0.6)':'none',
                   }} />
               </button>
             ))}
@@ -159,19 +159,19 @@ export default function VendorOnboarding() {
       {/* Bottom nav — only for steps 1–6 */}
       {step < 7 && (
         <div className="fixed bottom-0 left-0 right-0 px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-3"
-          style={{ background: 'rgba(13,21,23,0.97)', backdropFilter: 'blur(12px)', borderTop: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+          style={{ background: 'rgba(13,21,23,0.97)', backdropFilter:'blur(12px)', borderTop:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
           <div className="flex gap-3 max-w-lg mx-auto">
             {!currentStepInfo.required && (
               <button onClick={goNext}
                 className="flex-1 py-3.5 rounded-full text-sm font-semibold"
-                style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }}>
+                style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)' }}>
                 Skip for now
               </button>
             )}
             <button onClick={goNext}
               className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-full font-display text-sm"
-              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 16px rgba(var(--cc-accent-rgb),0.3)' }}>
-              {step === 6 ? 'Review & Launch' : 'Save & Continue'}
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 16px rgba(var(--cc-accent-rgb),0.3)' }}>
+              {step === 6 ? 'Review & Launch':'Save & Continue'}
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>

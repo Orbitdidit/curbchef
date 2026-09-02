@@ -10,11 +10,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 
 const CATEGORIES = [
-  { value: 'mains', label: 'Mains' },
-  { value: 'sides', label: 'Sides' },
-  { value: 'drinks', label: 'Drinks' },
-  { value: 'desserts', label: 'Desserts' },
-  { value: 'specials', label: 'Specials' },
+  { value: 'mains', label:'Mains' },
+  { value: 'sides', label:'Sides' },
+  { value: 'drinks', label:'Drinks' },
+  { value: 'desserts', label:'Desserts' },
+  { value: 'specials', label:'Specials' },
 ];
 
 export default function VendorMenu() {
@@ -23,7 +23,7 @@ export default function VendorMenu() {
   const [showForm, setShowForm] = useState(false);
   const [showCategoryDrawer, setShowCategoryDrawer] = useState(false);
   const [editItem, setEditItem] = useState(null);
-  const [form, setForm] = useState({ name: '', description: '', price: '', category: 'mains', image_url: '', is_available: true, is_special: false, has_spice_option: false });
+  const [form, setForm] = useState({ name: '', description:'', price:'', category:'mains', image_url:'', is_available: true, is_special: false, has_spice_option: false });
 
   const { data: truck } = useQuery({
     queryKey: ['my-truck'],
@@ -53,7 +53,7 @@ export default function VendorMenu() {
       queryClient.invalidateQueries({ queryKey: ['vendor-menu'] });
       setShowForm(false);
       setEditItem(null);
-      setForm({ name: '', description: '', price: '', category: 'mains', image_url: '', is_available: true, is_special: false, has_spice_option: false });
+      setForm({ name: '', description:'', price:'', category:'mains', image_url:'', is_available: true, is_special: false, has_spice_option: false });
     },
   });
 
@@ -64,7 +64,7 @@ export default function VendorMenu() {
 
   const openEdit = (item) => {
     setEditItem(item);
-    setForm({ name: item.name, description: item.description || '', price: String(item.price), category: item.category || 'mains', image_url: item.image_url || '', is_available: item.is_available !== false, is_special: item.is_special || false, has_spice_option: item.has_spice_option || false });
+    setForm({ name: item.name, description: item.description || '', price: String(item.price), category: item.category ||'mains', image_url: item.image_url ||'', is_available: item.is_available !== false, is_special: item.is_special || false, has_spice_option: item.has_spice_option || false });
     setShowForm(true);
   };
 
@@ -78,7 +78,7 @@ export default function VendorMenu() {
           <h1 className="font-display text-lg">Menu</h1>
         </div>
         <button
-          onClick={() => { setEditItem(null); setForm({ name: '', description: '', price: '', category: 'mains', image_url: '', is_available: true, is_special: false, has_spice_option: false }); setShowForm(true); }}
+          onClick={() => { setEditItem(null); setForm({ name: '', description:'', price:'', category:'mains', image_url:'', is_available: true, is_special: false, has_spice_option: false }); setShowForm(true); }}
           className="flex items-center gap-1.5 bg-primary text-primary-foreground px-4 py-2 rounded-xl text-xs font-bold"
         >
           <Plus className="w-3.5 h-3.5" /> Add Item
@@ -91,7 +91,7 @@ export default function VendorMenu() {
         </div>
       ) : items.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-5xl mb-3">🍽️</p>
+          <p className="text-5xl mb-3"></p>
           <p className="text-muted-foreground text-sm">No items yet. Add your first menu item!</p>
         </div>
       ) : (
@@ -128,7 +128,7 @@ export default function VendorMenu() {
       <Dialog open={showForm} onOpenChange={setShowForm}>
         <DialogContent className="bg-card border-border max-w-sm mx-auto">
           <DialogHeader>
-            <DialogTitle className="font-heading">{editItem ? 'Edit Item' : 'New Item'}</DialogTitle>
+            <DialogTitle className="font-heading">{editItem ? 'Edit Item':'New Item'}</DialogTitle>
           </DialogHeader>
           <div className="space-y-3">
             <Input placeholder="Name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} className="bg-secondary border-0" />
@@ -139,7 +139,7 @@ export default function VendorMenu() {
               type="button"
               onClick={() => setShowCategoryDrawer(true)}
               className="w-full flex items-center justify-between px-3 py-3 rounded-lg text-sm"
-              style={{ background: 'hsl(var(--secondary))', color: 'hsl(var(--foreground))' }}
+              style={{ background: 'hsl(var(--secondary))', color:'hsl(var(--foreground))' }}
             >
               <span>{CATEGORIES.find(c => c.value === form.category)?.label || 'Category'}</span>
               <ChevronRight className="w-4 h-4 opacity-50" />
@@ -164,7 +164,7 @@ export default function VendorMenu() {
               disabled={!form.name || !form.price}
               className="w-full bg-primary text-primary-foreground py-3 rounded-2xl font-bold text-sm disabled:opacity-50"
             >
-              {editItem ? 'Update' : 'Add'} Item
+              {editItem ? 'Update':'Add'} Item
             </button>
           </div>
         </DialogContent>
@@ -172,7 +172,7 @@ export default function VendorMenu() {
 
       {/* Native-feel Category Bottom Sheet */}
       <Drawer open={showCategoryDrawer} onOpenChange={setShowCategoryDrawer}>
-        <DrawerContent style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
+        <DrawerContent style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}>
           <DrawerHeader>
             <DrawerTitle style={{ color: 'var(--cc-ink)' }}>Select Category</DrawerTitle>
           </DrawerHeader>
@@ -183,9 +183,9 @@ export default function VendorMenu() {
                 onClick={() => { setForm(f => ({ ...f, category: cat.value })); setShowCategoryDrawer(false); }}
                 className="flex items-center justify-between px-4 py-4 rounded-2xl text-sm font-semibold transition-all"
                 style={{
-                  background: form.category === cat.value ? 'rgba(var(--cc-accent-rgb),0.1)' : 'transparent',
-                  color: form.category === cat.value ? 'var(--cc-accent)' : 'var(--cc-ink)',
-                  border: form.category === cat.value ? '1px solid rgba(var(--cc-accent-rgb),0.3)' : '1px solid transparent',
+                  background: form.category === cat.value ? 'rgba(var(--cc-accent-rgb),0.1)':'transparent',
+                  color: form.category === cat.value ? 'var(--cc-accent)':'var(--cc-ink)',
+                  border: form.category === cat.value ? '1px solid rgba(var(--cc-accent-rgb),0.3)':'1px solid transparent',
                   minHeight: '52px',
                 }}
               >

@@ -53,11 +53,10 @@ function TruckLabel({ truck, userLat, userLng, heading, screenW }) {
           className="px-3 py-2 rounded-2xl flex flex-col items-center gap-1 active:scale-95 transition-transform"
           style={{
             background: 'rgba(13,21,23,0.85)',
-            border: `1px solid ${truck.is_live ? 'rgba(var(--cc-warm-red-rgb),0.6)' : 'rgba(var(--cc-accent-rgb),0.35)'}`,
+            border: `1px solid ${truck.is_live ? 'rgba(var(--cc-warm-red-rgb),0.6)':'rgba(var(--cc-accent-rgb),0.35)'}`,
             backdropFilter: 'blur(14px)',
             boxShadow: truck.is_live
-              ? '0 0 20px rgba(var(--cc-warm-red-rgb),0.3)'
-              : '0 4px 24px rgba(0,0,0,0.6)',
+              ? '0 0 20px rgba(var(--cc-warm-red-rgb),0.3)':'0 4px 24px rgba(0,0,0,0.6)',
             minWidth: 100,
           }}
         >
@@ -83,7 +82,7 @@ function TruckLabel({ truck, userLat, userLng, heading, screenW }) {
         {/* Pulsing dot */}
         <div className="relative w-3 h-3">
           <div className="absolute inset-0 rounded-full animate-ping" style={{ background: 'rgba(var(--cc-accent-rgb),0.4)' }} />
-          <div className="w-3 h-3 rounded-full" style={{ background: 'var(--cc-accent)', boxShadow: '0 0 8px var(--cc-accent)' }} />
+          <div className="w-3 h-3 rounded-full" style={{ background: 'var(--cc-accent)', boxShadow:'0 0 8px var(--cc-accent)' }} />
         </div>
       </div>
     </Link>
@@ -98,12 +97,12 @@ function Compass({ heading }) {
     <div className="flex flex-col items-center gap-1">
       <div
         className="w-12 h-12 rounded-full flex items-center justify-center relative"
-        style={{ background: 'rgba(13,21,23,0.85)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)', backdropFilter: 'blur(12px)' }}
+        style={{ background: 'rgba(13,21,23,0.85)', border:'1px solid rgba(var(--cc-accent-rgb),0.3)', backdropFilter:'blur(12px)' }}
       >
         <div
           style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 0.15s ease', fontSize: 20, lineHeight: 1 }}
         >
-          🧭
+          
         </div>
       </div>
       <span className="text-[9px] font-bold tracking-widest" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -230,7 +229,7 @@ export default function TruckRadar() {
   if (!isSupported || status === 'unsupported') {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-8 text-center" style={{ background: 'var(--cc-bg-0)' }}>
-        <div className="text-6xl mb-6">📡</div>
+        <div className="text-6xl mb-6"></div>
         <h1 className="font-display text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>Truck Radar</h1>
         <p className="text-base leading-relaxed mb-8" style={{ color: 'var(--cc-ink-dim)' }}>
           Truck Radar works best on your phone — camera and compass required.
@@ -238,7 +237,7 @@ export default function TruckRadar() {
         <button
           onClick={() => navigate(-1)}
           className="px-6 py-3 rounded-full font-bold"
-          style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }}
+          style={{ background: 'var(--cc-bg-2)', color:'var(--cc-accent)', border:'1px solid rgba(var(--cc-accent-rgb),0.3)' }}
         >
           Go Back
         </button>
@@ -250,11 +249,11 @@ export default function TruckRadar() {
   if (status === 'error') {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-8 text-center" style={{ background: 'var(--cc-bg-0)' }}>
-        <div className="text-6xl mb-6">⚠️</div>
-        <h1 className="font-display text-xl mb-3" style={{ color: 'var(--cc-ink)' }}>Couldn't Start Radar</h1>
+        <div className="text-6xl mb-6"></div>
+        <h1 className="font-display text-xl mb-3" style={{ color: 'var(--cc-ink)'}}>Couldn't Start Radar</h1>
         <p className="text-sm mb-8" style={{ color: 'var(--cc-ink-dim)' }}>{errorMsg}</p>
         <button onClick={startRadar} className="px-6 py-3 rounded-full font-bold"
-          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)' }}>
           Try Again
         </button>
       </div>
@@ -275,10 +274,10 @@ export default function TruckRadar() {
         <div className="flex-1 flex flex-col items-center justify-center px-8 text-center">
           <div className="relative mb-8">
             <div className="w-28 h-28 rounded-full flex items-center justify-center"
-              style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border: '2px solid rgba(var(--cc-accent-rgb),0.25)' }}>
+              style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border:'2px solid rgba(var(--cc-accent-rgb),0.25)' }}>
               <div className="w-20 h-20 rounded-full flex items-center justify-center"
-                style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', border: '2px solid rgba(var(--cc-accent-rgb),0.35)' }}>
-                <span className="text-4xl">📡</span>
+                style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', border:'2px solid rgba(var(--cc-accent-rgb),0.35)' }}>
+                <span className="text-4xl"></span>
               </div>
             </div>
             {/* pulsing ring */}
@@ -292,7 +291,7 @@ export default function TruckRadar() {
           <button
             onClick={startRadar}
             className="w-full py-4 rounded-full font-display text-base neon-glow"
-            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)' }}
           >
             Start Radar
           </button>
@@ -338,7 +337,7 @@ export default function TruckRadar() {
         <button
           onClick={() => { streamRef.current?.getTracks().forEach(t => t.stop()); navigate(-1); }}
           className="w-10 h-10 rounded-2xl flex items-center justify-center"
-          style={{ background: 'rgba(13,21,23,0.8)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
+          style={{ background: 'rgba(13,21,23,0.8)', border:'1px solid rgba(255,255,255,0.1)', backdropFilter:'blur(12px)' }}>
           <ChevronLeft className="w-5 h-5 text-white" />
         </button>
 
@@ -347,7 +346,7 @@ export default function TruckRadar() {
 
         {/* Live indicator */}
         <div className="flex items-center gap-2 px-3 py-2 rounded-full"
-          style={{ background: 'rgba(13,21,23,0.8)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)', backdropFilter: 'blur(12px)' }}>
+          style={{ background: 'rgba(13,21,23,0.8)', border:'1px solid rgba(var(--cc-accent-rgb),0.25)', backdropFilter:'blur(12px)' }}>
           <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--cc-accent)' }} />
           <span className="text-xs font-black" style={{ color: 'var(--cc-accent)' }}>RADAR ON</span>
         </div>
@@ -356,7 +355,7 @@ export default function TruckRadar() {
       {/* Calibration hint */}
       {calibrateHint && (
         <div className="absolute top-28 left-1/2 -translate-x-1/2 z-40 px-4 py-2 rounded-full"
-          style={{ background: 'rgba(var(--cc-warm-rgb),0.85)', backdropFilter: 'blur(10px)' }}>
+          style={{ background: 'rgba(var(--cc-warm-rgb),0.85)', backdropFilter:'blur(10px)' }}>
           <p className="text-xs font-bold text-white">Move phone in figure-8 to calibrate compass</p>
         </div>
       )}
@@ -388,12 +387,12 @@ export default function TruckRadar() {
       <div className="absolute bottom-0 left-0 right-0 z-40 px-4 pb-8 pt-4"
         style={{ background: 'linear-gradient(0deg,rgba(0,0,0,0.75) 0%,transparent 100%)' }}>
         <div className="rounded-3xl p-4"
-          style={{ background: 'rgba(13,21,23,0.88)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)', backdropFilter: 'blur(20px)' }}>
+          style={{ background: 'rgba(13,21,23,0.88)', border:'1px solid rgba(var(--cc-accent-rgb),0.2)', backdropFilter:'blur(20px)' }}>
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <Radio className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
               <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>
-                {nearbyTrucks.length} truck{nearbyTrucks.length !== 1 ? 's' : ''} within 0.5 mi
+                {nearbyTrucks.length} truck{nearbyTrucks.length !== 1 ? 's':''} within 0.5 mi
               </p>
             </div>
             {nearbyTrucks.length === 0 && (
@@ -403,9 +402,9 @@ export default function TruckRadar() {
 
           <div className="flex gap-3">
             {[
-              { label: 'LIVE', value: liveCount, color: 'var(--cc-warm-red)', bg: 'rgba(var(--cc-warm-red-rgb),0.15)' },
-              { label: 'OPEN', value: openCount, color: 'var(--cc-accent)', bg: 'rgba(var(--cc-accent-rgb),0.1)' },
-              { label: 'TOTAL', value: nearbyTrucks.length, color: 'var(--cc-ink-dim)', bg: 'rgba(186,203,192,0.08)' },
+              { label: 'LIVE', value: liveCount, color:'var(--cc-warm-red)', bg:'rgba(var(--cc-warm-red-rgb),0.15)' },
+              { label: 'OPEN', value: openCount, color:'var(--cc-accent)', bg:'rgba(var(--cc-accent-rgb),0.1)' },
+              { label: 'TOTAL', value: nearbyTrucks.length, color:'var(--cc-ink-dim)', bg:'rgba(186,203,192,0.08)' },
             ].map(({ label, value, color, bg }) => (
               <div key={label} className="flex-1 py-2.5 px-2 rounded-2xl text-center" style={{ background: bg }}>
                 <p className="text-[9px] font-bold tracking-widest mb-0.5" style={{ color: 'rgba(186,203,192,0.6)' }}>{label}</p>

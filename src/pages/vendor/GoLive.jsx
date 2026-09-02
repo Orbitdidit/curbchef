@@ -13,7 +13,7 @@ function formatTime(secs) {
 }
 
 function getSupportedMimeType() {
-  const types = ['video/webm;codecs=vp9', 'video/webm', 'video/mp4'];
+  const types = ['video/webm;codecs=vp9','video/webm','video/mp4'];
   for (const t of types) {
     if (MediaRecorder.isTypeSupported(t)) return t;
   }
@@ -21,9 +21,9 @@ function getSupportedMimeType() {
 }
 
 const CAPTION_CHIPS = [
-  'Slicing brisket 🔥',
-  'Just opened ☀️',
-  'Hot off the grill 🌶️',
+  'Slicing brisket',
+  'Just opened',
+  'Hot off the grill',
   'Last call! ⏰',
 ];
 
@@ -35,11 +35,11 @@ function ErrorScreen({ message, onClose }) {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center px-8 text-center z-50"
       style={{ background: 'var(--cc-bg-0)' }}>
-      <span className="text-5xl mb-4">📵</span>
+      <span className="text-5xl mb-4"></span>
       <p className="font-display text-xl text-white mb-3">{message}</p>
       <button onClick={onClose}
         className="mt-6 px-8 py-3 rounded-full font-display text-sm"
-        style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }}>
+        style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)' }}>
         Go Back
       </button>
     </div>
@@ -53,7 +53,7 @@ function CaptionScreen({ videoBlob, caption, setCaption, onPost, onRetry, isPost
   return (
     <div className="fixed inset-0 flex flex-col z-50 overflow-y-auto" style={{ background: 'var(--cc-bg-0)' }}>
       {/* video preview */}
-      <div className="relative w-full flex-shrink-0" style={{ aspectRatio: '9/16', maxHeight: '45vh' }}>
+      <div className="relative w-full flex-shrink-0" style={{ aspectRatio: '9/16', maxHeight:'45vh' }}>
         <video src={videoUrl} className="w-full h-full object-cover" controls playsInline />
       </div>
 
@@ -63,9 +63,8 @@ function CaptionScreen({ videoBlob, caption, setCaption, onPost, onRetry, isPost
         <textarea
           value={caption}
           onChange={e => setCaption(e.target.value.slice(0, 100))}
-          placeholder="What's happening at the truck?"
-          className="w-full rounded-2xl px-4 py-3 text-sm resize-none outline-none"
-          style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)', minHeight: '80px' }}
+          placeholder="What's happening at the truck?" className="w-full rounded-2xl px-4 py-3 text-sm resize-none outline-none"
+          style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-accent-rgb),0.2)', minHeight:'80px' }}
         />
         <p className="text-xs text-right -mt-2" style={{ color: 'var(--cc-ink-dim)' }}>{caption.length}/100</p>
 
@@ -75,7 +74,7 @@ function CaptionScreen({ videoBlob, caption, setCaption, onPost, onRetry, isPost
             <button key={chip}
               onClick={() => setCaption(chip)}
               className="px-3 py-1.5 rounded-full text-xs font-semibold"
-              style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }}>
+              style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.4)' }}>
               {chip}
             </button>
           ))}
@@ -84,15 +83,15 @@ function CaptionScreen({ videoBlob, caption, setCaption, onPost, onRetry, isPost
         <div className="flex gap-3 mt-auto pt-4">
           <button onClick={onRetry}
             className="flex-1 py-4 rounded-full font-display text-sm"
-            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
+            style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}>
             Retry
           </button>
           <button onClick={onPost} disabled={isPosting}
             className="flex-[2] py-4 rounded-full font-display text-base flex items-center justify-center gap-2"
-            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.35)', opacity: isPosting ? 0.7 : 1 }}>
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 24px rgba(var(--cc-accent-rgb),0.35)', opacity: isPosting ? 0.7 : 1 }}>
             {isPosting ? (
               <><div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'var(--cc-accent-deep) transparent' }} /> Posting…</>
-            ) : '🔴 Post Live'}
+            ) : 'Post Live'}
           </button>
         </div>
       </div>
@@ -105,7 +104,7 @@ function SuccessScreen() {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center px-8 text-center z-50"
       style={{ background: 'var(--cc-bg-0)' }}>
-      <div className="text-6xl mb-4 animate-bounce">🔴</div>
+      <div className="text-6xl mb-4 animate-bounce"></div>
       <p className="font-display text-2xl text-white mb-3">You're LIVE!</p>
       <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>
         Customers will see your truck in the live feed for the next 15 minutes.
@@ -150,7 +149,7 @@ function GoLiveInner({ truck }) {
       video: { facingMode: mode, width: { ideal: 1280 }, height: { ideal: 720 } },
       audio: true,
     }).catch(err => {
-      if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+      if (err.name === 'NotAllowedError'|| err.name ==='PermissionDeniedError') {
         setErrorMsg('Camera permission denied. To go live, enable camera in your browser settings.');
       } else {
         setErrorMsg('Camera not detected — please use a phone or device with a camera.');
@@ -175,7 +174,7 @@ function GoLiveInner({ truck }) {
   }, []);
 
   const flipCamera = async () => {
-    const newMode = facingMode === 'environment' ? 'user' : 'environment';
+    const newMode = facingMode === 'environment'?'user':'environment';
     setFacingMode(newMode);
     await startStream(newMode);
   };
@@ -244,7 +243,7 @@ function GoLiveInner({ truck }) {
 
     const now = new Date().toISOString();
     const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString();
-    const titleText = caption || `${truck.name} is LIVE 🔴`;
+    const titleText = caption || `${truck.name} is LIVE `;
 
     // create LiveClipVideo record
     await base44.entities.LiveClipVideo.create({
@@ -275,7 +274,7 @@ function GoLiveInner({ truck }) {
     // update truck
     await base44.entities.FoodTruck.update(truck.id, {
       is_live: true,
-      live_description: caption || `🔴 Live now — ${truck.name}`,
+      live_description: caption || ` Live now — ${truck.name}`,
     });
 
     setScreen('success');
@@ -294,12 +293,12 @@ function GoLiveInner({ truck }) {
         <div className="flex gap-3 px-5 py-6" style={{ background: 'var(--cc-bg-0)' }}>
           <button onClick={handleRetry}
             className="flex-1 py-4 rounded-full font-display text-sm"
-            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }}>
+            style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)' }}>
             Retry
           </button>
           <button onClick={() => setScreen('caption')}
             className="flex-[2] py-4 rounded-full font-display text-base"
-            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)' }}>
             Continue →
           </button>
         </div>
@@ -340,21 +339,21 @@ function GoLiveInner({ truck }) {
         {/* Close */}
         <button onClick={() => navigate('/vendor')}
           className="w-11 h-11 rounded-full flex items-center justify-center"
-          style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)' }}>
+          style={{ background: 'rgba(0,0,0,0.5)', backdropFilter:'blur(8px)' }}>
           <X className="w-5 h-5 text-white" />
         </button>
 
         {/* REC indicator */}
         {recording ? (
           <div className="flex items-center gap-2 px-4 py-2 rounded-full"
-            style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)' }}>
+            style={{ background: 'rgba(0,0,0,0.6)', backdropFilter:'blur(8px)' }}>
             <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
             <span className="font-mono font-black text-sm text-white tracking-widest">REC</span>
             <span className="font-mono text-sm text-white">{formatTime(elapsed)}</span>
           </div>
         ) : (
           <div className="px-4 py-2 rounded-full"
-            style={{ background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(8px)' }}>
+            style={{ background: 'rgba(0,0,0,0.4)', backdropFilter:'blur(8px)' }}>
             <span className="font-mono text-xs text-white/60">READY</span>
           </div>
         )}
@@ -362,7 +361,7 @@ function GoLiveInner({ truck }) {
         {/* Flip camera */}
         <button onClick={flipCamera}
           className="w-11 h-11 rounded-full flex items-center justify-center"
-          style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)' }}>
+          style={{ background: 'rgba(0,0,0,0.5)', backdropFilter:'blur(8px)' }}>
           <RefreshCw className="w-5 h-5 text-white" />
         </button>
       </div>
@@ -373,8 +372,7 @@ function GoLiveInner({ truck }) {
           <div className="relative flex items-center justify-center">
             <svg width="100" height="100" style={{ transform: 'rotate(-90deg)' }}>
               <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="4" />
-              <circle cx="50" cy="50" r="44" fill="none" stroke="var(--cc-warm-red)" strokeWidth="4"
-                strokeLinecap="round"
+              <circle cx="50" cy="50" r="44" fill="none" stroke="var(--cc-warm-red)" strokeWidth="4" strokeLinecap="round"
                 strokeDasharray={`${2 * Math.PI * 44}`}
                 strokeDashoffset={`${2 * Math.PI * 44 * (1 - elapsed / MAX_DURATION)}`}
                 style={{ transition: 'stroke-dashoffset 1s linear' }}
@@ -399,11 +397,9 @@ function GoLiveInner({ truck }) {
             width: 84,
             height: 84,
             background: recording
-              ? 'linear-gradient(135deg,var(--cc-warm-red),#ff5e57)'
-              : 'linear-gradient(135deg,var(--cc-warm-red),#ff5e57)',
+              ? 'linear-gradient(135deg,var(--cc-warm-red),#ff5e57)':'linear-gradient(135deg,var(--cc-warm-red),#ff5e57)',
             boxShadow: recording
-              ? '0 0 32px rgba(var(--cc-warm-red-rgb),0.7), 0 0 0 6px rgba(255,255,255,0.15)'
-              : '0 0 20px rgba(var(--cc-warm-red-rgb),0.5), 0 0 0 4px rgba(255,255,255,0.12)',
+              ? '0 0 32px rgba(var(--cc-warm-red-rgb),0.7), 0 0 0 6px rgba(255,255,255,0.15)':'0 0 20px rgba(var(--cc-warm-red-rgb),0.5), 0 0 0 4px rgba(255,255,255,0.12)',
           }}>
           {recording
             ? <Square className="w-9 h-9 text-white" fill="white" />
@@ -412,7 +408,7 @@ function GoLiveInner({ truck }) {
         </button>
 
         <p className="text-white/60 text-xs font-semibold mt-4 px-4 text-center">
-          {recording ? 'Tap to stop recording' : 'Tap to start • Max 60 seconds'}
+          {recording ? 'Tap to stop recording':'Tap to start • Max 60 seconds'}
         </p>
       </div>
     </div>

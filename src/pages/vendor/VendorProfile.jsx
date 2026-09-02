@@ -12,9 +12,9 @@ import { RotateCcw } from 'lucide-react';
 const CUISINE_OPTIONS = ['tacos','burgers','bbq','seafood','asian','fusion','desserts','vegan','pizza','soul_food'];
 
 const TABS = [
-  { id: 'description', label: 'Description', icon: FileText },
-  { id: 'images', label: 'Images', icon: ImageIcon },
-  { id: 'menu', label: 'Menu Items', icon: Utensils },
+  { id: 'description', label:'Description', icon: FileText },
+  { id: 'images', label:'Images', icon: ImageIcon },
+  { id: 'menu', label:'Menu Items', icon: Utensils },
 ];
 
 function MenuAvailabilityToggle({ truckId }) {
@@ -29,7 +29,7 @@ function MenuAvailabilityToggle({ truckId }) {
   const toggleMutation = useMutation({
     mutationFn: ({ id, is_available }) => base44.entities.MenuItem.update(id, { is_available }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['vendor-menu-items', truckId] }),
-    onError: () => toast({ title: 'Failed to update', variant: 'destructive' }),
+    onError: () => toast({ title: 'Failed to update', variant:'destructive' }),
   });
 
   const grouped = menuItems.reduce((acc, item) => {
@@ -47,7 +47,7 @@ function MenuAvailabilityToggle({ truckId }) {
 
   if (!menuItems.length) return (
     <div className="text-center py-10">
-      <p className="text-2xl mb-2">🍽️</p>
+      <p className="text-2xl mb-2"></p>
       <p className="text-sm font-bold" style={{ color: 'var(--cc-ink)' }}>No menu items yet</p>
       <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-dim)' }}>Add items from the Menu tab first</p>
     </div>
@@ -64,14 +64,14 @@ function MenuAvailabilityToggle({ truckId }) {
               <div key={item.id}
                 className="flex items-center gap-3 p-3.5 rounded-2xl transition-all"
                 style={{
-                  background: item.is_available ? 'rgba(var(--cc-accent-rgb),0.05)' : 'var(--cc-bg-0)',
-                  border: `1px solid ${item.is_available ? 'rgba(var(--cc-accent-rgb),0.15)' : 'rgba(var(--cc-line-rgb),0.2)'}`,
+                  background: item.is_available ? 'rgba(var(--cc-accent-rgb),0.05)':'var(--cc-bg-0)',
+                  border: `1px solid ${item.is_available ? 'rgba(var(--cc-accent-rgb),0.15)':'rgba(var(--cc-line-rgb),0.2)'}`,
                 }}>
                 {item.image_url && (
                   <img src={item.image_url} alt={item.name} className="w-10 h-10 rounded-xl object-cover flex-shrink-0" />
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="font-display text-sm truncate" style={{ color: item.is_available ? 'var(--cc-ink)' : 'var(--cc-ink-faint)' }}>
+                  <p className="font-display text-sm truncate" style={{ color: item.is_available ? 'var(--cc-ink)':'var(--cc-ink-faint)' }}>
                     {item.name}
                   </p>
                   <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>${item.price?.toFixed(2)}</p>
@@ -114,7 +114,7 @@ function VendorProfileInner({ truck, user }) {
       await base44.entities.UserProfile.create({ user_email: user.email, tour_completed: false });
     }
     qc.invalidateQueries({ queryKey: ['user-profile-tour', user?.email] });
-    toast({ title: '🎬 Tour reset! Head back to the dashboard.', duration: 3000 });
+    toast({ title: 'Tour reset! Head back to the dashboard.', duration: 3000 });
   };
   const [activeTab, setActiveTab] = useState('description');
   const [form, setForm] = useState({
@@ -145,17 +145,17 @@ function VendorProfileInner({ truck, user }) {
   });
 
   const inputStyle = {
-    background: 'var(--cc-bg-0)', color: 'var(--cc-ink)',
-    border: '1px solid rgba(var(--cc-line-rgb),0.4)', borderRadius: '0.75rem',
-    padding: '10px 14px', fontSize: '0.875rem', outline: 'none', width: '100%',
+    background: 'var(--cc-bg-0)', color:'var(--cc-ink)',
+    border: '1px solid rgba(var(--cc-line-rgb),0.4)', borderRadius:'0.75rem',
+    padding: '10px 14px', fontSize:'0.875rem', outline:'none', width:'100%',
   };
-  const labelStyle = { color: 'var(--cc-ink-dim)', fontSize: '10px', fontWeight: '700', letterSpacing: '0.1em', display: 'block', marginBottom: '6px' };
+  const labelStyle = { color: 'var(--cc-ink-dim)', fontSize:'10px', fontWeight:'700', letterSpacing:'0.1em', display:'block', marginBottom:'6px' };
 
   return (
     <div className="min-h-screen pb-24" style={{ background: 'var(--cc-bg-0)' }}>
       {/* Header */}
       <div className="flex items-center gap-3 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-20"
-        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.12)' }}>
+        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter:'blur(20px)', borderBottom:'1px solid rgba(var(--cc-line-rgb),0.12)' }}>
         <button onClick={() => navigate('/vendor')} className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </button>
@@ -166,9 +166,9 @@ function VendorProfileInner({ truck, user }) {
         {activeTab !== 'menu' && (
           <button onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}
             className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-black"
-            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)' }}>
             <Save className="w-3.5 h-3.5" />
-            {saveMutation.isPending ? 'Saving...' : 'Save'}
+            {saveMutation.isPending ? 'Saving...':'Save'}
           </button>
         )}
       </div>
@@ -179,8 +179,8 @@ function VendorProfileInner({ truck, user }) {
           <button key={id} onClick={() => setActiveTab(id)}
             className="flex-1 flex flex-col items-center gap-1 py-2.5 rounded-2xl text-xs font-bold transition-all"
             style={activeTab === id
-              ? { background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }
-              : { background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid transparent' }
+              ? { background: 'rgba(var(--cc-accent-rgb),0.1)', color:'var(--cc-accent)', border:'1px solid rgba(var(--cc-accent-rgb),0.25)' }
+              : { background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid transparent' }
             }>
             <Icon className="w-4 h-4" />
             {label}
@@ -208,7 +208,7 @@ function VendorProfileInner({ truck, user }) {
               <label style={labelStyle}>CUISINE TYPE</label>
               <select style={inputStyle} value={form.cuisine_type} onChange={e => set('cuisine_type', e.target.value)}>
                 {CUISINE_OPTIONS.map(c => (
-                  <option key={c} value={c}>{c.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</option>
+                  <option key={c} value={c}>{c.replace('_','').replace(/\b\w/g, l => l.toUpperCase())}</option>
                 ))}
               </select>
             </div>
@@ -226,15 +226,15 @@ function VendorProfileInner({ truck, user }) {
             </div>
             <div>
               <label style={labelStyle}>LIVE STATUS MESSAGE</label>
-              <input style={inputStyle} value={form.live_description} onChange={e => set('live_description', e.target.value)} placeholder="e.g. 🔥 Cooking brisket plates until sold out" />
+              <input style={inputStyle} value={form.live_description} onChange={e => set('live_description', e.target.value)} placeholder="e.g.  Cooking brisket plates until sold out" />
             </div>
             <div>
               <label style={labelStyle}>DELIVERY MODE</label>
               <select style={inputStyle} value={form.delivery_mode} onChange={e => set('delivery_mode', e.target.value)}>
-                <option value="pickup_only">🏪 Pickup Only</option>
-                <option value="pickup_delivery_curbchef">🛵 Pickup + CurbChef Delivery</option>
-                <option value="pickup_delivery_vendor">🚗 Pickup + Vendor Delivery</option>
-                <option value="full_delivery" disabled>📦 Full Delivery (coming soon)</option>
+                <option value="pickup_only"> Pickup Only</option>
+                <option value="pickup_delivery_curbchef"> Pickup + CurbChef Delivery</option>
+                <option value="pickup_delivery_vendor"> Pickup + Vendor Delivery</option>
+                <option value="full_delivery" disabled> Full Delivery (coming soon)</option>
               </select>
             </div>
             {/* Replay Tour */}
@@ -243,7 +243,7 @@ function VendorProfileInner({ truck, user }) {
               <button
                 onClick={handleReplayTour}
                 className="flex items-center gap-2 px-4 py-3 rounded-2xl text-sm font-bold w-full"
-                style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}
+                style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}
               >
                 <RotateCcw className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
                 Replay Welcome Tour
@@ -266,8 +266,8 @@ function VendorProfileInner({ truck, user }) {
             )}
             <button onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}
               className="w-full py-4 rounded-full font-display text-base"
-              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}>
-              {saveMutation.isPending ? 'Saving...' : 'Save Changes'}
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}>
+              {saveMutation.isPending ? 'Saving...':'Save Changes'}
             </button>
           </>
         )}
@@ -284,8 +284,8 @@ function VendorProfileInner({ truck, user }) {
               hint="Square · Used in cards and search results" />
             <button onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}
               className="w-full py-4 rounded-full font-display text-base"
-              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}>
-              {saveMutation.isPending ? 'Saving...' : 'Save Images'}
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}>
+              {saveMutation.isPending ? 'Saving...':'Save Images'}
             </button>
           </>
         )}

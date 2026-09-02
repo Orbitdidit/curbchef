@@ -5,13 +5,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ChevronLeft, MapPin, Truck, Star, ExternalLink, Instagram, Phone, Clock, Wifi, Music, Dog, Baby, Wine, Umbrella } from 'lucide-react';
 
 const AMENITY_ICONS = {
-  'live music': '🎵',
-  'dog friendly': '🐕',
-  'family friendly': '👨‍👩‍👧',
-  'alcohol': '🍺',
-  'covered seating': '⛱️',
-  'wifi': '📶',
-  'restrooms': '🚻',
+  'live music':'','dog friendly':'','family friendly':'','alcohol':'','covered seating':'','wifi':'','restrooms':'',
 };
 
 function HeroCarousel({ media, parkName }) {
@@ -28,7 +22,7 @@ function HeroCarousel({ media, parkName }) {
   const src = current?.url || 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=900';
 
   return (
-    <div className="relative w-full" style={{ height: '55vw', maxHeight: '320px', minHeight: '200px' }}>
+    <div className="relative w-full" style={{ height: '55vw', maxHeight:'320px', minHeight:'200px' }}>
       <img src={src} alt={parkName} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700" />
       <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg,rgba(0,0,0,0.3) 0%,transparent 40%,rgba(0,0,0,0.7) 100%)' }} />
       {media?.length > 1 && (
@@ -36,7 +30,7 @@ function HeroCarousel({ media, parkName }) {
           {media.map((_, i) => (
             <button key={i} onClick={() => setIdx(i)}
               className="rounded-full transition-all"
-              style={{ width: i === idx ? 16 : 5, height: 5, background: i === idx ? 'var(--cc-accent-2)' : 'rgba(255,255,255,0.4)' }} />
+              style={{ width: i === idx ? 16 : 5, height: 5, background: i === idx ? 'var(--cc-accent-2)':'rgba(255,255,255,0.4)' }} />
           ))}
         </div>
       )}
@@ -45,16 +39,16 @@ function HeroCarousel({ media, parkName }) {
 }
 
 function TruckRow({ truck }) {
-  const statusColor = truck.status === 'open' ? 'var(--cc-accent-2)' : 'var(--cc-ink-faint)';
-  const statusBg = truck.status === 'open' ? 'rgba(0,245,212,0.1)' : 'rgba(107,102,92,0.1)';
+  const statusColor = truck.status === 'open'?'var(--cc-accent-2)':'var(--cc-ink-faint)';
+  const statusBg = truck.status === 'open'?'rgba(0,245,212,0.1)':'rgba(107,102,92,0.1)';
   return (
     <Link to={`/truck/${truck.id}`} className="flex items-center gap-3 p-3 rounded-2xl"
-      style={{ background: '#1a2123', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+      style={{ background: '#1a2123', border:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
       <img src={truck.image_url || 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=200'}
         alt={truck.name} className="w-14 h-14 rounded-xl object-cover flex-shrink-0" />
       <div className="flex-1 min-w-0">
         <p className="font-display text-sm truncate" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
-        <p className="text-xs capitalize mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{truck.cuisine_type?.replace(/_/g, ' ')}</p>
+        <p className="text-xs capitalize mt-0.5" style={{ color: 'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace(/_/g,' ')}</p>
         {truck.truck_park_member_status && (
           <span className="text-[10px] font-semibold capitalize" style={{ color: 'var(--cc-ink-muted)' }}>
             {truck.truck_park_member_status} member
@@ -64,7 +58,7 @@ function TruckRow({ truck }) {
       <div className="flex flex-col items-end gap-1.5">
         {truck.is_live && (
           <span className="text-[9px] font-black px-2 py-0.5 rounded-full"
-            style={{ background: 'rgba(var(--cc-warm-red-rgb),0.2)', color: 'var(--cc-warm-red)' }}>LIVE</span>
+            style={{ background: 'rgba(var(--cc-warm-red-rgb),0.2)', color:'var(--cc-warm-red)' }}>LIVE</span>
         )}
         <span className="text-[10px] font-black px-2 py-0.5 rounded-full"
           style={{ background: statusBg, color: statusColor }}>
@@ -120,8 +114,8 @@ export default function ParkProfile() {
   const TABS = [
     { id: 'trucks', label: `Trucks (${trucks.length})` },
     { id: 'live', label: `Live Now (${liveTrucks.length})` },
-    { id: 'photos', label: 'Photos' },
-    { id: 'info', label: 'Info' },
+    { id: 'photos', label:'Photos' },
+    { id: 'info', label:'Info' },
   ];
 
   return (
@@ -131,7 +125,7 @@ export default function ParkProfile() {
         <HeroCarousel media={galleryMedia} parkName={park.name} />
         <button onClick={() => navigate(-1)}
           className="absolute top-[max(1rem,env(safe-area-inset-top))] left-4 w-9 h-9 rounded-xl flex items-center justify-center"
-          style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)' }}>
+          style={{ background: 'rgba(0,0,0,0.5)', backdropFilter:'blur(8px)' }}>
           <ChevronLeft className="w-5 h-5 text-white" />
         </button>
       </div>
@@ -157,10 +151,10 @@ export default function ParkProfile() {
         {/* Live trucks indicator */}
         {liveTrucks.length > 0 && (
           <div className="flex items-center gap-2 mt-3 px-3 py-2 rounded-xl"
-            style={{ background: 'rgba(var(--cc-warm-red-rgb),0.1)', border: '1px solid rgba(var(--cc-warm-red-rgb),0.2)' }}>
+            style={{ background: 'rgba(var(--cc-warm-red-rgb),0.1)', border:'1px solid rgba(var(--cc-warm-red-rgb),0.2)' }}>
             <span className="w-2 h-2 rounded-full flex-shrink-0 live-dot" style={{ background: 'var(--cc-warm-red)' }} />
             <span className="text-sm font-bold" style={{ color: 'var(--cc-warm-red)' }}>
-              {liveTrucks.length} truck{liveTrucks.length > 1 ? 's' : ''} live right now
+              {liveTrucks.length} truck{liveTrucks.length > 1 ? 's':''} live right now
             </span>
           </div>
         )}
@@ -193,8 +187,8 @@ export default function ParkProfile() {
         <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 mb-4">
           {park.amenities.map(a => (
             <span key={a} className="flex-shrink-0 text-xs px-3 py-1.5 rounded-full font-semibold"
-              style={{ background: 'var(--cc-surface)', color: 'var(--cc-ink-muted)', border: '1px solid rgba(255,255,255,0.06)' }}>
-              {AMENITY_ICONS[a.toLowerCase()] || '✓'} {a}
+              style={{ background: 'var(--cc-surface)', color:'var(--cc-ink-muted)', border:'1px solid rgba(255,255,255,0.06)' }}>
+              {AMENITY_ICONS[a.toLowerCase()] || ''} {a}
             </span>
           ))}
         </div>
@@ -205,7 +199,7 @@ export default function ParkProfile() {
         {TABS.map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             className="pb-3 px-3 text-xs font-bold transition-colors relative"
-            style={{ color: tab === t.id ? 'var(--cc-accent-2)' : 'var(--cc-ink-faint)' }}>
+            style={{ color: tab === t.id ? 'var(--cc-accent-2)':'var(--cc-ink-faint)' }}>
             {t.label}
             {tab === t.id && (
               <div className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full" style={{ background: 'var(--cc-accent-2)' }} />
@@ -220,7 +214,7 @@ export default function ParkProfile() {
           <div className="flex flex-col gap-2.5">
             {trucks.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-3xl mb-2">🚚</p>
+                <p className="text-3xl mb-2"></p>
                 <p className="font-display" style={{ color: 'var(--cc-ink)' }}>No trucks listed yet</p>
               </div>
             ) : trucks.map(t => <TruckRow key={t.id} truck={t} />)}
@@ -231,7 +225,7 @@ export default function ParkProfile() {
           <div className="flex flex-col gap-2.5">
             {liveTrucks.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-3xl mb-2">📡</p>
+                <p className="text-3xl mb-2"></p>
                 <p className="font-display" style={{ color: 'var(--cc-ink)' }}>No trucks live right now</p>
                 <p className="text-sm mt-1" style={{ color: 'var(--cc-ink-muted)' }}>Check back soon — things heat up fast.</p>
               </div>
@@ -248,7 +242,7 @@ export default function ParkProfile() {
             ))}
             {galleryMedia.length === 0 && (
               <div className="col-span-2 text-center py-12">
-                <p className="text-3xl mb-2">📸</p>
+                <p className="text-3xl mb-2"></p>
                 <p className="font-display" style={{ color: 'var(--cc-ink)' }}>No photos yet</p>
               </div>
             )}
@@ -276,8 +270,7 @@ export default function ParkProfile() {
             <div className="p-4 rounded-2xl flex flex-col gap-3" style={{ background: 'var(--cc-surface)' }}>
               <p className="font-display text-sm mb-1" style={{ color: 'var(--cc-ink)' }}>Contact & Directions</p>
               <a href={`https://maps.google.com/?q=${encodeURIComponent(park.address)}`}
-                target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3">
+                target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: 'rgba(0,245,212,0.1)' }}>
                   <MapPin className="w-4 h-4" style={{ color: 'var(--cc-accent-2)' }} />
@@ -322,11 +315,11 @@ export default function ParkProfile() {
 
       {/* Sticky bottom CTA */}
       <div className="fixed bottom-0 left-0 right-0 px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 z-50"
-        style={{ background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        style={{ background: 'rgba(10,10,10,0.95)', backdropFilter:'blur(20px)', borderTop:'1px solid rgba(255,255,255,0.06)' }}>
         <Link
           to={`/explore?park=${park.id}`}
           className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-display text-base"
-          style={{ background: 'linear-gradient(135deg,var(--cc-accent-2),var(--cc-accent-3))', color: 'var(--cc-black)', boxShadow: '0 0 24px rgba(0,245,212,0.3)' }}>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent-2),var(--cc-accent-3))', color:'var(--cc-black)', boxShadow:'0 0 24px rgba(0,245,212,0.3)' }}>
           <Truck className="w-5 h-5" />
           Order from a Truck Here
         </Link>
