@@ -46,7 +46,7 @@ export default function OnboardingStep2Photos({ truck, saveTruck }) {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <p className="font-heading font-black text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Add your photos</p>
+        <p className="font-display text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Add your photos</p>
         <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Great photos get 3× more taps. Show off your brand!</p>
       </div>
 

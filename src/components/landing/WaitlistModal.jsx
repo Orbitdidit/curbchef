@@ -61,7 +61,7 @@ export default function WaitlistModal({ source, onClose, onSuccess }) {
       <div className="w-full max-w-md rounded-3xl p-6 pb-8"
         style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}
         onClick={e => e.stopPropagation()}>
-        <h3 className="font-heading font-black text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Get early access 🚀</h3>
+        <h3 className="font-display text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Get early access 🚀</h3>
         <p className="text-xs mb-5" style={{ color: 'var(--cc-ink-dim)' }}>
           Founding members get lifetime perks — limited spots.
         </p>
@@ -74,7 +74,7 @@ export default function WaitlistModal({ source, onClose, onSuccess }) {
             style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.5)' }} />
           {error && <p className="text-xs px-1" style={{ color: 'var(--cc-warm)' }}>{error}</p>}
           <button type="submit" disabled={loading}
-            className="w-full py-4 rounded-full font-heading font-black text-base transition-all active:scale-95"
+            className="w-full py-4 rounded-full font-display text-base transition-all active:scale-95"
             style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.3)', opacity: loading ? 0.7 : 1 }}>
             {loading ? 'Joining...' : '🚀 Join the Waitlist'}
           </button>

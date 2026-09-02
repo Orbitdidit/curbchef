@@ -42,7 +42,7 @@ function ApplicationCard({ app, onApprove, onReject, isPending }) {
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>{app.truck_name}</p>
+                <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>{app.truck_name}</p>
                 <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{app.owner_name} · {app.email}</p>
                 <p className="text-xs mt-0.5 capitalize" style={{ color: 'var(--cc-ink-dim)' }}>{app.cuisine_type?.replace('_', ' ')} · {app.city}</p>
                 {app.vendor_type && (
@@ -181,7 +181,7 @@ function ApplicationCard({ app, onApprove, onReject, isPending }) {
           <button
             onClick={() => onApprove(app)}
             disabled={isPending}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full font-heading font-black text-sm transition-all active:scale-95"
+            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full font-display text-sm transition-all active:scale-95"
             style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 16px rgba(var(--cc-accent-rgb),0.3)' }}
           >
             <CheckCircle className="w-4 h-4" />

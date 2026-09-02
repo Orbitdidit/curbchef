@@ -160,7 +160,7 @@ function VendorProfileInner({ truck, user }) {
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </button>
         <div className="flex-1">
-          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>Edit Profile</p>
+          <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>Edit Profile</p>
           <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>{truck.name}</p>
         </div>
         {activeTab !== 'menu' && (
@@ -265,7 +265,7 @@ function VendorProfileInner({ truck, user }) {
               </div>
             )}
             <button onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}
-              className="w-full py-4 rounded-full font-heading font-black text-base"
+              className="w-full py-4 rounded-full font-display text-base"
               style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}>
               {saveMutation.isPending ? 'Saving...' : 'Save Changes'}
             </button>
@@ -283,7 +283,7 @@ function VendorProfileInner({ truck, user }) {
               onChange={v => set('image_url', v)}
               hint="Square · Used in cards and search results" />
             <button onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}
-              className="w-full py-4 rounded-full font-heading font-black text-base"
+              className="w-full py-4 rounded-full font-display text-base"
               style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}>
               {saveMutation.isPending ? 'Saving...' : 'Save Images'}
             </button>

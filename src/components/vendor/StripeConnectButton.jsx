@@ -97,7 +97,7 @@ export default function StripeConnectButton({ truck, onStatusUpdate }) {
         <button
           onClick={handleConnect}
           disabled={loading}
-          className="w-full mt-3 flex items-center justify-center gap-2 py-3 rounded-full font-heading font-black text-sm"
+          className="w-full mt-3 flex items-center justify-center gap-2 py-3 rounded-full font-display text-sm"
           style={{
             background: status === 'not_connected' ? 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' : 'rgba(var(--cc-accent-rgb),0.1)',
             color: status === 'not_connected' ? 'var(--cc-accent-deep)' : 'var(--cc-accent)',

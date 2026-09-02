@@ -38,13 +38,13 @@ export default function Support() {
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </Link>
         <div>
-          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-accent)' }}>Help & Support</p>
+          <p className="font-display text-base" style={{ color: 'var(--cc-accent)' }}>Help & Support</p>
           <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>We typically respond within a few hours</p>
         </div>
       </div>
 
       <div className="px-5 pt-6 max-w-2xl mx-auto">
-        <h1 className="font-heading font-black text-2xl mb-2" style={{ color: 'var(--cc-ink)' }}>How can we help?</h1>
+        <h1 className="font-display text-2xl mb-2" style={{ color: 'var(--cc-ink)' }}>How can we help?</h1>
         <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Browse FAQs or reach us directly.</p>
 
         {/* Contact cards */}

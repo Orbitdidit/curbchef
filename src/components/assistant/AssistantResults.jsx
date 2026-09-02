@@ -12,7 +12,7 @@ export default function AssistantResults() {
     return (
       <div className="flex flex-col items-center justify-center px-6 py-12 text-center">
         <span className="text-5xl mb-4">😢</span>
-        <h3 className="font-heading font-black text-lg mb-1" style={{ color: 'var(--cc-ink)' }}>
+        <h3 className="font-display text-lg mb-1" style={{ color: 'var(--cc-ink)' }}>
           No matches found
         </h3>
         <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -32,7 +32,7 @@ export default function AssistantResults() {
       <div className="px-5 pt-4 pb-3">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>
+            <h2 className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>
               Your Picks 🔥
             </h2>
             <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>

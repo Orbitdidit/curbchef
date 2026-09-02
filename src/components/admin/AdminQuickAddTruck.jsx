@@ -109,7 +109,7 @@ export default function AdminQuickAddTruck() {
             <button
               onClick={handleCreate}
               disabled={!form.name || !form.owner_email || saving || done}
-              className="w-full py-3.5 rounded-full font-heading font-black text-sm flex items-center justify-center gap-2 transition-all"
+              className="w-full py-3.5 rounded-full font-display text-sm flex items-center justify-center gap-2 transition-all"
               style={{
                 background: done ? 'rgba(var(--cc-accent-rgb),0.1)' : 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))',
                 color: done ? 'var(--cc-accent)' : 'var(--cc-accent-deep)',

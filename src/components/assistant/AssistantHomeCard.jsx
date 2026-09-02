@@ -30,7 +30,7 @@ export default function AssistantHomeCard() {
           <Sparkles className="w-6 h-6" style={{ color: 'var(--cc-accent-deep)' }} />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-heading font-black text-base leading-tight" style={{ color: 'var(--cc-ink)' }}>
+          <p className="font-display text-base leading-tight" style={{ color: 'var(--cc-ink)' }}>
             What should I eat?
           </p>
           <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -46,7 +46,7 @@ export default function AssistantHomeCard() {
       </div>
       <div className="px-5 pb-4">
         <div
-          className="w-full py-2.5 rounded-full text-center font-heading font-black text-sm"
+          className="w-full py-2.5 rounded-full text-center font-display text-sm"
           style={{
             background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))',
             color: 'var(--cc-accent-deep)',

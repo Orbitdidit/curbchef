@@ -37,7 +37,7 @@ function ConfidenceRing({ pct }) {
           style={{ transition: 'stroke-dasharray 1s ease' }} />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="font-heading font-black text-sm" style={{ color }}>{pct}%</span>
+        <span className="font-display text-sm" style={{ color }}>{pct}%</span>
       </div>
     </div>
   );
@@ -102,7 +102,7 @@ export default function FoodScan() {
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </button>
         <div>
-          <h1 className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>Food Scan</h1>
+          <h1 className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>Food Scan</h1>
           <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>AI-powered calorie & macro analysis</p>
         </div>
         <div className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full"
@@ -153,7 +153,7 @@ export default function FoodScan() {
               <div className="flex items-center gap-2 px-5 py-2.5 rounded-full"
                 style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>
                 <Upload className="w-4 h-4" style={{ color: 'var(--cc-accent-deep)' }} />
-                <span className="font-heading font-black text-sm" style={{ color: 'var(--cc-accent-deep)' }}>Choose Photo</span>
+                <span className="font-display text-sm" style={{ color: 'var(--cc-accent-deep)' }}>Choose Photo</span>
               </div>
             </div>
           )}
@@ -176,7 +176,7 @@ export default function FoodScan() {
               style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
               <ConfidenceRing pct={result.confidence} />
               <div className="flex-1">
-                <p className="font-heading font-black text-xl leading-tight" style={{ color: 'var(--cc-ink)' }}>{result.food_name}</p>
+                <p className="font-display text-xl leading-tight" style={{ color: 'var(--cc-ink)' }}>{result.food_name}</p>
                 <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{result.portion_size}</p>
                 <div className="flex items-center gap-1.5 mt-2">
                   <span className="text-[10px] font-black px-2 py-0.5 rounded-full"
@@ -192,13 +192,13 @@ export default function FoodScan() {
               <div className="flex-1 flex flex-col items-center justify-center py-5 rounded-3xl"
                 style={{ background: 'linear-gradient(135deg,rgba(var(--cc-warm-rgb),0.12),rgba(var(--cc-warm-rgb),0.06))', border: '1px solid rgba(var(--cc-warm-rgb),0.2)' }}>
                 <Flame className="w-6 h-6 mb-1" style={{ color: 'var(--cc-warm)' }} />
-                <p className="font-heading font-black text-4xl" style={{ color: 'var(--cc-warm)' }}>{result.calories}</p>
+                <p className="font-display text-4xl" style={{ color: 'var(--cc-warm)' }}>{result.calories}</p>
                 <p className="text-xs font-bold mt-0.5" style={{ color: 'rgba(186,203,192,0.6)' }}>CALORIES</p>
               </div>
               <div className="flex-1 flex flex-col items-center justify-center py-5 rounded-3xl"
                 style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
                 <TrendingUp className="w-6 h-6 mb-1" style={{ color: healthColor }} />
-                <p className="font-heading font-black text-4xl" style={{ color: healthColor }}>{result.health_score}<span className="text-lg">/10</span></p>
+                <p className="font-display text-4xl" style={{ color: healthColor }}>{result.health_score}<span className="text-lg">/10</span></p>
                 <p className="text-xs font-bold mt-0.5" style={{ color: 'rgba(186,203,192,0.6)' }}>HEALTH SCORE</p>
               </div>
             </div>
@@ -258,7 +258,7 @@ export default function FoodScan() {
                         }
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-heading font-black text-sm truncate" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
+                        <p className="font-display text-sm truncate" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
                         <p className="text-xs capitalize" style={{ color: 'var(--cc-ink-dim)' }}>{truck.cuisine_type?.replace('_', ' ')}</p>
                       </div>
                       <div className="flex flex-col items-end gap-1">

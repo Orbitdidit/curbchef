@@ -254,7 +254,7 @@ export default function Cart() {
       <div className="fixed bottom-0 left-0 right-0 flex justify-center px-5 pb-6 pt-4 z-50"
         style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(16px)' }}>
         <button onClick={handlePlace} disabled={placing}
-          className="w-full max-w-lg flex items-center justify-center gap-2 py-4 rounded-full font-heading font-black text-base transition-all"
+          className="w-full max-w-lg flex items-center justify-center gap-2 py-4 rounded-full font-display text-base transition-all"
           style={{
             background: 'linear-gradient(135deg, var(--cc-accent-2) 0%, var(--cc-accent-3) 100%)',
             color: 'var(--cc-black)',

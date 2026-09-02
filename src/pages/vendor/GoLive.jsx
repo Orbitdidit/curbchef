@@ -36,9 +36,9 @@ function ErrorScreen({ message, onClose }) {
     <div className="fixed inset-0 flex flex-col items-center justify-center px-8 text-center z-50"
       style={{ background: 'var(--cc-bg-0)' }}>
       <span className="text-5xl mb-4">📵</span>
-      <p className="font-heading font-black text-xl text-white mb-3">{message}</p>
+      <p className="font-display text-xl text-white mb-3">{message}</p>
       <button onClick={onClose}
-        className="mt-6 px-8 py-3 rounded-full font-heading font-black text-sm"
+        className="mt-6 px-8 py-3 rounded-full font-display text-sm"
         style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }}>
         Go Back
       </button>
@@ -83,12 +83,12 @@ function CaptionScreen({ videoBlob, caption, setCaption, onPost, onRetry, isPost
 
         <div className="flex gap-3 mt-auto pt-4">
           <button onClick={onRetry}
-            className="flex-1 py-4 rounded-full font-heading font-black text-sm"
+            className="flex-1 py-4 rounded-full font-display text-sm"
             style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
             Retry
           </button>
           <button onClick={onPost} disabled={isPosting}
-            className="flex-[2] py-4 rounded-full font-heading font-black text-base flex items-center justify-center gap-2"
+            className="flex-[2] py-4 rounded-full font-display text-base flex items-center justify-center gap-2"
             style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.35)', opacity: isPosting ? 0.7 : 1 }}>
             {isPosting ? (
               <><div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'var(--cc-accent-deep) transparent' }} /> Posting…</>
@@ -106,7 +106,7 @@ function SuccessScreen() {
     <div className="fixed inset-0 flex flex-col items-center justify-center px-8 text-center z-50"
       style={{ background: 'var(--cc-bg-0)' }}>
       <div className="text-6xl mb-4 animate-bounce">🔴</div>
-      <p className="font-heading font-black text-2xl text-white mb-3">You're LIVE!</p>
+      <p className="font-display text-2xl text-white mb-3">You're LIVE!</p>
       <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>
         Customers will see your truck in the live feed for the next 15 minutes.
       </p>
@@ -293,12 +293,12 @@ function GoLiveInner({ truck }) {
         <video src={blobUrl} className="flex-1 w-full object-contain" controls playsInline autoPlay loop />
         <div className="flex gap-3 px-5 py-6" style={{ background: 'var(--cc-bg-0)' }}>
           <button onClick={handleRetry}
-            className="flex-1 py-4 rounded-full font-heading font-black text-sm"
+            className="flex-1 py-4 rounded-full font-display text-sm"
             style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }}>
             Retry
           </button>
           <button onClick={() => setScreen('caption')}
-            className="flex-[2] py-4 rounded-full font-heading font-black text-base"
+            className="flex-[2] py-4 rounded-full font-display text-base"
             style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
             Continue →
           </button>

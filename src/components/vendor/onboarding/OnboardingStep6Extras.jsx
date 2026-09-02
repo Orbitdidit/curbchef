@@ -28,7 +28,7 @@ export default function OnboardingStep6Extras() {
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <p className="font-heading font-black text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Power-up your truck</p>
+        <p className="font-display text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Power-up your truck</p>
         <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>These optional tools help you sell more. All available after setup.</p>
       </div>
 

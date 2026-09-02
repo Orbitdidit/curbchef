@@ -39,7 +39,7 @@ function UploadField({ label, hint, required, value, onChange, accept = 'image/*
               ? <CheckCircle className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--cc-green)' }} />
               : <div className="w-4 h-4 rounded-full border-2 flex-shrink-0" style={{ borderColor: required ? 'var(--cc-warm)' : 'var(--cc-ink-faint)' }} />
             }
-            <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>
+            <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>
               {label}
               {required && <span className="ml-1 text-xs" style={{ color: 'var(--cc-warm)' }}>*</span>}
             </p>
@@ -174,7 +174,7 @@ function VendorVerificationInner({ truck, user }) {
           <CheckCircle className="w-12 h-12" style={{ color: 'var(--cc-green)' }} />
         </div>
         <VerifiedBadge size="lg" showLabel className="mb-4 justify-center" />
-        <h1 className="font-heading font-black text-3xl mb-2" style={{ color: 'var(--cc-ink)' }}>You're Verified ✅</h1>
+        <h1 className="font-display text-3xl mb-2" style={{ color: 'var(--cc-ink)' }}>You're Verified ✅</h1>
         {truck.verification_date && (
           <p className="text-sm mb-4" style={{ color: 'var(--cc-ink-dim)' }}>
             Verified on {new Date(truck.verification_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
@@ -184,7 +184,7 @@ function VendorVerificationInner({ truck, user }) {
           You can now Go Live, access all features, and build your audience on CurbChef.
         </p>
         <Link to="/vendor">
-          <button className="px-8 py-3.5 rounded-full font-heading font-black text-sm"
+          <button className="px-8 py-3.5 rounded-full font-display text-sm"
             style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}>
             ← Back to Dashboard
           </button>
@@ -204,7 +204,7 @@ function VendorVerificationInner({ truck, user }) {
             <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
           </Link>
           <div className="flex-1">
-            <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>Get Verified</p>
+            <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>Get Verified</p>
             <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Unlock Live broadcasting & all features</p>
           </div>
         </div>
@@ -213,7 +213,7 @@ function VendorVerificationInner({ truck, user }) {
       <div className="px-5 pt-5 max-w-lg mx-auto">
         {/* Intro */}
         <div className="p-5 rounded-3xl mb-6" style={{ background: 'rgba(var(--cc-accent-rgb),0.04)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
-          <h2 className="font-heading font-black text-lg mb-1" style={{ color: 'var(--cc-ink)' }}>
+          <h2 className="font-display text-lg mb-1" style={{ color: 'var(--cc-ink)' }}>
             🛡️ Verify your truck to unlock Live broadcasting
           </h2>
           <p className="text-sm leading-relaxed" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -285,7 +285,7 @@ function VendorVerificationInner({ truck, user }) {
         {/* Success state after submit */}
         {submitted && (
           <div className="p-4 rounded-2xl mb-5 text-center" style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}>
-            <p className="font-heading font-black text-base mb-1" style={{ color: 'var(--cc-accent)' }}>🎉 Submitted for review!</p>
+            <p className="font-display text-base mb-1" style={{ color: 'var(--cc-accent)' }}>🎉 Submitted for review!</p>
             <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>We'll reach out within 24-48 hours. Watch your email.</p>
           </div>
         )}
@@ -295,7 +295,7 @@ function VendorVerificationInner({ truck, user }) {
           <button
             onClick={handleSubmit}
             disabled={!allRequired || submitting}
-            className="w-full py-4 rounded-full font-heading font-black text-base flex items-center justify-center gap-2 transition-all active:scale-95"
+            className="w-full py-4 rounded-full font-display text-base flex items-center justify-center gap-2 transition-all active:scale-95"
             style={{
               background: allRequired ? 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' : 'var(--cc-bg-2)',
               color: allRequired ? 'var(--cc-accent-deep)' : 'var(--cc-ink-faint)',

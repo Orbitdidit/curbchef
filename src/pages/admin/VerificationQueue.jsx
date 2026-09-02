@@ -19,7 +19,7 @@ function DocModal({ url, title, onClose }) {
         onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-5 py-4"
           style={{ borderBottom: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
-          <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>{title}</p>
+          <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>{title}</p>
           <div className="flex items-center gap-3">
             <a href={url} target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-xs font-bold"
@@ -61,7 +61,7 @@ function NoteModal({ truck, mode, onClose, onSubmit, loading }) {
       <div className="w-full max-w-md rounded-3xl p-6 pb-8"
         style={{ background: 'var(--cc-bg-1)', border: `1px solid ${isReject ? 'rgba(239,68,68,0.3)' : 'rgba(251,191,36,0.3)'}` }}
         onClick={e => e.stopPropagation()}>
-        <p className="font-heading font-black text-lg mb-1" style={{ color: 'var(--cc-ink)' }}>
+        <p className="font-display text-lg mb-1" style={{ color: 'var(--cc-ink)' }}>
           {isReject ? '❌ Reject Application' : '📋 Request More Info'}
         </p>
         <p className="text-xs mb-4" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -83,7 +83,7 @@ function NoteModal({ truck, mode, onClose, onSubmit, loading }) {
             Cancel
           </button>
           <button onClick={() => onSubmit(note)} disabled={loading || !note.trim()}
-            className="flex-1 py-3 rounded-full font-heading font-black text-sm flex items-center justify-center gap-2 transition-all"
+            className="flex-1 py-3 rounded-full font-display text-sm flex items-center justify-center gap-2 transition-all"
             style={{
               background: isReject ? '#ef4444' : 'rgba(251,191,36,0.9)',
               color: isReject ? '#fff' : '#1a0f00',
@@ -152,7 +152,7 @@ function TruckRow({ truck, onApprove, onReject, onRequestInfo, loading }) {
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
+              <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
               <StripePill status={truck.stripe_onboarding_status} />
             </div>
             <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>{truck.owner_email || '—'}</p>
@@ -177,17 +177,17 @@ function TruckRow({ truck, onApprove, onReject, onRequestInfo, loading }) {
         {/* Actions */}
         <div className="flex gap-2">
           <button onClick={() => onApprove(truck)} disabled={loading}
-            className="flex-1 py-2.5 rounded-xl font-heading font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95"
+            className="flex-1 py-2.5 rounded-xl font-display text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95"
             style={{ background: 'linear-gradient(135deg,var(--cc-green),#16a34a)', color: '#fff', opacity: loading ? 0.6 : 1 }}>
             <CheckCircle className="w-3.5 h-3.5" /> Approve
           </button>
           <button onClick={() => onReject(truck)} disabled={loading}
-            className="flex-1 py-2.5 rounded-xl font-heading font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95"
+            className="flex-1 py-2.5 rounded-xl font-display text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95"
             style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.3)', opacity: loading ? 0.6 : 1 }}>
             <XCircle className="w-3.5 h-3.5" /> Reject
           </button>
           <button onClick={() => onRequestInfo(truck)} disabled={loading}
-            className="flex-1 py-2.5 rounded-xl font-heading font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95"
+            className="flex-1 py-2.5 rounded-xl font-display text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95"
             style={{ background: 'rgba(251,191,36,0.08)', color: 'var(--cc-amber)', border: '1px solid rgba(251,191,36,0.25)', opacity: loading ? 0.6 : 1 }}>
             <MessageSquare className="w-3.5 h-3.5" /> Request Info
           </button>
@@ -299,7 +299,7 @@ export default function VerificationQueue() {
             <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
           </button>
           <div className="flex-1">
-            <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>
+            <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>
               <Shield className="w-4 h-4 inline mr-1.5 mb-0.5" style={{ color: 'var(--cc-green)' }} />
               Verification Queue
             </p>
@@ -318,7 +318,7 @@ export default function VerificationQueue() {
         ) : allTrucks.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4">✅</div>
-            <p className="font-heading font-black text-xl mb-2" style={{ color: 'var(--cc-ink)' }}>Queue is clear!</p>
+            <p className="font-display text-xl mb-2" style={{ color: 'var(--cc-ink)' }}>Queue is clear!</p>
             <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>
               No trucks pending verification. Trucks appear here once they upload a business license.
             </p>

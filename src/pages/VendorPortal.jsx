@@ -51,7 +51,7 @@ export default function VendorPortal() {
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </button>
         <div>
-          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-accent)' }}>Vendor Portal</p>
+          <p className="font-display text-base" style={{ color: 'var(--cc-accent)' }}>Vendor Portal</p>
           <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Manage your food truck on CurbChef</p>
         </div>
       </div>
@@ -66,7 +66,7 @@ export default function VendorPortal() {
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl" style={{ background: 'var(--cc-bg-2)' }}>🚚</div>
                 <div>
-                  <p className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
+                  <p className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
                   <div className="flex items-center gap-2 mt-0.5">
                     {truck.is_approved ? (
                       <span className="flex items-center gap-1 text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background: 'rgba(var(--cc-accent-rgb),0.15)', color: 'var(--cc-accent)' }}>
@@ -96,7 +96,7 @@ export default function VendorPortal() {
               </div>
 
               <Link to="/vendor">
-                <button className="w-full py-3.5 rounded-full font-heading font-black text-sm"
+                <button className="w-full py-3.5 rounded-full font-display text-sm"
                   style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}>
                   Go to Vendor Dashboard →
                 </button>
@@ -161,7 +161,7 @@ export default function VendorPortal() {
               Unfortunately your application wasn't approved this time. Please contact support or re-apply with updated information.
             </p>
             <Link to="/onboard-truck">
-              <button className="w-full py-3 rounded-full font-heading font-black text-sm"
+              <button className="w-full py-3 rounded-full font-display text-sm"
                 style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}>
                 Re-apply
               </button>
@@ -175,7 +175,7 @@ export default function VendorPortal() {
             {/* Hero */}
             <div className="text-center mb-8">
               <div className="text-5xl mb-3">🚚</div>
-              <h1 className="font-heading font-black text-2xl mb-2" style={{ color: 'var(--cc-ink)' }}>
+              <h1 className="font-display text-2xl mb-2" style={{ color: 'var(--cc-ink)' }}>
                 {user ? `Hey ${user.full_name?.split(' ')[0]}!` : 'Own a Food Truck?'}
               </h1>
               <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -191,7 +191,7 @@ export default function VendorPortal() {
                 <p className="text-xs mb-3" style={{ color: 'var(--cc-ink-dim)' }}>You'll need an account so we can link your truck to your profile and enable payments.</p>
                 <button
                   onClick={() => base44.auth.redirectToLogin('/vendor-portal')}
-                  className="w-full py-3 rounded-full font-heading font-black text-sm"
+                  className="w-full py-3 rounded-full font-display text-sm"
                   style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
                   Sign In / Create Account
                 </button>
@@ -218,14 +218,14 @@ export default function VendorPortal() {
             <div className="p-4 rounded-2xl mb-6"
               style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
               <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: 'var(--cc-ink-dim)' }}>PRICING</p>
-              <p className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-accent)' }}>Free to list</p>
+              <p className="font-display text-2xl mb-1" style={{ color: 'var(--cc-accent)' }}>Free to list</p>
               <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>CurbChef takes a 12% platform fee per order. No monthly fees, no setup costs.</p>
             </div>
 
             {/* Apply CTA */}
             {user ? (
               <Link to="/onboard-truck">
-                <button className="w-full py-4 rounded-full font-heading font-black text-base"
+                <button className="w-full py-4 rounded-full font-display text-base"
                   style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.4)' }}>
                   🚀 Start Truck Application
                 </button>
@@ -233,7 +233,7 @@ export default function VendorPortal() {
             ) : (
               <button
                 onClick={() => base44.auth.redirectToLogin('/onboard-truck')}
-                className="w-full py-4 rounded-full font-heading font-black text-base"
+                className="w-full py-4 rounded-full font-display text-base"
                 style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.4)' }}>
                 🚀 Create Account & Apply
               </button>

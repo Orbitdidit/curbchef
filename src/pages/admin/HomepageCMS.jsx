@@ -310,7 +310,7 @@ function LiveVideosManager() {
           <div className="w-full max-w-lg rounded-t-3xl p-6 flex flex-col gap-4 max-h-[90vh] overflow-y-auto"
             style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }}>
             <div className="flex items-center justify-between">
-              <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>Edit Video</p>
+              <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>Edit Video</p>
               <button onClick={() => setEditingClip(null)} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'var(--cc-bg-3)' }}>
                 <X className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />
               </button>
@@ -374,7 +374,7 @@ function LaunchModeToggle() {
     <div className="rounded-2xl p-5 flex items-center justify-between"
       style={{ background: isLive ? 'rgba(var(--cc-accent-rgb),0.07)' : 'rgba(var(--cc-warm-rgb),0.07)', border: `1px solid ${isLive ? 'rgba(var(--cc-accent-rgb),0.3)' : 'rgba(var(--cc-warm-rgb),0.3)'}` }}>
       <div>
-        <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>
+        <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>
           Launch Mode
         </p>
         <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -385,7 +385,7 @@ function LaunchModeToggle() {
       </div>
       <button
         onClick={toggle}
-        className="flex items-center gap-2 px-4 py-2.5 rounded-full font-heading font-black text-sm transition-all"
+        className="flex items-center gap-2 px-4 py-2.5 rounded-full font-display text-sm transition-all"
         style={isLive
           ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 14px rgba(var(--cc-accent-rgb),0.3)' }
           : { background: 'rgba(var(--cc-warm-rgb),0.2)', color: 'var(--cc-warm)', border: '1px solid rgba(var(--cc-warm-rgb),0.4)' }
@@ -440,7 +440,7 @@ export default function HomepageCMS() {
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </Link>
         <div>
-          <h1 className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>Homepage CMS</h1>
+          <h1 className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>Homepage CMS</h1>
           <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Upload media · Edit copy · Go live instantly</p>
         </div>
         <Link to="/" className="ml-auto px-4 py-2 rounded-full text-xs font-bold"

@@ -119,7 +119,7 @@ export default function LaunchReadinessCard({ truck, menuItems, onLaunchReadyCha
         <div className="relative z-10 flex items-center gap-4">
           <div className="text-3xl flex-shrink-0">🎉</div>
           <div>
-            <p className="font-heading font-black text-base" style={{ color: 'var(--cc-accent-2)' }}>You're launch ready!</p>
+            <p className="font-display text-base" style={{ color: 'var(--cc-accent-2)' }}>You're launch ready!</p>
             <p className="text-xs mt-0.5" style={{ color: 'rgba(0,245,212,0.7)' }}>
               Your truck is now live on CurbChef and visible to customers.
             </p>
@@ -158,13 +158,13 @@ export default function LaunchReadinessCard({ truck, menuItems, onLaunchReadyCha
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="font-heading font-black text-sm leading-none" style={{ color: 'var(--cc-ink)' }}>{passed}/{total}</span>
+              <span className="font-display text-sm leading-none" style={{ color: 'var(--cc-ink)' }}>{passed}/{total}</span>
               <span className="text-[9px] font-bold" style={{ color: 'var(--cc-ink-dim)' }}>{pct}%</span>
             </div>
           </div>
 
           <div className="flex-1 min-w-0">
-            <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>Launch Readiness</p>
+            <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>Launch Readiness</p>
             <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>
               Complete {remaining} more {remaining === 1 ? 'step' : 'steps'} to start receiving orders.
             </p>

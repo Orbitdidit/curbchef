@@ -58,7 +58,7 @@ export default function TopItems() {
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-cream)' }} />
         </Link>
         <div>
-          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-cream)' }}>Top Sellers</p>
+          <p className="font-display text-base" style={{ color: 'var(--cc-cream)' }}>Top Sellers</p>
           <p className="text-xs" style={{ color: 'var(--cc-ink-faint)' }}>This week's best-performing items</p>
         </div>
       </div>
@@ -72,7 +72,7 @@ export default function TopItems() {
             { label: 'Revenue', value: `$${totalRevenue.toFixed(0)}` },
           ].map(({ label, value }) => (
             <div key={label} className="p-4 rounded-2xl text-center" style={{ background: 'var(--cc-surface)', border: '1px solid rgba(255,255,255,0.05)' }}>
-              <p className="font-heading font-black text-xl" style={{ color: 'var(--cc-accent-2)' }}>{value}</p>
+              <p className="font-display text-xl" style={{ color: 'var(--cc-accent-2)' }}>{value}</p>
               <p className="text-[10px] font-semibold mt-0.5" style={{ color: 'var(--cc-ink-faint)' }}>{label}</p>
             </div>
           ))}
@@ -104,7 +104,7 @@ export default function TopItems() {
                 <div key={item.name} className="p-4 rounded-2xl"
                   style={{ background: 'var(--cc-surface)', border: idx < 3 ? '1px solid rgba(0,245,212,0.12)' : '1px solid rgba(255,255,255,0.04)' }}>
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="font-heading font-black text-sm w-6 text-center flex-shrink-0"
+                    <span className="font-display text-sm w-6 text-center flex-shrink-0"
                       style={{ color: idx < 3 ? 'var(--cc-accent-2)' : 'var(--cc-ink-faint)' }}>
                       {medal || `#${idx + 1}`}
                     </span>
@@ -118,7 +118,7 @@ export default function TopItems() {
                       )}
                     </div>
                     <div className="text-right flex-shrink-0">
-                      <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-cream)' }}>{item.qty} sold</p>
+                      <p className="font-display text-sm" style={{ color: 'var(--cc-cream)' }}>{item.qty} sold</p>
                       <p className="text-[10px]" style={{ color: 'var(--cc-ink-faint)' }}>${item.revenue.toFixed(0)} rev</p>
                     </div>
                   </div>

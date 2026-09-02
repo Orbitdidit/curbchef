@@ -84,7 +84,7 @@ export default function TopMenuBar() {
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
           <div>
-            <p className="font-heading font-black text-base" style={{ color: 'var(--cc-accent)' }}>CurbChef</p>
+            <p className="font-display text-base" style={{ color: 'var(--cc-accent)' }}>CurbChef</p>
             {user && <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{user.full_name}</p>}
           </div>
           <button

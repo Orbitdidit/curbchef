@@ -58,7 +58,7 @@ export default function ReferFriendModal({ user, onClose }) {
     <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}>
       <div className="w-full max-w-lg rounded-t-3xl p-6 pb-10" style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
         <div className="flex items-center justify-between mb-5">
-          <h2 className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>Refer a Friend 🎁</h2>
+          <h2 className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>Refer a Friend 🎁</h2>
           <button onClick={onClose} className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-3)' }}>
             <X className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />
           </button>
@@ -85,7 +85,7 @@ export default function ReferFriendModal({ user, onClose }) {
         {/* Referral code */}
         <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: 'var(--cc-ink-dim)' }}>YOUR CODE</p>
         <div className="flex items-center gap-3 p-4 rounded-2xl mb-4" style={{ background: 'var(--cc-bg-0)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
-          <p className="font-heading font-black text-2xl tracking-widest flex-1" style={{ color: 'var(--cc-accent)' }}>{referralCode}</p>
+          <p className="font-display text-2xl tracking-widest flex-1" style={{ color: 'var(--cc-accent)' }}>{referralCode}</p>
           <button onClick={handleCopy} className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
             style={{ background: copied ? 'rgba(var(--cc-accent-rgb),0.15)' : 'var(--cc-bg-3)' }}>
             {copied ? <Check className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} /> : <Copy className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />}
@@ -94,7 +94,7 @@ export default function ReferFriendModal({ user, onClose }) {
 
         {/* Share button */}
         <button onClick={handleShare}
-          className="w-full py-4 rounded-full font-heading font-black text-base flex items-center justify-center gap-2"
+          className="w-full py-4 rounded-full font-display text-base flex items-center justify-center gap-2"
           style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.35)' }}>
           <Share2 className="w-5 h-5" />
           Share My Link

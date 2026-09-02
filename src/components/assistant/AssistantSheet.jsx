@@ -57,7 +57,7 @@ export default function AssistantSheet() {
                   style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>
                   <Sparkles className="w-4 h-4" style={{ color: 'var(--cc-accent-deep)' }} />
                 </div>
-                <span className="font-heading font-black text-sm" style={{ color: 'var(--cc-accent)' }}>
+                <span className="font-display text-sm" style={{ color: 'var(--cc-accent)' }}>
                   What Should I Eat?
                 </span>
               </div>

@@ -275,7 +275,7 @@ export default function AdminDashboard() {
                 {trend && <span className="text-[10px] font-bold" style={{ color: 'var(--cc-accent)' }}>{trend}</span>}
                 {hot && <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />}
               </div>
-              <p className="font-heading font-black text-3xl" style={{ color: 'var(--cc-ink)' }}>{value}</p>
+              <p className="font-display text-3xl" style={{ color: 'var(--cc-ink)' }}>{value}</p>
               <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-dim)' }}>{label}</p>
             </div>
           ))}
@@ -288,7 +288,7 @@ export default function AdminDashboard() {
         >
           <div>
             <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-ink-dim)' }}>TOTAL ORDERS (TODAY)</p>
-            <p className="font-heading font-black text-4xl mt-1" style={{ color: 'var(--cc-ink)' }}>
+            <p className="font-display text-4xl mt-1" style={{ color: 'var(--cc-ink)' }}>
               {orders.length.toLocaleString()}
             </p>
           </div>
@@ -434,7 +434,7 @@ export default function AdminDashboard() {
             <button
               onClick={() => approveAllPending.mutate()}
               disabled={approveAllPending.isPending}
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-heading font-black text-sm transition-all"
+              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-display text-sm transition-all"
               style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', opacity: approveAllPending.isPending ? 0.6 : 1 }}
             >
               <CheckCheck className="w-4 h-4" />
@@ -462,7 +462,7 @@ export default function AdminDashboard() {
             ].map(({ label, value }) => (
               <div key={label} className="p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)' }}>
                 <p className="text-[10px] font-bold tracking-wide mb-1" style={{ color: 'var(--cc-ink-dim)' }}>{label}</p>
-                <p className="font-heading font-black text-2xl" style={{ color: 'var(--cc-accent)' }}>{value}</p>
+                <p className="font-display text-2xl" style={{ color: 'var(--cc-accent)' }}>{value}</p>
               </div>
             ))}
           </div>

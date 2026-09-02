@@ -86,7 +86,7 @@ export default function DashboardDave({ truck, menuItems = [] }) {
           🤖
         </div>
         <div className="flex-1">
-          <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>Dashboard Dave</p>
+          <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Dashboard Dave</p>
           <p className="text-[11px]" style={{ color: 'var(--cc-ink-dim)' }}>Your personal visibility coach</p>
         </div>
         <button onClick={() => setExpanded(e => !e)}
@@ -108,7 +108,7 @@ export default function DashboardDave({ truck, menuItems = [] }) {
               <div className="h-full rounded-full transition-all duration-700"
                 style={{ width: `${score}%`, background: `linear-gradient(90deg, ${scoreColor}, ${scoreColor}aa)` }} />
             </div>
-            <span className="font-heading font-black text-lg flex-shrink-0" style={{ color: scoreColor }}>{score}</span>
+            <span className="font-display text-lg flex-shrink-0" style={{ color: scoreColor }}>{score}</span>
           </div>
         </div>
 
@@ -187,7 +187,7 @@ export default function DashboardDave({ truck, menuItems = [] }) {
         <button
           onClick={handleBoost}
           disabled={boosting}
-          className="w-full flex items-center justify-center gap-2 py-3 rounded-full font-heading font-black text-sm transition-all"
+          className="w-full flex items-center justify-center gap-2 py-3 rounded-full font-display text-sm transition-all"
           style={{
             background: boosting ? 'var(--cc-bg-3)' : 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))',
             color: boosting ? 'var(--cc-ink-dim)' : 'var(--cc-accent-deep)',

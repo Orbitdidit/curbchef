@@ -28,10 +28,10 @@ export default function PerksSection({ onJoinWaitlist }) {
     <section className="px-6 py-14 max-w-lg mx-auto">
       <div className="flex items-center gap-3 mb-2">
         <div className="h-px flex-1" style={{ background: 'rgba(var(--cc-line-rgb),0.4)' }} />
-        <p className="font-heading font-black text-sm tracking-widest" style={{ color: 'var(--cc-accent)' }}>WHY JOIN</p>
+        <p className="font-display text-sm tracking-widest" style={{ color: 'var(--cc-accent)' }}>WHY JOIN</p>
         <div className="h-px flex-1" style={{ background: 'rgba(var(--cc-line-rgb),0.4)' }} />
       </div>
-      <h2 className="font-heading font-black text-2xl text-center mb-1" style={{ color: 'var(--cc-ink)' }}>
+      <h2 className="font-display text-2xl text-center mb-1" style={{ color: 'var(--cc-ink)' }}>
         🎁 Why join the waitlist?
       </h2>
       <p className="text-sm text-center mb-8" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -44,7 +44,7 @@ export default function PerksSection({ onJoinWaitlist }) {
             style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-line-rgb),0.25)' }}>
             <span className="text-2xl flex-shrink-0 mt-0.5">{emoji}</span>
             <div>
-              <p className="font-heading font-black text-sm mb-1" style={{ color: 'var(--cc-ink)' }}>{title}</p>
+              <p className="font-display text-sm mb-1" style={{ color: 'var(--cc-ink)' }}>{title}</p>
               <p className="text-xs leading-relaxed" style={{ color: 'var(--cc-ink-dim)' }}>{desc}</p>
             </div>
           </div>
@@ -52,7 +52,7 @@ export default function PerksSection({ onJoinWaitlist }) {
       </div>
 
       <button onClick={() => onJoinWaitlist('perks')}
-        className="w-full py-4 rounded-full font-heading font-black text-base transition-all active:scale-95"
+        className="w-full py-4 rounded-full font-display text-base transition-all active:scale-95"
         style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.3)' }}>
         🚀 Claim my Founding Member spot
       </button>

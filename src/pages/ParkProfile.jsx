@@ -140,7 +140,7 @@ export default function ParkProfile() {
       <div className="px-4 pt-4 pb-3">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1">
-            <h1 className="font-heading font-black text-2xl leading-tight" style={{ color: 'var(--cc-cream)' }}>{park.name}</h1>
+            <h1 className="font-display text-2xl leading-tight" style={{ color: 'var(--cc-cream)' }}>{park.name}</h1>
             <div className="flex items-center gap-1.5 mt-1">
               <MapPin className="w-3.5 h-3.5 flex-shrink-0" style={{ color: 'var(--cc-ink-muted)' }} />
               <span className="text-sm" style={{ color: 'var(--cc-ink-muted)' }}>{park.address}</span>
@@ -149,7 +149,7 @@ export default function ParkProfile() {
           {park.avg_rating && (
             <div className="flex items-center gap-1 flex-shrink-0 mt-1">
               <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-              <span className="font-heading font-black text-base" style={{ color: 'var(--cc-cream)' }}>{park.avg_rating.toFixed(1)}</span>
+              <span className="font-display text-base" style={{ color: 'var(--cc-cream)' }}>{park.avg_rating.toFixed(1)}</span>
             </div>
           )}
         </div>
@@ -173,17 +173,17 @@ export default function ParkProfile() {
       {/* Quick stats strip */}
       <div className="flex gap-3 px-4 mb-4">
         <div className="flex-1 py-2.5 rounded-xl text-center" style={{ background: 'var(--cc-surface)' }}>
-          <p className="font-heading font-black text-lg" style={{ color: 'var(--cc-accent-2)' }}>{trucks.length}</p>
+          <p className="font-display text-lg" style={{ color: 'var(--cc-accent-2)' }}>{trucks.length}</p>
           <p className="text-[10px] font-bold" style={{ color: 'var(--cc-ink-faint)' }}>TRUCKS</p>
         </div>
         <div className="flex-1 py-2.5 rounded-xl text-center" style={{ background: 'var(--cc-surface)' }}>
-          <p className="font-heading font-black text-lg" style={{ color: 'var(--cc-accent-2)' }}>
+          <p className="font-display text-lg" style={{ color: 'var(--cc-accent-2)' }}>
             {[...new Set(trucks.map(t => t.cuisine_type))].length}
           </p>
           <p className="text-[10px] font-bold" style={{ color: 'var(--cc-ink-faint)' }}>CUISINES</p>
         </div>
         <div className="flex-1 py-2.5 rounded-xl text-center" style={{ background: 'var(--cc-surface)' }}>
-          <p className="font-heading font-black text-lg" style={{ color: 'var(--cc-warm-red)' }}>{liveTrucks.length}</p>
+          <p className="font-display text-lg" style={{ color: 'var(--cc-warm-red)' }}>{liveTrucks.length}</p>
           <p className="text-[10px] font-bold" style={{ color: 'var(--cc-ink-faint)' }}>LIVE NOW</p>
         </div>
       </div>
@@ -325,7 +325,7 @@ export default function ParkProfile() {
         style={{ background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
         <Link
           to={`/explore?park=${park.id}`}
-          className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-heading font-black text-base"
+          className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-display text-base"
           style={{ background: 'linear-gradient(135deg,var(--cc-accent-2),var(--cc-accent-3))', color: 'var(--cc-black)', boxShadow: '0 0 24px rgba(0,245,212,0.3)' }}>
           <Truck className="w-5 h-5" />
           Order from a Truck Here

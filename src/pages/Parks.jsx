@@ -31,7 +31,7 @@ function ParkCard({ park, featured = false }) {
               style={{ background: 'rgba(0,245,212,0.9)', color: 'var(--cc-black)' }}>⭐ FEATURED</div>
           )}
           <div className="absolute bottom-3 left-3 right-3">
-            <p className="font-heading font-black text-white text-lg leading-tight">{park.name}</p>
+            <p className="font-display text-white text-lg leading-tight">{park.name}</p>
             <div className="flex items-center gap-1.5 mt-1">
               <MapPin className="w-3 h-3 text-white/60" />
               <span className="text-xs text-white/70">{park.address?.split(',')[0]}</span>
@@ -121,7 +121,7 @@ export default function Parks() {
       {/* Hero Header */}
       <div className="px-4 pt-[max(1.25rem,env(safe-area-inset-top))] pb-5"
         style={{ background: 'linear-gradient(180deg,#0d1a0f 0%,var(--cc-black) 100%)' }}>
-        <p className="font-heading font-black text-2xl" style={{ color: 'var(--cc-cream)' }}>
+        <p className="font-display text-2xl" style={{ color: 'var(--cc-cream)' }}>
           Houston's Best <span style={{ color: 'var(--cc-accent-2)' }}>Truck Parks</span> 🏛️
         </p>
         <p className="text-sm mt-1" style={{ color: 'var(--cc-ink-muted)' }}>
@@ -133,7 +133,7 @@ export default function Parks() {
       {featured.length > 0 && (
         <div className="mb-6">
           <div className="flex items-center justify-between px-4 mb-3">
-            <h2 className="font-heading font-black text-sm" style={{ color: 'var(--cc-accent-2)' }}>⭐ FEATURED PARKS</h2>
+            <h2 className="font-display text-sm" style={{ color: 'var(--cc-accent-2)' }}>⭐ FEATURED PARKS</h2>
           </div>
           <div className="flex gap-3 overflow-x-auto no-scrollbar px-4 pb-1">
             {featured.map(p => <ParkCard key={p.id} park={p} featured />)}

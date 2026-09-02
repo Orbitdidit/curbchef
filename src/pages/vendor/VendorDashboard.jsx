@@ -107,7 +107,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         <div className="flex items-center justify-between mb-5">
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="font-heading font-black text-xl" style={{ color: 'var(--cc-ink)' }}>{truck.name}</h1>
+              <h1 className="font-display text-xl" style={{ color: 'var(--cc-ink)' }}>{truck.name}</h1>
               {truck.verified_status
                 ? <VerifiedBadge size="md" />
                 : (
@@ -155,7 +155,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         <Link
           id="tour-go-live"
           to="/vendor/go-live"
-          className="w-full flex items-center justify-center gap-3 py-5 rounded-2xl mb-5 font-heading font-black text-lg active:scale-95 transition-transform"
+          className="w-full flex items-center justify-center gap-3 py-5 rounded-2xl mb-5 font-display text-lg active:scale-95 transition-transform"
           style={{
             background: 'linear-gradient(135deg, var(--cc-accent) 0%, var(--cc-accent-3) 100%)',
             color: 'var(--cc-accent-deep)',
@@ -176,7 +176,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
             style={{ background: 'rgba(var(--cc-accent-rgb),0.06)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
             <div>
               <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-ink-dim)' }}>YOUR PLAN</p>
-              <p className="font-heading font-black text-sm capitalize" style={{ color: 'var(--cc-accent)' }}>{truck.vendor_plan || 'Free'}</p>
+              <p className="font-display text-sm capitalize" style={{ color: 'var(--cc-accent)' }}>{truck.vendor_plan || 'Free'}</p>
             </div>
             <div className="flex items-center gap-1.5">
               <Zap className="w-3.5 h-3.5" style={{ color: 'var(--cc-accent)' }} />
@@ -190,7 +190,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         <DropTokenCounter truck={truck} />
         <button
           onClick={() => setShowDropModal(true)}
-          className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl mb-5 font-heading font-black text-sm transition-all active:scale-95"
+          className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl mb-5 font-display text-sm transition-all active:scale-95"
           style={{
             background: (truck.drop_tokens ?? 0) > 0
               ? 'linear-gradient(135deg,rgba(var(--cc-warm-rgb),0.15),rgba(var(--cc-warm-rgb),0.08))'
@@ -256,7 +256,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
               ].map(({ label, value, highlight }) => (
                 <div key={label} className="p-3 rounded-xl" style={{ background: 'var(--cc-bg-0)' }}>
                   <p className="text-[10px] font-bold tracking-wide mb-1" style={{ color: 'var(--cc-ink-dim)' }}>{label}</p>
-                  <p className="font-heading font-black text-base" style={{ color: highlight ? 'var(--cc-accent)' : 'var(--cc-ink)' }}>{value}</p>
+                  <p className="font-display text-base" style={{ color: highlight ? 'var(--cc-accent)' : 'var(--cc-ink)' }}>{value}</p>
                 </div>
               ))}
             </div>
@@ -279,7 +279,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
             ].map(({ label, value, icon: Icon }) => (
               <div key={label} className="p-3 rounded-2xl text-center" style={{ background: 'var(--cc-bg-2)' }}>
                 <p className="text-[10px] font-bold tracking-wide mb-1" style={{ color: 'var(--cc-ink-dim)' }}>{label}</p>
-                <p className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>{value}</p>
+                <p className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>{value}</p>
               </div>
             ))}
           </div>
@@ -372,7 +372,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
                 <div key={order.id} className="p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <span className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>
+                      <span className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>
                         #{order.pickup_code || order.id.slice(-4).toUpperCase()}
                       </span>
                       <span

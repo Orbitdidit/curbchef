@@ -91,7 +91,7 @@ export default function AssistantSteps() {
           </span>
         </div>
 
-        <h2 className="font-heading font-black text-xl leading-tight" style={{ color: 'var(--cc-ink)' }}>
+        <h2 className="font-display text-xl leading-tight" style={{ color: 'var(--cc-ink)' }}>
           {step.question}
         </h2>
         <p className="text-xs mt-1 mb-5" style={{ color: 'var(--cc-ink-dim)' }}>{step.sub}</p>

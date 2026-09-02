@@ -74,7 +74,7 @@ export default function PermitsStep({ form, set, handleFileUpload, labelStyle, i
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Permits & Verification 🛡️</h2>
+        <h2 className="font-display text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Permits & Verification 🛡️</h2>
         <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>
           Upload your permits to unlock your trust badge. This keeps customers safe and helps your listing stand out.
         </p>

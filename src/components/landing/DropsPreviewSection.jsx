@@ -24,10 +24,10 @@ export default function DropsPreviewSection({ onJoinWaitlist }) {
     <section className="px-6 py-14 max-w-lg mx-auto">
       <div className="flex items-center gap-3 mb-2">
         <div className="h-px flex-1" style={{ background: 'rgba(var(--cc-line-rgb),0.4)' }} />
-        <p className="font-heading font-black text-sm tracking-widest" style={{ color: 'var(--cc-warm)' }}>CURB DROPS</p>
+        <p className="font-display text-sm tracking-widest" style={{ color: 'var(--cc-warm)' }}>CURB DROPS</p>
         <div className="h-px flex-1" style={{ background: 'rgba(var(--cc-line-rgb),0.4)' }} />
       </div>
-      <h2 className="font-heading font-black text-2xl text-center mb-1" style={{ color: 'var(--cc-ink)' }}>
+      <h2 className="font-display text-2xl text-center mb-1" style={{ color: 'var(--cc-ink)' }}>
         💥 $5 Curb Drops drop daily
       </h2>
       <p className="text-sm text-center mb-8" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -54,12 +54,12 @@ export default function DropsPreviewSection({ onJoinWaitlist }) {
                 {drop.emoji}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>{drop.name}</p>
+                <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>{drop.name}</p>
                 <p className="text-xs truncate mb-1" style={{ color: 'var(--cc-ink-dim)' }}>{drop.desc}</p>
                 <p className="text-[10px]" style={{ color: 'rgba(186,203,192,0.5)' }}>from {drop.truck}</p>
               </div>
               <div className="text-right flex-shrink-0">
-                <p className="font-heading font-black text-xl" style={{ color: 'var(--cc-warm)' }}>{drop.dealPrice}</p>
+                <p className="font-display text-xl" style={{ color: 'var(--cc-warm)' }}>{drop.dealPrice}</p>
                 <p className="text-xs line-through" style={{ color: 'var(--cc-ink-faint)' }}>{drop.originalPrice}</p>
               </div>
             </div>
@@ -68,7 +68,7 @@ export default function DropsPreviewSection({ onJoinWaitlist }) {
       </div>
 
       <button onClick={() => onJoinWaitlist('drops_peek')}
-        className="w-full mt-6 py-3.5 rounded-full font-heading font-black text-sm transition-all active:scale-95"
+        className="w-full mt-6 py-3.5 rounded-full font-display text-sm transition-all active:scale-95"
         style={{ background: 'rgba(var(--cc-warm-rgb),0.1)', color: 'var(--cc-warm)', border: '1px solid rgba(var(--cc-warm-rgb),0.3)' }}>
         ⚡ Get notified when drops go live →
       </button>

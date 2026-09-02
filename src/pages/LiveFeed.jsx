@@ -166,7 +166,7 @@ function ClipCard({ clip, isActive, liked, saved, onLike, onSave }) {
         </div>
 
         {/* Title / caption */}
-        <h2 className="font-heading font-black text-2xl text-white mb-1 leading-tight">{clip.title}</h2>
+        <h2 className="font-display text-2xl text-white mb-1 leading-tight">{clip.title}</h2>
         {clip.vendor_caption && clip.vendor_caption !== clip.title && (
           <p className="text-sm mb-3" style={{ color: 'var(--cc-ink-dim)' }}>{clip.vendor_caption}</p>
         )}
@@ -183,7 +183,7 @@ function ClipCard({ clip, isActive, liked, saved, onLike, onSave }) {
 
         {/* CTA */}
         <Link to={`/truck/${clip.truck_id}`}>
-          <button className="w-full py-4 rounded-full font-heading font-black text-base flex items-center justify-center gap-2"
+          <button className="w-full py-4 rounded-full font-display text-base flex items-center justify-center gap-2"
             style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.4)' }}>
             <ShoppingBag className="w-5 h-5" />
             ORDER FROM THIS TRUCK

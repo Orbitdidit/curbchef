@@ -60,7 +60,7 @@ export default function OnboardingAssistantPanel({ truck, currentStep, onClose }
             <div className="w-8 h-8 rounded-full flex items-center justify-center text-base"
               style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}>🚚</div>
             <div>
-              <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>Setup Guide</p>
+              <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Setup Guide</p>
               <p className="text-[10px]" style={{ color: 'var(--cc-accent)' }}>Step {currentStep} — AI Assistant</p>
             </div>
           </div>

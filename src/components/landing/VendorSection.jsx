@@ -26,10 +26,10 @@ export default function VendorSection() {
       <div className="px-6 max-w-lg mx-auto">
         <div className="flex items-center gap-3 mb-2">
           <div className="h-px flex-1" style={{ background: 'rgba(var(--cc-line-rgb),0.4)' }} />
-          <p className="font-heading font-black text-sm tracking-widest" style={{ color: 'var(--cc-warm)' }}>FOR TRUCK OWNERS</p>
+          <p className="font-display text-sm tracking-widest" style={{ color: 'var(--cc-warm)' }}>FOR TRUCK OWNERS</p>
           <div className="h-px flex-1" style={{ background: 'rgba(var(--cc-line-rgb),0.4)' }} />
         </div>
-        <h2 className="font-heading font-black text-2xl text-center mb-8" style={{ color: 'var(--cc-ink)' }}>
+        <h2 className="font-display text-2xl text-center mb-8" style={{ color: 'var(--cc-ink)' }}>
           🚐 Got a Truck? Read this.
         </h2>
 
@@ -38,7 +38,7 @@ export default function VendorSection() {
 
           {/* Column 1: Social proof */}
           <div className="p-5 rounded-3xl" style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-warm-rgb),0.2)' }}>
-            <p className="font-heading font-black text-sm mb-3" style={{ color: 'var(--cc-warm)' }}>Real trucks already winning</p>
+            <p className="font-display text-sm mb-3" style={{ color: 'var(--cc-warm)' }}>Real trucks already winning</p>
             <div className="flex flex-col gap-3 mb-3">
               {showcaseTrucks.length > 0 ? showcaseTrucks.map(t => (
                 <div key={t.id} className="flex items-center gap-3">
@@ -73,7 +73,7 @@ export default function VendorSection() {
 
           {/* Column 2: Benefits */}
           <div className="p-5 rounded-3xl" style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
-            <p className="font-heading font-black text-sm mb-3" style={{ color: 'var(--cc-accent)' }}>What you get</p>
+            <p className="font-display text-sm mb-3" style={{ color: 'var(--cc-accent)' }}>What you get</p>
             <div className="flex flex-col gap-2">
               {VENDOR_BENEFITS.map(b => (
                 <p key={b} className="text-xs leading-relaxed" style={{ color: 'var(--cc-ink-dim)' }}>{b}</p>
@@ -83,10 +83,10 @@ export default function VendorSection() {
 
           {/* Column 3: Pricing */}
           <div className="p-5 rounded-3xl" style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
-            <p className="font-heading font-black text-sm mb-3" style={{ color: 'var(--cc-accent)' }}>What it costs</p>
-            <p className="font-heading font-black leading-none mb-1"
+            <p className="font-display text-sm mb-3" style={{ color: 'var(--cc-accent)' }}>What it costs</p>
+            <p className="font-display leading-none mb-1"
               style={{ fontSize: '2.5rem', color: 'var(--cc-ink)' }}>12%</p>
-            <p className="font-heading font-black text-sm mb-3" style={{ color: 'var(--cc-ink)' }}>per order. That's it.</p>
+            <p className="font-display text-sm mb-3" style={{ color: 'var(--cc-ink)' }}>per order. That's it.</p>
             <p className="text-xs leading-relaxed mb-3" style={{ color: 'var(--cc-ink-dim)' }}>
               No setup fee. No monthly fee. No menu fee.
             </p>
@@ -99,7 +99,7 @@ export default function VendorSection() {
 
         {/* CTA */}
         <Link to="/onboard-truck">
-          <button className="w-full py-4 rounded-full font-heading font-black text-base transition-all active:scale-95 mb-3"
+          <button className="w-full py-4 rounded-full font-display text-base transition-all active:scale-95 mb-3"
             style={{ background: 'linear-gradient(135deg,var(--cc-warm),#e84c14)', color: '#fff', boxShadow: '0 0 24px rgba(var(--cc-warm-rgb),0.35)' }}>
             🚐 Apply for Vendor Access →
           </button>

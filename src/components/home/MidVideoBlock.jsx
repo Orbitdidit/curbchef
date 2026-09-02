@@ -35,7 +35,7 @@ export default function MidVideoBlock() {
           <p className="text-[10px] font-black tracking-widest mb-1" style={{ color: 'var(--cc-accent)' }}>
             {c.subline}
           </p>
-          <p className="font-heading font-black text-xl text-white leading-tight" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.8)', whiteSpace: 'pre-line' }}>
+          <p className="font-display text-xl text-white leading-tight" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.8)', whiteSpace: 'pre-line' }}>
             {c.headline}
           </p>
         </div>

@@ -34,7 +34,7 @@ function OrderCard({ order, advance }) {
       <div className="flex items-start justify-between mb-3">
         <div>
           <p className="text-[10px] font-bold tracking-wide" style={{ color: 'var(--cc-ink-dim)' }}>ORDER ID</p>
-          <p className="font-heading font-black text-xl" style={{ color: 'var(--cc-accent)' }}>
+          <p className="font-display text-xl" style={{ color: 'var(--cc-accent)' }}>
             #{order.pickup_code || order.id.slice(-4).toUpperCase()}
           </p>
         </div>
@@ -74,7 +74,7 @@ function OrderCard({ order, advance }) {
       <button
         onClick={() => advance.mutate(order)}
         disabled={advance.isPending}
-        className="w-full py-3 rounded-2xl font-heading font-black text-sm"
+        className="w-full py-3 rounded-2xl font-display text-sm"
         style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 14px rgba(var(--cc-accent-rgb),0.3)', opacity: advance.isPending ? 0.6 : 1 }}
       >
         {BTN_LABEL[order.status]}
@@ -250,11 +250,11 @@ export default function VendorOrders() {
         <div className="w-full max-w-lg grid grid-cols-2 gap-4">
           <div className="text-center p-3 rounded-2xl" style={{ background: 'var(--cc-bg-2)' }}>
             <p className="text-[10px] font-bold tracking-wide" style={{ color: 'var(--cc-ink-dim)' }}>QUEUE TIME</p>
-            <p className="font-heading font-black text-2xl" style={{ color: 'var(--cc-ink)' }}>18 min</p>
+            <p className="font-display text-2xl" style={{ color: 'var(--cc-ink)' }}>18 min</p>
           </div>
           <div className="text-center p-3 rounded-2xl" style={{ background: 'var(--cc-bg-2)' }}>
             <p className="text-[10px] font-bold tracking-wide" style={{ color: 'var(--cc-ink-dim)' }}>REVENUE TODAY</p>
-            <p className="font-heading font-black text-2xl" style={{ color: 'var(--cc-accent)' }}>${Math.round(totalRevToday)}</p>
+            <p className="font-display text-2xl" style={{ color: 'var(--cc-accent)' }}>${Math.round(totalRevToday)}</p>
           </div>
         </div>
       </div>

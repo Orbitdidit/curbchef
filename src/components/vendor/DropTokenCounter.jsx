@@ -58,7 +58,7 @@ export default function DropTokenCounter({ truck }) {
             )}
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="font-heading font-black text-xl leading-none" style={{ color: ringColor }}>{tokens}</span>
+            <span className="font-display text-xl leading-none" style={{ color: ringColor }}>{tokens}</span>
             <span className="text-[9px] font-bold" style={{ color: 'var(--cc-ink-dim)' }}>drops</span>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function DropTokenCounter({ truck }) {
         <div className="flex-1 min-w-0">
           {isEmpty ? (
             <>
-              <p className="font-heading font-black text-sm leading-tight mb-0.5" style={{ color: 'var(--cc-warm)' }}>
+              <p className="font-display text-sm leading-tight mb-0.5" style={{ color: 'var(--cc-warm)' }}>
                 Out of drops
               </p>
               <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -76,7 +76,7 @@ export default function DropTokenCounter({ truck }) {
             </>
           ) : (
             <>
-              <p className="font-heading font-black text-sm leading-tight mb-0.5" style={{ color: 'var(--cc-ink)' }}>
+              <p className="font-display text-sm leading-tight mb-0.5" style={{ color: 'var(--cc-ink)' }}>
                 🎟️ {tokens} Drop{tokens !== 1 ? 's' : ''} left this week
               </p>
               <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>

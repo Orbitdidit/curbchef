@@ -123,7 +123,7 @@ function SpotlightOverlay({ rect, onNext, onBack, onSkip, stepIndex, totalSteps,
         <p className="text-[10px] font-black tracking-widest mb-2" style={{ color: 'var(--cc-accent)' }}>
           {stepIndex} OF {totalSteps - 2}
         </p>
-        <p className="font-heading font-black text-base leading-snug mb-2" style={{ color: 'var(--cc-ink)' }}>
+        <p className="font-display text-base leading-snug mb-2" style={{ color: 'var(--cc-ink)' }}>
           {content.title}
         </p>
         <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -163,11 +163,11 @@ function ModalStep({ content, onNext, onSkip, isLast, firstName, stepIndex, tota
         {isLast ? (
           <>
             <div className="text-5xl mb-4">🚐</div>
-            <p className="font-heading font-black text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>{content.title}</p>
+            <p className="font-display text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>{content.title}</p>
             <p className="text-sm leading-relaxed mb-2" style={{ color: 'var(--cc-ink-dim)' }}>{content.body}</p>
             {content.sub && <p className="text-xs mb-6" style={{ color: 'var(--cc-ink-faint)' }}>{content.sub}</p>}
             <button onClick={onNext}
-              className="w-full py-4 rounded-full font-heading font-black text-base"
+              className="w-full py-4 rounded-full font-display text-base"
               style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.35)' }}>
               Let's Go! 🚀
             </button>
@@ -175,14 +175,14 @@ function ModalStep({ content, onNext, onSkip, isLast, firstName, stepIndex, tota
         ) : (
           <>
             <div className="text-5xl mb-4">🎉</div>
-            <p className="font-heading font-black text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>
+            <p className="font-display text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>
               Welcome to CurbChef, {firstName}!
             </p>
             <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--cc-ink-dim)' }}>
               {content.body}
             </p>
             <button onClick={onNext}
-              className="w-full py-4 rounded-full font-heading font-black text-base mb-3"
+              className="w-full py-4 rounded-full font-display text-base mb-3"
               style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.35)' }}>
               Start Tour →
             </button>

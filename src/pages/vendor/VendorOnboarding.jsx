@@ -84,7 +84,7 @@ export default function VendorOnboarding() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: 'var(--cc-bg-0)' }}>
         <div className="text-5xl mb-4">🚚</div>
-        <p className="font-heading font-black text-xl mb-2" style={{ color: 'var(--cc-ink)' }}>No truck found</p>
+        <p className="font-display text-xl mb-2" style={{ color: 'var(--cc-ink)' }}>No truck found</p>
         <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Ask your CurbChef contact to link your account to a truck.</p>
         <button onClick={() => navigate('/vendor-portal')}
           className="px-6 py-3 rounded-full font-bold text-sm"
@@ -112,7 +112,7 @@ export default function VendorOnboarding() {
             </button>
           )}
           <div className="flex-1">
-            <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>Set Up Your Truck 🚚</p>
+            <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>Set Up Your Truck 🚚</p>
             <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>
               Step {step} of {STEPS.length} · {pct}% complete
               {!currentStepInfo.required && <span style={{ color: 'var(--cc-ink-faint)' }}> · Optional</span>}
@@ -169,7 +169,7 @@ export default function VendorOnboarding() {
               </button>
             )}
             <button onClick={goNext}
-              className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-full font-heading font-black text-sm"
+              className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-full font-display text-sm"
               style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 16px rgba(var(--cc-accent-rgb),0.3)' }}>
               {step === 6 ? 'Review & Launch' : 'Save & Continue'}
               <ChevronRight className="w-4 h-4" />

@@ -87,7 +87,7 @@ export default function CurbDropCard({ drop }) {
 
         {/* Truck name */}
         <div className="absolute bottom-3 left-3 right-3">
-          <p className="font-heading font-black text-sm text-white leading-tight">{drop.title}</p>
+          <p className="font-display text-sm text-white leading-tight">{drop.title}</p>
           <p className="text-white/60 text-xs mt-0.5">{drop.truck_name}</p>
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function CurbDropCard({ drop }) {
       <div className="p-4">
         {/* Price row */}
         <div className="flex items-center gap-2 mb-3">
-          <span className="font-heading font-black text-2xl" style={{ color: 'var(--cc-warm)' }}>
+          <span className="font-display text-2xl" style={{ color: 'var(--cc-warm)' }}>
             ${drop.deal_price?.toFixed(2)}
           </span>
           {drop.original_price > 0 && (
@@ -138,7 +138,7 @@ export default function CurbDropCard({ drop }) {
         <button
           onClick={handleClaim}
           disabled={claiming || claimed || isSoldOut}
-          className="w-full py-3 rounded-2xl font-heading font-black text-sm transition-all active:scale-95 flex items-center justify-center gap-2"
+          className="w-full py-3 rounded-2xl font-display text-sm transition-all active:scale-95 flex items-center justify-center gap-2"
           style={
             claimed
               ? { background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }

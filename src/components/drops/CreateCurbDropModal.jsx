@@ -80,7 +80,7 @@ export default function CreateCurbDropModal({ truck, onClose }) {
         <div className="flex items-center justify-between p-5 pb-4 sticky top-0 z-10"
           style={{ background: 'var(--cc-bg-1)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
           <div>
-            <p className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>🪂 New Curb Drop</p>
+            <p className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>🪂 New Curb Drop</p>
             <p className="text-xs mt-0.5" style={{ color: tokens < 1 ? 'var(--cc-warm)' : 'var(--cc-ink-dim)' }}>
               {tokens < 1 ? '⚠️ No tokens left — drops reset Monday' : `${tokens} token${tokens !== 1 ? 's' : ''} remaining`}
             </p>
@@ -210,7 +210,7 @@ export default function CreateCurbDropModal({ truck, onClose }) {
           <button
             onClick={handleSubmit}
             disabled={submitting || tokens < 1}
-            className="w-full py-4 rounded-2xl font-heading font-black text-base transition-all active:scale-95 flex items-center justify-center gap-2"
+            className="w-full py-4 rounded-2xl font-display text-base transition-all active:scale-95 flex items-center justify-center gap-2"
             style={tokens < 1
               ? { background: 'var(--cc-bg-3)', color: 'var(--cc-ink-dim)', opacity: 0.5 }
               : { background: 'linear-gradient(135deg,var(--cc-warm),var(--cc-warm-3))', color: '#fff', boxShadow: '0 0 20px rgba(var(--cc-warm-rgb),0.4)' }

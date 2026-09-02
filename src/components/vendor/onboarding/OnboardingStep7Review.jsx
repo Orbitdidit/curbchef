@@ -18,14 +18,14 @@ export default function OnboardingStep7Review({ truck, menuItems, onComplete }) 
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <p className="font-heading font-black text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Ready to launch? 🚀</p>
+        <p className="font-display text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Ready to launch? 🚀</p>
         <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Review your setup before going live.</p>
       </div>
 
       {/* Score */}
       <div className="p-5 rounded-2xl text-center"
         style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
-        <p className="font-heading font-black text-5xl mb-1" style={{ color: 'var(--cc-accent)' }}>{pct}%</p>
+        <p className="font-display text-5xl mb-1" style={{ color: 'var(--cc-accent)' }}>{pct}%</p>
         <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Profile Complete</p>
         <div className="w-full h-2 rounded-full mt-3 overflow-hidden" style={{ background: 'var(--cc-bg-0)' }}>
           <div className="h-full rounded-full transition-all"
@@ -63,7 +63,7 @@ export default function OnboardingStep7Review({ truck, menuItems, onComplete }) 
       <button
         onClick={onComplete}
         disabled={!allRequiredDone}
-        className="w-full py-4 rounded-full font-heading font-black text-base transition-all"
+        className="w-full py-4 rounded-full font-display text-base transition-all"
         style={{
           background: allRequiredDone ? 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' : 'var(--cc-bg-2)',
           color: allRequiredDone ? 'var(--cc-accent-deep)' : 'var(--cc-ink-faint)',

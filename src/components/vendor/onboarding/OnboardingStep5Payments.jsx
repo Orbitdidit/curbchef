@@ -23,7 +23,7 @@ export default function OnboardingStep5Payments({ truck }) {
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <p className="font-heading font-black text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Get paid</p>
+        <p className="font-display text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Get paid</p>
         <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Connect your bank account through Stripe to receive payments.</p>
       </div>
 
@@ -52,7 +52,7 @@ export default function OnboardingStep5Payments({ truck }) {
         </div>
       ) : (
         <button onClick={handleConnect} disabled={loading}
-          className="flex items-center justify-center gap-2 py-4 rounded-2xl font-heading font-black text-sm"
+          className="flex items-center justify-center gap-2 py-4 rounded-2xl font-display text-sm"
           style={{ background: 'linear-gradient(135deg,#635BFF,#7B73FF)', color: 'white', opacity: loading ? 0.7 : 1 }}>
           <ExternalLink className="w-4 h-4" />
           {loading ? 'Opening Stripe…' : 'Connect Bank Account via Stripe'}

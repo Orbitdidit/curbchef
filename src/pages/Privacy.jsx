@@ -42,13 +42,13 @@ export default function Privacy() {
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </Link>
         <div>
-          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-accent)' }}>Privacy Policy</p>
+          <p className="font-display text-base" style={{ color: 'var(--cc-accent)' }}>Privacy Policy</p>
           <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>Last updated April 2026</p>
         </div>
       </div>
 
       <div className="px-5 pt-6 max-w-2xl mx-auto">
-        <h1 className="font-heading font-black text-2xl mb-2" style={{ color: 'var(--cc-ink)' }}>Your Privacy Matters</h1>
+        <h1 className="font-display text-2xl mb-2" style={{ color: 'var(--cc-ink)' }}>Your Privacy Matters</h1>
         <p className="text-sm mb-8" style={{ color: 'var(--cc-ink-dim)' }}>
           CurbChef is built on trust. Here's exactly how we handle your data — plainly, no legal jargon.
         </p>

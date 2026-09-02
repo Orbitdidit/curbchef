@@ -56,7 +56,7 @@ export default function ReliabilityCard({ truck }) {
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="font-heading font-black text-lg" style={{ color: ringColor }}>{score}</span>
+              <span className="font-display text-lg" style={{ color: ringColor }}>{score}</span>
             </div>
           </div>
 

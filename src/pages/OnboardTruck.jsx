@@ -126,7 +126,7 @@ export default function OnboardTruck() {
           style={{ background: 'linear-gradient(135deg,rgba(var(--cc-accent-rgb),0.15),rgba(var(--cc-accent-rgb),0.05))', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }}>
           <span className="text-4xl">🎉</span>
         </div>
-        <h1 className="font-heading font-black text-3xl mb-3" style={{ color: 'var(--cc-ink)' }}>Application Submitted!</h1>
+        <h1 className="font-display text-3xl mb-3" style={{ color: 'var(--cc-ink)' }}>Application Submitted!</h1>
         <p className="text-sm mb-2 max-w-sm" style={{ color: 'var(--cc-ink-dim)' }}>
           <span className="font-bold" style={{ color: 'var(--cc-accent)' }}>{form.truck_name}</span> is now under review by the CurbChef team.
         </p>
@@ -145,12 +145,12 @@ export default function OnboardTruck() {
             ))}
           </div>
           <button onClick={() => navigate('/')}
-            className="w-full py-4 rounded-full font-heading font-black text-base"
+            className="w-full py-4 rounded-full font-display text-base"
             style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.35)' }}>
             Back to CurbChef
           </button>
           <button onClick={() => base44.auth.redirectToLogin('/vendor-portal')}
-            className="w-full py-3 rounded-full font-heading font-black text-sm"
+            className="w-full py-3 rounded-full font-display text-sm"
             style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
             Sign In to Vendor Portal
           </button>
@@ -169,7 +169,7 @@ export default function OnboardTruck() {
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </button>
         <div className="flex-1">
-          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-accent)' }}>Truck Onboarding</p>
+          <p className="font-display text-base" style={{ color: 'var(--cc-accent)' }}>Truck Onboarding</p>
           <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Step {step + 1} of {STEPS.length} — {STEPS[step]}</p>
         </div>
         <div className="flex items-center gap-1">
@@ -189,7 +189,7 @@ export default function OnboardTruck() {
         {/* STEP 0 — Vendor Type */}
         {step === 0 && (
           <div className="space-y-4">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>What kind of vendor are you? 🏷️</h2>
+            <h2 className="font-display text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>What kind of vendor are you? 🏷️</h2>
             <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>
               CurbChef only accepts verified, permitted vendors. Choose the type that best describes your operation.
             </p>
@@ -240,7 +240,7 @@ export default function OnboardTruck() {
         {/* STEP 1 — Basic Info */}
         {step === 1 && (
           <div className="space-y-4">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Let's get started 🚚</h2>
+            <h2 className="font-display text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Let's get started 🚚</h2>
             <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Tell us about your food truck.</p>
             {[
               { key: 'truck_name', label: 'TRUCK NAME', placeholder: 'e.g. Smoke & Soul BBQ' },
@@ -282,7 +282,7 @@ export default function OnboardTruck() {
         {/* STEP 2 — Location */}
         {step === 2 && (
           <div className="space-y-4">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Where are you parked? 📍</h2>
+            <h2 className="font-display text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Where are you parked? 📍</h2>
             <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Set your current zone or location.</p>
             <div>
               <p className="mb-1.5" style={labelStyle}>CITY / ZONE</p>
@@ -313,7 +313,7 @@ export default function OnboardTruck() {
         {/* STEP 4 — Media */}
         {step === 4 && (
           <div className="space-y-5">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Show us your vibe 📸</h2>
+            <h2 className="font-display text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Show us your vibe 📸</h2>
             <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Upload your logo, truck photo, and food shots.</p>
             {[
               { key: 'logo_url', label: 'LOGO' },
@@ -370,7 +370,7 @@ export default function OnboardTruck() {
         {/* STEP 5 — Menu */}
         {step === 5 && (
           <div className="space-y-4">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Build your menu 🍽️</h2>
+            <h2 className="font-display text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Build your menu 🍽️</h2>
             <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Add your key items. You can add more later.</p>
             {form.menu_items.map((item, i) => (
               <div key={i} className="p-4 rounded-2xl space-y-3" style={{ background: 'var(--cc-bg-2)' }}>
@@ -403,7 +403,7 @@ export default function OnboardTruck() {
         {/* STEP 6 — Go Live */}
         {step === 6 && (
           <div className="space-y-5">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Go Live Setup 🔴</h2>
+            <h2 className="font-display text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Go Live Setup 🔴</h2>
             <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Set your current status so customers can find you.</p>
             {[
               { key: 'is_open_now', label: 'Open Now', sub: 'Start accepting orders immediately' },
@@ -442,7 +442,7 @@ export default function OnboardTruck() {
         {/* STEP 7 — Kitchen Check */}
         {step === 7 && (
           <div className="space-y-5">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Kitchen Check ✅</h2>
+            <h2 className="font-display text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Kitchen Check ✅</h2>
             <p className="text-sm mb-2" style={{ color: 'var(--cc-ink-dim)' }}>
               Snap a quick photo of your kitchen interior to build customer trust. This is auto-timestamped as "Checked Today."
             </p>
@@ -488,14 +488,14 @@ export default function OnboardTruck() {
         {/* STEP 8 — Preview & Submit */}
         {step === 8 && (
           <div className="space-y-5">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>You're ready! 🎉</h2>
+            <h2 className="font-display text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>You're ready! 🎉</h2>
             <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Review your details and go live on CurbChef.</p>
 
             <div className="p-5 rounded-3xl space-y-3" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
               {form.truck_photo_url && (
                 <img src={form.truck_photo_url} alt="Truck" className="w-full h-36 object-cover rounded-2xl" />
               )}
-              <h3 className="font-heading font-black text-xl" style={{ color: 'var(--cc-ink)' }}>{form.truck_name || '—'}</h3>
+              <h3 className="font-display text-xl" style={{ color: 'var(--cc-ink)' }}>{form.truck_name || '—'}</h3>
               <p className="text-sm capitalize" style={{ color: 'var(--cc-ink-dim)' }}>{form.cuisine_type?.replace('_', ' ')} • {form.city}</p>
               <div className="flex gap-2 flex-wrap">
                 {form.vendor_type && (
@@ -531,7 +531,7 @@ export default function OnboardTruck() {
             </p>
 
             <button onClick={handleSubmit} disabled={submitting}
-              className="w-full py-4 rounded-full font-heading font-black text-base"
+              className="w-full py-4 rounded-full font-display text-base"
               style={{
                 background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))',
                 color: 'var(--cc-accent-deep)',
@@ -554,7 +554,7 @@ export default function OnboardTruck() {
         <div className="fixed bottom-0 left-0 right-0 px-5 pb-6 pt-4 z-50"
           style={{ background: 'rgba(13,21,23,0.97)', backdropFilter: 'blur(16px)' }}>
           <button onClick={() => setStep(s => s + 1)} disabled={!canNext()}
-            className="w-full flex items-center justify-center gap-2 py-4 rounded-full font-heading font-black text-base transition-all"
+            className="w-full flex items-center justify-center gap-2 py-4 rounded-full font-display text-base transition-all"
             style={{
               background: canNext() ? 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' : 'var(--cc-bg-2)',
               color: canNext() ? 'var(--cc-accent-deep)' : 'var(--cc-ink-dim)',

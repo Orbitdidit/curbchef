@@ -59,7 +59,7 @@ function TipCard({ tip, onDismiss, prominent = false }) {
       <div className="text-3xl mb-3 mt-2">{tip.icon_emoji || '💡'}</div>
 
       {/* Title */}
-      <p className="font-heading font-black text-sm leading-snug mb-2" style={{ color: 'var(--cc-ink)' }}>
+      <p className="font-display text-sm leading-snug mb-2" style={{ color: 'var(--cc-ink)' }}>
         {tip.title}
       </p>
 

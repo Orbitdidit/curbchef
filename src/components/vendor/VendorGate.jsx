@@ -51,11 +51,11 @@ export default function VendorGate({ children }) {
           style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
           <LogIn className="w-7 h-7" style={{ color: 'var(--cc-accent)' }} />
         </div>
-        <h2 className="font-heading font-black text-xl mb-2" style={{ color: 'var(--cc-ink)' }}>Sign in to access your Vendor Dashboard</h2>
+        <h2 className="font-display text-xl mb-2" style={{ color: 'var(--cc-ink)' }}>Sign in to access your Vendor Dashboard</h2>
         <p className="text-sm mb-8" style={{ color: 'var(--cc-ink-dim)' }}>Your vendor account, truck management, and earnings are waiting.</p>
         <button
           onClick={() => base44.auth.redirectToLogin(window.location.pathname)}
-          className="px-8 py-3.5 rounded-full font-heading font-black text-sm"
+          className="px-8 py-3.5 rounded-full font-display text-sm"
           style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}
         >
           Sign In / Create Account
@@ -71,13 +71,13 @@ export default function VendorGate({ children }) {
           style={{ background: 'rgba(var(--cc-warm-rgb),0.08)', border: '1px solid rgba(var(--cc-warm-rgb),0.2)' }}>
           <Truck className="w-7 h-7" style={{ color: 'var(--cc-warm)' }} />
         </div>
-        <h2 className="font-heading font-black text-xl mb-2" style={{ color: 'var(--cc-ink)' }}>No truck linked to your account</h2>
+        <h2 className="font-display text-xl mb-2" style={{ color: 'var(--cc-ink)' }}>No truck linked to your account</h2>
         <p className="text-sm mb-2" style={{ color: 'var(--cc-ink-dim)' }}>
           Signed in as <span style={{ color: 'var(--cc-accent)' }}>{user?.email}</span>
         </p>
         <p className="text-sm mb-8" style={{ color: 'var(--cc-ink-dim)' }}>Apply to list your food truck on CurbChef and start accepting orders.</p>
         <a href="/vendor-portal"
-          className="px-8 py-3.5 rounded-full font-heading font-black text-sm"
+          className="px-8 py-3.5 rounded-full font-display text-sm"
           style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}>
           Apply as a Vendor
         </a>

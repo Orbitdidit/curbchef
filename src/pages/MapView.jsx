@@ -265,7 +265,7 @@ export default function MapView() {
                         )}
                       </div>
                       <div className="flex-1 px-4 pt-3 pb-2 min-w-0">
-                        <p className="font-heading font-black text-base leading-tight mb-0.5" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
+                        <p className="font-display text-base leading-tight mb-0.5" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
                         <p className="text-xs capitalize mb-2" style={{ color: 'var(--cc-ink-dim)' }}>{truck.cuisine_type?.replace('_', ' ')}</p>
                         <div className="flex gap-2">
                           {[
@@ -276,7 +276,7 @@ export default function MapView() {
                             <div key={label} className="flex flex-col items-center px-2 py-1.5 rounded-xl flex-1"
                               style={{ background: 'var(--cc-bg-0)' }}>
                               <p className="text-[8px] font-bold tracking-wider mb-0.5" style={{ color: 'rgba(186,203,192,0.5)' }}>{label}</p>
-                              <p className="font-heading font-black text-xs" style={{ color: color || 'var(--cc-ink)' }}>{value}</p>
+                              <p className="font-display text-xs" style={{ color: color || 'var(--cc-ink)' }}>{value}</p>
                             </div>
                           ))}
                         </div>
@@ -284,7 +284,7 @@ export default function MapView() {
                     </div>
                     <div className="flex gap-2.5 px-4 pb-4 pt-2">
                       <Link to={`/truck/${truck.id}`} className="flex-1">
-                        <button className="w-full py-3 rounded-full font-heading font-black text-sm"
+                        <button className="w-full py-3 rounded-full font-display text-sm"
                           style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 16px rgba(var(--cc-accent-rgb),0.3)' }}>
                           View Menu
                         </button>
@@ -293,7 +293,7 @@ export default function MapView() {
                         onClick={() => {
                           if (truck.latitude) window.open(`https://www.google.com/maps/dir/?api=1&destination=${truck.latitude},${truck.longitude}`, '_blank');
                         }}
-                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full font-heading font-black text-sm"
+                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full font-display text-sm"
                         style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
                         🚶 Directions
                       </button>
@@ -326,7 +326,7 @@ export default function MapView() {
       {/* open carousel on first truck tap */}
       {mappedTrucks.length > 0 && !selected && (
         <button
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[1000] px-5 py-3 rounded-full font-heading font-black text-sm"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[1000] px-5 py-3 rounded-full font-display text-sm"
           style={{ background: 'rgba(13,21,23,0.92)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)', color: 'var(--cc-accent)', backdropFilter: 'blur(12px)' }}
           onClick={() => selectTruckAtIndex(0)}
         >

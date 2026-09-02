@@ -50,7 +50,7 @@ export default function HeroPromo() {
           </div>
 
           <h2
-            className="font-heading font-black text-white leading-tight mb-1"
+            className="font-display text-white leading-tight mb-1"
             style={{ fontSize: 'clamp(1.1rem, 5vw, 1.5rem)', textShadow: '0 2px 20px rgba(0,0,0,0.8)', whiteSpace: 'pre-line' }}
           >
             {c.headline}

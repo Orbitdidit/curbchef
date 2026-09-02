@@ -83,7 +83,7 @@ export default function OrderDetail() {
         <Link to="/orders" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-surface)' }}>
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-cream)' }} />
         </Link>
-        <p className="font-heading font-black text-base" style={{ color: 'var(--cc-cream)' }}>CurbChef</p>
+        <p className="font-display text-base" style={{ color: 'var(--cc-cream)' }}>CurbChef</p>
         <div className="w-9 h-9" />
       </div>
 
@@ -91,7 +91,7 @@ export default function OrderDetail() {
         {/* Status */}
         <div className="mb-6">
           <p className="text-xs font-semibold" style={{ color: 'var(--cc-ink-muted)' }}>CURRENT STATUS</p>
-          <h1 className="font-heading font-black text-2xl mt-1 leading-tight" style={{ color: 'var(--cc-cream)' }}>
+          <h1 className="font-display text-2xl mt-1 leading-tight" style={{ color: 'var(--cc-cream)' }}>
             {STATUS_LABELS[order.status] || 'Processing...'}
           </h1>
           <p className="text-sm mt-1 font-semibold" style={{ color: 'var(--cc-accent-2)' }}>{readyLabel}</p>
@@ -139,7 +139,7 @@ export default function OrderDetail() {
             className="w-full p-6 rounded-3xl text-center mb-5 active:scale-95 transition-all"
             style={{ background: 'var(--cc-surface)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
             <p className="text-xs font-bold tracking-widest mb-3" style={{ color: 'var(--cc-ink-muted)' }}>YOUR PICKUP CODE</p>
-            <p className="font-heading font-black text-5xl tracking-widest"
+            <p className="font-display text-5xl tracking-widest"
               style={{ color: 'var(--cc-accent-2)', textShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.5)' }}>
               {order.pickup_code}
             </p>
@@ -205,7 +205,7 @@ export default function OrderDetail() {
       <div className="fixed bottom-0 left-0 right-0 flex justify-center px-5 pb-6 pt-4 z-50"
         style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(16px)' }}>
         <button onClick={() => setShowContact(true)}
-          className="w-full max-w-lg flex items-center justify-center gap-2 py-4 rounded-full font-heading font-black text-sm"
+          className="w-full max-w-lg flex items-center justify-center gap-2 py-4 rounded-full font-display text-sm"
           style={{ background: 'linear-gradient(135deg, var(--cc-accent-2) 0%, var(--cc-accent-3) 100%)', color: 'var(--cc-black)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.35)' }}>
           <Phone className="w-4 h-4" />
           Contact Truck
@@ -218,7 +218,7 @@ export default function OrderDetail() {
           onClick={() => setShowContact(false)}>
           <div className="w-full max-w-lg rounded-t-3xl p-6 pb-10" style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-line-rgb),0.25)' }}
             onClick={e => e.stopPropagation()}>
-            <h2 className="font-heading font-black text-lg mb-1" style={{ color: 'var(--cc-cream)' }}>Contact {order.truck_name}</h2>
+            <h2 className="font-display text-lg mb-1" style={{ color: 'var(--cc-cream)' }}>Contact {order.truck_name}</h2>
             <p className="text-xs mb-5" style={{ color: 'var(--cc-ink-muted)' }}>Order #{order.pickup_code}</p>
             <div className="flex flex-col gap-3 mb-4">
               {truck?.phone ? (
@@ -242,7 +242,7 @@ export default function OrderDetail() {
               )}
             </div>
             <button onClick={() => setShowContact(false)}
-              className="w-full py-3.5 rounded-full font-heading font-black text-sm"
+              className="w-full py-3.5 rounded-full font-display text-sm"
               style={{ background: 'var(--cc-bg-3)', color: 'var(--cc-ink-muted)' }}>Close</button>
           </div>
         </div>

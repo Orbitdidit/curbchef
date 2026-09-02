@@ -9,13 +9,13 @@ export default function NotApproved() {
         style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
         <Clock className="w-7 h-7" style={{ color: 'var(--cc-accent)' }} />
       </div>
-      <h2 className="font-heading font-black text-2xl mb-2" style={{ color: 'var(--cc-ink)' }}>You're on the list!</h2>
+      <h2 className="font-display text-2xl mb-2" style={{ color: 'var(--cc-ink)' }}>You're on the list!</h2>
       <p className="text-sm mb-8 max-w-xs leading-relaxed" style={{ color: 'var(--cc-ink-dim)' }}>
         CurbChef is currently in early access. We'll notify you the moment your spot opens up.
       </p>
       <a
         href="https://curbchef.app"
-        className="px-8 py-3.5 rounded-full font-heading font-black text-sm mb-4"
+        className="px-8 py-3.5 rounded-full font-display text-sm mb-4"
         style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}
       >
         Back to curbchef.app

@@ -136,7 +136,7 @@ export default function RewardsCoach({ user, reward }) {
             <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-xl flex-shrink-0"
               style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>🏅</div>
             <div>
-              <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>Rewards Coach</p>
+              <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Rewards Coach</p>
               <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>AI-powered perk advisor · Level up faster</p>
             </div>
           </div>
@@ -185,7 +185,7 @@ export default function RewardsCoach({ user, reward }) {
         style={{ background: 'var(--cc-bg-2)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
         <div className="w-7 h-7 rounded-lg flex items-center justify-center text-sm"
           style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>🏅</div>
-        <p className="font-heading font-black text-sm flex-1" style={{ color: 'var(--cc-ink)' }}>Rewards Coach</p>
+        <p className="font-display text-sm flex-1" style={{ color: 'var(--cc-ink)' }}>Rewards Coach</p>
         <button onClick={() => { setStarted(false); setMessages([]); setConversation(null); }}
           className="w-7 h-7 rounded-lg flex items-center justify-center"
           style={{ background: 'var(--cc-bg-3)' }}>

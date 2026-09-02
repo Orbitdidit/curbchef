@@ -43,7 +43,7 @@ function ParkFormModal({ park, onClose }) {
       <div className="w-full max-w-lg rounded-t-3xl sm:rounded-3xl p-5 overflow-y-auto max-h-[90vh]"
         style={{ background: '#1a2123', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
         <div className="flex items-center justify-between mb-5">
-          <p className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>
+          <p className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>
             {park?.id ? 'Edit Park' : 'Add Park'}
           </p>
           <button onClick={onClose} className="w-8 h-8 rounded-full flex items-center justify-center"
@@ -126,7 +126,7 @@ function ParkFormModal({ park, onClose }) {
           </div>
 
           <button onClick={() => save.mutate(form)} disabled={save.isPending}
-            className="w-full py-3.5 rounded-2xl font-heading font-black text-sm mt-2"
+            className="w-full py-3.5 rounded-2xl font-display text-sm mt-2"
             style={{ background: 'linear-gradient(135deg,var(--cc-accent-2),var(--cc-accent-3))', color: 'var(--cc-black)' }}>
             {save.isPending ? 'Saving...' : park?.id ? 'Save Changes' : 'Create Park'}
           </button>

@@ -43,7 +43,7 @@ export default function CustomerEtaCard({ order, truck }) {
       <div className="p-5 rounded-3xl mb-5 text-center"
         style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border: '2px solid rgba(var(--cc-accent-rgb),0.4)' }}>
         <p className="text-3xl mb-2">👋</p>
-        <p className="font-heading font-black text-base" style={{ color: 'var(--cc-accent)' }}>You've arrived!</p>
+        <p className="font-display text-base" style={{ color: 'var(--cc-accent)' }}>You've arrived!</p>
         <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-dim)' }}>The vendor has been notified. Show your pickup code.</p>
       </div>
     );
@@ -57,7 +57,7 @@ export default function CustomerEtaCard({ order, truck }) {
   return (
     <div className="p-5 rounded-3xl mb-5"
       style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
-      <p className="font-heading font-black text-base mb-1" style={{ color: 'var(--cc-ink)' }}>
+      <p className="font-display text-base mb-1" style={{ color: 'var(--cc-ink)' }}>
         When will you arrive?
       </p>
       <p className="text-xs mb-4" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -78,7 +78,7 @@ export default function CustomerEtaCard({ order, truck }) {
               <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>~{walkEta} min away</p>
             </div>
           </div>
-          <span className="font-heading font-black text-lg" style={{ color: 'var(--cc-accent)' }}>{walkEta}m</span>
+          <span className="font-display text-lg" style={{ color: 'var(--cc-accent)' }}>{walkEta}m</span>
         </button>
 
         <button
@@ -94,13 +94,13 @@ export default function CustomerEtaCard({ order, truck }) {
               <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>~{driveEta} min away</p>
             </div>
           </div>
-          <span className="font-heading font-black text-lg" style={{ color: 'var(--cc-accent)' }}>{driveEta}m</span>
+          <span className="font-display text-lg" style={{ color: 'var(--cc-accent)' }}>{driveEta}m</span>
         </button>
 
         <button
           onClick={() => setEta('arrived')}
           disabled={saving}
-          className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl font-heading font-black text-sm transition-all active:scale-95"
+          className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl font-display text-sm transition-all active:scale-95"
           style={{
             background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))',
             color: 'var(--cc-accent-deep)',
@@ -139,7 +139,7 @@ function EtaCountdown({ order, onArrive, saving }) {
       <div className="flex items-center gap-3">
         <span className="text-2xl">{emoji}</span>
         <div>
-          <p className="font-heading font-black text-base" style={{ color }}>
+          <p className="font-display text-base" style={{ color }}>
             {minsLeft === 0 ? 'Almost there!' : `~${minsLeft} min away`}
           </p>
           <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -150,7 +150,7 @@ function EtaCountdown({ order, onArrive, saving }) {
       <button
         onClick={onArrive}
         disabled={saving}
-        className="px-4 py-2 rounded-full font-heading font-black text-sm active:scale-95 transition-all"
+        className="px-4 py-2 rounded-full font-display text-sm active:scale-95 transition-all"
         style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}
       >
         I'm here!

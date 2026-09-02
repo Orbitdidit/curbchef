@@ -291,7 +291,7 @@ export default function LaunchDashboard() {
             <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
           </Link>
           <div className="flex-1">
-            <h1 className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>🚀 Launch Command Center</h1>
+            <h1 className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>🚀 Launch Command Center</h1>
             <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>CurbChef pre-launch readiness tracker</p>
           </div>
           <span className="text-sm font-black px-3 py-1.5 rounded-full" style={{ background: launchReady === 'green' ? 'rgba(var(--cc-accent-rgb),0.12)' : launchReady === 'yellow' ? 'rgba(251,191,36,0.12)' : 'rgba(var(--cc-warm-red-rgb),0.12)', color: launchReadyStyle.color }}>
@@ -313,7 +313,7 @@ export default function LaunchDashboard() {
             { label: 'Blockers', value: blockers.length, color: blockers.length === 0 ? 'var(--cc-accent)' : 'var(--cc-warm-red)' },
           ].map(({ label, value, color }) => (
             <div key={label} className="p-4 rounded-2xl text-center" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
-              <p className="font-heading font-black text-2xl" style={{ color }}>{value}</p>
+              <p className="font-display text-2xl" style={{ color }}>{value}</p>
               <p className="text-[10px] font-bold mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{label}</p>
             </div>
           ))}
@@ -336,7 +336,7 @@ export default function LaunchDashboard() {
           <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(var(--cc-warm-red-rgb),0.25)', background: 'rgba(var(--cc-warm-red-rgb),0.03)' }}>
             <div className="flex items-center gap-2 px-5 py-3" style={{ background: 'rgba(var(--cc-warm-red-rgb),0.08)', borderBottom: '1px solid rgba(var(--cc-warm-red-rgb),0.15)' }}>
               <AlertTriangle className="w-4 h-4" style={{ color: 'var(--cc-warm-red)' }} />
-              <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-warm-red)' }}>Current Blockers</p>
+              <p className="font-display text-sm" style={{ color: 'var(--cc-warm-red)' }}>Current Blockers</p>
               <span className="ml-auto text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background: 'rgba(var(--cc-warm-red-rgb),0.2)', color: 'var(--cc-warm-red)' }}>{blockers.length}</span>
             </div>
             <div className="divide-y" style={{ borderColor: 'rgba(var(--cc-warm-red-rgb),0.1)' }}>
@@ -361,7 +361,7 @@ export default function LaunchDashboard() {
           <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
             <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
               <Zap className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
-              <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>What's Left Before Launch</p>
+              <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>What's Left Before Launch</p>
             </div>
             <div className="divide-y" style={{ borderColor: 'rgba(var(--cc-line-rgb),0.1)' }}>
               {criticalLeft.map((t, i) => (
@@ -384,7 +384,7 @@ export default function LaunchDashboard() {
         <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
           <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
             <Check className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
-            <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>Launch Scorecard</p>
+            <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Launch Scorecard</p>
             <span className="ml-auto text-xs font-bold" style={{ color: 'var(--cc-ink-dim)' }}>
               {Object.values(scorecard).filter(Boolean).length} / {SCORECARD_ITEMS.length} passing
             </span>
@@ -414,7 +414,7 @@ export default function LaunchDashboard() {
         <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
           <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
             <Clock className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />
-            <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>Recently Updated</p>
+            <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Recently Updated</p>
           </div>
           <div className="divide-y" style={{ borderColor: 'rgba(var(--cc-line-rgb),0.1)' }}>
             {recentlyUpdated.map(t => (
@@ -434,7 +434,7 @@ export default function LaunchDashboard() {
         {/* ── TASK TABLE ── */}
         <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
           <div className="flex items-center gap-2 px-5 py-3 flex-wrap" style={{ borderBottom: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
-            <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>All Tasks</p>
+            <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>All Tasks</p>
             <div className="flex gap-1.5 ml-auto overflow-x-auto no-scrollbar">
               {SECTIONS.map(s => (
                 <button key={s.id} onClick={() => setActiveSection(s.id)}

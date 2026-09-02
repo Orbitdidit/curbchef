@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from'react';
+import { base44 } from'@/api/base44Client';
+import { useQuery } from'@tanstack/react-query';
+import { Link } from'react-router-dom';
 import {
   ShoppingBag, Star, Flame, Trophy, Bell, HelpCircle, Mail,
   Phone, LogOut, Shield, ChevronRight, Gift, Truck, Zap,
   Heart, MapPin, Radio, Users
-} from 'lucide-react';
+} from'lucide-react';
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel,
   AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
   AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import ReferFriendModal from '@/components/profile/ReferFriendModal';
-import { parseServerDate, localDayKey } from '@/lib/timeUtils';
+} from'@/components/ui/alert-dialog';
+import ReferFriendModal from'@/components/profile/ReferFriendModal';
+import { parseServerDate, localDayKey } from'@/lib/timeUtils';
 
 const TIERS = [
-  { key: 'starter', label: 'Starter', min: 0, emoji: '🌱', color: 'var(--cc-ink-muted)' },
-  { key: 'regular', label: 'Regular', min: 500, emoji: '🔥', color: 'var(--cc-warm-2)' },
-  { key: 'vip', label: 'Night Owl', min: 1000, emoji: '🦉', color: 'var(--cc-accent-2)' },
-  { key: 'legend', label: 'Legend', min: 2500, emoji: '👑', color: 'var(--cc-yellow)' },
+  { key:'starter', label:'Starter', min: 0, emoji:'', color:'var(--cc-ink-muted)'},
+  { key:'regular', label:'Regular', min: 500, emoji:'', color:'var(--cc-warm-2)'},
+  { key:'vip', label:'Night Owl', min: 1000, emoji:'', color:'var(--cc-accent-2)'},
+  { key:'legend', label:'Legend', min: 2500, emoji:'', color:'var(--cc-yellow)'},
 ];
 
 const FOOD_LABELS = {
-  tacos: 'Taco Loyalist',
-  burgers: 'Burger Hunter',
-  bbq: 'BBQ Pit Master',
-  seafood: 'Gulf Coast Foodie',
-  asian: 'Asian Fusion Head',
-  vegan: 'Plant-Based Rider',
-  desserts: 'Sweet Tooth',
-  pizza: 'Pie Connoisseur',
-  soul_food: 'Soul Food Senator',
+  tacos:'Taco Loyalist',
+  burgers:'Burger Hunter',
+  bbq:'BBQ Pit Master',
+  seafood:'Gulf Coast Foodie',
+  asian:'Asian Fusion Head',
+  vegan:'Plant-Based Rider',
+  desserts:'Sweet Tooth',
+  pizza:'Pie Connoisseur',
+  soul_food:'Soul Food Senator',
 };
 
 function getPersonalityLabel(orders, follows) {
-  if (!orders?.length) return 'CurbChef Starter';
+  if (!orders?.length) return'CurbChef Starter';
   // Find most ordered cuisine
   const cuisineCounts = {};
   orders.forEach(o => {
@@ -44,9 +44,9 @@ function getPersonalityLabel(orders, follows) {
   });
   const top = Object.entries(cuisineCounts).sort((a, b) => b[1] - a[1])[0];
   const h = new Date().getHours();
-  if (h >= 22 || h < 4) return 'Night Owl 🦉';
-  if (top) return FOOD_LABELS[top[0]] || 'Street Food Devotee';
-  return 'Street Food Devotee';
+  if (h >= 22 || h < 4) return'Night Owl';
+  if (top) return FOOD_LABELS[top[0]] ||'Street Food Devotee';
+  return'Street Food Devotee';
 }
 
 function getStreak(orders) {
@@ -90,17 +90,17 @@ export default function Profile() {
 
   const { data: allTrucks = [] } = useQuery({
     queryKey: ['trucks-profile'],
-    queryFn: () => base44.entities.FoodTruck.filter({ is_approved: true }, '-rating', 50),
+    queryFn: () => base44.entities.FoodTruck.filter({ is_approved: true },'-rating', 50),
     enabled: follows.length > 0,
   });
 
-  const reward = rewards[0] || { points: 0, tier: 'starter', orders_count: 0 };
+  const reward = rewards[0] || { points: 0, tier:'starter', orders_count: 0 };
   const currentTier = TIERS.find(t => t.key === reward.tier) || TIERS[0];
   const nextTier = TIERS.find(t => t.min > reward.points) || TIERS[TIERS.length - 1];
   const progress = nextTier.min > 0 ? Math.min((reward.points / nextTier.min) * 100, 100) : 100;
   const streak = getStreak(orders);
   const personality = getPersonalityLabel(orders, follows);
-  const isAdmin = user?.role === 'admin';
+  const isAdmin = user?.role ==='admin';
 
   const followedTrucks = follows
     .map(f => allTrucks.find(t => t.id === f.truck_id))
@@ -113,19 +113,17 @@ export default function Profile() {
   const totalSpent = orders.reduce((sum, o) => sum + (o.total || 0), 0);
 
   return (
-    <div className="min-h-screen pb-32" style={{ background: 'var(--cc-black)' }}>
+    <div className="min-h-screen pb-32"style={{ background:'var(--cc-black)'}}>
 
       {/* ── IDENTITY HEADER ── */}
-      <div className="relative pt-[max(1.5rem,env(safe-area-inset-top))] pb-6 px-5"
-        style={{ background: 'linear-gradient(180deg, var(--cc-surface) 0%, var(--cc-black) 100%)' }}>
+      <div className="relative pt-[max(1.5rem,env(safe-area-inset-top))] pb-6 px-5"style={{ background:'linear-gradient(180deg, var(--cc-surface) 0%, var(--cc-black) 100%)'}}>
         {/* Top row */}
         <div className="flex items-center justify-between mb-5">
-          <p className="font-heading font-black text-xl" style={{ color: 'var(--cc-cream)' }}>My CurbChef</p>
+          <p className="font-display text-xl"style={{ color:'var(--cc-cream)'}}>My CurbChef</p>
           {isAdmin && (
             <Link to="/admin">
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black"
-                style={{ background: 'rgba(var(--cc-warm-red-rgb),0.12)', color: 'var(--cc-warm-red)', border: '1px solid rgba(var(--cc-warm-red-rgb),0.25)' }}>
-                <Shield className="w-3 h-3" /> Admin
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black"style={{ background:'rgba(var(--cc-warm-red-rgb),0.12)', color:'var(--cc-warm-red)', border:'1px solid rgba(var(--cc-warm-red-rgb),0.25)'}}>
+                <Shield className="w-3 h-3"/> Admin
               </div>
             </Link>
           )}
@@ -134,30 +132,25 @@ export default function Profile() {
         {/* Avatar + identity */}
         <div className="flex items-center gap-4">
           {/* Avatar ring */}
-          <div className="relative flex-shrink-0"
-            style={{ padding: 3, borderRadius: '50%', background: `linear-gradient(135deg, ${currentTier.color}, var(--cc-black))` }}>
-            <div className="w-20 h-20 rounded-full flex items-center justify-center font-heading font-black text-3xl"
-              style={{ background: 'var(--cc-surface-3)', color: currentTier.color }}>
-              {user?.full_name?.[0]?.toUpperCase() || '?'}
+          <div className="relative flex-shrink-0"style={{ padding: 3, borderRadius:'50%', background: `linear-gradient(135deg, ${currentTier.color}, var(--cc-black))` }}>
+            <div className="w-20 h-20 rounded-full flex items-center justify-center font-display text-3xl"style={{ background:'var(--cc-surface-3)', color: currentTier.color }}>
+              {user?.full_name?.[0]?.toUpperCase() ||'?'}
             </div>
             {streak > 2 && (
-              <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center text-sm"
-                style={{ background: 'var(--cc-warm-2)', border: '2px solid var(--cc-black)' }}>🔥</div>
+              <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center text-sm"style={{ background:'var(--cc-warm-2)', border:'2px solid var(--cc-black)'}}></div>
             )}
           </div>
 
           <div className="flex-1 min-w-0">
-            <p className="font-heading font-black text-xl leading-tight" style={{ color: 'var(--cc-cream)' }}>
-              {user?.full_name || 'CurbChef Fan'}
+            <p className="font-display text-xl leading-tight"style={{ color:'var(--cc-cream)'}}>
+              {user?.full_name ||'CurbChef Fan'}
             </p>
-            <p className="text-xs mt-0.5 truncate" style={{ color: 'var(--cc-ink-muted)' }}>{user?.email}</p>
+            <p className="text-xs mt-0.5 truncate"style={{ color:'var(--cc-ink-muted)'}}>{user?.email}</p>
             <div className="flex items-center gap-2 mt-2 flex-wrap">
-              <span className="text-[10px] font-black px-2.5 py-1 rounded-full"
-                style={{ background: `rgba(${currentTier.color === 'var(--cc-accent-2)' ? '0,245,212' : currentTier.color === 'var(--cc-yellow)' ? '255,214,10' : currentTier.color === 'var(--cc-warm-2)' ? '255,107,26' : '163,158,148'},0.12)`, color: currentTier.color, border: `1px solid ${currentTier.color}40` }}>
+              <span className="text-[10px] font-black px-2.5 py-1 rounded-full"style={{ background: `rgba(${currentTier.color ==='var(--cc-accent-2)'?'0,245,212': currentTier.color ==='var(--cc-yellow)'?'255,214,10': currentTier.color ==='var(--cc-warm-2)'?'255,107,26':'163,158,148'},0.12)`, color: currentTier.color, border: `1px solid ${currentTier.color}40` }}>
                 {currentTier.emoji} {currentTier.label}
               </span>
-              <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full"
-                style={{ background: 'var(--cc-surface-3)', color: 'var(--cc-ink-muted)' }}>
+              <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full"style={{ background:'var(--cc-surface-3)', color:'var(--cc-ink-muted)'}}>
                 {personality}
               </span>
             </div>
@@ -168,23 +161,20 @@ export default function Profile() {
       <div className="px-4 space-y-5">
 
         {/* ── HERO POINTS CARD ── */}
-        <div className="rounded-3xl p-5 relative overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #0D2420 0%, #071A14 100%)', border: '1px solid rgba(0,245,212,0.2)', boxShadow: '0 0 40px rgba(0,245,212,0.07)' }}>
+        <div className="rounded-3xl p-5 relative overflow-hidden"style={{ background:'linear-gradient(135deg, #0D2420 0%, #071A14 100%)', border:'1px solid rgba(0,245,212,0.2)', boxShadow:'0 0 40px rgba(0,245,212,0.07)'}}>
           {/* Glow orb */}
-          <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full pointer-events-none"
-            style={{ background: 'radial-gradient(circle, rgba(0,245,212,0.12) 0%, transparent 70%)' }} />
+          <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full pointer-events-none"style={{ background:'radial-gradient(circle, rgba(0,245,212,0.12) 0%, transparent 70%)'}} />
           <div className="relative z-10">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <p className="text-[10px] font-black tracking-widest mb-1" style={{ color: 'rgba(0,245,212,0.6)' }}>CURBPOINTS BALANCE</p>
-                <p className="font-heading font-black leading-none" style={{ color: 'var(--cc-accent-2)', fontSize: '3rem', textShadow: '0 0 30px rgba(0,245,212,0.4)' }}>
+                <p className="text-[10px] font-black tracking-widest mb-1"style={{ color:'rgba(0,245,212,0.6)'}}>CURBPOINTS BALANCE</p>
+                <p className="font-display leading-none"style={{ color:'var(--cc-accent-2)', fontSize:'3rem', textShadow:'0 0 30px rgba(0,245,212,0.4)'}}>
                   {reward.points.toLocaleString()}
                 </p>
-                <p className="text-xs mt-1 font-semibold" style={{ color: 'rgba(0,245,212,0.5)' }}>points</p>
+                <p className="text-xs mt-1 font-semibold"style={{ color:'rgba(0,245,212,0.5)'}}>points</p>
               </div>
               <Link to="/rewards">
-                <button className="px-4 py-2 rounded-full font-heading font-black text-xs mt-1"
-                  style={{ background: 'linear-gradient(135deg, var(--cc-accent-2), #00d4b8)', color: 'var(--cc-black)', boxShadow: '0 0 16px rgba(0,245,212,0.3)' }}>
+                <button className="px-4 py-2 rounded-full font-display text-xs mt-1"style={{ background:'linear-gradient(135deg, var(--cc-accent-2), #00d4b8)', color:'var(--cc-black)', boxShadow:'0 0 16px rgba(0,245,212,0.3)'}}>
                   View Rewards
                 </button>
               </Link>
@@ -192,15 +182,14 @@ export default function Profile() {
             {/* Progress bar */}
             <div className="mb-2">
               <div className="flex justify-between mb-1.5">
-                <span className="text-[10px] font-bold" style={{ color: 'rgba(0,245,212,0.5)' }}>{currentTier.label}</span>
-                <span className="text-[10px] font-bold" style={{ color: 'rgba(0,245,212,0.5)' }}>{nextTier.label} at {nextTier.min.toLocaleString()} pts</span>
+                <span className="text-[10px] font-bold"style={{ color:'rgba(0,245,212,0.5)'}}>{currentTier.label}</span>
+                <span className="text-[10px] font-bold"style={{ color:'rgba(0,245,212,0.5)'}}>{nextTier.label} at {nextTier.min.toLocaleString()} pts</span>
               </div>
-              <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(0,245,212,0.1)' }}>
-                <div className="h-full rounded-full transition-all duration-700"
-                  style={{ width: `${progress}%`, background: 'linear-gradient(90deg, var(--cc-accent-2), var(--cc-accent-3))', boxShadow: '0 0 8px rgba(0,245,212,0.5)' }} />
+              <div className="h-2 rounded-full overflow-hidden"style={{ background:'rgba(0,245,212,0.1)'}}>
+                <div className="h-full rounded-full transition-all duration-700"style={{ width: `${progress}%`, background:'linear-gradient(90deg, var(--cc-accent-2), var(--cc-accent-3))', boxShadow:'0 0 8px rgba(0,245,212,0.5)'}} />
               </div>
             </div>
-            <p className="text-xs" style={{ color: 'rgba(0,245,212,0.45)' }}>
+            <p className="text-xs"style={{ color:'rgba(0,245,212,0.45)'}}>
               {Math.max(0, nextTier.min - reward.points).toLocaleString()} pts to {nextTier.label} {nextTier.emoji}
             </p>
           </div>
@@ -208,44 +197,42 @@ export default function Profile() {
 
         {/* ── BENTO STATS GRID ── */}
         <div>
-          <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: 'var(--cc-ink-muted)' }}>YOUR STATS</p>
+          <p className="text-[10px] font-black tracking-widest mb-3"style={{ color:'var(--cc-ink-muted)'}}>YOUR STATS</p>
           <div className="grid grid-cols-2 gap-3">
             {/* Streak */}
-            <div className="rounded-2xl p-4"
-              style={{ background: streak > 0 ? 'rgba(255,107,26,0.08)' : 'var(--cc-surface)', border: streak > 0 ? '1px solid rgba(255,107,26,0.25)' : '1px solid rgba(255,255,255,0.04)' }}>
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3"
-                style={{ background: streak > 0 ? 'rgba(255,107,26,0.15)' : 'var(--cc-surface-3)' }}>
-                <Flame className="w-4 h-4" style={{ color: streak > 0 ? 'var(--cc-warm-2)' : 'var(--cc-ink-faint)' }} />
+            <div className="rounded-2xl p-4"style={{ background: streak > 0 ?'rgba(255,107,26,0.08)':'var(--cc-surface)', border: streak > 0 ?'1px solid rgba(255,107,26,0.25)':'1px solid rgba(255,255,255,0.04)'}}>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3"style={{ background: streak > 0 ?'rgba(255,107,26,0.15)':'var(--cc-surface-3)'}}>
+                <Flame className="w-4 h-4"style={{ color: streak > 0 ?'var(--cc-warm-2)':'var(--cc-ink-faint)'}} />
               </div>
-              <p className="font-heading font-black text-2xl leading-none" style={{ color: streak > 0 ? 'var(--cc-warm-2)' : 'var(--cc-cream)' }}>{streak}</p>
-              <p className="text-[11px] mt-1 font-semibold" style={{ color: 'var(--cc-ink-muted)' }}>day streak</p>
+              <p className="font-display text-2xl leading-none"style={{ color: streak > 0 ?'var(--cc-warm-2)':'var(--cc-cream)'}}>{streak}</p>
+              <p className="text-[11px] mt-1 font-semibold"style={{ color:'var(--cc-ink-muted)'}}>day streak</p>
             </div>
 
             {/* Orders */}
-            <div className="rounded-2xl p-4" style={{ background: 'var(--cc-surface)', border: '1px solid rgba(255,255,255,0.04)' }}>
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: 'rgba(0,245,212,0.08)' }}>
-                <ShoppingBag className="w-4 h-4" style={{ color: 'var(--cc-accent-2)' }} />
+            <div className="rounded-2xl p-4"style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.04)'}}>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3"style={{ background:'rgba(0,245,212,0.08)'}}>
+                <ShoppingBag className="w-4 h-4"style={{ color:'var(--cc-accent-2)'}} />
               </div>
-              <p className="font-heading font-black text-2xl leading-none" style={{ color: 'var(--cc-cream)' }}>{orders.length}</p>
-              <p className="text-[11px] mt-1 font-semibold" style={{ color: 'var(--cc-ink-muted)' }}>orders placed</p>
+              <p className="font-display text-2xl leading-none"style={{ color:'var(--cc-cream)'}}>{orders.length}</p>
+              <p className="text-[11px] mt-1 font-semibold"style={{ color:'var(--cc-ink-muted)'}}>orders placed</p>
             </div>
 
             {/* Following */}
-            <div className="rounded-2xl p-4" style={{ background: 'var(--cc-surface)', border: '1px solid rgba(255,255,255,0.04)' }}>
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: 'rgba(var(--cc-warm-red-rgb),0.08)' }}>
-                <Heart className="w-4 h-4" style={{ color: 'var(--cc-warm-red)' }} />
+            <div className="rounded-2xl p-4"style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.04)'}}>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3"style={{ background:'rgba(var(--cc-warm-red-rgb),0.08)'}}>
+                <Heart className="w-4 h-4"style={{ color:'var(--cc-warm-red)'}} />
               </div>
-              <p className="font-heading font-black text-2xl leading-none" style={{ color: 'var(--cc-cream)' }}>{follows.length}</p>
-              <p className="text-[11px] mt-1 font-semibold" style={{ color: 'var(--cc-ink-muted)' }}>trucks followed</p>
+              <p className="font-display text-2xl leading-none"style={{ color:'var(--cc-cream)'}}>{follows.length}</p>
+              <p className="text-[11px] mt-1 font-semibold"style={{ color:'var(--cc-ink-muted)'}}>trucks followed</p>
             </div>
 
             {/* Total spent */}
-            <div className="rounded-2xl p-4" style={{ background: 'var(--cc-surface)', border: '1px solid rgba(255,255,255,0.04)' }}>
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: 'rgba(255,214,10,0.08)' }}>
-                <Star className="w-4 h-4" style={{ color: 'var(--cc-yellow)' }} />
+            <div className="rounded-2xl p-4"style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.04)'}}>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3"style={{ background:'rgba(255,214,10,0.08)'}}>
+                <Star className="w-4 h-4"style={{ color:'var(--cc-yellow)'}} />
               </div>
-              <p className="font-heading font-black text-2xl leading-none" style={{ color: 'var(--cc-cream)' }}>${totalSpent.toFixed(0)}</p>
-              <p className="text-[11px] mt-1 font-semibold" style={{ color: 'var(--cc-ink-muted)' }}>total spent</p>
+              <p className="font-display text-2xl leading-none"style={{ color:'var(--cc-cream)'}}>${totalSpent.toFixed(0)}</p>
+              <p className="text-[11px] mt-1 font-semibold"style={{ color:'var(--cc-ink-muted)'}}>total spent</p>
             </div>
           </div>
         </div>
@@ -254,33 +241,30 @@ export default function Profile() {
         {followedTrucks.length > 0 && (
           <div>
             <div className="flex items-center justify-between mb-3">
-              <p className="text-[10px] font-black tracking-widest" style={{ color: 'var(--cc-ink-muted)' }}>MY TRUCKS</p>
-              <span className="text-xs font-bold" style={{ color: 'var(--cc-accent-2)' }}>{followedTrucks.length} following</span>
+              <p className="text-[10px] font-black tracking-widest"style={{ color:'var(--cc-ink-muted)'}}>MY TRUCKS</p>
+              <span className="text-xs font-bold"style={{ color:'var(--cc-accent-2)'}}>{followedTrucks.length} following</span>
             </div>
             <div className="flex gap-3 overflow-x-auto no-scrollbar pb-1">
               {followedTrucks.map(truck => {
                 const isLive = truck.is_live;
-                const isOpen = truck.status === 'open';
+                const isOpen = truck.status ==='open';
                 return (
                   <Link key={truck.id} to={`/truck/${truck.id}`} className="flex flex-col items-center gap-1.5 flex-shrink-0">
-                    <div className="relative"
-                      style={{ padding: 2, borderRadius: '50%', background: isLive ? 'linear-gradient(135deg,var(--cc-warm-red),#ff6b60)' : isOpen ? 'linear-gradient(135deg,var(--cc-accent-2),#00d4b8)' : '#242424' }}>
-                      <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center text-2xl" style={{ background: 'var(--cc-surface-3)' }}>
-                        {truck.image_url ? <img src={truck.image_url} alt={truck.name} className="w-full h-full object-cover" /> : '🚚'}
+                    <div className="relative"style={{ padding: 2, borderRadius:'50%', background: isLive ?'linear-gradient(135deg,var(--cc-warm-red),#ff6b60)': isOpen ?'linear-gradient(135deg,var(--cc-accent-2),#00d4b8)':'#242424'}}>
+                      <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center text-2xl"style={{ background:'var(--cc-surface-3)'}}>
+                        {truck.image_url ? <img src={truck.image_url} alt={truck.name} className="w-full h-full object-cover"/> :''}
                       </div>
                       {isLive && (
-                        <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full flex items-center justify-center"
-                          style={{ background: 'var(--cc-warm-red)', border: '2px solid var(--cc-black)' }}>
-                          <Radio className="w-2.5 h-2.5 text-white" />
+                        <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full flex items-center justify-center"style={{ background:'var(--cc-warm-red)', border:'2px solid var(--cc-black)'}}>
+                          <Radio className="w-2.5 h-2.5 text-white"/>
                         </div>
                       )}
                       {!isLive && isOpen && (
-                        <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full"
-                          style={{ background: 'var(--cc-accent-2)', border: '2px solid var(--cc-black)' }} />
+                        <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full"style={{ background:'var(--cc-accent-2)', border:'2px solid var(--cc-black)'}} />
                       )}
                     </div>
-                    <p className="text-[10px] font-bold text-center max-w-[64px] truncate" style={{ color: 'var(--cc-ink-muted)' }}>{truck.name}</p>
-                    {isLive && <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(var(--cc-warm-red-rgb),0.15)', color: 'var(--cc-warm-red)' }}>LIVE</span>}
+                    <p className="text-[10px] font-bold text-center max-w-[64px] truncate"style={{ color:'var(--cc-ink-muted)'}}>{truck.name}</p>
+                    {isLive && <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full"style={{ background:'rgba(var(--cc-warm-red-rgb),0.15)', color:'var(--cc-warm-red)'}}>LIVE</span>}
                   </Link>
                 );
               })}
@@ -293,33 +277,30 @@ export default function Profile() {
           <div>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <p className="text-[10px] font-black tracking-widest" style={{ color: 'var(--cc-ink-muted)' }}>MY CURB LIST</p>
-                <span className="text-[9px] font-black px-2 py-0.5 rounded-full"
-                  style={{ background: 'rgba(255,107,26,0.12)', color: 'var(--cc-warm-2)', border: '1px solid rgba(255,107,26,0.2)' }}>
-                  🔥 RECENT EATS
+                <p className="text-[10px] font-black tracking-widest"style={{ color:'var(--cc-ink-muted)'}}>MY CURB LIST</p>
+                <span className="text-[9px] font-black px-2 py-0.5 rounded-full"style={{ background:'rgba(255,107,26,0.12)', color:'var(--cc-warm-2)', border:'1px solid rgba(255,107,26,0.2)'}}>
+                   RECENT EATS
                 </span>
               </div>
-              <Link to="/orders" className="text-xs font-bold" style={{ color: 'var(--cc-accent-2)' }}>See all →</Link>
+              <Link to="/orders"className="text-xs font-bold"style={{ color:'var(--cc-accent-2)'}}>See all →</Link>
             </div>
             <div className="flex flex-col gap-2">
               {recentOrders.map((order, i) => (
                 <Link key={order.id} to={`/order/${order.id}`}>
-                  <div className="flex items-center gap-3 p-3.5 rounded-2xl"
-                    style={{ background: 'var(--cc-surface)', border: '1px solid rgba(255,255,255,0.04)' }}>
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0" style={{ background: 'var(--cc-surface-3)' }}>
-                      🚚
+                  <div className="flex items-center gap-3 p-3.5 rounded-2xl"style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.04)'}}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0"style={{ background:'var(--cc-surface-3)'}}>
+                      
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-heading font-bold text-sm truncate" style={{ color: 'var(--cc-cream)' }}>{order.truck_name}</p>
-                      <p className="text-xs truncate" style={{ color: 'var(--cc-ink-muted)' }}>
-                        {order.items?.slice(0, 2).map(i => i.name).join(', ')}{order.items?.length > 2 ? ` +${order.items.length - 2}` : ''}
+                      <p className="font-heading font-bold text-sm truncate"style={{ color:'var(--cc-cream)'}}>{order.truck_name}</p>
+                      <p className="text-xs truncate"style={{ color:'var(--cc-ink-muted)'}}>
+                        {order.items?.slice(0, 2).map(i => i.name).join(',')}{order.items?.length > 2 ? ` +${order.items.length - 2}` :''}
                       </p>
                     </div>
                     <div className="text-right flex-shrink-0">
-                      <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-accent-2)' }}>${order.total?.toFixed(2)}</p>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                        style={{ background: order.status === 'picked_up' ? 'rgba(0,245,212,0.1)' : 'rgba(255,214,10,0.1)', color: order.status === 'picked_up' ? 'var(--cc-accent-2)' : 'var(--cc-yellow)' }}>
-                        {order.status === 'picked_up' ? '✓ Done' : order.status === 'ready' ? '🎉 Ready' : '⏳'}
+                      <p className="font-heading font-bold text-sm"style={{ color:'var(--cc-accent-2)'}}>${order.total?.toFixed(2)}</p>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"style={{ background: order.status ==='picked_up'?'rgba(0,245,212,0.1)':'rgba(255,214,10,0.1)', color: order.status ==='picked_up'?'var(--cc-accent-2)':'var(--cc-yellow)'}}>
+                        {order.status ==='picked_up'?'Done': order.status ==='ready'?'Ready':'⏳'}
                       </span>
                     </div>
                   </div>
@@ -330,31 +311,27 @@ export default function Profile() {
         )}
 
         {/* ── HUNGRY TIME / SUGGESTIONS ── */}
-        <div className="rounded-3xl p-5 relative overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #1A0D00 0%, #140800 100%)', border: '1px solid rgba(255,107,26,0.2)' }}>
-          <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full pointer-events-none"
-            style={{ background: 'radial-gradient(circle, rgba(255,107,26,0.15) 0%, transparent 70%)' }} />
+        <div className="rounded-3xl p-5 relative overflow-hidden"style={{ background:'linear-gradient(135deg, #1A0D00 0%, #140800 100%)', border:'1px solid rgba(255,107,26,0.2)'}}>
+          <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full pointer-events-none"style={{ background:'radial-gradient(circle, rgba(255,107,26,0.15) 0%, transparent 70%)'}} />
           <div className="relative z-10">
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-4 h-4" style={{ color: 'var(--cc-warm-2)' }} />
-              <p className="text-[10px] font-black tracking-widest" style={{ color: 'var(--cc-warm-2)' }}>HUNGRY TIME?</p>
+              <Zap className="w-4 h-4"style={{ color:'var(--cc-warm-2)'}} />
+              <p className="text-[10px] font-black tracking-widest"style={{ color:'var(--cc-warm-2)'}}>HUNGRY TIME?</p>
             </div>
-            <p className="font-heading font-black text-lg leading-tight mb-1" style={{ color: 'var(--cc-cream)' }}>
+            <p className="font-display text-lg leading-tight mb-1"style={{ color:'var(--cc-cream)'}}>
               What should I eat next?
             </p>
-            <p className="text-xs mb-4" style={{ color: 'rgba(245,240,232,0.5)' }}>
+            <p className="text-xs mb-4"style={{ color:'rgba(245,240,232,0.5)'}}>
               Based on your taste profile & nearby trucks
             </p>
             <div className="flex gap-2">
               <Link to="/explore">
-                <button className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-black text-xs"
-                  style={{ background: 'linear-gradient(135deg, var(--cc-warm-2), var(--cc-warm-red))', color: '#fff', boxShadow: '0 0 16px rgba(255,107,26,0.3)' }}>
-                  🔥 Get Picks
+                <button className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-display text-xs"style={{ background:'linear-gradient(135deg, var(--cc-warm-2), var(--cc-warm-red))', color:'#fff', boxShadow:'0 0 16px rgba(255,107,26,0.3)'}}>
+                   Get Picks
                 </button>
               </Link>
               <Link to="/quiz">
-                <button className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-bold text-xs"
-                  style={{ background: 'rgba(255,255,255,0.07)', color: 'var(--cc-cream)', border: '1px solid rgba(255,255,255,0.12)' }}>
+                <button className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-bold text-xs"style={{ background:'rgba(255,255,255,0.07)', color:'var(--cc-cream)', border:'1px solid rgba(255,255,255,0.12)'}}>
                   Update Taste
                 </button>
               </Link>
@@ -364,18 +341,15 @@ export default function Profile() {
 
         {/* ── REFER A FRIEND ── */}
         <button onClick={() => setShowReferModal(true)} className="w-full text-left">
-          <div className="rounded-2xl p-4 flex items-center gap-4"
-            style={{ background: 'linear-gradient(135deg, rgba(0,245,212,0.05) 0%, rgba(0,180,140,0.04) 100%)', border: '1px solid rgba(0,245,212,0.15)' }}>
-            <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
-              style={{ background: 'rgba(0,245,212,0.08)', border: '1px solid rgba(0,245,212,0.15)' }}>
-              💸
+          <div className="rounded-2xl p-4 flex items-center gap-4"style={{ background:'linear-gradient(135deg, rgba(0,245,212,0.05) 0%, rgba(0,180,140,0.04) 100%)', border:'1px solid rgba(0,245,212,0.15)'}}>
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"style={{ background:'rgba(0,245,212,0.08)', border:'1px solid rgba(0,245,212,0.15)'}}>
+              
             </div>
             <div className="flex-1">
-              <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-cream)' }}>Bring a friend. Earn CurbPoints.</p>
-              <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-muted)' }}>500 pts per referral · instant reward</p>
+              <p className="font-display text-sm"style={{ color:'var(--cc-cream)'}}>Bring a friend. Earn CurbPoints.</p>
+              <p className="text-xs mt-0.5"style={{ color:'var(--cc-ink-muted)'}}>500 pts per referral · instant reward</p>
             </div>
-            <div className="px-3 py-1.5 rounded-full text-[11px] font-black flex-shrink-0"
-              style={{ background: 'rgba(0,245,212,0.12)', color: 'var(--cc-accent-2)', border: '1px solid rgba(0,245,212,0.25)' }}>
+            <div className="px-3 py-1.5 rounded-full text-[11px] font-black flex-shrink-0"style={{ background:'rgba(0,245,212,0.12)', color:'var(--cc-accent-2)', border:'1px solid rgba(0,245,212,0.25)'}}>
               Invite →
             </div>
           </div>
@@ -383,21 +357,20 @@ export default function Profile() {
 
         {/* ── QUICK LINKS ── */}
         <div>
-          <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: 'var(--cc-ink-muted)' }}>QUICK ACCESS</p>
+          <p className="text-[10px] font-black tracking-widest mb-3"style={{ color:'var(--cc-ink-muted)'}}>QUICK ACCESS</p>
           <div className="grid grid-cols-2 gap-2">
             {[
-              { icon: '🏆', label: 'Rewards', sub: `${reward.points.toLocaleString()} pts`, to: '/rewards', color: 'var(--cc-yellow)' },
-              { icon: '🗺️', label: 'Find on Map', sub: 'Trucks near you', to: '/map', color: 'var(--cc-accent-2)' },
-              { icon: '⚡', label: 'Hot Deals', sub: 'CurbDrops live', to: '/deals', color: 'var(--cc-warm-2)' },
-              { icon: '🚚', label: 'Vendor Portal', sub: 'Own a truck?', to: '/vendor-portal', color: 'var(--cc-ink-muted)' },
+              { icon:'', label:'Rewards', sub: `${reward.points.toLocaleString()} pts`, to:'/rewards', color:'var(--cc-yellow)'},
+              { icon:'', label:'Find on Map', sub:'Trucks near you', to:'/map', color:'var(--cc-accent-2)'},
+              { icon:'', label:'Hot Deals', sub:'CurbDrops live', to:'/deals', color:'var(--cc-warm-2)'},
+              { icon:'', label:'Vendor Portal', sub:'Own a truck?', to:'/vendor-portal', color:'var(--cc-ink-muted)'},
             ].map(item => (
               <Link key={item.label} to={item.to}>
-                <div className="flex items-center gap-3 p-3.5 rounded-2xl"
-                  style={{ background: 'var(--cc-surface)', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <div className="flex items-center gap-3 p-3.5 rounded-2xl"style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.04)'}}>
                   <span className="text-xl">{item.icon}</span>
                   <div className="min-w-0">
-                    <p className="font-heading font-bold text-xs" style={{ color: 'var(--cc-cream)' }}>{item.label}</p>
-                    <p className="text-[10px]" style={{ color: 'var(--cc-ink-faint)' }}>{item.sub}</p>
+                    <p className="font-heading font-bold text-xs"style={{ color:'var(--cc-cream)'}}>{item.label}</p>
+                    <p className="text-[10px]"style={{ color:'var(--cc-ink-faint)'}}>{item.sub}</p>
                   </div>
                 </div>
               </Link>
@@ -407,22 +380,22 @@ export default function Profile() {
 
         {/* ── SETTINGS (bottom) ── */}
         <div>
-          <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: 'var(--cc-ink-faint)' }}>SETTINGS</p>
+          <p className="text-[10px] font-black tracking-widest mb-3"style={{ color:'var(--cc-ink-faint)'}}>SETTINGS</p>
           <div className="flex flex-col gap-2">
             {[
-              { icon: Bell, label: 'Notifications', sub: 'Alerts & live pings', onClick: () => setShowNotifications(true) },
-              { icon: HelpCircle, label: 'Help & Support', sub: 'FAQs, contact, report', onClick: () => setShowHelp(true) },
+              { icon: Bell, label:'Notifications', sub:'Alerts & live pings', onClick: () => setShowNotifications(true) },
+              { icon: HelpCircle, label:'Help & Support', sub:'FAQs, contact, report', onClick: () => setShowHelp(true) },
             ].map(({ icon: Icon, label, sub, onClick }) => (
               <button key={label} onClick={onClick} className="w-full text-left">
-                <div className="flex items-center gap-3 p-4 rounded-2xl" style={{ background: 'var(--cc-surface)', border: '1px solid rgba(255,255,255,0.04)' }}>
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--cc-surface-3)' }}>
-                    <Icon className="w-4 h-4" style={{ color: 'var(--cc-ink-faint)' }} />
+                <div className="flex items-center gap-3 p-4 rounded-2xl"style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.04)'}}>
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"style={{ background:'var(--cc-surface-3)'}}>
+                    <Icon className="w-4 h-4"style={{ color:'var(--cc-ink-faint)'}} />
                   </div>
                   <div className="flex-1">
-                    <p className="font-bold text-sm" style={{ color: 'var(--cc-cream)' }}>{label}</p>
-                    <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-faint)' }}>{sub}</p>
+                    <p className="font-bold text-sm"style={{ color:'var(--cc-cream)'}}>{label}</p>
+                    <p className="text-xs mt-0.5"style={{ color:'var(--cc-ink-faint)'}}>{sub}</p>
                   </div>
-                  <ChevronRight className="w-4 h-4" style={{ color: 'var(--cc-ink-faint)' }} />
+                  <ChevronRight className="w-4 h-4"style={{ color:'var(--cc-ink-faint)'}} />
                 </div>
               </button>
             ))}
@@ -430,10 +403,10 @@ export default function Profile() {
         </div>
 
         {/* Legal */}
-        <div className="flex items-center justify-center gap-5 py-4" style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-          <Link to="/privacy" className="text-xs font-semibold" style={{ color: 'var(--cc-ink-faint)' }}>Privacy</Link>
-          <Link to="/terms" className="text-xs font-semibold" style={{ color: 'var(--cc-ink-faint)' }}>Terms</Link>
-          <Link to="/support" className="text-xs font-semibold" style={{ color: 'var(--cc-ink-faint)' }}>Support</Link>
+        <div className="flex items-center justify-center gap-5 py-4"style={{ borderTop:'1px solid rgba(255,255,255,0.04)'}}>
+          <Link to="/privacy"className="text-xs font-semibold"style={{ color:'var(--cc-ink-faint)'}}>Privacy</Link>
+          <Link to="/terms"className="text-xs font-semibold"style={{ color:'var(--cc-ink-faint)'}}>Terms</Link>
+          <Link to="/support"className="text-xs font-semibold"style={{ color:'var(--cc-ink-faint)'}}>Support</Link>
         </div>
 
         {/* Report a Bug */}
@@ -444,43 +417,40 @@ export default function Profile() {
               base44.entities.ErrorLog.create({
                 error_message: msg.trim(),
                 page_url: window.location.href,
-                user_email: user?.email || 'unknown',
-                context: 'User-submitted bug report',
-                severity: 'medium',
+                user_email: user?.email ||'unknown',
+                context:'User-submitted bug report',
+                severity:'medium',
               }).then(() => alert('Thanks! Bug reported. We\'ll look into it.'));
             }
           }}
-          className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-xs font-bold"
-          style={{ background: 'rgba(var(--cc-warm-red-rgb),0.06)', color: 'var(--cc-warm-red)', border: '1px solid rgba(var(--cc-warm-red-rgb),0.15)' }}
+          className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-xs font-bold"style={{ background:'rgba(var(--cc-warm-red-rgb),0.06)', color:'var(--cc-warm-red)', border:'1px solid rgba(var(--cc-warm-red-rgb),0.15)'}}
         >
-          🐛 Report a Bug
+           Report a Bug
         </button>
 
         {/* Sign out + delete */}
         <div className="flex flex-col gap-3 pb-4">
           <button onClick={() => base44.auth.logout('/')}
-            className="flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-sm"
-            style={{ background: 'var(--cc-surface)', color: 'var(--cc-ink-muted)', border: '1px solid rgba(255,255,255,0.06)' }}>
-            <LogOut className="w-4 h-4" /> Sign Out
+            className="flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-sm"style={{ background:'var(--cc-surface)', color:'var(--cc-ink-muted)', border:'1px solid rgba(255,255,255,0.06)'}}>
+            <LogOut className="w-4 h-4"/> Sign Out
           </button>
 
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <button className="flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-sm"
-                style={{ background: 'rgba(239,68,68,0.06)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.15)' }}>
+              <button className="flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-sm"style={{ background:'rgba(239,68,68,0.06)', color:'#ef4444', border:'1px solid rgba(239,68,68,0.15)'}}>
                 Delete My Account
               </button>
             </AlertDialogTrigger>
-            <AlertDialogContent style={{ background: 'var(--cc-surface-3)', border: '1px solid rgba(239,68,68,0.3)' }}>
+            <AlertDialogContent style={{ background:'var(--cc-surface-3)', border:'1px solid rgba(239,68,68,0.3)'}}>
               <AlertDialogHeader>
-                <AlertDialogTitle style={{ color: 'var(--cc-cream)' }}>Delete your account?</AlertDialogTitle>
-                <AlertDialogDescription style={{ color: 'var(--cc-ink-muted)' }}>
+                <AlertDialogTitle style={{ color:'var(--cc-cream)'}}>Delete your account?</AlertDialogTitle>
+                <AlertDialogDescription style={{ color:'var(--cc-ink-muted)'}}>
                   Your account will be signed out and flagged for deletion. Our team will remove your data within 30 days per our privacy policy. This cannot be undone.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel style={{ background: '#242424', color: 'var(--cc-ink-muted)', border: 'none' }}>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={() => base44.auth.logout('/')} style={{ background: '#ef4444', color: 'white' }}>
+                <AlertDialogCancel style={{ background:'#242424', color:'var(--cc-ink-muted)', border:'none'}}>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={() => base44.auth.logout('/')} style={{ background:'#ef4444', color:'white'}}>
                   Yes, delete
                 </AlertDialogAction>
               </AlertDialogFooter>
@@ -493,54 +463,52 @@ export default function Profile() {
       {showReferModal && <ReferFriendModal user={user} onClose={() => setShowReferModal(false)} />}
 
       {showNotifications && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(8px)' }}
+        <div className="fixed inset-0 z-50 flex items-end justify-center"style={{ background:'rgba(0,0,0,0.75)', backdropFilter:'blur(8px)'}}
           onClick={() => setShowNotifications(false)}>
-          <div className="w-full max-w-lg rounded-t-3xl p-6 pb-10" style={{ background: 'var(--cc-surface)', border: '1px solid rgba(255,255,255,0.08)' }}
+          <div className="w-full max-w-lg rounded-t-3xl p-6 pb-10"style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.08)'}}
             onClick={e => e.stopPropagation()}>
-            <h2 className="font-heading font-black text-lg mb-4" style={{ color: 'var(--cc-cream)' }}>🔔 Notifications</h2>
-            <p className="text-sm mb-5" style={{ color: 'var(--cc-ink-muted)' }}>Push notifications are available in the mobile app.</p>
-            <div className="p-4 rounded-2xl mb-4" style={{ background: 'var(--cc-surface-3)' }}>
-              <p className="text-sm font-bold mb-2" style={{ color: 'var(--cc-cream)' }}>Coming in v1.1:</p>
-              <ul className="text-xs space-y-1.5" style={{ color: 'var(--cc-ink-muted)' }}>
+            <h2 className="font-display text-lg mb-4"style={{ color:'var(--cc-cream)'}}> Notifications</h2>
+            <p className="text-sm mb-5"style={{ color:'var(--cc-ink-muted)'}}>Push notifications are available in the mobile app.</p>
+            <div className="p-4 rounded-2xl mb-4"style={{ background:'var(--cc-surface-3)'}}>
+              <p className="text-sm font-bold mb-2"style={{ color:'var(--cc-cream)'}}>Coming in v1.1:</p>
+              <ul className="text-xs space-y-1.5"style={{ color:'var(--cc-ink-muted)'}}>
                 <li>• Live alerts when your fave truck goes LIVE</li>
                 <li>• Order ready notifications</li>
                 <li>• New CurbDrop deals near you</li>
               </ul>
             </div>
-            <button onClick={() => setShowNotifications(false)} className="w-full py-3.5 rounded-full font-heading font-black text-sm"
-              style={{ background: '#242424', color: 'var(--cc-ink-muted)' }}>Got it</button>
+            <button onClick={() => setShowNotifications(false)} className="w-full py-3.5 rounded-full font-display text-sm"style={{ background:'#242424', color:'var(--cc-ink-muted)'}}>Got it</button>
           </div>
         </div>
       )}
 
       {showHelp && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(8px)' }}
+        <div className="fixed inset-0 z-50 flex items-end justify-center"style={{ background:'rgba(0,0,0,0.75)', backdropFilter:'blur(8px)'}}
           onClick={() => setShowHelp(false)}>
-          <div className="w-full max-w-lg rounded-t-3xl p-6 pb-10" style={{ background: 'var(--cc-surface)', border: '1px solid rgba(255,255,255,0.08)' }}
+          <div className="w-full max-w-lg rounded-t-3xl p-6 pb-10"style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.08)'}}
             onClick={e => e.stopPropagation()}>
-            <h2 className="font-heading font-black text-lg mb-4" style={{ color: 'var(--cc-cream)' }}>Help & Support</h2>
+            <h2 className="font-display text-lg mb-4"style={{ color:'var(--cc-cream)'}}>Help & Support</h2>
             <div className="flex flex-col gap-3 mb-5">
-              <a href="mailto:support@curbchef.com" className="flex items-center gap-3 p-4 rounded-2xl" style={{ background: 'var(--cc-surface-3)' }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(0,245,212,0.08)' }}>
-                  <Mail className="w-5 h-5" style={{ color: 'var(--cc-accent-2)' }} />
+              <a href="mailto:support@curbchef.com"className="flex items-center gap-3 p-4 rounded-2xl"style={{ background:'var(--cc-surface-3)'}}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center"style={{ background:'rgba(0,245,212,0.08)'}}>
+                  <Mail className="w-5 h-5"style={{ color:'var(--cc-accent-2)'}} />
                 </div>
                 <div>
-                  <p className="font-bold text-sm" style={{ color: 'var(--cc-cream)' }}>Email Support</p>
-                  <p className="text-xs" style={{ color: 'var(--cc-ink-muted)' }}>support@curbchef.com</p>
+                  <p className="font-bold text-sm"style={{ color:'var(--cc-cream)'}}>Email Support</p>
+                  <p className="text-xs"style={{ color:'var(--cc-ink-muted)'}}>support@curbchef.com</p>
                 </div>
               </a>
-              <a href="tel:+18005550100" className="flex items-center gap-3 p-4 rounded-2xl" style={{ background: 'var(--cc-surface-3)' }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(0,245,212,0.08)' }}>
-                  <Phone className="w-5 h-5" style={{ color: 'var(--cc-accent-2)' }} />
+              <a href="tel:+18005550100"className="flex items-center gap-3 p-4 rounded-2xl"style={{ background:'var(--cc-surface-3)'}}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center"style={{ background:'rgba(0,245,212,0.08)'}}>
+                  <Phone className="w-5 h-5"style={{ color:'var(--cc-accent-2)'}} />
                 </div>
                 <div>
-                  <p className="font-bold text-sm" style={{ color: 'var(--cc-cream)' }}>Call Us</p>
-                  <p className="text-xs" style={{ color: 'var(--cc-ink-muted)' }}>Mon–Fri, 9am–6pm CST</p>
+                  <p className="font-bold text-sm"style={{ color:'var(--cc-cream)'}}>Call Us</p>
+                  <p className="text-xs"style={{ color:'var(--cc-ink-muted)'}}>Mon–Fri, 9am–6pm CST</p>
                 </div>
               </a>
             </div>
-            <button onClick={() => setShowHelp(false)} className="w-full py-3.5 rounded-full font-heading font-black text-sm"
-              style={{ background: '#242424', color: 'var(--cc-ink-muted)' }}>Close</button>
+            <button onClick={() => setShowHelp(false)} className="w-full py-3.5 rounded-full font-display text-sm"style={{ background:'#242424', color:'var(--cc-ink-muted)'}}>Close</button>
           </div>
         </div>
       )}

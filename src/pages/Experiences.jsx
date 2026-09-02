@@ -75,7 +75,7 @@ function ChefCard({ chef }) {
           </div>
         )}
         <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
-          <p className="font-heading font-black text-xl text-white leading-tight">{chef.chef_name}</p>
+          <p className="font-display text-xl text-white leading-tight">{chef.chef_name}</p>
           <p className="text-xs mt-0.5" style={{ color: 'rgba(245,240,232,0.6)' }}>
             {chef.cuisine_specialties?.slice(0, 2).join(' · ')}
           </p>
@@ -111,7 +111,7 @@ function ChefCard({ chef }) {
         </div>
 
         <button onClick={() => setShowInquiry(true)}
-          className="w-full py-3 rounded-full font-heading font-black text-sm flex items-center justify-center gap-2"
+          className="w-full py-3 rounded-full font-display text-sm flex items-center justify-center gap-2"
           style={{ background: 'linear-gradient(135deg, var(--cc-violet), #9333ea)', color: '#fff', boxShadow: '0 0 20px rgba(192,132,252,0.25)' }}>
           <Send className="w-3.5 h-3.5" /> Request Chef
         </button>
@@ -159,11 +159,11 @@ function InquiryModal({ chef, onClose }) {
           {done ? (
             <div className="text-center py-10">
               <div className="text-5xl mb-4">✨</div>
-              <h3 className="font-heading font-black text-xl mb-2" style={{ color: 'var(--cc-cream)' }}>Inquiry Sent!</h3>
+              <h3 className="font-display text-xl mb-2" style={{ color: 'var(--cc-cream)' }}>Inquiry Sent!</h3>
               <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-muted)' }}>
                 {chef.chef_name} will review your request and reach out within 24 hours.
               </p>
-              <button onClick={onClose} className="px-8 py-3 rounded-full font-heading font-black text-sm"
+              <button onClick={onClose} className="px-8 py-3 rounded-full font-display text-sm"
                 style={{ background: 'linear-gradient(135deg,var(--cc-violet),#9333ea)', color: '#fff' }}>
                 Close
               </button>
@@ -172,7 +172,7 @@ function InquiryModal({ chef, onClose }) {
             <>
               <div className="flex items-center justify-between mb-5">
                 <div>
-                  <h3 className="font-heading font-black text-lg" style={{ color: 'var(--cc-cream)' }}>Request {chef.chef_name}</h3>
+                  <h3 className="font-display text-lg" style={{ color: 'var(--cc-cream)' }}>Request {chef.chef_name}</h3>
                   <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-muted)' }}>No commitment — this is just an inquiry</p>
                 </div>
                 <button onClick={onClose} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'var(--cc-surface-3)' }}>
@@ -220,7 +220,7 @@ function InquiryModal({ chef, onClose }) {
                 </div>
 
                 <button onClick={handleSubmit} disabled={submitting}
-                  className="w-full py-4 rounded-full font-heading font-black text-sm flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-full font-display text-sm flex items-center justify-center gap-2"
                   style={{ background: 'linear-gradient(135deg,var(--cc-violet),#9333ea)', color: '#fff', boxShadow: '0 0 24px rgba(192,132,252,0.3)', opacity: submitting ? 0.7 : 1 }}>
                   <Send className="w-4 h-4" />
                   {submitting ? 'Sending...' : 'Send Inquiry'}
@@ -253,7 +253,7 @@ export default function Experiences() {
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-cream)' }} />
         </Link>
         <div className="flex-1">
-          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-violet)' }}>CurbChef Experiences</p>
+          <p className="font-display text-base" style={{ color: 'var(--cc-violet)' }}>CurbChef Experiences</p>
           <p className="text-xs" style={{ color: 'var(--cc-ink-muted)' }}>Private chefs · Curated events</p>
         </div>
         <div className="px-2.5 py-1 rounded-full text-[10px] font-black"
@@ -276,7 +276,7 @@ export default function Experiences() {
               <Sparkles className="w-4 h-4" style={{ color: 'var(--cc-violet)' }} />
               <span className="text-[10px] font-black tracking-widest" style={{ color: 'var(--cc-violet)' }}>COMING TO HOUSTON</span>
             </div>
-            <h1 className="font-heading font-black text-3xl leading-tight text-white mb-2">
+            <h1 className="font-display text-3xl leading-tight text-white mb-2">
               Book a chef.<br />Create a memory.
             </h1>
             <p className="text-sm leading-relaxed mb-4" style={{ color: 'rgba(245,240,232,0.7)' }}>
@@ -343,7 +343,7 @@ export default function Experiences() {
               { step: '04', title: 'Enjoy', body: 'Your chef arrives, sets up, cooks, and creates the experience.' },
             ].map(({ step, title, body }) => (
               <div key={step} className="flex gap-4">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 font-heading font-black text-xs"
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 font-display text-xs"
                   style={{ background: 'rgba(192,132,252,0.15)', color: 'var(--cc-violet)' }}>
                   {step}
                 </div>
@@ -359,12 +359,12 @@ export default function Experiences() {
         {/* Are you a chef CTA */}
         <div className="rounded-3xl p-5 mb-4"
           style={{ background: 'linear-gradient(135deg, #1a0a2e 0%, #0f0a1a 100%)', border: '1px solid rgba(192,132,252,0.2)' }}>
-          <p className="font-heading font-black text-lg mb-1" style={{ color: 'var(--cc-cream)' }}>Are you a private chef?</p>
+          <p className="font-display text-lg mb-1" style={{ color: 'var(--cc-cream)' }}>Are you a private chef?</p>
           <p className="text-sm mb-4" style={{ color: 'var(--cc-ink-muted)' }}>
             Join the CurbChef Experiences waitlist and be among the first chefs featured in Houston.
           </p>
           <Link to="/onboard-truck">
-            <button className="flex items-center gap-2 px-5 py-3 rounded-full font-heading font-black text-sm"
+            <button className="flex items-center gap-2 px-5 py-3 rounded-full font-display text-sm"
               style={{ background: 'linear-gradient(135deg,var(--cc-violet),#9333ea)', color: '#fff', boxShadow: '0 0 20px rgba(192,132,252,0.3)' }}>
               Apply as Chef <ChevronRight className="w-4 h-4" />
             </button>

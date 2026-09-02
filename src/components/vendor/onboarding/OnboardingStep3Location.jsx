@@ -6,7 +6,7 @@ export default function OnboardingStep3Location({ truck, saveTruck }) {
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <p className="font-heading font-black text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Where do you operate?</p>
+        <p className="font-display text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Where do you operate?</p>
         <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Help customers find you.</p>
       </div>
 

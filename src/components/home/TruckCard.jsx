@@ -58,7 +58,7 @@ export default function TruckCard({ truck, rank }) {
             </div>
             {rank && rank <= 3 && (
               <div
-                className="w-7 h-7 rounded-lg flex items-center justify-center font-heading font-black text-xs flex-shrink-0"
+                className="w-7 h-7 rounded-lg flex items-center justify-center font-display text-xs flex-shrink-0"
                 style={{
                   background: rank === 1 ? 'var(--cc-yellow)' : rank === 2 ? 'rgba(200,200,200,0.9)' : 'rgba(205,127,50,0.9)',
                   color: 'var(--cc-black)',

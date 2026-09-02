@@ -67,7 +67,7 @@ function TruckLabel({ truck, userLat, userLng, heading, screenW }) {
               <span className="text-[9px] font-black text-red-400 tracking-widest">LIVE</span>
             </div>
           )}
-          <p className="font-heading font-black text-sm text-center leading-tight" style={{ color: 'var(--cc-ink)', maxWidth: 120 }}>
+          <p className="font-display text-sm text-center leading-tight" style={{ color: 'var(--cc-ink)', maxWidth: 120 }}>
             {truck.name}
           </p>
           <div className="flex items-center gap-2">
@@ -231,7 +231,7 @@ export default function TruckRadar() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-8 text-center" style={{ background: 'var(--cc-bg-0)' }}>
         <div className="text-6xl mb-6">📡</div>
-        <h1 className="font-heading font-black text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>Truck Radar</h1>
+        <h1 className="font-display text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>Truck Radar</h1>
         <p className="text-base leading-relaxed mb-8" style={{ color: 'var(--cc-ink-dim)' }}>
           Truck Radar works best on your phone — camera and compass required.
         </p>
@@ -251,7 +251,7 @@ export default function TruckRadar() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-8 text-center" style={{ background: 'var(--cc-bg-0)' }}>
         <div className="text-6xl mb-6">⚠️</div>
-        <h1 className="font-heading font-black text-xl mb-3" style={{ color: 'var(--cc-ink)' }}>Couldn't Start Radar</h1>
+        <h1 className="font-display text-xl mb-3" style={{ color: 'var(--cc-ink)' }}>Couldn't Start Radar</h1>
         <p className="text-sm mb-8" style={{ color: 'var(--cc-ink-dim)' }}>{errorMsg}</p>
         <button onClick={startRadar} className="px-6 py-3 rounded-full font-bold"
           style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
@@ -270,7 +270,7 @@ export default function TruckRadar() {
             className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
             <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
           </button>
-          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>Truck Radar</p>
+          <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>Truck Radar</p>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center px-8 text-center">
           <div className="relative mb-8">
@@ -285,13 +285,13 @@ export default function TruckRadar() {
             <div className="absolute inset-0 rounded-full animate-ping opacity-20"
               style={{ background: 'rgba(var(--cc-accent-rgb),0.3)' }} />
           </div>
-          <h1 className="font-heading font-black text-3xl mb-3" style={{ color: 'var(--cc-ink)' }}>Truck Radar</h1>
+          <h1 className="font-display text-3xl mb-3" style={{ color: 'var(--cc-ink)' }}>Truck Radar</h1>
           <p className="text-sm leading-relaxed mb-10" style={{ color: 'var(--cc-ink-dim)' }}>
             Point your phone at the street to see nearby food trucks in augmented reality. We'll need access to your camera, compass, and location.
           </p>
           <button
             onClick={startRadar}
-            className="w-full py-4 rounded-full font-heading font-black text-base neon-glow"
+            className="w-full py-4 rounded-full font-display text-base neon-glow"
             style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}
           >
             Start Radar
@@ -392,7 +392,7 @@ export default function TruckRadar() {
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <Radio className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
-              <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>
+              <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>
                 {nearbyTrucks.length} truck{nearbyTrucks.length !== 1 ? 's' : ''} within 0.5 mi
               </p>
             </div>
@@ -409,7 +409,7 @@ export default function TruckRadar() {
             ].map(({ label, value, color, bg }) => (
               <div key={label} className="flex-1 py-2.5 px-2 rounded-2xl text-center" style={{ background: bg }}>
                 <p className="text-[9px] font-bold tracking-widest mb-0.5" style={{ color: 'rgba(186,203,192,0.6)' }}>{label}</p>
-                <p className="font-heading font-black text-xl" style={{ color }}>{value}</p>
+                <p className="font-display text-xl" style={{ color }}>{value}</p>
               </div>
             ))}
           </div>

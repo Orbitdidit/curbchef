@@ -142,7 +142,7 @@ function VendorPlansInner({ truck, user }) {
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </button>
         <div className="flex-1">
-          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>Plans & Boosts</p>
+          <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>Plans & Boosts</p>
           <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Current: <span style={{ color: currentPlan.color }}>{currentPlan.label}</span> · {truck.boost_credits || 0} credits available</p>
         </div>
       </div>
@@ -180,9 +180,9 @@ function VendorPlansInner({ truck, user }) {
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-2xl">{plan.icon}</span>
                     <div>
-                      <p className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>{plan.label}</p>
+                      <p className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>{plan.label}</p>
                       <div className="flex items-baseline gap-0.5">
-                        <span className="font-heading font-black text-2xl" style={{ color: plan.color }}>{plan.price}</span>
+                        <span className="font-display text-2xl" style={{ color: plan.color }}>{plan.price}</span>
                         <span className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>{plan.period}</span>
                       </div>
                     </div>
@@ -203,7 +203,7 @@ function VendorPlansInner({ truck, user }) {
                     ))}
                   </div>
                   {isActive ? (
-                    <div className="w-full py-3 rounded-full text-center font-heading font-black text-sm"
+                    <div className="w-full py-3 rounded-full text-center font-display text-sm"
                       style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }}>
                       ✓ Current Plan
                     </div>
@@ -211,7 +211,7 @@ function VendorPlansInner({ truck, user }) {
                     <button
                       onClick={() => updateTruck.mutate({ vendor_plan: plan.id })}
                       disabled={updateTruck.isPending}
-                      className="w-full py-3 rounded-full font-heading font-black text-sm transition-all active:scale-95"
+                      className="w-full py-3 rounded-full font-display text-sm transition-all active:scale-95"
                       style={{ background: `${plan.color}`, color: plan.id === 'standard' ? 'var(--cc-accent-deep)' : '#000' }}>
                       {updateTruck.isPending ? 'Updating...' : `Switch to ${plan.label}`}
                     </button>
@@ -228,7 +228,7 @@ function VendorPlansInner({ truck, user }) {
               style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
               <div>
                 <p className="text-xs font-bold" style={{ color: 'var(--cc-ink-dim)' }}>AVAILABLE CREDITS</p>
-                <p className="font-heading font-black text-3xl" style={{ color: 'var(--cc-accent)' }}>{truck.boost_credits || 0}</p>
+                <p className="font-display text-3xl" style={{ color: 'var(--cc-accent)' }}>{truck.boost_credits || 0}</p>
               </div>
               <Zap className="w-8 h-8" style={{ color: 'var(--cc-accent)', opacity: 0.4 }} />
             </div>

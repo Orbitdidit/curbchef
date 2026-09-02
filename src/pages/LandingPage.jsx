@@ -55,7 +55,7 @@ function ReferralSuccess({ email }) {
 
   return (
     <div className="mt-6 p-5 rounded-3xl" style={{ background: 'rgba(var(--cc-accent-rgb),0.07)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}>
-      <p className="font-heading font-black text-base mb-1" style={{ color: 'var(--cc-accent)' }}>🚀 Skip 10 spots by inviting 3 friends!</p>
+      <p className="font-display text-base mb-1" style={{ color: 'var(--cc-accent)' }}>🚀 Skip 10 spots by inviting 3 friends!</p>
       <p className="text-xs mb-4" style={{ color: 'var(--cc-ink-dim)' }}>Each friend who joins with your link moves you up 10 positions.</p>
       <div className="flex items-center gap-2 mb-3 p-3 rounded-2xl" style={{ background: 'var(--cc-bg-0)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
         <span className="flex-1 text-xs font-mono truncate" style={{ color: 'var(--cc-ink)' }}>{shareUrl}</span>
@@ -134,7 +134,7 @@ function HeroForm({ onSuccess }) {
         style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.5)' }} />
       {error && <p className="text-xs px-1" style={{ color: 'var(--cc-warm)' }}>{error}</p>}
       <button type="submit" disabled={loading}
-        className="w-full py-4 rounded-full font-heading font-black text-base transition-all active:scale-95"
+        className="w-full py-4 rounded-full font-display text-base transition-all active:scale-95"
         style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 28px rgba(var(--cc-accent-rgb),0.35)', opacity: loading ? 0.7 : 1 }}>
         {loading ? 'Joining...' : '🚀 Join the Waitlist'}
       </button>
@@ -201,10 +201,10 @@ export default function LandingPage() {
               style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.5)' }}>
               <Flame className="w-5 h-5" style={{ color: 'var(--cc-accent-deep)' }} />
             </div>
-            <span className="font-heading font-black text-3xl tracking-tight" style={{ color: 'var(--cc-accent)' }}>CurbChef</span>
+            <span className="font-display text-3xl tracking-tight" style={{ color: 'var(--cc-accent)' }}>CurbChef</span>
           </div>
 
-          <h1 className="font-heading font-black leading-none mb-4" style={{ fontSize: 'clamp(2.8rem,12vw,5rem)', color: 'var(--cc-ink)' }}>
+          <h1 className="font-display leading-none mb-4" style={{ fontSize: 'clamp(2.8rem,12vw,5rem)', color: 'var(--cc-ink)' }}>
             The curb is<br /><span style={{ color: 'var(--cc-accent)' }}>the kitchen.</span>
           </h1>
           <p className="text-base leading-relaxed mb-10" style={{ color: 'var(--cc-ink-dim)', maxWidth: 340 }}>
@@ -217,13 +217,13 @@ export default function LandingPage() {
             {heroResult ? (
               <div className="p-6 rounded-3xl text-center" style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }}>
                 <div className="text-5xl mb-3">🎉</div>
-                <p className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-accent)' }}>You're #{heroResult.position} in line!</p>
+                <p className="font-display text-2xl mb-1" style={{ color: 'var(--cc-accent)' }}>You're #{heroResult.position} in line!</p>
                 <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>We'll text & email you the moment CurbChef goes live.</p>
                 <ReferralSuccess email={heroResult.email} />
               </div>
             ) : (
               <div className="p-6 rounded-3xl" style={{ background: 'rgba(21,29,31,0.95)', border: '1px solid rgba(var(--cc-line-rgb),0.4)', backdropFilter: 'blur(20px)' }}>
-                <p className="font-heading font-black text-lg mb-1" style={{ color: 'var(--cc-ink)' }}>Get early access</p>
+                <p className="font-display text-lg mb-1" style={{ color: 'var(--cc-ink)' }}>Get early access</p>
                 <p className="text-xs mb-5" style={{ color: 'var(--cc-ink-dim)' }}>Founding members get lifetime perks — limited to 1,000 spots.</p>
                 <HeroForm onSuccess={setHeroResult} />
               </div>
@@ -282,10 +282,10 @@ export default function LandingPage() {
             style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }}
             onClick={e => e.stopPropagation()}>
             <div className="text-5xl mb-3">🎉</div>
-            <p className="font-heading font-black text-2xl mb-2" style={{ color: 'var(--cc-accent)' }}>You're #{modalResult.position} in line!</p>
+            <p className="font-display text-2xl mb-2" style={{ color: 'var(--cc-accent)' }}>You're #{modalResult.position} in line!</p>
             <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>We'll notify you the moment CurbChef goes live.</p>
             <button onClick={() => setModalResult(null)}
-              className="w-full py-3.5 rounded-full font-heading font-black text-sm"
+              className="w-full py-3.5 rounded-full font-display text-sm"
               style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }}>
               Close
             </button>

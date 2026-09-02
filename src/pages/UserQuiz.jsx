@@ -93,11 +93,11 @@ export default function UserQuiz() {
             style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>
             <span className="text-xs font-black" style={{ color: 'var(--cc-accent-deep)' }}>CC</span>
           </div>
-          <span className="font-heading font-black text-sm" style={{ color: 'var(--cc-accent)' }}>CurbChef</span>
+          <span className="font-display text-sm" style={{ color: 'var(--cc-accent)' }}>CurbChef</span>
           <span className="ml-auto text-xs" style={{ color: 'var(--cc-ink-dim)' }}>{step + 1} / {STEPS.length}</span>
         </div>
 
-        <h2 className="font-heading font-black text-2xl mb-8 leading-tight" style={{ color: 'var(--cc-ink)' }}>
+        <h2 className="font-display text-2xl mb-8 leading-tight" style={{ color: 'var(--cc-ink)' }}>
           {current.question}
         </h2>
 
@@ -118,14 +118,14 @@ export default function UserQuiz() {
         <div className="mt-8 flex gap-3">
           {step < STEPS.length - 1 && current.multi && (
             <button onClick={() => setStep(s => s + 1)}
-              className="flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-heading font-black text-base"
+              className="flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-display text-base"
               style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.35)' }}>
               Next <ChevronRight className="w-5 h-5" />
             </button>
           )}
           {step === STEPS.length - 1 && (
             <button onClick={handleFinish} disabled={saving}
-              className="flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-heading font-black text-base"
+              className="flex-1 flex items-center justify-center gap-2 py-4 rounded-full font-display text-base"
               style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.35)' }}>
               {saving ? 'Saving...' : '🚀 Let\'s Eat!'}
             </button>

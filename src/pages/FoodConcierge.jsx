@@ -127,7 +127,7 @@ export default function FoodConcierge() {
           🍽️
         </div>
         <div className="flex-1">
-          <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>Food Concierge</p>
+          <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Food Concierge</p>
           <p className="text-xs" style={{ color: 'var(--cc-accent)' }}>● AI-powered · Always hungry</p>
         </div>
         <div className="flex items-center gap-1 px-2.5 py-1 rounded-full"
@@ -143,7 +143,7 @@ export default function FoodConcierge() {
         {messages.length === 0 && (
           <div className="text-center pt-8">
             <p className="text-4xl mb-3">🍽️</p>
-            <p className="font-heading font-black text-lg mb-1" style={{ color: 'var(--cc-ink)' }}>
+            <p className="font-display text-lg mb-1" style={{ color: 'var(--cc-ink)' }}>
               What are you craving?
             </p>
             <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>

@@ -39,7 +39,7 @@ export default function AppLayout() {
       {/* Left side panel — desktop only */}
       <div className="hidden lg:flex flex-1 items-center justify-end pr-8 max-w-xs">
         <div className="text-right">
-          <p className="font-heading font-black text-2xl"><span style={{ color: 'var(--cc-cream)' }}>Curb</span><span style={{ color: 'var(--cc-accent-2)' }}>Chef</span></p>
+          <p className="font-display text-2xl"><span style={{ color: 'var(--cc-cream)' }}>Curb</span><span style={{ color: 'var(--cc-accent-2)' }}>Chef</span></p>
           <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-faint)' }}>Street food, elevated.</p>
         </div>
       </div>
@@ -72,7 +72,7 @@ export default function AppLayout() {
         <div className="space-y-3">
           <div className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(var(--cc-accent-rgb),0.05)', border: '1px solid rgba(var(--cc-accent-rgb),0.1)' }}>
             <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: 'var(--cc-accent)' }}>OPEN NOW</p>
-            <p className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>Houston, TX</p>
+            <p className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>Houston, TX</p>
           </div>
           <div className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(var(--cc-warm-rgb),0.05)', border: '1px solid rgba(var(--cc-warm-rgb),0.12)' }}>
             <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: 'var(--cc-warm)' }}>GET THE APP</p>

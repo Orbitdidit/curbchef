@@ -121,7 +121,7 @@ export default function OnboardingGuideChat({ currentStep, vendorEmail }) {
         <div className="w-8 h-8 rounded-xl flex items-center justify-center text-base flex-shrink-0"
           style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>🚚</div>
         <div className="flex-1 text-left">
-          <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>Launch Coach</p>
+          <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Launch Coach</p>
           <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>Ask anything about this step</p>
         </div>
         <Sparkles className="w-3.5 h-3.5 mr-1" style={{ color: 'var(--cc-accent)' }} />

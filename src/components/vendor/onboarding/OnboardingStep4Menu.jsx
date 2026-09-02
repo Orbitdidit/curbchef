@@ -67,7 +67,7 @@ export default function OnboardingStep4Menu({ truck, menuItems, setMenuItems }) 
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <p className="font-heading font-black text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Build your menu</p>
+        <p className="font-display text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Build your menu</p>
         <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Add at least {MIN_ITEMS} items to get started.</p>
       </div>
 

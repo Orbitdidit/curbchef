@@ -18,7 +18,7 @@ export default function OnboardingStep1Basics({ truck, saveTruck }) {
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <p className="font-heading font-black text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Tell us about your truck</p>
+        <p className="font-display text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Tell us about your truck</p>
         <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>This is how customers will find and remember you.</p>
       </div>
 

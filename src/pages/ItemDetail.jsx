@@ -115,11 +115,11 @@ export default function ItemDetail() {
       <div className="px-5 -mt-4 relative z-10 pb-40">
         {/* Name + price */}
         <div className="flex items-start justify-between mb-3">
-          <h1 className="font-heading font-black text-2xl leading-tight flex-1 mr-4" style={{ color: 'var(--cc-ink)' }}>
+          <h1 className="font-display text-2xl leading-tight flex-1 mr-4" style={{ color: 'var(--cc-ink)' }}>
             {item.name}
           </h1>
           <div className="text-right flex-shrink-0">
-            <p className="font-heading font-black text-2xl" style={{ color: 'var(--cc-accent)' }}>
+            <p className="font-display text-2xl" style={{ color: 'var(--cc-accent)' }}>
               ${item.price?.toFixed(2)}
             </p>
             <p className="text-[10px] font-bold" style={{ color: 'var(--cc-ink-dim)' }}>PER {item.category?.toUpperCase()}</p>
@@ -252,7 +252,7 @@ export default function ItemDetail() {
             >
               <Minus className="w-3.5 h-3.5" style={{ color: 'var(--cc-ink)' }} />
             </button>
-            <span className="font-heading font-black text-lg w-4 text-center" style={{ color: 'var(--cc-ink)' }}>{qty}</span>
+            <span className="font-display text-lg w-4 text-center" style={{ color: 'var(--cc-ink)' }}>{qty}</span>
             <button
               onClick={() => setQty(q => q + 1)}
               className="w-8 h-8 rounded-full flex items-center justify-center"
@@ -265,7 +265,7 @@ export default function ItemDetail() {
           {/* Add to cart */}
           <button
             onClick={handleAddToCart}
-            className="flex-1 py-4 rounded-2xl font-heading font-black text-base flex items-center justify-between px-5"
+            className="flex-1 py-4 rounded-2xl font-display text-base flex items-center justify-between px-5"
             style={{
               background: 'linear-gradient(135deg, var(--cc-accent) 0%, var(--cc-accent-3) 100%)',
               color: 'var(--cc-accent-deep)',

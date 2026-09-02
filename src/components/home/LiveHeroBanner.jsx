@@ -80,7 +80,7 @@ export default function LiveHeroBanner({ liveTrucks = [], openTrucks = [] }) {
 
       {/* Content bottom */}
       <div className="absolute bottom-0 left-0 right-0 p-4">
-        <p className="font-heading font-black text-xl text-white leading-tight mb-3 whitespace-pre-line">
+        <p className="font-display text-xl text-white leading-tight mb-3 whitespace-pre-line">
           {slide.title}
         </p>
         <div className="flex gap-2">
