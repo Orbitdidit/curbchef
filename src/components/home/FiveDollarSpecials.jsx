@@ -49,7 +49,7 @@ export default function FiveDollarSpecials({ trucks }) {
                 {item.image_url ? (
                   <img src={item.image_url} alt={item.name} className="w-full h-full object-cover"/>
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-3xl" style={{ background:'var(--cc-bg-2)'}}><Truck className="w-5 h-5" style={{ color: \'var(--cc-ink-faint)\' }} /></div>
+                  <div className="w-full h-full flex items-center justify-center text-3xl" style={{ background:'var(--cc-bg-2)'}}><Truck className="w-5 h-5" style={{ color: 'var(--cc-ink-faint)' }} /></div>
                 )}
                 {/* Price badge */}
                 <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full font-display text-xs" style={{ background:'linear-gradient(135deg,var(--cc-amber),#f59e0b)', color:'var(--cc-bg-0)'}}>

@@ -37,7 +37,7 @@ export default function FollowedTrucksRail({ user, trucks }) {
                   {truck.image_url ? (
                     <img src={truck.image_url} alt={truck.name} className="w-full h-full object-cover"/>
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-2xl"><Truck className="w-5 h-5" style={{ color: \'var(--cc-ink-faint)\' }} /></div>
+                    <div className="w-full h-full flex items-center justify-center text-2xl"><Truck className="w-5 h-5" style={{ color: 'var(--cc-ink-faint)' }} /></div>
                   )}
                 </div>
                 {isLive && (

@@ -43,7 +43,7 @@ export default function QuickReorder({ user }) {
       <p className="text-[10px] font-bold tracking-widest mb-3 font-mono" style={{ color:'var(--cc-ink-faint)'}}>QUICK REORDER</p>
       <div className="p-4 rounded-2xl flex items-center gap-3" style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.04)'}}>
         <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0" style={{ background:'var(--cc-surface-3)'}}>
-          <div className="w-full h-full flex items-center justify-center text-2xl"><Truck className="w-5 h-5" style={{ color: \'var(--cc-ink-faint)\' }} /></div>
+          <div className="w-full h-full flex items-center justify-center text-2xl"><Truck className="w-5 h-5" style={{ color: 'var(--cc-ink-faint)' }} /></div>
         </div>
         <div className="flex-1 min-w-0">
           <p className="font-heading font-bold text-sm truncate" style={{ color:'var(--cc-cream)', letterSpacing:'-0.01em'}}>{last.truck_name}</p>
