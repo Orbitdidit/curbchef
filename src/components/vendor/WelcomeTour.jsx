@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { base44 } from '@/api/base44Client';
-import { useQueryClient } from '@tanstack/react-query';
-import { X, ArrowLeft, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from'framer-motion';
+import { base44 } from'@/api/base44Client';
+import { useQueryClient } from'@tanstack/react-query';
+import { X, ArrowLeft, ArrowRight } from'lucide-react';
 
 const STEPS = [
-  { id: 'welcome', type: 'modal' },
-  { id: 'go-live',      type: 'spotlight', targetId: 'tour-go-live' },
-  { id: 'curb-drops',   type: 'spotlight', targetId: 'tour-curb-drops' },
-  { id: 'hours',        type: 'spotlight', targetId: 'tour-hours' },
-  { id: 'orders',       type: 'spotlight', targetId: 'tour-orders' },
-  { id: 'done',         type: 'modal' },
+  { id:'welcome', type:'modal'},
+  { id:'go-live',      type:'spotlight', targetId:'tour-go-live'},
+  { id:'curb-drops',   type:'spotlight', targetId:'tour-curb-drops'},
+  { id:'hours',        type:'spotlight', targetId:'tour-hours'},
+  { id:'orders',       type:'spotlight', targetId:'tour-orders'},
+  { id:'done',         type:'modal' },
 ];
 
 const STEP_CONTENT = {
@@ -19,25 +19,24 @@ const STEP_CONTENT = {
     body: "Let's show you the 5 features that'll grow your business fastest. Takes 30 seconds.",
   },
   'go-live': {
-    title: '📹 GO LIVE — Free advertising',
-    body: 'Tap this to record a 60-sec clip of your truck. Customers nearby see you in their LIVE feed instantly.',
-  },
-  'curb-drops': {
-    title: '🎟️ CURB DROPS — Move slow inventory',
-    body: 'Got 20 brisket sandwiches left at 2pm? Drop a deal. 200 nearby phones get notified. Sells out fast.',
+    title:'GO LIVE — Free advertising',
+    body:'Tap this to record a 60-sec clip of your truck. Customers nearby see you in their LIVE feed instantly.',
+  },'curb-drops': {
+    title:'CURB DROPS — Move slow inventory',
+    body:'Got 20 brisket sandwiches left at 2pm? Drop a deal. 200 nearby phones get notified. Sells out fast.',
   },
   hours: {
-    title: '⏰ KEEP YOUR HOURS — Build trust',
+    title:'⏰ KEEP YOUR HOURS — Build trust',
     body: "Set your real hours and stick to them. Reliable trucks get featured higher. Late opens hurt your score.",
   },
   orders: {
-    title: '📦 ORDER QUEUE — Listen for the chime',
-    body: 'When a customer orders, you\'ll hear a chime and see them here. Move them through New → Preparing → Ready.',
+    title: 'ORDER QUEUE — Listen for the chime',
+    body:'When a customer orders, you\'ll hear a chime and see them here. Move them through New → Preparing → Ready.',
   },
   done: {
-    title: "You're all set! 🚐💚",
+    title: "You're all set! ",
     body: 'Hit the streets and let customers find you. Welcome to the family.',
-    sub: 'Got questions? Tap the help icon anytime.',
+    sub:'Got questions? Tap the help icon anytime.',
   },
 };
 
@@ -50,7 +49,7 @@ function useElementRect(targetId, step) {
     const r = el.getBoundingClientRect();
     setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
     // Scroll element into view if needed
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.scrollIntoView({ behavior:'smooth', block:'center' });
   }, [targetId, step]);
   return rect;
 }
@@ -76,31 +75,25 @@ function SpotlightOverlay({ rect, onNext, onBack, onSkip, stepIndex, totalSteps,
       <svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
         <defs>
           <mask id="spotlight-mask">
-            <rect width="100%" height="100%" fill="white" />
+            <rect width="100%"height="100%"fill="white"/>
             {rect && (
               <rect
                 x={spotLeft} y={spotTop}
                 width={spotW} height={spotH}
                 rx={16} ry={16}
-                fill="black"
-              />
+                fill="black"/>
             )}
           </mask>
         </defs>
         <rect
-          width="100%" height="100%"
-          fill="rgba(0,0,0,0.82)"
-          mask="url(#spotlight-mask)"
-        />
+          width="100%"height="100%"fill="rgba(0,0,0,0.82)"mask="url(#spotlight-mask)"/>
         {/* Mint green glow border around spotlight */}
         {rect && (
           <rect
             x={spotLeft} y={spotTop}
             width={spotW} height={spotH}
             rx={16} ry={16}
-            fill="none"
-            stroke="var(--cc-accent)"
-            strokeWidth="2"
+            fill="none"stroke="var(--cc-accent)"strokeWidth="2"
             style={{ filter: 'drop-shadow(0 0 8px rgba(var(--cc-accent-rgb),0.6))' }}
           />
         )}
@@ -114,8 +107,8 @@ function SpotlightOverlay({ rect, onNext, onBack, onSkip, stepIndex, totalSteps,
         style={{
           top: Math.max(12, Math.min(tooltipTop, window.innerHeight - 220)),
           background: 'var(--cc-bg-1)',
-          border: '1px solid rgba(var(--cc-accent-rgb),0.2)',
-          boxShadow: '0 8px 40px rgba(0,0,0,0.6)',
+          border:'1px solid rgba(var(--cc-accent-rgb),0.2)',
+          boxShadow:'0 8px 40px rgba(0,0,0,0.6)',
           zIndex: 10,
         }}
       >
@@ -131,13 +124,13 @@ function SpotlightOverlay({ rect, onNext, onBack, onSkip, stepIndex, totalSteps,
         </p>
         <div className="flex items-center justify-between">
           <button onClick={onBack} className="flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-full"
-            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }}>
-            <ArrowLeft className="w-3 h-3" /> Back
+            style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)' }}>
+            <ArrowLeft className="w-3 h-3"/> Back
           </button>
           <button onClick={onSkip} className="text-xs" style={{ color: 'var(--cc-ink-faint)' }}>Skip tour</button>
           <button onClick={onNext} className="flex items-center gap-1.5 text-xs font-black px-4 py-2 rounded-full"
-            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
-            Next <ArrowRight className="w-3 h-3" />
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)' }}>
+            Next <ArrowRight className="w-3 h-3"/>
           </button>
         </div>
       </motion.div>
@@ -148,7 +141,7 @@ function SpotlightOverlay({ rect, onNext, onBack, onSkip, stepIndex, totalSteps,
 function ModalStep({ content, onNext, onSkip, isLast, firstName, stepIndex, totalSteps }) {
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-5"
-      style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)' }}>
+      style={{ background: 'rgba(0,0,0,0.85)', backdropFilter:'blur(4px)' }}>
       <motion.div
         initial={{ opacity: 0, scale: 0.92, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -156,25 +149,25 @@ function ModalStep({ content, onNext, onSkip, isLast, firstName, stepIndex, tota
         className="w-full max-w-sm rounded-3xl p-7 text-center"
         style={{
           background: 'var(--cc-bg-1)',
-          border: '1px solid rgba(var(--cc-accent-rgb),0.2)',
-          boxShadow: '0 0 60px rgba(var(--cc-accent-rgb),0.1), 0 20px 60px rgba(0,0,0,0.6)',
+          border:'1px solid rgba(var(--cc-accent-rgb),0.2)',
+          boxShadow:'0 0 60px rgba(var(--cc-accent-rgb),0.1), 0 20px 60px rgba(0,0,0,0.6)',
         }}
       >
         {isLast ? (
           <>
-            <div className="text-5xl mb-4">🚐</div>
+            <div className="text-5xl mb-4"></div>
             <p className="font-display text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>{content.title}</p>
             <p className="text-sm leading-relaxed mb-2" style={{ color: 'var(--cc-ink-dim)' }}>{content.body}</p>
             {content.sub && <p className="text-xs mb-6" style={{ color: 'var(--cc-ink-faint)' }}>{content.sub}</p>}
             <button onClick={onNext}
               className="w-full py-4 rounded-full font-display text-base"
-              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.35)' }}>
-              Let's Go! 🚀
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 24px rgba(var(--cc-accent-rgb),0.35)'}}>
+              Let's Go! 
             </button>
           </>
         ) : (
           <>
-            <div className="text-5xl mb-4">🎉</div>
+            <div className="text-5xl mb-4"></div>
             <p className="font-display text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>
               Welcome to CurbChef, {firstName}!
             </p>
@@ -183,10 +176,10 @@ function ModalStep({ content, onNext, onSkip, isLast, firstName, stepIndex, tota
             </p>
             <button onClick={onNext}
               className="w-full py-4 rounded-full font-display text-base mb-3"
-              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.35)' }}>
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 24px rgba(var(--cc-accent-rgb),0.35)' }}>
               Start Tour →
             </button>
-            <button onClick={onSkip} className="text-sm" style={{ color: 'var(--cc-ink-faint)' }}>
+            <button onClick={onSkip} className="text-sm" style={{ color: 'var(--cc-ink-faint)'}}>
               Skip for now
             </button>
           </>
@@ -202,11 +195,11 @@ export default function WelcomeTour({ user, profile, onComplete }) {
 
   const currentStep = STEPS[step];
   const rect = useElementRect(
-    currentStep.type === 'spotlight' ? currentStep.targetId : null,
+    currentStep.type ==='spotlight'? currentStep.targetId : null,
     step
   );
 
-  const firstName = user?.full_name?.split(' ')[0] || 'Chef';
+  const firstName = user?.full_name?.split('')[0] || 'Chef';
 
   const completeTour = async () => {
     if (profile) {
@@ -230,19 +223,19 @@ export default function WelcomeTour({ user, profile, onComplete }) {
   const handleSkip = () => completeTour();
 
   const content = { ...STEP_CONTENT[currentStep.id] };
-  if (currentStep.id === 'welcome') {
-    content.title = `Welcome to CurbChef, ${firstName}! 🎉`;
+  if (currentStep.id ==='welcome') {
+    content.title = `Welcome to CurbChef, ${firstName}! `;
   }
 
   return (
     <AnimatePresence mode="wait">
-      {currentStep.type === 'modal' ? (
+      {currentStep.type === 'modal'? (
         <ModalStep
           key={currentStep.id}
           content={content}
           onNext={handleNext}
           onSkip={handleSkip}
-          isLast={currentStep.id === 'done'}
+          isLast={currentStep.id ==='done'}
           firstName={firstName}
           stepIndex={step}
           totalSteps={STEPS.length}

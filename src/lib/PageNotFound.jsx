@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
-import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
+import { base44 } from'@/api/base44Client';
+import { useQuery } from'@tanstack/react-query';
 
 
 export default function PageNotFound({}) {
@@ -24,7 +24,7 @@ export default function PageNotFound({}) {
             <div className="max-w-md w-full">
                 <div className="text-center space-y-6">
                     <div className="space-y-2">
-                        <div className="text-6xl mb-2">🚚</div>
+                        <div className="text-6xl mb-2"></div>
                         <h1 className="text-7xl font-display text-muted-foreground/30">404</h1>
                     </div>
                     
@@ -37,7 +37,7 @@ export default function PageNotFound({}) {
                         </p>
                     </div>
                     
-                    {isFetched && authData.isAuthenticated && authData.user?.role === 'admin' && (
+                    {isFetched && authData.isAuthenticated && authData.user?.role ==='admin' && (
                         <div className="mt-8 p-4 bg-card rounded-2xl">
                             <p className="text-sm text-muted-foreground">
                                 Admin: This page hasn't been implemented yet.

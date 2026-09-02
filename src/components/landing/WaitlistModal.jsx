@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
-import confetti from 'canvas-confetti';
+import { base44 } from'@/api/base44Client';
+import confetti from'canvas-confetti';
 
 export default function WaitlistModal({ source, onClose, onSuccess }) {
   const [email, setEmail] = useState('');
@@ -16,7 +16,7 @@ export default function WaitlistModal({ source, onClose, onSuccess }) {
 
     const existing = await base44.entities.WaitlistEntry.filter({ email });
     if (existing.length > 0) {
-      setError("You're already on the waitlist! 🎉");
+      setError("You're already on the waitlist! ");
       setLoading(false);
       return;
     }
@@ -34,7 +34,7 @@ export default function WaitlistModal({ source, onClose, onSuccess }) {
       referred_by: refCode || undefined,
       referral_count: 0,
       signup_date: new Date().toISOString(),
-      signup_source: source || 'hero',
+      signup_source: source ||'hero',
       notified_launch: false,
     });
 
@@ -49,34 +49,34 @@ export default function WaitlistModal({ source, onClose, onSuccess }) {
       }
     }
 
-    confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 }, colors: ['var(--cc-accent)', 'var(--cc-accent-3)', 'var(--cc-warm)', '#ffffff'] });
+    confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 }, colors: ['var(--cc-accent)','var(--cc-accent-3)','var(--cc-warm)','#ffffff'] });
     setLoading(false);
     onSuccess({ email, position });
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center px-4 pb-6"
-      style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(8px)' }}
+      style={{ background: 'rgba(0,0,0,0.8)', backdropFilter:'blur(8px)' }}
       onClick={onClose}>
       <div className="w-full max-w-md rounded-3xl p-6 pb-8"
-        style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}
+        style={{ background: 'var(--cc-bg-1)', border:'1px solid rgba(var(--cc-accent-rgb),0.25)' }}
         onClick={e => e.stopPropagation()}>
-        <h3 className="font-display text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Get early access 🚀</h3>
+        <h3 className="font-display text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Get early access </h3>
         <p className="text-xs mb-5" style={{ color: 'var(--cc-ink-dim)' }}>
           Founding members get lifetime perks — limited spots.
         </p>
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <input type="email" placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} required
+          <input type="email"placeholder="your@email.com"value={email} onChange={e => setEmail(e.target.value)} required
             className="w-full px-4 py-3.5 rounded-2xl text-sm outline-none"
-            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.5)' }} />
-          <input type="tel" placeholder="Phone (optional — for launch alerts)" value={phone} onChange={e => setPhone(e.target.value)}
+            style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.5)' }} />
+          <input type="tel"placeholder="Phone (optional — for launch alerts)"value={phone} onChange={e => setPhone(e.target.value)}
             className="w-full px-4 py-3.5 rounded-2xl text-sm outline-none"
-            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.5)' }} />
+            style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.5)' }} />
           {error && <p className="text-xs px-1" style={{ color: 'var(--cc-warm)' }}>{error}</p>}
-          <button type="submit" disabled={loading}
+          <button type="submit"disabled={loading}
             className="w-full py-4 rounded-full font-display text-base transition-all active:scale-95"
-            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.3)', opacity: loading ? 0.7 : 1 }}>
-            {loading ? 'Joining...' : '🚀 Join the Waitlist'}
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 24px rgba(var(--cc-accent-rgb),0.3)', opacity: loading ? 0.7 : 1 }}>
+            {loading ?'Joining...':' Join the Waitlist'}
           </button>
         </form>
         <button onClick={onClose} className="w-full mt-3 py-2 text-sm font-semibold" style={{ color: 'var(--cc-ink-dim)' }}>

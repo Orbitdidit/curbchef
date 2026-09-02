@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Clock, Users, Zap } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
-import { useQueryClient } from '@tanstack/react-query';
+import { Link } from'react-router-dom';
+import { Clock, Users, Zap } from'lucide-react';
+import { base44 } from'@/api/base44Client';
+import { useQueryClient } from'@tanstack/react-query';
 
 function useCountdown(expiresAt) {
   const [remaining, setRemaining] = useState('');
@@ -51,7 +51,7 @@ export default function CurbDropCard({ drop }) {
       items: [{ name: drop.title, price: drop.deal_price, quantity: 1 }],
       subtotal: drop.deal_price,
       total: drop.deal_price,
-      status: 'placed',
+      status:'placed',
       pickup_code: Math.random().toString(36).slice(2, 6).toUpperCase(),
     });
 
@@ -65,23 +65,23 @@ export default function CurbDropCard({ drop }) {
     <div className="rounded-3xl overflow-hidden flex-shrink-0"
       style={{
         width: '280px',
-        background: 'var(--cc-bg-2)',
-        border: isSoldOut ? '1px solid rgba(var(--cc-line-rgb),0.2)' : '1px solid rgba(var(--cc-warm-rgb),0.25)',
-        boxShadow: isSoldOut ? 'none' : '0 0 20px rgba(var(--cc-warm-rgb),0.1)',
+        background:'var(--cc-bg-2)',
+        border: isSoldOut ?'1px solid rgba(var(--cc-line-rgb),0.2)':'1px solid rgba(var(--cc-warm-rgb),0.25)',
+        boxShadow: isSoldOut ?'none':'0 0 20px rgba(var(--cc-warm-rgb),0.1)',
       }}>
       {/* Image */}
       <div className="relative" style={{ height: '160px' }}>
         {drop.image_url ? (
-          <img src={drop.image_url} alt={drop.title} className="w-full h-full object-cover" />
+          <img src={drop.image_url} alt={drop.title} className="w-full h-full object-cover"/>
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-5xl" style={{ background: 'var(--cc-bg-0)' }}>🔥</div>
+          <div className="w-full h-full flex items-center justify-center text-5xl" style={{ background: 'var(--cc-bg-0)' }}></div>
         )}
         <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg,rgba(13,21,23,0) 40%,rgba(13,21,23,0.95) 100%)' }} />
 
         {/* Countdown badge */}
         <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full"
-          style={{ background: 'rgba(var(--cc-warm-rgb),0.92)', backdropFilter: 'blur(8px)' }}>
-          <Clock className="w-3 h-3 text-white" />
+          style={{ background: 'rgba(var(--cc-warm-rgb),0.92)', backdropFilter:'blur(8px)' }}>
+          <Clock className="w-3 h-3 text-white"/>
           <span className="text-[10px] font-black text-white">{countdown}</span>
         </div>
 
@@ -106,7 +106,7 @@ export default function CurbDropCard({ drop }) {
           )}
           {drop.original_price > 0 && (
             <span className="text-[9px] font-black px-2 py-0.5 rounded-full ml-auto"
-              style={{ background: 'rgba(var(--cc-warm-rgb),0.15)', color: 'var(--cc-warm)' }}>
+              style={{ background: 'rgba(var(--cc-warm-rgb),0.15)', color:'var(--cc-warm)' }}>
               {Math.round((1 - drop.deal_price / drop.original_price) * 100)}% OFF
             </span>
           )}
@@ -117,8 +117,8 @@ export default function CurbDropCard({ drop }) {
           <div className="flex items-center justify-between mb-1">
             <div className="flex items-center gap-1">
               <Users className="w-3 h-3" style={{ color: 'var(--cc-ink-dim)' }} />
-              <span className="text-xs font-bold" style={{ color: isSoldOut ? 'var(--cc-warm)' : 'var(--cc-ink-dim)' }}>
-                {isSoldOut ? 'SOLD OUT' : `${drop.current_claims} / ${drop.max_claims} claimed`}
+              <span className="text-xs font-bold" style={{ color: isSoldOut ? 'var(--cc-warm)':'var(--cc-ink-dim)'}}>
+                {isSoldOut ?'SOLD OUT' : `${drop.current_claims} / ${drop.max_claims} claimed`}
               </span>
             </div>
             {!isSoldOut && (
@@ -129,7 +129,7 @@ export default function CurbDropCard({ drop }) {
             <div className="h-full rounded-full transition-all"
               style={{
                 width: `${pctFull}%`,
-                background: isSoldOut ? 'var(--cc-warm)' : 'linear-gradient(90deg,var(--cc-warm),var(--cc-warm-3))',
+                background: isSoldOut ? 'var(--cc-warm)':'linear-gradient(90deg,var(--cc-warm),var(--cc-warm-3))',
               }} />
           </div>
         </div>
@@ -141,13 +141,13 @@ export default function CurbDropCard({ drop }) {
           className="w-full py-3 rounded-2xl font-display text-sm transition-all active:scale-95 flex items-center justify-center gap-2"
           style={
             claimed
-              ? { background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }
+              ? { background: 'rgba(var(--cc-accent-rgb),0.12)', color:'var(--cc-accent)', border:'1px solid rgba(var(--cc-accent-rgb),0.3)'}
               : isSoldOut
-              ? { background: 'var(--cc-bg-3)', color: 'var(--cc-ink-dim)', opacity: 0.5 }
-              : { background: 'linear-gradient(135deg,var(--cc-warm),var(--cc-warm-3))', color: '#fff', boxShadow: '0 0 14px rgba(var(--cc-warm-rgb),0.35)' }
+              ? { background:'var(--cc-bg-3)', color:'var(--cc-ink-dim)', opacity: 0.5 }
+              : { background:'linear-gradient(135deg,var(--cc-warm),var(--cc-warm-3))', color:'#fff', boxShadow:'0 0 14px rgba(var(--cc-warm-rgb),0.35)'}
           }
         >
-          {claimed ? '✓ Claimed! Check Orders' : isSoldOut ? 'Sold Out' : claiming ? 'Claiming...' : (
+          {claimed ?' Claimed! Check Orders': isSoldOut ?'Sold Out': claiming ?'Claiming...' : (
             <><Zap className="w-4 h-4" /> Claim Drop</>
           )}
         </button>

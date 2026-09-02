@@ -1,65 +1,65 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
-import { CheckCircle2, XCircle, ChevronDown, ChevronUp, Rocket } from 'lucide-react';
+import { base44 } from'@/api/base44Client';
+import { useQuery, useQueryClient } from'@tanstack/react-query';
+import { Link } from'react-router-dom';
+import { CheckCircle2, XCircle, ChevronDown, ChevronUp, Rocket } from'lucide-react';
 
 const CHECKS = [
   {
-    id: 'profile',
-    label: 'Profile complete',
-    sub: 'Name, description, cuisine & photo set',
-    fixHref: '/vendor/profile',
-    fixLabel: 'Edit Profile',
+    id:'profile',
+    label:'Profile complete',
+    sub:'Name, description, cuisine & photo set',
+    fixHref:'/vendor/profile',
+    fixLabel:'Edit Profile',
   },
   {
-    id: 'menu',
-    label: 'At least 5 menu items',
-    sub: 'Build your menu so customers can order',
-    fixHref: '/vendor/menu',
-    fixLabel: 'Add Items',
+    id:'menu',
+    label:'At least 5 menu items',
+    sub:'Build your menu so customers can order',
+    fixHref:'/vendor/menu',
+    fixLabel:'Add Items',
   },
   {
-    id: 'cover',
-    label: 'Cover image set',
-    sub: 'A great cover photo drives more clicks',
-    fixHref: '/vendor/profile',
-    fixLabel: 'Upload Cover',
+    id:'cover',
+    label:'Cover image set',
+    sub:'A great cover photo drives more clicks',
+    fixHref:'/vendor/profile',
+    fixLabel:'Upload Cover',
   },
   {
-    id: 'stripe',
-    label: 'Stripe payouts enabled',
-    sub: 'Connect Stripe to receive payments',
-    fixHref: '/vendor',
-    fixLabel: 'Connect Stripe',
+    id:'stripe',
+    label:'Stripe payouts enabled',
+    sub:'Connect Stripe to receive payments',
+    fixHref:'/vendor',
+    fixLabel:'Connect Stripe',
   },
   {
-    id: 'hours',
-    label: 'Operating hours set',
+    id:'hours',
+    label:'Operating hours set',
     sub: "Let customers know when you're open",
     fixHref: '/vendor/profile',
-    fixLabel: 'Set Hours',
+    fixLabel:'Set Hours',
   },
   {
-    id: 'phone',
-    label: 'Phone number set',
-    sub: 'Customers and admin may need to reach you',
-    fixHref: '/vendor/profile',
-    fixLabel: 'Add Phone',
+    id:'phone',
+    label:'Phone number set',
+    sub:'Customers and admin may need to reach you',
+    fixHref:'/vendor/profile',
+    fixLabel:'Add Phone',
   },
   {
-    id: 'liveclip',
-    label: 'At least 1 live clip / video',
-    sub: 'Videos increase visibility on the home feed',
-    fixHref: '/vendor/profile',
-    fixLabel: 'Upload Clip',
+    id:'liveclip',
+    label:'At least 1 live clip / video',
+    sub:'Videos increase visibility on the home feed',
+    fixHref:'/vendor/profile',
+    fixLabel:'Upload Clip',
   },
   {
-    id: 'location',
-    label: 'GPS location set',
-    sub: 'Required to appear on the map',
-    fixHref: '/vendor/profile',
-    fixLabel: 'Set Location',
+    id:'location',
+    label:'GPS location set',
+    sub:'Required to appear on the map',
+    fixHref:'/vendor/profile',
+    fixLabel:'Set Location',
   },
 ];
 
@@ -68,7 +68,7 @@ function buildChecks(truck, menuItems, liveClips) {
     profile: !!(truck.name && truck.description && truck.cuisine_type && truck.image_url),
     menu: menuItems.length >= 5,
     cover: !!truck.cover_image_url,
-    stripe: truck.stripe_onboarding_status === 'payouts_enabled',
+    stripe: truck.stripe_onboarding_status ==='payouts_enabled',
     hours: !!(truck.operating_hours && truck.operating_hours.trim()),
     phone: !!(truck.phone && truck.phone.trim()),
     liveclip: liveClips.length >= 1,
@@ -113,20 +113,20 @@ export default function LaunchReadinessCard({ truck, menuItems, onLaunchReadyCha
   if (isLaunchReady) {
     return (
       <div className="mb-5 rounded-3xl p-5 relative overflow-hidden"
-        style={{ background: 'linear-gradient(135deg,rgba(0,245,212,0.1),rgba(0,230,167,0.06))', border: '1px solid rgba(0,245,212,0.35)', boxShadow: '0 0 32px rgba(0,245,212,0.1)' }}>
+        style={{ background: 'linear-gradient(135deg,rgba(0,245,212,0.1),rgba(0,230,167,0.06))', border:'1px solid rgba(0,245,212,0.35)', boxShadow:'0 0 32px rgba(0,245,212,0.1)' }}>
         <div className="absolute -top-6 -right-6 w-28 h-28 rounded-full pointer-events-none"
           style={{ background: 'radial-gradient(circle,rgba(0,245,212,0.15) 0%,transparent 70%)' }} />
         <div className="relative z-10 flex items-center gap-4">
-          <div className="text-3xl flex-shrink-0">🎉</div>
+          <div className="text-3xl flex-shrink-0"></div>
           <div>
-            <p className="font-display text-base" style={{ color: 'var(--cc-accent-2)' }}>You're launch ready!</p>
+            <p className="font-display text-base" style={{ color: 'var(--cc-accent-2)'}}>You're launch ready!</p>
             <p className="text-xs mt-0.5" style={{ color: 'rgba(0,245,212,0.7)' }}>
               Your truck is now live on CurbChef and visible to customers.
             </p>
           </div>
           <div className="flex-shrink-0 ml-auto">
             <div className="w-10 h-10 rounded-full flex items-center justify-center"
-              style={{ background: 'rgba(0,245,212,0.15)', border: '1px solid rgba(0,245,212,0.3)' }}>
+              style={{ background: 'rgba(0,245,212,0.15)', border:'1px solid rgba(0,245,212,0.3)' }}>
               <Rocket className="w-5 h-5" style={{ color: 'var(--cc-accent-2)' }} />
             </div>
           </div>
@@ -139,19 +139,18 @@ export default function LaunchReadinessCard({ truck, menuItems, onLaunchReadyCha
 
   return (
     <div className="mb-5 rounded-3xl overflow-hidden"
-      style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
+      style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}>
       {/* Header row */}
       <div className="p-5">
         <div className="flex items-center gap-4">
           {/* Circular progress ring */}
           <div className="relative flex-shrink-0 w-16 h-16">
-            <svg width="64" height="64" className="transform -rotate-90">
-              <circle cx="32" cy="32" r={r} fill="none" stroke="rgba(var(--cc-line-rgb),0.4)" strokeWidth="5" />
+            <svg width="64"height="64"className="transform -rotate-90">
+              <circle cx="32"cy="32"r={r} fill="none"stroke="rgba(var(--cc-line-rgb),0.4)"strokeWidth="5"/>
               <circle
-                cx="32" cy="32" r={r} fill="none"
-                stroke={pct >= 75 ? 'var(--cc-accent-2)' : pct >= 40 ? 'var(--cc-amber)' : 'var(--cc-warm)'}
-                strokeWidth="5"
-                strokeDasharray={circ}
+                cx="32"cy="32"r={r} fill="none"
+                stroke={pct >= 75 ? 'var(--cc-accent-2)': pct >= 40 ?'var(--cc-amber)':'var(--cc-warm)'}
+                strokeWidth="5"strokeDasharray={circ}
                 strokeDashoffset={dashOffset}
                 strokeLinecap="round"
                 style={{ transition: 'stroke-dashoffset 0.6s ease' }}
@@ -165,8 +164,8 @@ export default function LaunchReadinessCard({ truck, menuItems, onLaunchReadyCha
 
           <div className="flex-1 min-w-0">
             <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>Launch Readiness</p>
-            <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>
-              Complete {remaining} more {remaining === 1 ? 'step' : 'steps'} to start receiving orders.
+            <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)'}}>
+              Complete {remaining} more {remaining === 1 ?'step':'steps'} to start receiving orders.
             </p>
           </div>
 
@@ -184,14 +183,14 @@ export default function LaunchReadinessCard({ truck, menuItems, onLaunchReadyCha
           <div className="h-full rounded-full transition-all duration-700"
             style={{
               width: `${pct}%`,
-              background: pct >= 75 ? 'linear-gradient(90deg,var(--cc-accent-2),var(--cc-accent-3))' : pct >= 40 ? 'linear-gradient(90deg,var(--cc-amber),#f59e0b)' : 'linear-gradient(90deg,var(--cc-warm),var(--cc-warm-3))',
+              background: pct >= 75 ? 'linear-gradient(90deg,var(--cc-accent-2),var(--cc-accent-3))': pct >= 40 ?'linear-gradient(90deg,var(--cc-amber),#f59e0b)':'linear-gradient(90deg,var(--cc-warm),var(--cc-warm-3))',
             }} />
         </div>
       </div>
 
       {/* Expandable checklist */}
       {expanded && (
-        <div style={{ borderTop: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+        <div style={{ borderTop:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
           {CHECKS.map((check) => {
             const done = checks[check.id];
             return (
@@ -202,12 +201,12 @@ export default function LaunchReadinessCard({ truck, menuItems, onLaunchReadyCha
                   : <XCircle className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--cc-warm)' }} />
                 }
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold" style={{ color: done ? 'var(--cc-ink)' : 'var(--cc-ink-dim)' }}>{check.label}</p>
+                  <p className="text-sm font-bold" style={{ color: done ? 'var(--cc-ink)':'var(--cc-ink-dim)' }}>{check.label}</p>
                   <p className="text-xs" style={{ color: 'var(--cc-ink-faint)' }}>{check.sub}</p>
                 </div>
                 {!done && (
                   <Link to={check.fixHref} className="flex-shrink-0 px-3 py-1.5 rounded-full text-[11px] font-black"
-                    style={{ background: 'rgba(var(--cc-warm-rgb),0.12)', color: 'var(--cc-warm)', border: '1px solid rgba(var(--cc-warm-rgb),0.25)' }}>
+                    style={{ background: 'rgba(var(--cc-warm-rgb),0.12)', color:'var(--cc-warm)', border:'1px solid rgba(var(--cc-warm-rgb),0.25)' }}>
                     Fix →
                   </Link>
                 )}

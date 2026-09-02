@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
-import { X } from 'lucide-react';
+import { base44 } from'@/api/base44Client';
+import { useQuery, useQueryClient } from'@tanstack/react-query';
+import { Link } from'react-router-dom';
+import { X } from'lucide-react';
 
 // Gradient themes keyed by emoji "mood"
 function getTipTheme(emoji) {
   const e = emoji || '';
-  if (['📹', '🎬', '📺', '🎥'].includes(e))
-    return { grad: 'linear-gradient(135deg,rgba(var(--cc-warm-rgb),0.18),rgba(var(--cc-warm-rgb),0.06))', border: 'rgba(var(--cc-warm-rgb),0.3)', accent: 'var(--cc-warm)' };
-  if (['💸', '🏆', '🚀', '⭐'].includes(e))
-    return { grad: 'linear-gradient(135deg,rgba(var(--cc-accent-rgb),0.12),rgba(0,230,167,0.05))', border: 'rgba(var(--cc-accent-rgb),0.25)', accent: 'var(--cc-accent)' };
-  if (['🎟️', '🎉', '🎊', '🎁'].includes(e))
-    return { grad: 'linear-gradient(135deg,rgba(251,191,36,0.14),rgba(245,158,11,0.05))', border: 'rgba(251,191,36,0.25)', accent: 'var(--cc-amber)' };
-  if (['🎬', '📸', '🖼️', '🎨'].includes(e))
-    return { grad: 'linear-gradient(135deg,rgba(192,132,252,0.14),rgba(167,139,250,0.05))', border: 'rgba(192,132,252,0.25)', accent: 'var(--cc-violet)' };
+  if (['','','',''].includes(e))
+    return { grad:'linear-gradient(135deg,rgba(var(--cc-warm-rgb),0.18),rgba(var(--cc-warm-rgb),0.06))', border:'rgba(var(--cc-warm-rgb),0.3)', accent:'var(--cc-warm)'};
+  if (['','','',''].includes(e))
+    return { grad:'linear-gradient(135deg,rgba(var(--cc-accent-rgb),0.12),rgba(0,230,167,0.05))', border:'rgba(var(--cc-accent-rgb),0.25)', accent:'var(--cc-accent)'};
+  if (['','','',''].includes(e))
+    return { grad:'linear-gradient(135deg,rgba(251,191,36,0.14),rgba(245,158,11,0.05))', border:'rgba(251,191,36,0.25)', accent:'var(--cc-amber)'};
+  if (['','','',''].includes(e))
+    return { grad:'linear-gradient(135deg,rgba(192,132,252,0.14),rgba(167,139,250,0.05))', border:'rgba(192,132,252,0.25)', accent:'var(--cc-violet)'};
   // default blue/system
-  return { grad: 'linear-gradient(135deg,rgba(96,165,250,0.14),rgba(59,130,246,0.05))', border: 'rgba(96,165,250,0.25)', accent: '#60a5fa' };
+  return { grad:'linear-gradient(135deg,rgba(96,165,250,0.14),rgba(59,130,246,0.05))', border:'rgba(96,165,250,0.25)', accent:'#60a5fa' };
 }
 
 function isNew(createdDate) {
@@ -33,9 +33,9 @@ function TipCard({ tip, onDismiss, prominent = false }) {
       style={{
         background: theme.grad,
         border: `1px solid ${theme.border}`,
-        width: prominent ? '100%' : '260px',
-        minHeight: prominent ? 'auto' : '200px',
-        padding: '20px',
+        width: prominent ? '100%':'260px',
+        minHeight: prominent ?'auto':'200px',
+        padding:'20px',
       }}
     >
       {/* NEW badge */}
@@ -56,7 +56,7 @@ function TipCard({ tip, onDismiss, prominent = false }) {
       </button>
 
       {/* Emoji */}
-      <div className="text-3xl mb-3 mt-2">{tip.icon_emoji || '💡'}</div>
+      <div className="text-3xl mb-3 mt-2">{tip.icon_emoji || ''}</div>
 
       {/* Title */}
       <p className="font-display text-sm leading-snug mb-2" style={{ color: 'var(--cc-ink)' }}>
@@ -72,7 +72,7 @@ function TipCard({ tip, onDismiss, prominent = false }) {
       {tip.cta_label && tip.cta_link && (
         <Link to={tip.cta_link} className="mt-4 inline-block">
           <div className="px-4 py-2 rounded-full text-xs font-black w-fit"
-            style={{ background: theme.accent, color: 'var(--cc-bg-0)' }}>
+            style={{ background: theme.accent, color: 'var(--cc-bg-0)'}}>
             {tip.cta_label} →
           </div>
         </Link>
@@ -86,7 +86,7 @@ export default function VendorTipsSection({ user }) {
 
   const { data: tips = [] } = useQuery({
     queryKey: ['vendor-tips'],
-    queryFn: () => base44.entities.VendorTip.filter({ is_active: true }, 'order_num', 20),
+    queryFn: () => base44.entities.VendorTip.filter({ is_active: true },'order_num', 20),
   });
 
   const { data: profiles = [] } = useQuery({
@@ -120,9 +120,9 @@ export default function VendorTipsSection({ user }) {
   return (
     <div className="mb-6">
       <div className="flex items-center justify-between mb-3">
-        <p className="text-[10px] font-black tracking-widest" style={{ color: 'var(--cc-accent)' }}>💡 VENDOR TIPS</p>
+        <p className="text-[10px] font-black tracking-widest" style={{ color: 'var(--cc-accent)' }}> VENDOR TIPS</p>
         <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-          style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)' }}>
+          style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color:'var(--cc-accent)' }}>
           {visibleTips.length} tips
         </span>
       </div>

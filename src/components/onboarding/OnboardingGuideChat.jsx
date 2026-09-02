@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { base44 } from '@/api/base44Client';
-import { Send, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
+import { base44 } from'@/api/base44Client';
+import { Send, ChevronDown, ChevronUp, Sparkles } from'lucide-react';
+import ReactMarkdown from'react-markdown';
 
 const STEP_PROMPTS = {
-  0: ["What makes a great truck name?", "What info do I need to get started?"],
-  1: ["Does my location need to be exact?", "Can I change my location later?"],
-  2: ["What photos work best?", "Do I need professional photos?"],
-  3: ["How should I price my items?", "What items should I list first?", "How do I get in the $5 Specials carousel?"],
-  4: ["When should I go live?", "What's the difference between Open and Opening Soon?"],
-  5: ["Why does the kitchen photo matter?", "What should be in the photo?"],
-  6: ["What happens after I submit?", "How do I set up payments?"],
+  0: ["What makes a great truck name?","What info do I need to get started?"],
+  1: ["Does my location need to be exact?","Can I change my location later?"],
+  2: ["What photos work best?","Do I need professional photos?"],
+  3: ["How should I price my items?","What items should I list first?","How do I get in the $5 Specials carousel?"],
+  4: ["When should I go live?","What's the difference between Open and Opening Soon?"],
+  5: ["Why does the kitchen photo matter?","What should be in the photo?"],
+  6: ["What happens after I submit?","How do I set up payments?"],
 };
 
 function MessageBubble({ message }) {
@@ -19,7 +19,7 @@ function MessageBubble({ message }) {
     return (
       <div className="flex gap-2 justify-start">
         <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 text-sm"
-          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>🚚</div>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}></div>
         <div className="px-4 py-3 rounded-2xl rounded-tl-sm" style={{ background: 'var(--cc-bg-3)' }}>
           <div className="flex items-center gap-1.5">
             {[0, 1, 2].map(i => (
@@ -32,15 +32,15 @@ function MessageBubble({ message }) {
     );
   }
   return (
-    <div className={`flex gap-2 ${isUser ? 'justify-end' : 'justify-start'}`}>
+    <div className={`flex gap-2 ${isUser ?'justify-end':'justify-start'}`}>
       {!isUser && (
         <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 text-sm"
-          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>🚚</div>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))'}}></div>
       )}
-      <div className={`max-w-[84%] px-4 py-2.5 text-sm leading-relaxed ${isUser ? 'rounded-2xl rounded-tr-sm' : 'rounded-2xl rounded-tl-sm'}`}
+      <div className={`max-w-[84%] px-4 py-2.5 text-sm leading-relaxed ${isUser ?'rounded-2xl rounded-tr-sm':'rounded-2xl rounded-tl-sm'}`}
         style={isUser
-          ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }
-          : { background: 'var(--cc-bg-3)', color: 'var(--cc-ink)' }
+          ? { background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)'}
+          : { background:'var(--cc-bg-3)', color:'var(--cc-ink)' }
         }>
         <ReactMarkdown
           components={{
@@ -65,7 +65,7 @@ export default function OnboardingGuideChat({ currentStep, vendorEmail }) {
   const unsubRef = useRef(null);
 
   useEffect(() => () => unsubRef.current?.(), []);
-  useEffect(() => { if (open) bottomRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages, open]);
+  useEffect(() => { if (open) bottomRef.current?.scrollIntoView({ behavior:'smooth'}); }, [messages, open]);
 
   // Reset conversation hint when step changes
   const stepPrompts = STEP_PROMPTS[currentStep] || [];
@@ -73,19 +73,19 @@ export default function OnboardingGuideChat({ currentStep, vendorEmail }) {
   const ensureConversation = async () => {
     if (conversation) return conversation;
     const convo = await base44.agents.createConversation({
-      agent_name: 'onboarding_guide',
-      metadata: { name: `Onboarding — ${vendorEmail || 'New Vendor'}` },
+      agent_name:'onboarding_guide',
+      metadata: { name: `Onboarding — ${vendorEmail ||'New Vendor'}` },
     });
     setConversation(convo);
     unsubRef.current?.();
     unsubRef.current = base44.agents.subscribeToConversation(convo.id, (data) => {
-      const msgs = (data.messages || []).filter(m => m.role !== 'system');
+      const msgs = (data.messages || []).filter(m => m.role !=='system');
       if (msgs.length) {
         setMessages(msgs);
         const allDone = !msgs.some(m =>
-          m.tool_calls?.some(t => ['running', 'in_progress', 'pending'].includes(t.status))
+          m.tool_calls?.some(t => ['running','in_progress','pending'].includes(t.status))
         );
-        const lastAssistant = [...msgs].reverse().find(m => m.role === 'assistant' && m.content);
+        const lastAssistant = [...msgs].reverse().find(m => m.role ==='assistant'&& m.content);
         if (allDone && lastAssistant) setLoading(false);
       }
     });
@@ -100,26 +100,26 @@ export default function OnboardingGuideChat({ currentStep, vendorEmail }) {
     setLoading(true);
     setMessages(prev => [
       ...prev,
-      { role: 'user', content: msg },
-      { role: 'assistant', _loading: true, content: '' },
+      { role:'user', content: msg },
+      { role:'assistant', _loading: true, content:''},
     ]);
     const convo = await ensureConversation();
     const fullMsg = vendorEmail
       ? `${msg}\n\n(Vendor email: ${vendorEmail}, currently on onboarding step ${currentStep + 1})`
       : msg;
-    await base44.agents.addMessage(convo, { role: 'user', content: fullMsg });
+    await base44.agents.addMessage(convo, { role:'user', content: fullMsg });
   };
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(var(--cc-accent-rgb),0.2)', background: 'var(--cc-bg-1)' }}>
+    <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(var(--cc-accent-rgb),0.2)', background:'var(--cc-bg-1)' }}>
       {/* Header toggle */}
       <button
         onClick={() => setOpen(o => !o)}
         className="w-full flex items-center gap-3 px-4 py-3"
-        style={{ background: open ? 'var(--cc-bg-2)' : 'rgba(var(--cc-accent-rgb),0.04)' }}
+        style={{ background: open ? 'var(--cc-bg-2)':'rgba(var(--cc-accent-rgb),0.04)' }}
       >
         <div className="w-8 h-8 rounded-xl flex items-center justify-center text-base flex-shrink-0"
-          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>🚚</div>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}></div>
         <div className="flex-1 text-left">
           <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Launch Coach</p>
           <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>Ask anything about this step</p>
@@ -136,7 +136,7 @@ export default function OnboardingGuideChat({ currentStep, vendorEmail }) {
               {stepPrompts.map(p => (
                 <button key={p} onClick={() => sendMessage(p)}
                   className="text-left px-3 py-2 rounded-xl text-xs font-semibold transition-all active:scale-95"
-                  style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
+                  style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}>
                   {p}
                 </button>
               ))}
@@ -146,8 +146,8 @@ export default function OnboardingGuideChat({ currentStep, vendorEmail }) {
           {/* Messages */}
           {messages.length > 0 && (
             <div className="px-4 py-3 flex flex-col gap-3 max-h-64 overflow-y-auto no-scrollbar"
-              style={{ borderTop: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
-              {messages.filter(m => m.role !== 'system').map((msg, i) => (
+              style={{ borderTop: '1px solid rgba(var(--cc-line-rgb),0.2)'}}>
+              {messages.filter(m => m.role !=='system').map((msg, i) => (
                 <MessageBubble key={i} message={msg} />
               ))}
               <div ref={bottomRef} />
@@ -155,22 +155,21 @@ export default function OnboardingGuideChat({ currentStep, vendorEmail }) {
           )}
 
           {/* Input */}
-          <div className="px-4 pb-3 pt-2 flex gap-2" style={{ borderTop: messages.length ? '1px solid rgba(var(--cc-line-rgb),0.2)' : 'none' }}>
+          <div className="px-4 pb-3 pt-2 flex gap-2" style={{ borderTop: messages.length ? '1px solid rgba(var(--cc-line-rgb),0.2)':'none'}}>
             <input
               value={input}
               onChange={e => setInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && sendMessage()}
-              placeholder="Ask your launch coach..."
-              className="flex-1 px-3 py-2 rounded-xl text-xs outline-none"
-              style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}
+              onKeyDown={e => e.key ==='Enter' && sendMessage()}
+              placeholder="Ask your launch coach..."className="flex-1 px-3 py-2 rounded-xl text-xs outline-none"
+              style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}
             />
             <button onClick={() => sendMessage()} disabled={loading || !input.trim()}
               className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all active:scale-95"
               style={input.trim() && !loading
-                ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }
-                : { background: 'var(--cc-bg-3)' }
+                ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))'}
+                : { background:'var(--cc-bg-3)' }
               }>
-              <Send className="w-3.5 h-3.5" style={{ color: input.trim() && !loading ? 'var(--cc-accent-deep)' : 'var(--cc-ink-dim)' }} />
+              <Send className="w-3.5 h-3.5" style={{ color: input.trim() && !loading ? 'var(--cc-accent-deep)':'var(--cc-ink-dim)' }} />
             </button>
           </div>
         </>

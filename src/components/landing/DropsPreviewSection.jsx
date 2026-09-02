@@ -2,20 +2,20 @@ import React from 'react';
 
 const SAMPLE_DROPS = [
   {
-    emoji: '🥤',
-    name: 'Cyberade',
-    desc: 'Neon blue electrolyte drink — Houston exclusive',
-    dealPrice: '$5.00',
-    originalPrice: '$8.00',
-    truck: 'Curb Hydration Co.',
+    emoji:'',
+    name:'Cyberade',
+    desc:'Neon blue electrolyte drink — Houston exclusive',
+    dealPrice:'$5.00',
+    originalPrice:'$8.00',
+    truck:'Curb Hydration Co.',
   },
   {
-    emoji: '🥛',
-    name: 'Street Horchata',
-    desc: 'House-made cinnamon horchata, ice cold',
-    dealPrice: '$3.99',
-    originalPrice: '$6.50',
-    truck: 'El Camino Cantina',
+    emoji:'',
+    name:'Street Horchata',
+    desc:'House-made cinnamon horchata, ice cold',
+    dealPrice:'$3.99',
+    originalPrice:'$6.50',
+    truck:'El Camino Cantina',
   },
 ];
 
@@ -28,7 +28,7 @@ export default function DropsPreviewSection({ onJoinWaitlist }) {
         <div className="h-px flex-1" style={{ background: 'rgba(var(--cc-line-rgb),0.4)' }} />
       </div>
       <h2 className="font-display text-2xl text-center mb-1" style={{ color: 'var(--cc-ink)' }}>
-        💥 $5 Curb Drops drop daily
+         $5 Curb Drops drop daily
       </h2>
       <p className="text-sm text-center mb-8" style={{ color: 'var(--cc-ink-dim)' }}>
         Flash deals from real Houston trucks. Be first when we go live.
@@ -38,13 +38,13 @@ export default function DropsPreviewSection({ onJoinWaitlist }) {
         {SAMPLE_DROPS.map(drop => (
           <button key={drop.name} onClick={() => onJoinWaitlist('drops_peek')}
             className="relative rounded-3xl p-4 text-left active:scale-95 transition-transform overflow-hidden"
-            style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-warm-rgb),0.25)' }}>
+            style={{ background: 'var(--cc-bg-1)', border:'1px solid rgba(var(--cc-warm-rgb),0.25)' }}>
             {/* Available at launch overlay */}
             <div className="absolute inset-0 rounded-3xl flex items-center justify-center z-10"
-              style={{ background: 'rgba(13,21,23,0.45)', backdropFilter: 'blur(1px)' }}>
+              style={{ background: 'rgba(13,21,23,0.45)', backdropFilter:'blur(1px)' }}>
               <span className="text-xs font-black px-4 py-1.5 rounded-full"
-                style={{ background: 'rgba(var(--cc-warm-rgb),0.9)', color: '#fff', boxShadow: '0 0 16px rgba(var(--cc-warm-rgb),0.4)' }}>
-                🔒 Available at launch — Join waitlist
+                style={{ background: 'rgba(var(--cc-warm-rgb),0.9)', color:'#fff', boxShadow:'0 0 16px rgba(var(--cc-warm-rgb),0.4)' }}>
+                 Available at launch — Join waitlist
               </span>
             </div>
 
@@ -60,7 +60,7 @@ export default function DropsPreviewSection({ onJoinWaitlist }) {
               </div>
               <div className="text-right flex-shrink-0">
                 <p className="font-display text-xl" style={{ color: 'var(--cc-warm)' }}>{drop.dealPrice}</p>
-                <p className="text-xs line-through" style={{ color: 'var(--cc-ink-faint)' }}>{drop.originalPrice}</p>
+                <p className="text-xs line-through" style={{ color: 'var(--cc-ink-faint)'}}>{drop.originalPrice}</p>
               </div>
             </div>
           </button>
@@ -69,8 +69,8 @@ export default function DropsPreviewSection({ onJoinWaitlist }) {
 
       <button onClick={() => onJoinWaitlist('drops_peek')}
         className="w-full mt-6 py-3.5 rounded-full font-display text-sm transition-all active:scale-95"
-        style={{ background: 'rgba(var(--cc-warm-rgb),0.1)', color: 'var(--cc-warm)', border: '1px solid rgba(var(--cc-warm-rgb),0.3)' }}>
-        ⚡ Get notified when drops go live →
+        style={{ background: 'rgba(var(--cc-warm-rgb),0.1)', color:'var(--cc-warm)', border:'1px solid rgba(var(--cc-warm-rgb),0.3)' }}>
+         Get notified when drops go live →
       </button>
     </section>
   );

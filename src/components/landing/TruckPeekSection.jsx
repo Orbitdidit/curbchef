@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
-import { Star, Lock } from 'lucide-react';
+import { base44 } from'@/api/base44Client';
+import { useQuery } from'@tanstack/react-query';
+import { Star, Lock } from'lucide-react';
 
 function TruckModal({ truck, onClose, onJoin }) {
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center px-4 pb-6"
-      style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(8px)' }}
+      style={{ background: 'rgba(0,0,0,0.8)', backdropFilter:'blur(8px)' }}
       onClick={onClose}>
       <div className="w-full max-w-md rounded-3xl p-6 pb-8"
-        style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}
+        style={{ background: 'var(--cc-bg-1)', border:'1px solid rgba(var(--cc-accent-rgb),0.2)' }}
         onClick={e => e.stopPropagation()}>
-        <div className="text-4xl mb-3 text-center">🔒</div>
+        <div className="text-4xl mb-3 text-center"></div>
         <h3 className="font-display text-xl text-center mb-2" style={{ color: 'var(--cc-ink)' }}>
           Want to order from {truck.name}?
         </h3>
@@ -20,11 +20,11 @@ function TruckModal({ truck, onClose, onJoin }) {
         </p>
         <button onClick={onJoin}
           className="w-full py-4 rounded-full font-display text-base transition-all active:scale-95"
-          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.35)' }}>
-          🚀 Join the Waitlist
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 24px rgba(var(--cc-accent-rgb),0.35)' }}>
+           Join the Waitlist
         </button>
         <button onClick={onClose} className="w-full mt-3 py-3 rounded-full text-sm font-semibold"
-          style={{ color: 'var(--cc-ink-dim)' }}>
+          style={{ color: 'var(--cc-ink-dim)'}}>
           Maybe later
         </button>
       </div>
@@ -68,7 +68,7 @@ export default function TruckPeekSection({ onJoinWaitlist }) {
           <div className="h-px flex-1" style={{ background: 'rgba(var(--cc-line-rgb),0.4)' }} />
         </div>
         <h2 className="font-display text-2xl text-center" style={{ color: 'var(--cc-ink)' }}>
-          🔥 Cooking right now in Houston
+           Cooking right now in Houston
         </h2>
         <p className="text-sm text-center mt-1" style={{ color: 'var(--cc-ink-dim)' }}>
           Real trucks. Real food. Ordering unlocks at launch.
@@ -82,29 +82,29 @@ export default function TruckPeekSection({ onJoinWaitlist }) {
           return (
             <button key={truck.id} onClick={() => handleTruckTap(truck)}
               className="flex-shrink-0 rounded-3xl overflow-hidden relative active:scale-95 transition-transform text-left"
-              style={{ width: 200, background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
+              style={{ width: 200, background: 'var(--cc-bg-1)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}>
               {/* Image */}
-              <div className="relative" style={{ height: 140 }}>
-                <img src={img} alt={truck.name} className="w-full h-full object-cover" />
+              <div className="relative"style={{ height: 140 }}>
+                <img src={img} alt={truck.name} className="w-full h-full object-cover"/>
                 {/* Blur overlay on bottom 30% for deal teaser */}
                 <div className="absolute bottom-0 left-0 right-0 h-14 flex items-center justify-center"
-                  style={{ backdropFilter: 'blur(6px)', background: 'rgba(13,21,23,0.55)' }}>
+                  style={{ backdropFilter: 'blur(6px)', background:'rgba(13,21,23,0.55)' }}>
                   <span className="text-xs font-black px-2.5 py-1 rounded-full"
-                    style={{ background: 'rgba(var(--cc-warm-rgb),0.85)', color: '#fff' }}>
-                    🔒 $5 Special
+                    style={{ background: 'rgba(var(--cc-warm-rgb),0.85)', color:'#fff'}}>
+                     $5 Special
                   </span>
                 </div>
                 {/* Open indicator */}
-                {truck.status === 'open' && (
+                {truck.status ==='open' && (
                   <div className="absolute top-3 left-3 flex items-center gap-1 px-2 py-0.5 rounded-full"
-                    style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(var(--cc-accent-rgb),0.4)' }}>
+                    style={{ background: 'rgba(0,0,0,0.6)', border:'1px solid rgba(var(--cc-accent-rgb),0.4)' }}>
                     <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--cc-accent)' }} />
                     <span className="text-[9px] font-black" style={{ color: 'var(--cc-accent)' }}>OPEN NOW</span>
                   </div>
                 )}
                 {/* Lock overlay hint */}
                 <div className="absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center"
-                  style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}>
+                  style={{ background: 'rgba(0,0,0,0.6)', backdropFilter:'blur(4px)' }}>
                   <Lock className="w-3 h-3" style={{ color: 'rgba(255,255,255,0.6)' }} />
                 </div>
               </div>
@@ -112,17 +112,17 @@ export default function TruckPeekSection({ onJoinWaitlist }) {
               {/* Info */}
               <div className="p-3">
                 <p className="font-display text-sm truncate" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
-                <p className="text-xs capitalize mb-2" style={{ color: 'var(--cc-ink-dim)' }}>
-                  {truck.cuisine_type?.replace(/_/g, ' ')}
+                <p className="text-xs capitalize mb-2" style={{ color: 'var(--cc-ink-dim)'}}>
+                  {truck.cuisine_type?.replace(/_/g,' ')}
                 </p>
                 <div className="flex items-center gap-1">
-                  <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                  <span className="text-xs font-bold" style={{ color: 'var(--cc-ink)' }}>
-                    {truck.rating?.toFixed(1) || '4.8'}
+                  <Star className="w-3 h-3 fill-yellow-400 text-yellow-400"/>
+                  <span className="text-xs font-bold" style={{ color: 'var(--cc-ink)'}}>
+                    {truck.rating?.toFixed(1) ||'4.8'}
                   </span>
                 </div>
                 <p className="text-[10px] mt-2 font-semibold" style={{ color: 'rgba(var(--cc-accent-rgb),0.7)' }}>
-                  🔒 Order access unlocks at launch
+                   Order access unlocks at launch
                 </p>
               </div>
             </button>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { base44 } from '@/api/base44Client';
-import { Send, Sparkles, X } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
+import { base44 } from'@/api/base44Client';
+import { Send, Sparkles, X } from'lucide-react';
+import ReactMarkdown from'react-markdown';
 
 const STARTER_PROMPTS = [
-  "How close am I to VIP? 🏆",
-  "What should I order to level up fast? 🚀",
-  "What perks do I unlock next? 🎁",
+  "How close am I to VIP?",
+  "What should I order to level up fast?",
+  "What perks do I unlock next?",
 ];
 
 function MessageBubble({ message }) {
@@ -14,17 +14,17 @@ function MessageBubble({ message }) {
   const isLoading = message._loading;
 
   return (
-    <div className={`flex gap-2 ${isUser ? 'justify-end' : 'justify-start'}`}>
+    <div className={`flex gap-2 ${isUser ?'justify-end':'justify-start'}`}>
       {!isUser && (
         <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 text-sm"
-          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>
-          🏅
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))'}}>
+          
         </div>
       )}
-      <div className={`max-w-[82%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${isUser ? 'rounded-tr-sm' : 'rounded-tl-sm'}`}
+      <div className={`max-w-[82%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${isUser ?'rounded-tr-sm':'rounded-tl-sm'}`}
         style={isUser
-          ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }
-          : { background: 'var(--cc-bg-3)', color: 'var(--cc-ink)' }
+          ? { background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)'}
+          : { background:'var(--cc-bg-3)', color:'var(--cc-ink)' }
         }>
         {isLoading ? (
           <div className="flex items-center gap-1.5">
@@ -60,38 +60,38 @@ export default function RewardsCoach({ user, reward }) {
   const unsubRef = useRef(null);
 
   useEffect(() => () => unsubRef.current?.(), []);
-  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
+  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior:'smooth'}); }, [messages]);
 
   const startConversation = async (firstMessage) => {
     setStarted(true);
     setLoading(true);
     setMessages([
-      { role: 'user', content: firstMessage },
-      { role: 'assistant', _loading: true, content: '' },
+      { role:'user', content: firstMessage },
+      { role:'assistant', _loading: true, content:''},
     ]);
 
     const convo = await base44.agents.createConversation({
-      agent_name: 'rewards_coach',
-      metadata: { name: `Rewards Coach — ${user?.full_name || 'Guest'}` },
+      agent_name:'rewards_coach',
+      metadata: { name: `Rewards Coach — ${user?.full_name ||'Guest'}` },
     });
     setConversation(convo);
 
     unsubRef.current = base44.agents.subscribeToConversation(convo.id, (data) => {
-      const msgs = (data.messages || []).filter(m => m.role !== 'system');
+      const msgs = (data.messages || []).filter(m => m.role !=='system');
       setMessages(msgs.length ? msgs : [
-        { role: 'user', content: firstMessage },
-        { role: 'assistant', _loading: true, content: '' },
+        { role:'user', content: firstMessage },
+        { role:'assistant', _loading: true, content:''},
       ]);
       const allDone = !msgs.some(m =>
-        m.tool_calls?.some(t => ['running', 'in_progress', 'pending'].includes(t.status))
+        m.tool_calls?.some(t => ['running','in_progress','pending'].includes(t.status))
       );
-      const lastAssistant = [...msgs].reverse().find(m => m.role === 'assistant' && m.content);
+      const lastAssistant = [...msgs].reverse().find(m => m.role ==='assistant'&& m.content);
       if (allDone && lastAssistant) setLoading(false);
     });
 
-    const userEmail = user?.email || 'unknown';
+    const userEmail = user?.email ||'unknown';
     await base44.agents.addMessage(convo, {
-      role: 'user',
+      role:'user',
       content: `${firstMessage}\n\n(My email: ${userEmail})`,
     });
   };
@@ -109,16 +109,16 @@ export default function RewardsCoach({ user, reward }) {
 
     setMessages(prev => [
       ...prev,
-      { role: 'user', content: text },
-      { role: 'assistant', _loading: true, content: '' },
+      { role:'user', content: text },
+      { role:'assistant', _loading: true, content:''},
     ]);
-    await base44.agents.addMessage(conversation, { role: 'user', content: text });
+    await base44.agents.addMessage(conversation, { role:'user', content: text });
   };
 
   // Tier progress bar
   const tierThresholds = { starter: 0, regular: 500, vip: 1000, legend: 2500 };
-  const nextTier = { starter: 'regular', regular: 'vip', vip: 'legend', legend: null };
-  const currentTier = reward?.tier || 'starter';
+  const nextTier = { starter:'regular', regular:'vip', vip:'legend', legend: null };
+  const currentTier = reward?.tier ||'starter';
   const points = reward?.points || 0;
   const nextTierName = nextTier[currentTier];
   const nextThreshold = nextTierName ? tierThresholds[nextTierName] : tierThresholds['legend'];
@@ -129,12 +129,12 @@ export default function RewardsCoach({ user, reward }) {
 
   if (!started) {
     return (
-      <div className="rounded-3xl overflow-hidden" style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
+      <div className="rounded-3xl overflow-hidden" style={{ background: 'var(--cc-bg-1)', border:'1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
         {/* Header */}
         <div className="px-5 pt-5 pb-4" style={{ background: 'linear-gradient(135deg,rgba(var(--cc-accent-rgb),0.06),rgba(var(--cc-accent-rgb),0.02))' }}>
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-xl flex-shrink-0"
-              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>🏅</div>
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}></div>
             <div>
               <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Rewards Coach</p>
               <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>AI-powered perk advisor · Level up faster</p>
@@ -155,7 +155,7 @@ export default function RewardsCoach({ user, reward }) {
             </div>
             <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(186,203,192,0.1)' }}>
               <div className="h-full rounded-full transition-all duration-700"
-                style={{ width: `${progress}%`, background: 'linear-gradient(90deg,var(--cc-accent),var(--cc-accent-3))', boxShadow: '0 0 8px rgba(var(--cc-accent-rgb),0.4)' }} />
+                style={{ width: `${progress}%`, background: 'linear-gradient(90deg,var(--cc-accent),var(--cc-accent-3))', boxShadow:'0 0 8px rgba(var(--cc-accent-rgb),0.4)' }} />
             </div>
             <p className="text-xs mt-1.5 font-black" style={{ color: 'var(--cc-ink)' }}>{points.toLocaleString()} pts</p>
           </div>
@@ -168,7 +168,7 @@ export default function RewardsCoach({ user, reward }) {
             {STARTER_PROMPTS.map(p => (
               <button key={p} onClick={() => startConversation(p)}
                 className="text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all active:scale-95"
-                style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
+                style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}>
                 {p}
               </button>
             ))}
@@ -179,12 +179,12 @@ export default function RewardsCoach({ user, reward }) {
   }
 
   return (
-    <div className="rounded-3xl overflow-hidden flex flex-col" style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)', height: '420px' }}>
+    <div className="rounded-3xl overflow-hidden flex flex-col" style={{ background: 'var(--cc-bg-1)', border:'1px solid rgba(var(--cc-accent-rgb),0.15)', height:'420px' }}>
       {/* Chat header */}
       <div className="flex items-center gap-3 px-4 py-3 flex-shrink-0"
-        style={{ background: 'var(--cc-bg-2)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+        style={{ background: 'var(--cc-bg-2)', borderBottom:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
         <div className="w-7 h-7 rounded-lg flex items-center justify-center text-sm"
-          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>🏅</div>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}></div>
         <p className="font-display text-sm flex-1" style={{ color: 'var(--cc-ink)' }}>Rewards Coach</p>
         <button onClick={() => { setStarted(false); setMessages([]); setConversation(null); }}
           className="w-7 h-7 rounded-lg flex items-center justify-center"
@@ -209,17 +209,16 @@ export default function RewardsCoach({ user, reward }) {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && sendMessage()}
-            placeholder="Ask about your rewards..."
-            className="flex-1 px-4 py-2.5 rounded-xl text-sm outline-none"
-            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}
+            placeholder="Ask about your rewards..."className="flex-1 px-4 py-2.5 rounded-xl text-sm outline-none"
+            style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}
           />
           <button onClick={sendMessage} disabled={loading || !input.trim()}
             className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all active:scale-95"
             style={input.trim() && !loading
-              ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }
-              : { background: 'var(--cc-bg-3)' }
+              ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))'}
+              : { background:'var(--cc-bg-3)' }
             }>
-            <Send className="w-4 h-4" style={{ color: input.trim() && !loading ? 'var(--cc-accent-deep)' : 'var(--cc-ink-dim)' }} />
+            <Send className="w-4 h-4" style={{ color: input.trim() && !loading ? 'var(--cc-accent-deep)':'var(--cc-ink-dim)' }} />
           </button>
         </div>
       </div>

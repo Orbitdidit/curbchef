@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const PHRASES = [
-  'Scanning nearby trucks...',
-  'Matching your cravings...',
-  'Finding the best bites...',
+const PHRASES = ['Scanning nearby trucks...','Matching your cravings...','Finding the best bites...',
 ];
 
 export default function AssistantLoading() {
@@ -20,8 +17,8 @@ export default function AssistantLoading() {
         <div className="absolute inset-0 rounded-full animate-ping opacity-20"
           style={{ background: 'var(--cc-accent)' }} />
         <div className="absolute inset-0 flex items-center justify-center rounded-full"
-          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.4)' }}>
-          <span className="text-2xl">🍽️</span>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', boxShadow:'0 0 24px rgba(var(--cc-accent-rgb),0.4)' }}>
+          <span className="text-2xl"></span>
         </div>
       </div>
       <p className="font-display text-sm transition-opacity" style={{ color: 'var(--cc-ink)' }}>
