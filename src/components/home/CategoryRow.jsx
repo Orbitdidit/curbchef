@@ -23,8 +23,8 @@ export default function CategoryRow({ selected, onChange }) {
             onClick={() => onChange(cat.id)}
             className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold transition-all duration-200 whitespace-nowrap"
             style={{
-              background: isActive ? '#00F5D4' : '#1A1A1A',
-              color: isActive ? '#0A0A0A' : '#A39E94',
+              background: isActive ? 'var(--cc-accent-2)' : 'var(--cc-surface-3)',
+              color: isActive ? 'var(--cc-black)' : 'var(--cc-ink-muted)',
               border: isActive ? 'none' : '1px solid rgba(255,255,255,0.06)',
             }}
           >

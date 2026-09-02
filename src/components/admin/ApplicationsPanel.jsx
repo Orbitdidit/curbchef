@@ -14,40 +14,40 @@ const VENDOR_TYPE_LABELS = {
 };
 
 const VERIFICATION_COLORS = {
-  pending:      { color: '#fbbf24', bg: 'rgba(251,191,36,0.1)' },
-  verified:     { color: '#77ffc8', bg: 'rgba(119,255,200,0.1)' },
-  rejected:     { color: '#ff3b30', bg: 'rgba(255,59,48,0.1)' },
-  needs_review: { color: '#fd591e', bg: 'rgba(253,89,30,0.1)' },
+  pending:      { color: 'var(--cc-amber)', bg: 'rgba(251,191,36,0.1)' },
+  verified:     { color: 'var(--cc-accent)', bg: 'rgba(var(--cc-accent-rgb),0.1)' },
+  rejected:     { color: 'var(--cc-warm-red)', bg: 'rgba(var(--cc-warm-red-rgb),0.1)' },
+  needs_review: { color: 'var(--cc-warm)', bg: 'rgba(var(--cc-warm-rgb),0.1)' },
 };
 
 function ApplicationCard({ app, onApprove, onReject, isPending }) {
   const [expanded, setExpanded] = useState(false);
 
   const statusStyle = {
-    submitted: { bg: 'rgba(251,191,36,0.12)', color: '#fbbf24', border: 'rgba(251,191,36,0.3)', label: 'SUBMITTED' },
-    approved: { bg: 'rgba(119,255,200,0.10)', color: '#77ffc8', border: 'rgba(119,255,200,0.3)', label: 'APPROVED' },
-    rejected: { bg: 'rgba(255,59,48,0.10)', color: '#ff3b30', border: 'rgba(255,59,48,0.3)', label: 'REJECTED' },
-    draft: { bg: 'rgba(186,203,192,0.08)', color: '#bacbc0', border: 'rgba(186,203,192,0.2)', label: 'DRAFT' },
-  }[app.status || 'draft'] || { bg: 'rgba(186,203,192,0.08)', color: '#bacbc0', border: 'rgba(186,203,192,0.2)', label: 'UNKNOWN' };
+    submitted: { bg: 'rgba(251,191,36,0.12)', color: 'var(--cc-amber)', border: 'rgba(251,191,36,0.3)', label: 'SUBMITTED' },
+    approved: { bg: 'rgba(var(--cc-accent-rgb),0.10)', color: 'var(--cc-accent)', border: 'rgba(var(--cc-accent-rgb),0.3)', label: 'APPROVED' },
+    rejected: { bg: 'rgba(var(--cc-warm-red-rgb),0.10)', color: 'var(--cc-warm-red)', border: 'rgba(var(--cc-warm-red-rgb),0.3)', label: 'REJECTED' },
+    draft: { bg: 'rgba(186,203,192,0.08)', color: 'var(--cc-ink-dim)', border: 'rgba(186,203,192,0.2)', label: 'DRAFT' },
+  }[app.status || 'draft'] || { bg: 'rgba(186,203,192,0.08)', color: 'var(--cc-ink-dim)', border: 'rgba(186,203,192,0.2)', label: 'UNKNOWN' };
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.25)' }}>
+    <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.25)' }}>
       <div className="p-4">
         <div className="flex items-start gap-3">
           {app.logo_url ? (
             <img src={app.logo_url} alt={app.truck_name} className="w-14 h-14 rounded-xl object-cover flex-shrink-0" />
           ) : (
-            <div className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style={{ background: '#2e3638' }}>🚚</div>
+            <div className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style={{ background: 'var(--cc-bg-3)' }}>🚚</div>
           )}
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <p className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>{app.truck_name}</p>
-                <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>{app.owner_name} · {app.email}</p>
-                <p className="text-xs mt-0.5 capitalize" style={{ color: '#bacbc0' }}>{app.cuisine_type?.replace('_', ' ')} · {app.city}</p>
+                <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>{app.truck_name}</p>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{app.owner_name} · {app.email}</p>
+                <p className="text-xs mt-0.5 capitalize" style={{ color: 'var(--cc-ink-dim)' }}>{app.cuisine_type?.replace('_', ' ')} · {app.city}</p>
                 {app.vendor_type && (
                   <span className="text-[10px] font-black px-2 py-0.5 rounded-full mt-1 inline-block"
-                    style={{ background: 'rgba(119,255,200,0.08)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.2)' }}>
+                    style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
                     {VENDOR_TYPE_LABELS[app.vendor_type] || app.vendor_type}
                   </span>
                 )}
@@ -67,7 +67,7 @@ function ApplicationCard({ app, onApprove, onReject, isPending }) {
         <button
           onClick={() => setExpanded(e => !e)}
           className="flex items-center gap-1.5 mt-3 text-xs font-semibold"
-          style={{ color: '#bacbc0' }}
+          style={{ color: 'var(--cc-ink-dim)' }}
         >
           {expanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
           {expanded ? 'Hide details' : 'View details'}
@@ -75,31 +75,31 @@ function ApplicationCard({ app, onApprove, onReject, isPending }) {
       </div>
 
       {expanded && (
-        <div className="px-4 pb-4 border-t" style={{ borderColor: 'rgba(59,74,66,0.2)' }}>
+        <div className="px-4 pb-4 border-t" style={{ borderColor: 'rgba(var(--cc-line-rgb),0.2)' }}>
           <div className="pt-4 flex flex-col gap-4">
             <div className="flex gap-4 flex-wrap">
               {app.phone && (
-                <div className="flex items-center gap-1.5 text-xs" style={{ color: '#bacbc0' }}>
-                  <Phone className="w-3.5 h-3.5" style={{ color: '#77ffc8' }} /> {app.phone}
+                <div className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--cc-ink-dim)' }}>
+                  <Phone className="w-3.5 h-3.5" style={{ color: 'var(--cc-accent)' }} /> {app.phone}
                 </div>
               )}
               {app.instagram && (
-                <div className="flex items-center gap-1.5 text-xs" style={{ color: '#bacbc0' }}>
-                  <Instagram className="w-3.5 h-3.5" style={{ color: '#77ffc8' }} /> {app.instagram}
+                <div className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--cc-ink-dim)' }}>
+                  <Instagram className="w-3.5 h-3.5" style={{ color: 'var(--cc-accent)' }} /> {app.instagram}
                 </div>
               )}
             </div>
 
             {app.menu_items?.length > 0 && (
               <div>
-                <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: '#77ffc8' }}>MENU ITEMS</p>
+                <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: 'var(--cc-accent)' }}>MENU ITEMS</p>
                 <div className="flex flex-col gap-1.5">
                   {app.menu_items.map((item, i) => (
-                    <div key={i} className="flex items-center justify-between px-3 py-2 rounded-xl" style={{ background: '#0d1517' }}>
-                      <span className="text-sm" style={{ color: '#dff0e8' }}>{item.name}</span>
+                    <div key={i} className="flex items-center justify-between px-3 py-2 rounded-xl" style={{ background: 'var(--cc-bg-0)' }}>
+                      <span className="text-sm" style={{ color: 'var(--cc-ink)' }}>{item.name}</span>
                       <div className="flex items-center gap-3">
-                        {item.prep_time && <span className="text-xs" style={{ color: '#bacbc0' }}>~{item.prep_time}min</span>}
-                        <span className="font-bold text-sm" style={{ color: '#77ffc8' }}>${Number(item.price || 0).toFixed(2)}</span>
+                        {item.prep_time && <span className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>~{item.prep_time}min</span>}
+                        <span className="font-bold text-sm" style={{ color: 'var(--cc-accent)' }}>${Number(item.price || 0).toFixed(2)}</span>
                       </div>
                     </div>
                   ))}
@@ -109,7 +109,7 @@ function ApplicationCard({ app, onApprove, onReject, isPending }) {
 
             {app.food_images?.length > 0 && (
               <div>
-                <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: '#77ffc8' }}>FOOD PHOTOS</p>
+                <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: 'var(--cc-accent)' }}>FOOD PHOTOS</p>
                 <div className="flex gap-2 overflow-x-auto no-scrollbar">
                   {app.food_images.map((url, i) => (
                     <img key={i} src={url} alt="food" className="w-20 h-20 rounded-xl object-cover flex-shrink-0" />
@@ -121,38 +121,38 @@ function ApplicationCard({ app, onApprove, onReject, isPending }) {
             {/* Permit & verification info */}
             {(app.permit_doc_url || app.food_handler_cert_url || app.commissary_info || app.event_authorization_info) && (
               <div>
-                <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: '#fbbf24' }}>PERMITS & VERIFICATION DOCS</p>
+                <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: 'var(--cc-amber)' }}>PERMITS & VERIFICATION DOCS</p>
                 <div className="flex flex-col gap-2">
                   {app.health_permit_status && (
                     <div className="flex items-center gap-2">
-                      <ShieldCheck className="w-3.5 h-3.5" style={{ color: '#77ffc8' }} />
-                      <span className="text-xs" style={{ color: '#bacbc0' }}>Health Permit: <strong style={{ color: '#dff0e8' }}>{app.health_permit_status?.replace('_', ' ')}</strong></span>
+                      <ShieldCheck className="w-3.5 h-3.5" style={{ color: 'var(--cc-accent)' }} />
+                      <span className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Health Permit: <strong style={{ color: 'var(--cc-ink)' }}>{app.health_permit_status?.replace('_', ' ')}</strong></span>
                     </div>
                   )}
                   {app.permit_doc_url && (
                     <a href={app.permit_doc_url} target="_blank" rel="noopener noreferrer"
                       className="flex items-center gap-2 text-xs py-2 px-3 rounded-xl"
-                      style={{ background: 'rgba(119,255,200,0.08)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.2)' }}>
+                      style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
                       <FileText className="w-3.5 h-3.5" /> View Permit Document ↗
                     </a>
                   )}
                   {app.food_handler_cert_url && (
                     <a href={app.food_handler_cert_url} target="_blank" rel="noopener noreferrer"
                       className="flex items-center gap-2 text-xs py-2 px-3 rounded-xl"
-                      style={{ background: 'rgba(119,255,200,0.08)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.2)' }}>
+                      style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
                       <FileText className="w-3.5 h-3.5" /> View Food Handler Cert ↗
                     </a>
                   )}
                   {app.commissary_info && (
-                    <div className="p-2 rounded-xl" style={{ background: '#0d1517' }}>
-                      <p className="text-[10px] font-bold mb-1" style={{ color: '#bacbc0' }}>COMMISSARY / KITCHEN</p>
-                      <p className="text-xs" style={{ color: '#dff0e8' }}>{app.commissary_info}</p>
+                    <div className="p-2 rounded-xl" style={{ background: 'var(--cc-bg-0)' }}>
+                      <p className="text-[10px] font-bold mb-1" style={{ color: 'var(--cc-ink-dim)' }}>COMMISSARY / KITCHEN</p>
+                      <p className="text-xs" style={{ color: 'var(--cc-ink)' }}>{app.commissary_info}</p>
                     </div>
                   )}
                   {app.event_authorization_info && (
-                    <div className="p-2 rounded-xl" style={{ background: '#0d1517' }}>
-                      <p className="text-[10px] font-bold mb-1" style={{ color: '#bacbc0' }}>EVENT / LOCATION AUTH</p>
-                      <p className="text-xs" style={{ color: '#dff0e8' }}>{app.event_authorization_info}</p>
+                    <div className="p-2 rounded-xl" style={{ background: 'var(--cc-bg-0)' }}>
+                      <p className="text-[10px] font-bold mb-1" style={{ color: 'var(--cc-ink-dim)' }}>EVENT / LOCATION AUTH</p>
+                      <p className="text-xs" style={{ color: 'var(--cc-ink)' }}>{app.event_authorization_info}</p>
                     </div>
                   )}
                 </div>
@@ -161,14 +161,14 @@ function ApplicationCard({ app, onApprove, onReject, isPending }) {
 
             {app.kitchen_check_photo && (
               <div>
-                <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: '#77ffc8' }}>KITCHEN CHECK PHOTO</p>
+                <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: 'var(--cc-accent)' }}>KITCHEN CHECK PHOTO</p>
                 <img src={app.kitchen_check_photo} alt="Kitchen" className="w-full max-w-xs rounded-xl object-cover" style={{ maxHeight: 180 }} />
               </div>
             )}
 
             {app.truck_photo_url && (
               <div>
-                <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: '#77ffc8' }}>TRUCK PHOTO</p>
+                <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: 'var(--cc-accent)' }}>TRUCK PHOTO</p>
                 <img src={app.truck_photo_url} alt="Truck" className="w-full rounded-xl object-cover" style={{ maxHeight: 200 }} />
               </div>
             )}
@@ -182,7 +182,7 @@ function ApplicationCard({ app, onApprove, onReject, isPending }) {
             onClick={() => onApprove(app)}
             disabled={isPending}
             className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full font-heading font-black text-sm transition-all active:scale-95"
-            style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 16px rgba(119,255,200,0.3)' }}
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 16px rgba(var(--cc-accent-rgb),0.3)' }}
           >
             <CheckCircle className="w-4 h-4" />
             Approve Truck
@@ -191,7 +191,7 @@ function ApplicationCard({ app, onApprove, onReject, isPending }) {
             onClick={() => onReject(app)}
             disabled={isPending}
             className="flex items-center justify-center gap-2 px-5 py-3 rounded-full font-bold text-sm transition-all active:scale-95"
-            style={{ background: 'rgba(255,59,48,0.12)', color: '#ff3b30', border: '1px solid rgba(255,59,48,0.25)' }}
+            style={{ background: 'rgba(var(--cc-warm-red-rgb),0.12)', color: 'var(--cc-warm-red)', border: '1px solid rgba(var(--cc-warm-red-rgb),0.25)' }}
           >
             <XCircle className="w-4 h-4" />
             Reject
@@ -295,7 +295,7 @@ export default function ApplicationsPanel() {
   if (isLoading) {
     return (
       <div className="flex flex-col gap-3">
-        {[1, 2].map(i => <div key={i} className="h-28 rounded-2xl animate-pulse" style={{ background: '#192123' }} />)}
+        {[1, 2].map(i => <div key={i} className="h-28 rounded-2xl animate-pulse" style={{ background: 'var(--cc-bg-2)' }} />)}
       </div>
     );
   }
@@ -305,9 +305,9 @@ export default function ApplicationsPanel() {
       {submitted.length > 0 ? (
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
-            <p className="text-[10px] font-bold tracking-widest" style={{ color: '#fbbf24' }}>PENDING REVIEW</p>
+            <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-amber)' }}>PENDING REVIEW</p>
             <span className="text-[10px] font-black px-2 py-0.5 rounded-full"
-              style={{ background: 'rgba(251,191,36,0.15)', color: '#fbbf24' }}>
+              style={{ background: 'rgba(251,191,36,0.15)', color: 'var(--cc-amber)' }}>
               {submitted.length}
             </span>
           </div>
@@ -324,14 +324,14 @@ export default function ApplicationsPanel() {
       ) : (
         <div className="text-center py-10 mb-6">
           <p className="text-3xl mb-2">🎉</p>
-          <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>No pending applications</p>
-          <p className="text-xs mt-1" style={{ color: '#bacbc0' }}>All caught up!</p>
+          <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>No pending applications</p>
+          <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-dim)' }}>All caught up!</p>
         </div>
       )}
 
       {reviewed.length > 0 && (
         <div>
-          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#bacbc0' }}>PREVIOUSLY REVIEWED</p>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: 'var(--cc-ink-dim)' }}>PREVIOUSLY REVIEWED</p>
           <div className="flex flex-col gap-3">
             {reviewed.map(app => (
               <ApplicationCard key={app.id} app={app}

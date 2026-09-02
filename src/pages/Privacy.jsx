@@ -35,36 +35,36 @@ const SECTIONS = [
 
 export default function Privacy() {
   return (
-    <div className="min-h-screen pb-20" style={{ background: '#0d1517' }}>
+    <div className="min-h-screen pb-20" style={{ background: 'var(--cc-bg-0)' }}>
       <div className="flex items-center gap-3 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-20"
-        style={{ background: 'rgba(13,21,23,0.97)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(59,74,66,0.12)' }}>
-        <Link to="/" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-          <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
+        style={{ background: 'rgba(13,21,23,0.97)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.12)' }}>
+        <Link to="/" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
+          <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </Link>
         <div>
-          <p className="font-heading font-black text-base" style={{ color: '#77ffc8' }}>Privacy Policy</p>
-          <p className="text-[10px]" style={{ color: '#bacbc0' }}>Last updated April 2026</p>
+          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-accent)' }}>Privacy Policy</p>
+          <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>Last updated April 2026</p>
         </div>
       </div>
 
       <div className="px-5 pt-6 max-w-2xl mx-auto">
-        <h1 className="font-heading font-black text-2xl mb-2" style={{ color: '#dff0e8' }}>Your Privacy Matters</h1>
-        <p className="text-sm mb-8" style={{ color: '#bacbc0' }}>
+        <h1 className="font-heading font-black text-2xl mb-2" style={{ color: 'var(--cc-ink)' }}>Your Privacy Matters</h1>
+        <p className="text-sm mb-8" style={{ color: 'var(--cc-ink-dim)' }}>
           CurbChef is built on trust. Here's exactly how we handle your data — plainly, no legal jargon.
         </p>
 
         <div className="flex flex-col gap-5">
           {SECTIONS.map(({ title, body }) => (
-            <div key={title} className="p-5 rounded-2xl" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}>
-              <p className="font-heading font-bold text-sm mb-2" style={{ color: '#dff0e8' }}>{title}</p>
-              <p className="text-sm leading-relaxed" style={{ color: '#bacbc0' }}>{body}</p>
+            <div key={title} className="p-5 rounded-2xl" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+              <p className="font-heading font-bold text-sm mb-2" style={{ color: 'var(--cc-ink)' }}>{title}</p>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--cc-ink-dim)' }}>{body}</p>
             </div>
           ))}
         </div>
 
         <div className="mt-8 flex flex-col gap-3">
-          <Link to="/terms" className="text-center text-sm font-semibold" style={{ color: '#77ffc8' }}>Terms of Service →</Link>
-          <Link to="/support" className="text-center text-sm font-semibold" style={{ color: '#77ffc8' }}>Support →</Link>
+          <Link to="/terms" className="text-center text-sm font-semibold" style={{ color: 'var(--cc-accent)' }}>Terms of Service →</Link>
+          <Link to="/support" className="text-center text-sm font-semibold" style={{ color: 'var(--cc-accent)' }}>Support →</Link>
         </div>
       </div>
     </div>

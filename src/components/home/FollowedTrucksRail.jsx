@@ -23,7 +23,7 @@ export default function FollowedTrucksRail({ user, trucks }) {
     <div className="mt-6">
       <div className="flex items-center justify-between px-5 mb-3">
         <p className="text-[10px] font-black tracking-widest" style={{ color: 'rgba(186,203,192,0.5)' }}>YOUR TRUCKS</p>
-        <span className="text-xs font-bold" style={{ color: '#bacbc0' }}>{followedTrucks.length} following</span>
+        <span className="text-xs font-bold" style={{ color: 'var(--cc-ink-dim)' }}>{followedTrucks.length} following</span>
       </div>
       <div className="flex gap-3 px-5 overflow-x-auto no-scrollbar pb-1">
         {followedTrucks.map(truck => {
@@ -33,8 +33,8 @@ export default function FollowedTrucksRail({ user, trucks }) {
             <Link key={truck.id} to={`/truck/${truck.id}`} className="flex flex-col items-center gap-1.5 flex-shrink-0">
               {/* Avatar ring */}
               <div className="relative"
-                style={{ padding: 2, borderRadius: '50%', background: isLive ? 'linear-gradient(135deg,#ff3b30,#ff6b60)' : isOpen ? 'linear-gradient(135deg,#77ffc8,#00e6a7)' : '#2e3638' }}>
-                <div className="w-14 h-14 rounded-full overflow-hidden" style={{ background: '#192123' }}>
+                style={{ padding: 2, borderRadius: '50%', background: isLive ? 'linear-gradient(135deg,var(--cc-warm-red),#ff6b60)' : isOpen ? 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' : 'var(--cc-bg-3)' }}>
+                <div className="w-14 h-14 rounded-full overflow-hidden" style={{ background: 'var(--cc-bg-2)' }}>
                   {truck.image_url ? (
                     <img src={truck.image_url} alt={truck.name} className="w-full h-full object-cover" />
                   ) : (
@@ -43,19 +43,19 @@ export default function FollowedTrucksRail({ user, trucks }) {
                 </div>
                 {isLive && (
                   <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full flex items-center justify-center"
-                    style={{ background: '#ff3b30', border: '2px solid #0d1517' }}>
+                    style={{ background: 'var(--cc-warm-red)', border: '2px solid var(--cc-bg-0)' }}>
                     <Radio className="w-2.5 h-2.5 text-white" />
                   </div>
                 )}
                 {!isLive && isOpen && (
                   <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full"
-                    style={{ background: '#77ffc8', border: '2px solid #0d1517' }} />
+                    style={{ background: 'var(--cc-accent)', border: '2px solid var(--cc-bg-0)' }} />
                 )}
               </div>
-              <p className="text-[10px] font-bold text-center max-w-[64px] truncate" style={{ color: '#bacbc0' }}>{truck.name}</p>
+              <p className="text-[10px] font-bold text-center max-w-[64px] truncate" style={{ color: 'var(--cc-ink-dim)' }}>{truck.name}</p>
               {isLive && (
                 <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full"
-                  style={{ background: 'rgba(255,59,48,0.15)', color: '#ff3b30' }}>LIVE</span>
+                  style={{ background: 'rgba(var(--cc-warm-red-rgb),0.15)', color: 'var(--cc-warm-red)' }}>LIVE</span>
               )}
             </Link>
           );

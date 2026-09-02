@@ -38,41 +38,41 @@ export default function TodaysHours({ truck, onUpdate }) {
   };
 
   return (
-    <div className="mb-5 p-4 rounded-2xl" style={{ background: '#192123', border: '1px solid rgba(119,255,200,0.1)' }}>
+    <div className="mb-5 p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-accent-rgb),0.1)' }}>
       <div className="flex items-center gap-2 mb-4">
-        <Clock className="w-4 h-4" style={{ color: '#77ffc8' }} />
-        <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>TODAY'S HOURS</p>
-        {saving && <span className="text-[10px]" style={{ color: '#bacbc0' }}>Saving...</span>}
+        <Clock className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
+        <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-accent)' }}>TODAY'S HOURS</p>
+        {saving && <span className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>Saving...</span>}
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-4">
         {/* Open time */}
         <div>
-          <label className="block text-[10px] font-bold mb-1.5" style={{ color: '#bacbc0' }}>OPENS AT</label>
+          <label className="block text-[10px] font-bold mb-1.5" style={{ color: 'var(--cc-ink-dim)' }}>OPENS AT</label>
           <input
             type="time"
             value={open}
             onChange={e => handleChange('scheduled_open_time', e.target.value)}
             className="w-full rounded-xl px-3 py-2.5 text-sm font-bold outline-none"
-            style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)', colorScheme: 'dark' }}
+            style={{ background: 'var(--cc-bg-0)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)', colorScheme: 'dark' }}
           />
           {open && (
-            <p className="text-[10px] mt-1 font-semibold" style={{ color: '#77ffc8' }}>{fmt12(open)}</p>
+            <p className="text-[10px] mt-1 font-semibold" style={{ color: 'var(--cc-accent)' }}>{fmt12(open)}</p>
           )}
         </div>
 
         {/* Close time */}
         <div>
-          <label className="block text-[10px] font-bold mb-1.5" style={{ color: '#bacbc0' }}>CLOSES AT</label>
+          <label className="block text-[10px] font-bold mb-1.5" style={{ color: 'var(--cc-ink-dim)' }}>CLOSES AT</label>
           <input
             type="time"
             value={close}
             onChange={e => handleChange('scheduled_close_time', e.target.value)}
             className="w-full rounded-xl px-3 py-2.5 text-sm font-bold outline-none"
-            style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)', colorScheme: 'dark' }}
+            style={{ background: 'var(--cc-bg-0)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)', colorScheme: 'dark' }}
           />
           {close && (
-            <p className="text-[10px] mt-1 font-semibold" style={{ color: '#77ffc8' }}>{fmt12(close)}</p>
+            <p className="text-[10px] mt-1 font-semibold" style={{ color: 'var(--cc-accent)' }}>{fmt12(close)}</p>
           )}
         </div>
       </div>
@@ -92,8 +92,8 @@ export default function TodaysHours({ truck, onUpdate }) {
               disabled={!close || saving}
               className="flex-1 flex items-center justify-center gap-1 py-2 rounded-xl text-xs font-black transition-all active:scale-95"
               style={close
-                ? { background: 'rgba(119,255,200,0.08)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.2)' }
-                : { background: '#192123', color: '#bacbc0', opacity: 0.4 }
+                ? { background: 'rgba(var(--cc-accent-rgb),0.08)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }
+                : { background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', opacity: 0.4 }
               }
             >
               <Plus className="w-3 h-3" />

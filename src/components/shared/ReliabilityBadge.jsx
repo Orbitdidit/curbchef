@@ -12,8 +12,8 @@ export default function ReliabilityBadge({ score, size = 'sm' }) {
   const isGreen = score >= 95;
   const label = isGreen ? '🟢 On Time' : '🟡 Usually On Time';
   const style = isGreen
-    ? { background: 'rgba(119,255,200,0.12)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.3)' }
-    : { background: 'rgba(251,191,36,0.12)', color: '#fbbf24', border: '1px solid rgba(251,191,36,0.3)' };
+    ? { background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }
+    : { background: 'rgba(251,191,36,0.12)', color: 'var(--cc-amber)', border: '1px solid rgba(251,191,36,0.3)' };
 
   return (
     <span

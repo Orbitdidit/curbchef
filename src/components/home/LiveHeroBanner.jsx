@@ -7,25 +7,25 @@ const SLIDES = [
     img: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&auto=format&fit=crop',
     label: 'BAYOU LIVE',
     title: 'Gulf Shrimp hitting\nthe grill now',
-    accent: '#ff3b30',
+    accent: 'var(--cc-warm-red)',
   },
   {
     img: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=900&auto=format&fit=crop',
     label: 'LIVE FIRE',
     title: 'Skewers over\nopen flame',
-    accent: '#fd591e',
+    accent: 'var(--cc-warm)',
   },
   {
     img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=900&auto=format&fit=crop',
     label: 'FRESH OUT',
     title: 'Neapolitan pies,\nfresh from the oven',
-    accent: '#fbbf24',
+    accent: 'var(--cc-amber)',
   },
   {
     img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=900&auto=format&fit=crop',
     label: 'TRENDING',
     title: 'Wagyu sliders\ngoing viral',
-    accent: '#77ffc8',
+    accent: 'var(--cc-accent)',
   },
 ];
 
@@ -86,7 +86,7 @@ export default function LiveHeroBanner({ liveTrucks = [], openTrucks = [] }) {
         <div className="flex gap-2">
           <Link to="/live"
             className="flex items-center gap-1.5 px-4 py-2 rounded-full font-black text-xs"
-            style={{ background: slide.accent === '#77ffc8' ? 'linear-gradient(135deg,#77ffc8,#00e6a7)' : slide.accent, color: slide.accent === '#77ffc8' ? '#003826' : '#fff' }}>
+            style={{ background: slide.accent === 'var(--cc-accent)' ? 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' : slide.accent, color: slide.accent === 'var(--cc-accent)' ? 'var(--cc-accent-deep)' : '#fff' }}>
             <Play className="w-3 h-3" fill="currentColor" />
             Watch Live
           </Link>

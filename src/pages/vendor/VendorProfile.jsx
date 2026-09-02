@@ -41,40 +41,40 @@ function MenuAvailabilityToggle({ truckId }) {
 
   if (isLoading) return (
     <div className="flex items-center justify-center py-12">
-      <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
+      <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: 'var(--cc-accent) transparent transparent transparent' }} />
     </div>
   );
 
   if (!menuItems.length) return (
     <div className="text-center py-10">
       <p className="text-2xl mb-2">🍽️</p>
-      <p className="text-sm font-bold" style={{ color: '#dff0e8' }}>No menu items yet</p>
-      <p className="text-xs mt-1" style={{ color: '#bacbc0' }}>Add items from the Menu tab first</p>
+      <p className="text-sm font-bold" style={{ color: 'var(--cc-ink)' }}>No menu items yet</p>
+      <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-dim)' }}>Add items from the Menu tab first</p>
     </div>
   );
 
   return (
     <div className="space-y-5">
-      <p className="text-xs" style={{ color: '#bacbc0' }}>Toggle items on or off instantly — changes save automatically.</p>
+      <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Toggle items on or off instantly — changes save automatically.</p>
       {Object.entries(grouped).map(([cat, items]) => (
         <div key={cat}>
-          <p className="text-[10px] font-black tracking-widest mb-3 capitalize" style={{ color: '#77ffc8' }}>{cat}</p>
+          <p className="text-[10px] font-black tracking-widest mb-3 capitalize" style={{ color: 'var(--cc-accent)' }}>{cat}</p>
           <div className="flex flex-col gap-2">
             {items.map(item => (
               <div key={item.id}
                 className="flex items-center gap-3 p-3.5 rounded-2xl transition-all"
                 style={{
-                  background: item.is_available ? 'rgba(119,255,200,0.05)' : '#0d1517',
-                  border: `1px solid ${item.is_available ? 'rgba(119,255,200,0.15)' : 'rgba(59,74,66,0.2)'}`,
+                  background: item.is_available ? 'rgba(var(--cc-accent-rgb),0.05)' : 'var(--cc-bg-0)',
+                  border: `1px solid ${item.is_available ? 'rgba(var(--cc-accent-rgb),0.15)' : 'rgba(var(--cc-line-rgb),0.2)'}`,
                 }}>
                 {item.image_url && (
                   <img src={item.image_url} alt={item.name} className="w-10 h-10 rounded-xl object-cover flex-shrink-0" />
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="font-heading font-bold text-sm truncate" style={{ color: item.is_available ? '#dff0e8' : '#6B665C' }}>
+                  <p className="font-heading font-bold text-sm truncate" style={{ color: item.is_available ? 'var(--cc-ink)' : 'var(--cc-ink-faint)' }}>
                     {item.name}
                   </p>
-                  <p className="text-xs" style={{ color: '#bacbc0' }}>${item.price?.toFixed(2)}</p>
+                  <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>${item.price?.toFixed(2)}</p>
                 </div>
                 <button
                   onClick={() => toggleMutation.mutate({ id: item.id, is_available: !item.is_available })}
@@ -82,7 +82,7 @@ function MenuAvailabilityToggle({ truckId }) {
                   className="flex-shrink-0 transition-all"
                 >
                   {item.is_available
-                    ? <ToggleRight className="w-8 h-8" style={{ color: '#77ffc8' }} />
+                    ? <ToggleRight className="w-8 h-8" style={{ color: 'var(--cc-accent)' }} />
                     : <ToggleLeft className="w-8 h-8" style={{ color: '#3a4a42' }} />
                   }
                 </button>
@@ -145,28 +145,28 @@ function VendorProfileInner({ truck, user }) {
   });
 
   const inputStyle = {
-    background: '#0d1517', color: '#dff0e8',
-    border: '1px solid rgba(59,74,66,0.4)', borderRadius: '0.75rem',
+    background: 'var(--cc-bg-0)', color: 'var(--cc-ink)',
+    border: '1px solid rgba(var(--cc-line-rgb),0.4)', borderRadius: '0.75rem',
     padding: '10px 14px', fontSize: '0.875rem', outline: 'none', width: '100%',
   };
-  const labelStyle = { color: '#bacbc0', fontSize: '10px', fontWeight: '700', letterSpacing: '0.1em', display: 'block', marginBottom: '6px' };
+  const labelStyle = { color: 'var(--cc-ink-dim)', fontSize: '10px', fontWeight: '700', letterSpacing: '0.1em', display: 'block', marginBottom: '6px' };
 
   return (
-    <div className="min-h-screen pb-24" style={{ background: '#0d1517' }}>
+    <div className="min-h-screen pb-24" style={{ background: 'var(--cc-bg-0)' }}>
       {/* Header */}
       <div className="flex items-center gap-3 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-20"
-        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(59,74,66,0.12)' }}>
-        <button onClick={() => navigate('/vendor')} className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-          <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
+        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.12)' }}>
+        <button onClick={() => navigate('/vendor')} className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
+          <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </button>
         <div className="flex-1">
-          <p className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>Edit Profile</p>
-          <p className="text-xs" style={{ color: '#bacbc0' }}>{truck.name}</p>
+          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>Edit Profile</p>
+          <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>{truck.name}</p>
         </div>
         {activeTab !== 'menu' && (
           <button onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}
             className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-black"
-            style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
             <Save className="w-3.5 h-3.5" />
             {saveMutation.isPending ? 'Saving...' : 'Save'}
           </button>
@@ -179,8 +179,8 @@ function VendorProfileInner({ truck, user }) {
           <button key={id} onClick={() => setActiveTab(id)}
             className="flex-1 flex flex-col items-center gap-1 py-2.5 rounded-2xl text-xs font-bold transition-all"
             style={activeTab === id
-              ? { background: 'rgba(119,255,200,0.1)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.25)' }
-              : { background: '#192123', color: '#bacbc0', border: '1px solid transparent' }
+              ? { background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }
+              : { background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid transparent' }
             }>
             <Icon className="w-4 h-4" />
             {label}
@@ -202,7 +202,7 @@ function VendorProfileInner({ truck, user }) {
               <textarea style={{ ...inputStyle, resize: 'none' }} rows={4}
                 value={form.description} onChange={e => set('description', e.target.value)}
                 placeholder="Tell customers what makes your truck special..." />
-              <p className="text-[10px] mt-1" style={{ color: '#6B665C' }}>{form.description.length} chars</p>
+              <p className="text-[10px] mt-1" style={{ color: 'var(--cc-ink-faint)' }}>{form.description.length} chars</p>
             </div>
             <div>
               <label style={labelStyle}>CUISINE TYPE</label>
@@ -238,14 +238,14 @@ function VendorProfileInner({ truck, user }) {
               </select>
             </div>
             {/* Replay Tour */}
-            <div className="pt-2 border-t" style={{ borderColor: 'rgba(59,74,66,0.2)' }}>
-              <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: '#bacbc0' }}>SETTINGS</p>
+            <div className="pt-2 border-t" style={{ borderColor: 'rgba(var(--cc-line-rgb),0.2)' }}>
+              <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: 'var(--cc-ink-dim)' }}>SETTINGS</p>
               <button
                 onClick={handleReplayTour}
                 className="flex items-center gap-2 px-4 py-3 rounded-2xl text-sm font-bold w-full"
-                style={{ background: '#192123', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }}
+                style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}
               >
-                <RotateCcw className="w-4 h-4" style={{ color: '#77ffc8' }} />
+                <RotateCcw className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
                 Replay Welcome Tour
               </button>
             </div>
@@ -266,7 +266,7 @@ function VendorProfileInner({ truck, user }) {
             )}
             <button onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}
               className="w-full py-4 rounded-full font-heading font-black text-base"
-              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 20px rgba(119,255,200,0.3)' }}>
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}>
               {saveMutation.isPending ? 'Saving...' : 'Save Changes'}
             </button>
           </>
@@ -284,7 +284,7 @@ function VendorProfileInner({ truck, user }) {
               hint="Square · Used in cards and search results" />
             <button onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}
               className="w-full py-4 rounded-full font-heading font-black text-base"
-              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 20px rgba(119,255,200,0.3)' }}>
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}>
               {saveMutation.isPending ? 'Saving...' : 'Save Images'}
             </button>
           </>

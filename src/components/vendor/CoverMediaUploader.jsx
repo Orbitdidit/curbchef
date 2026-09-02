@@ -52,7 +52,7 @@ export default function CoverMediaUploader({ value = [], onChange }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <label className="text-[10px] font-bold tracking-wider" style={{ color: '#bacbc0' }}>
+        <label className="text-[10px] font-bold tracking-wider" style={{ color: 'var(--cc-ink-dim)' }}>
           COVER MEDIA ({value.length}/{MAX_ITEMS}) — images, GIFs, videos
         </label>
         <span className="text-[10px]" style={{ color: 'rgba(186,203,192,0.5)' }}>drag to reorder</span>
@@ -69,8 +69,8 @@ export default function CoverMediaUploader({ value = [], onChange }) {
             className="relative rounded-2xl overflow-hidden"
             style={{
               aspectRatio: '16/9',
-              border: overIdx === idx ? '2px solid #77ffc8' : '1px solid rgba(59,74,66,0.3)',
-              background: '#192123',
+              border: overIdx === idx ? '2px solid var(--cc-accent)' : '1px solid rgba(var(--cc-line-rgb),0.3)',
+              background: 'var(--cc-bg-2)',
               opacity: dragIdx === idx ? 0.5 : 1,
               cursor: 'grab',
             }}
@@ -82,18 +82,18 @@ export default function CoverMediaUploader({ value = [], onChange }) {
             )}
             {/* Type badge */}
             <span className="absolute bottom-1.5 left-1.5 text-[9px] font-black px-1.5 py-0.5 rounded-full uppercase"
-              style={{ background: 'rgba(13,21,23,0.8)', color: '#77ffc8' }}>
+              style={{ background: 'rgba(13,21,23,0.8)', color: 'var(--cc-accent)' }}>
               {item.type}
             </span>
             {/* Drag handle */}
             <div className="absolute top-1.5 left-1.5 w-6 h-6 rounded-lg flex items-center justify-center"
               style={{ background: 'rgba(13,21,23,0.7)' }}>
-              <GripVertical className="w-3 h-3" style={{ color: '#bacbc0' }} />
+              <GripVertical className="w-3 h-3" style={{ color: 'var(--cc-ink-dim)' }} />
             </div>
             {/* Remove */}
             <button onClick={() => remove(idx)}
               className="absolute top-1.5 right-1.5 w-6 h-6 rounded-lg flex items-center justify-center"
-              style={{ background: 'rgba(255,59,48,0.85)' }}>
+              style={{ background: 'rgba(var(--cc-warm-red-rgb),0.85)' }}>
               <Trash2 className="w-3 h-3 text-white" />
             </button>
           </div>
@@ -107,13 +107,13 @@ export default function CoverMediaUploader({ value = [], onChange }) {
             className="relative rounded-2xl flex flex-col items-center justify-center gap-2 transition-all"
             style={{
               aspectRatio: '16/9',
-              border: '2px dashed rgba(119,255,200,0.25)',
-              background: 'rgba(119,255,200,0.03)',
-              color: '#77ffc8',
+              border: '2px dashed rgba(var(--cc-accent-rgb),0.25)',
+              background: 'rgba(var(--cc-accent-rgb),0.03)',
+              color: 'var(--cc-accent)',
             }}
           >
             {uploading ? (
-              <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
+              <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'var(--cc-accent) transparent transparent transparent' }} />
             ) : (
               <>
                 <Plus className="w-5 h-5" />

@@ -56,17 +56,17 @@ export default function ReferFriendModal({ user, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}>
-      <div className="w-full max-w-lg rounded-t-3xl p-6 pb-10" style={{ background: '#151d1f', border: '1px solid rgba(119,255,200,0.15)' }}>
+      <div className="w-full max-w-lg rounded-t-3xl p-6 pb-10" style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
         <div className="flex items-center justify-between mb-5">
-          <h2 className="font-heading font-black text-lg" style={{ color: '#dff0e8' }}>Refer a Friend 🎁</h2>
-          <button onClick={onClose} className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: '#2e3638' }}>
-            <X className="w-4 h-4" style={{ color: '#bacbc0' }} />
+          <h2 className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>Refer a Friend 🎁</h2>
+          <button onClick={onClose} className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-3)' }}>
+            <X className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />
           </button>
         </div>
 
         {/* How it works */}
-        <div className="p-4 rounded-2xl mb-5" style={{ background: '#192123', border: '1px solid rgba(119,255,200,0.1)' }}>
-          <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: '#77ffc8' }}>HOW IT WORKS</p>
+        <div className="p-4 rounded-2xl mb-5" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-accent-rgb),0.1)' }}>
+          <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: 'var(--cc-accent)' }}>HOW IT WORKS</p>
           <div className="flex flex-col gap-2">
             {[
               { step: '1', text: 'Share your link with a friend' },
@@ -75,27 +75,27 @@ export default function ReferFriendModal({ user, onClose }) {
             ].map(({ step, text }) => (
               <div key={step} className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-black"
-                  style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>{step}</div>
-                <p className="text-sm" style={{ color: '#bacbc0' }}>{text}</p>
+                  style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>{step}</div>
+                <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>{text}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Referral code */}
-        <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: '#bacbc0' }}>YOUR CODE</p>
-        <div className="flex items-center gap-3 p-4 rounded-2xl mb-4" style={{ background: '#0d1517', border: '1px solid rgba(119,255,200,0.2)' }}>
-          <p className="font-heading font-black text-2xl tracking-widest flex-1" style={{ color: '#77ffc8' }}>{referralCode}</p>
+        <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: 'var(--cc-ink-dim)' }}>YOUR CODE</p>
+        <div className="flex items-center gap-3 p-4 rounded-2xl mb-4" style={{ background: 'var(--cc-bg-0)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
+          <p className="font-heading font-black text-2xl tracking-widest flex-1" style={{ color: 'var(--cc-accent)' }}>{referralCode}</p>
           <button onClick={handleCopy} className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{ background: copied ? 'rgba(119,255,200,0.15)' : '#2e3638' }}>
-            {copied ? <Check className="w-4 h-4" style={{ color: '#77ffc8' }} /> : <Copy className="w-4 h-4" style={{ color: '#bacbc0' }} />}
+            style={{ background: copied ? 'rgba(var(--cc-accent-rgb),0.15)' : 'var(--cc-bg-3)' }}>
+            {copied ? <Check className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} /> : <Copy className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />}
           </button>
         </div>
 
         {/* Share button */}
         <button onClick={handleShare}
           className="w-full py-4 rounded-full font-heading font-black text-base flex items-center justify-center gap-2"
-          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 20px rgba(119,255,200,0.35)' }}>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.35)' }}>
           <Share2 className="w-5 h-5" />
           Share My Link
         </button>

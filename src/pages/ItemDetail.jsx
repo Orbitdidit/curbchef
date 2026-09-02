@@ -39,8 +39,8 @@ export default function ItemDetail() {
 
   if (!item) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0d1517' }}>
-        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--cc-bg-0)' }}>
+        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'var(--cc-accent) transparent transparent transparent' }} />
       </div>
     );
   }
@@ -77,7 +77,7 @@ export default function ItemDetail() {
 
 
   return (
-    <div className="min-h-screen" style={{ background: '#0d1517' }}>
+    <div className="min-h-screen" style={{ background: 'var(--cc-bg-0)' }}>
       {/* Hero image */}
       <div className="relative h-72">
         <img
@@ -85,7 +85,7 @@ export default function ItemDetail() {
           alt={item.name}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0d1517] via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--cc-bg-0)] via-transparent to-transparent" />
 
         {/* Nav */}
         <div className="absolute top-[max(1rem,env(safe-area-inset-top))] left-4 right-4 flex items-center justify-between">
@@ -107,7 +107,7 @@ export default function ItemDetail() {
         {/* Border glow on selected item */}
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{ border: '2px solid rgba(119,255,200,0.1)', borderRadius: 'inherit' }}
+          style={{ border: '2px solid rgba(var(--cc-accent-rgb),0.1)', borderRadius: 'inherit' }}
         />
       </div>
 
@@ -115,14 +115,14 @@ export default function ItemDetail() {
       <div className="px-5 -mt-4 relative z-10 pb-40">
         {/* Name + price */}
         <div className="flex items-start justify-between mb-3">
-          <h1 className="font-heading font-black text-2xl leading-tight flex-1 mr-4" style={{ color: '#dff0e8' }}>
+          <h1 className="font-heading font-black text-2xl leading-tight flex-1 mr-4" style={{ color: 'var(--cc-ink)' }}>
             {item.name}
           </h1>
           <div className="text-right flex-shrink-0">
-            <p className="font-heading font-black text-2xl" style={{ color: '#77ffc8' }}>
+            <p className="font-heading font-black text-2xl" style={{ color: 'var(--cc-accent)' }}>
               ${item.price?.toFixed(2)}
             </p>
-            <p className="text-[10px] font-bold" style={{ color: '#bacbc0' }}>PER {item.category?.toUpperCase()}</p>
+            <p className="text-[10px] font-bold" style={{ color: 'var(--cc-ink-dim)' }}>PER {item.category?.toUpperCase()}</p>
           </div>
         </div>
 
@@ -130,20 +130,20 @@ export default function ItemDetail() {
         <div className="flex items-center gap-3 mb-4">
           <div className="flex items-center gap-1">
             <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-            <span className="text-sm font-bold" style={{ color: '#dff0e8' }}>4.8</span>
-            <span className="text-xs" style={{ color: '#bacbc0' }}>(100 reviews)</span>
+            <span className="text-sm font-bold" style={{ color: 'var(--cc-ink)' }}>4.8</span>
+            <span className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>(100 reviews)</span>
           </div>
           {item.is_special && (
             <span
               className="text-[10px] font-black px-2.5 py-1 rounded-full"
-              style={{ background: 'rgba(253,89,30,0.15)', color: '#fd591e', border: '1px solid rgba(253,89,30,0.3)' }}
+              style={{ background: 'rgba(var(--cc-warm-rgb),0.15)', color: 'var(--cc-warm)', border: '1px solid rgba(var(--cc-warm-rgb),0.3)' }}
             >
               ★ TRENDING
             </span>
           )}
         </div>
 
-        <p className="text-sm leading-relaxed mb-6" style={{ color: '#bacbc0' }}>{item.description}</p>
+        <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--cc-ink-dim)' }}>{item.description}</p>
 
         {/* Spice Level — only shown when vendor enabled it AND category/tags support it */}
         {item.has_spice_option && (
@@ -152,8 +152,8 @@ export default function ItemDetail() {
         ) && (
           <div className="mb-6">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>SPICE LEVEL</h3>
-              <span className="text-[10px]" style={{ color: '#bacbc0' }}>Optional</span>
+              <h3 className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>SPICE LEVEL</h3>
+              <span className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>Optional</span>
             </div>
             <div className="flex gap-3">
               {SPICE.map(s => (
@@ -162,8 +162,8 @@ export default function ItemDetail() {
                   onClick={() => setSpice(prev => prev === s ? null : s)}
                   className="flex-1 py-2.5 rounded-full text-sm font-bold transition-all"
                   style={spice === s
-                    ? { background: '#fd591e', color: 'white', boxShadow: '0 0 12px rgba(253,89,30,0.4)' }
-                    : { background: '#192123', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }
+                    ? { background: 'var(--cc-warm)', color: 'white', boxShadow: '0 0 12px rgba(var(--cc-warm-rgb),0.4)' }
+                    : { background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }
                   }
                 >
                   {s}
@@ -176,7 +176,7 @@ export default function ItemDetail() {
         {/* Add-ons */}
         {item.add_ons?.length > 0 && (
           <div className="mb-6">
-            <h3 className="font-heading font-bold text-sm mb-3" style={{ color: '#dff0e8' }}>ADD-ONS</h3>
+            <h3 className="font-heading font-bold text-sm mb-3" style={{ color: 'var(--cc-ink)' }}>ADD-ONS</h3>
             <div className="flex flex-col gap-2">
               {item.add_ons.map((addon) => {
                 const selected = selectedAddOns.find(a => a.name === addon.name);
@@ -186,28 +186,28 @@ export default function ItemDetail() {
                     onClick={() => toggleAddOn(addon)}
                     className="flex items-center gap-3 p-3.5 rounded-2xl transition-all"
                     style={{
-                      background: '#192123',
-                      border: selected ? '1px solid rgba(119,255,200,0.4)' : '1px solid transparent',
+                      background: 'var(--cc-bg-2)',
+                      border: selected ? '1px solid rgba(var(--cc-accent-rgb),0.4)' : '1px solid transparent',
                     }}
                   >
                     <div
                       className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 text-sm"
-                      style={{ background: selected ? 'rgba(119,255,200,0.12)' : '#2e3638' }}
+                      style={{ background: selected ? 'rgba(var(--cc-accent-rgb),0.12)' : 'var(--cc-bg-3)' }}
                     >
                       🍴
                     </div>
-                    <span className="flex-1 text-sm font-semibold text-left" style={{ color: '#dff0e8' }}>{addon.name}</span>
-                    <span className="text-sm" style={{ color: '#bacbc0' }}>+${addon.price?.toFixed(2)}</span>
+                    <span className="flex-1 text-sm font-semibold text-left" style={{ color: 'var(--cc-ink)' }}>{addon.name}</span>
+                    <span className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>+${addon.price?.toFixed(2)}</span>
                     <div
                       className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-all"
                       style={{
-                        background: selected ? '#77ffc8' : '#2e3638',
-                        border: selected ? 'none' : '1.5px solid rgba(59,74,66,0.4)',
+                        background: selected ? 'var(--cc-accent)' : 'var(--cc-bg-3)',
+                        border: selected ? 'none' : '1.5px solid rgba(var(--cc-line-rgb),0.4)',
                       }}
                     >
                       {selected && (
                         <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none">
-                          <path d="M2 6l3 3 5-5" stroke="#003826" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M2 6l3 3 5-5" stroke="var(--cc-accent-deep)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       )}
                     </div>
@@ -225,7 +225,7 @@ export default function ItemDetail() {
               <span
                 key={tag}
                 className="text-xs font-bold px-3 py-1 rounded-full"
-                style={{ background: 'rgba(119,255,200,0.08)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.2)' }}
+                style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}
               >
                 {tag}
               </span>
@@ -243,22 +243,22 @@ export default function ItemDetail() {
           {/* Qty control */}
           <div
             className="flex items-center gap-4 px-4 py-3 rounded-2xl flex-shrink-0"
-            style={{ background: '#192123' }}
+            style={{ background: 'var(--cc-bg-2)' }}
           >
             <button
               onClick={() => setQty(q => Math.max(1, q - 1))}
               className="w-8 h-8 rounded-full flex items-center justify-center"
-              style={{ background: '#2e3638' }}
+              style={{ background: 'var(--cc-bg-3)' }}
             >
-              <Minus className="w-3.5 h-3.5" style={{ color: '#dff0e8' }} />
+              <Minus className="w-3.5 h-3.5" style={{ color: 'var(--cc-ink)' }} />
             </button>
-            <span className="font-heading font-black text-lg w-4 text-center" style={{ color: '#dff0e8' }}>{qty}</span>
+            <span className="font-heading font-black text-lg w-4 text-center" style={{ color: 'var(--cc-ink)' }}>{qty}</span>
             <button
               onClick={() => setQty(q => q + 1)}
               className="w-8 h-8 rounded-full flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}
             >
-              <Plus className="w-3.5 h-3.5" style={{ color: '#003826' }} />
+              <Plus className="w-3.5 h-3.5" style={{ color: 'var(--cc-accent-deep)' }} />
             </button>
           </div>
 
@@ -267,9 +267,9 @@ export default function ItemDetail() {
             onClick={handleAddToCart}
             className="flex-1 py-4 rounded-2xl font-heading font-black text-base flex items-center justify-between px-5"
             style={{
-              background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
-              color: '#003826',
-              boxShadow: '0 0 20px rgba(119,255,200,0.4)',
+              background: 'linear-gradient(135deg, var(--cc-accent) 0%, var(--cc-accent-3) 100%)',
+              color: 'var(--cc-accent-deep)',
+              boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.4)',
             }}
           >
             <span>{isInCart ? 'Update Cart' : 'Add to Cart'}</span>

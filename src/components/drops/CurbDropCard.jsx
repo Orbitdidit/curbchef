@@ -65,22 +65,22 @@ export default function CurbDropCard({ drop }) {
     <div className="rounded-3xl overflow-hidden flex-shrink-0"
       style={{
         width: '280px',
-        background: '#192123',
-        border: isSoldOut ? '1px solid rgba(59,74,66,0.2)' : '1px solid rgba(253,89,30,0.25)',
-        boxShadow: isSoldOut ? 'none' : '0 0 20px rgba(253,89,30,0.1)',
+        background: 'var(--cc-bg-2)',
+        border: isSoldOut ? '1px solid rgba(var(--cc-line-rgb),0.2)' : '1px solid rgba(var(--cc-warm-rgb),0.25)',
+        boxShadow: isSoldOut ? 'none' : '0 0 20px rgba(var(--cc-warm-rgb),0.1)',
       }}>
       {/* Image */}
       <div className="relative" style={{ height: '160px' }}>
         {drop.image_url ? (
           <img src={drop.image_url} alt={drop.title} className="w-full h-full object-cover" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-5xl" style={{ background: '#0d1517' }}>🔥</div>
+          <div className="w-full h-full flex items-center justify-center text-5xl" style={{ background: 'var(--cc-bg-0)' }}>🔥</div>
         )}
         <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg,rgba(13,21,23,0) 40%,rgba(13,21,23,0.95) 100%)' }} />
 
         {/* Countdown badge */}
         <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full"
-          style={{ background: 'rgba(253,89,30,0.92)', backdropFilter: 'blur(8px)' }}>
+          style={{ background: 'rgba(var(--cc-warm-rgb),0.92)', backdropFilter: 'blur(8px)' }}>
           <Clock className="w-3 h-3 text-white" />
           <span className="text-[10px] font-black text-white">{countdown}</span>
         </div>
@@ -96,17 +96,17 @@ export default function CurbDropCard({ drop }) {
       <div className="p-4">
         {/* Price row */}
         <div className="flex items-center gap-2 mb-3">
-          <span className="font-heading font-black text-2xl" style={{ color: '#fd591e' }}>
+          <span className="font-heading font-black text-2xl" style={{ color: 'var(--cc-warm)' }}>
             ${drop.deal_price?.toFixed(2)}
           </span>
           {drop.original_price > 0 && (
-            <span className="text-sm line-through" style={{ color: '#bacbc0' }}>
+            <span className="text-sm line-through" style={{ color: 'var(--cc-ink-dim)' }}>
               ${drop.original_price?.toFixed(2)}
             </span>
           )}
           {drop.original_price > 0 && (
             <span className="text-[9px] font-black px-2 py-0.5 rounded-full ml-auto"
-              style={{ background: 'rgba(253,89,30,0.15)', color: '#fd591e' }}>
+              style={{ background: 'rgba(var(--cc-warm-rgb),0.15)', color: 'var(--cc-warm)' }}>
               {Math.round((1 - drop.deal_price / drop.original_price) * 100)}% OFF
             </span>
           )}
@@ -116,20 +116,20 @@ export default function CurbDropCard({ drop }) {
         <div className="mb-3">
           <div className="flex items-center justify-between mb-1">
             <div className="flex items-center gap-1">
-              <Users className="w-3 h-3" style={{ color: '#bacbc0' }} />
-              <span className="text-xs font-bold" style={{ color: isSoldOut ? '#fd591e' : '#bacbc0' }}>
+              <Users className="w-3 h-3" style={{ color: 'var(--cc-ink-dim)' }} />
+              <span className="text-xs font-bold" style={{ color: isSoldOut ? 'var(--cc-warm)' : 'var(--cc-ink-dim)' }}>
                 {isSoldOut ? 'SOLD OUT' : `${drop.current_claims} / ${drop.max_claims} claimed`}
               </span>
             </div>
             {!isSoldOut && (
-              <span className="text-[10px] font-black" style={{ color: '#77ffc8' }}>{claimsLeft} left</span>
+              <span className="text-[10px] font-black" style={{ color: 'var(--cc-accent)' }}>{claimsLeft} left</span>
             )}
           </div>
-          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(59,74,66,0.4)' }}>
+          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(var(--cc-line-rgb),0.4)' }}>
             <div className="h-full rounded-full transition-all"
               style={{
                 width: `${pctFull}%`,
-                background: isSoldOut ? '#fd591e' : 'linear-gradient(90deg,#fd591e,#ff8c00)',
+                background: isSoldOut ? 'var(--cc-warm)' : 'linear-gradient(90deg,var(--cc-warm),var(--cc-warm-3))',
               }} />
           </div>
         </div>
@@ -141,10 +141,10 @@ export default function CurbDropCard({ drop }) {
           className="w-full py-3 rounded-2xl font-heading font-black text-sm transition-all active:scale-95 flex items-center justify-center gap-2"
           style={
             claimed
-              ? { background: 'rgba(119,255,200,0.12)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.3)' }
+              ? { background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }
               : isSoldOut
-              ? { background: '#2e3638', color: '#bacbc0', opacity: 0.5 }
-              : { background: 'linear-gradient(135deg,#fd591e,#ff8c00)', color: '#fff', boxShadow: '0 0 14px rgba(253,89,30,0.35)' }
+              ? { background: 'var(--cc-bg-3)', color: 'var(--cc-ink-dim)', opacity: 0.5 }
+              : { background: 'linear-gradient(135deg,var(--cc-warm),var(--cc-warm-3))', color: '#fff', boxShadow: '0 0 14px rgba(var(--cc-warm-rgb),0.35)' }
           }
         >
           {claimed ? '✓ Claimed! Check Orders' : isSoldOut ? 'Sold Out' : claiming ? 'Claiming...' : (

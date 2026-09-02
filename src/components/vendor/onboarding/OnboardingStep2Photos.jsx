@@ -16,18 +16,18 @@ function ImageUploader({ label, hint, currentUrl, onUploaded }) {
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-xs font-bold" style={{ color: '#77ffc8' }}>{label}</label>
-      {hint && <p className="text-xs" style={{ color: '#6B665C' }}>{hint}</p>}
+      <label className="text-xs font-bold" style={{ color: 'var(--cc-accent)' }}>{label}</label>
+      {hint && <p className="text-xs" style={{ color: 'var(--cc-ink-faint)' }}>{hint}</p>}
       <label className="relative flex flex-col items-center justify-center rounded-2xl cursor-pointer overflow-hidden"
-        style={{ background: '#192123', border: '2px dashed rgba(59,74,66,0.5)', minHeight: 120 }}>
+        style={{ background: 'var(--cc-bg-2)', border: '2px dashed rgba(var(--cc-line-rgb),0.5)', minHeight: 120 }}>
         {currentUrl ? (
           <img src={currentUrl} alt={label} className="w-full h-full object-cover absolute inset-0" style={{ minHeight: 120 }} />
         ) : uploading ? (
-          <Loader2 className="w-6 h-6 animate-spin" style={{ color: '#77ffc8' }} />
+          <Loader2 className="w-6 h-6 animate-spin" style={{ color: 'var(--cc-accent)' }} />
         ) : (
           <div className="flex flex-col items-center gap-2 py-6">
-            <Upload className="w-5 h-5" style={{ color: '#77ffc8' }} />
-            <span className="text-xs font-semibold" style={{ color: '#bacbc0' }}>Tap to upload</span>
+            <Upload className="w-5 h-5" style={{ color: 'var(--cc-accent)' }} />
+            <span className="text-xs font-semibold" style={{ color: 'var(--cc-ink-dim)' }}>Tap to upload</span>
           </div>
         )}
         {currentUrl && !uploading && (
@@ -46,8 +46,8 @@ export default function OnboardingStep2Photos({ truck, saveTruck }) {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <p className="font-heading font-black text-xl mb-1" style={{ color: '#dff0e8' }}>Add your photos</p>
-        <p className="text-sm" style={{ color: '#bacbc0' }}>Great photos get 3× more taps. Show off your brand!</p>
+        <p className="font-heading font-black text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Add your photos</p>
+        <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Great photos get 3× more taps. Show off your brand!</p>
       </div>
 
       <ImageUploader

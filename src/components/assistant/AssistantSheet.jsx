@@ -41,8 +41,8 @@ export default function AssistantSheet() {
         <div
           className="w-full max-w-lg rounded-t-3xl overflow-hidden flex flex-col"
           style={{
-            background: '#0d1517',
-            border: '1px solid rgba(59,74,66,0.3)',
+            background: 'var(--cc-bg-0)',
+            border: '1px solid rgba(var(--cc-line-rgb),0.3)',
             borderBottom: 'none',
             maxHeight: '85dvh',
             minHeight: '50dvh',
@@ -50,21 +50,21 @@ export default function AssistantSheet() {
         >
           {/* Handle + header */}
           <div className="flex flex-col items-center pt-3 px-5 pb-1 flex-shrink-0">
-            <div className="w-10 h-1 rounded-full mb-3" style={{ background: '#2e3638' }} />
+            <div className="w-10 h-1 rounded-full mb-3" style={{ background: 'var(--cc-bg-3)' }} />
             <div className="flex items-center justify-between w-full">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-xl flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}>
-                  <Sparkles className="w-4 h-4" style={{ color: '#003826' }} />
+                  style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>
+                  <Sparkles className="w-4 h-4" style={{ color: 'var(--cc-accent-deep)' }} />
                 </div>
-                <span className="font-heading font-black text-sm" style={{ color: '#77ffc8' }}>
+                <span className="font-heading font-black text-sm" style={{ color: 'var(--cc-accent)' }}>
                   What Should I Eat?
                 </span>
               </div>
               <button onClick={handleClose}
                 className="w-8 h-8 rounded-xl flex items-center justify-center"
-                style={{ background: '#2e3638' }}>
-                <X className="w-4 h-4" style={{ color: '#bacbc0' }} />
+                style={{ background: 'var(--cc-bg-3)' }}>
+                <X className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />
               </button>
             </div>
           </div>

@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const MOODS = [
-  { label: 'Order Now', emoji: '🛒', href: '/explore', color: 'rgba(119,255,200,0.12)', border: 'rgba(119,255,200,0.25)', textColor: '#77ffc8' },
-  { label: 'Food Scan', emoji: '📸', href: '/scan', color: 'rgba(119,255,200,0.08)', border: 'rgba(119,255,200,0.2)', textColor: '#77ffc8' },
-  { label: 'Watch Live', emoji: '📺', href: '/live', color: 'rgba(255,59,48,0.1)', border: 'rgba(255,59,48,0.25)', textColor: '#ff3b30' },
-  { label: 'Find on Map', emoji: '🗺️', href: '/map', color: 'rgba(253,89,30,0.1)', border: 'rgba(253,89,30,0.25)', textColor: '#fd591e' },
-  { label: 'My Rewards', emoji: '🏆', href: '/rewards', color: 'rgba(251,191,36,0.1)', border: 'rgba(251,191,36,0.25)', textColor: '#fbbf24' },
-  { label: 'Hot Deals', emoji: '🔥', href: '/deals', color: 'rgba(253,89,30,0.1)', border: 'rgba(253,89,30,0.2)', textColor: '#fd591e' },
+  { label: 'Order Now', emoji: '🛒', href: '/explore', color: 'rgba(var(--cc-accent-rgb),0.12)', border: 'rgba(var(--cc-accent-rgb),0.25)', textColor: 'var(--cc-accent)' },
+  { label: 'Food Scan', emoji: '📸', href: '/scan', color: 'rgba(var(--cc-accent-rgb),0.08)', border: 'rgba(var(--cc-accent-rgb),0.2)', textColor: 'var(--cc-accent)' },
+  { label: 'Watch Live', emoji: '📺', href: '/live', color: 'rgba(var(--cc-warm-red-rgb),0.1)', border: 'rgba(var(--cc-warm-red-rgb),0.25)', textColor: 'var(--cc-warm-red)' },
+  { label: 'Find on Map', emoji: '🗺️', href: '/map', color: 'rgba(var(--cc-warm-rgb),0.1)', border: 'rgba(var(--cc-warm-rgb),0.25)', textColor: 'var(--cc-warm)' },
+  { label: 'My Rewards', emoji: '🏆', href: '/rewards', color: 'rgba(251,191,36,0.1)', border: 'rgba(251,191,36,0.25)', textColor: 'var(--cc-amber)' },
+  { label: 'Hot Deals', emoji: '🔥', href: '/deals', color: 'rgba(var(--cc-warm-rgb),0.1)', border: 'rgba(var(--cc-warm-rgb),0.2)', textColor: 'var(--cc-warm)' },
 ];
 
 export default function FoodMoodRail() {

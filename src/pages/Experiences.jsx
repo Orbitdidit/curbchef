@@ -62,16 +62,16 @@ const FEATURED_CHEFS = [
 function ChefCard({ chef }) {
   const [showInquiry, setShowInquiry] = useState(false);
   return (
-    <div className="rounded-3xl overflow-hidden" style={{ background: '#141414', border: '1px solid rgba(255,255,255,0.05)' }}>
+    <div className="rounded-3xl overflow-hidden" style={{ background: 'var(--cc-surface)', border: '1px solid rgba(255,255,255,0.05)' }}>
       <div className="relative h-48 overflow-hidden">
         <img src={chef.profile_photo_url} alt={chef.chef_name} className="w-full h-full object-cover" />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.95) 100%)' }} />
         {chef.rating && (
           <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-full"
             style={{ background: 'rgba(10,10,10,0.75)', backdropFilter: 'blur(8px)' }}>
-            <Star className="w-3 h-3" style={{ fill: '#FFD60A', color: '#FFD60A' }} />
-            <span className="text-xs font-bold" style={{ color: '#F5F0E8' }}>{chef.rating}</span>
-            <span className="text-[10px]" style={{ color: '#A39E94' }}>({chef.review_count})</span>
+            <Star className="w-3 h-3" style={{ fill: 'var(--cc-yellow)', color: 'var(--cc-yellow)' }} />
+            <span className="text-xs font-bold" style={{ color: 'var(--cc-cream)' }}>{chef.rating}</span>
+            <span className="text-[10px]" style={{ color: 'var(--cc-ink-muted)' }}>({chef.review_count})</span>
           </div>
         )}
         <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
@@ -83,10 +83,10 @@ function ChefCard({ chef }) {
       </div>
 
       <div className="p-4 space-y-3">
-        <div className="flex items-center gap-4 text-xs" style={{ color: '#A39E94' }}>
+        <div className="flex items-center gap-4 text-xs" style={{ color: 'var(--cc-ink-muted)' }}>
           <div className="flex items-center gap-1">
             <DollarSign className="w-3 h-3" />
-            <span>From <strong style={{ color: '#F5F0E8' }}>${chef.starting_price}</strong></span>
+            <span>From <strong style={{ color: 'var(--cc-cream)' }}>${chef.starting_price}</strong></span>
           </div>
           <div className="flex items-center gap-1">
             <Users className="w-3 h-3" />
@@ -103,7 +103,7 @@ function ChefCard({ chef }) {
             const et = EXPERIENCE_TYPES.find(e => e.id === t);
             return et ? (
               <span key={t} className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                style={{ background: 'rgba(192,132,252,0.1)', color: '#C084FC', border: '1px solid rgba(192,132,252,0.2)' }}>
+                style={{ background: 'rgba(192,132,252,0.1)', color: 'var(--cc-violet)', border: '1px solid rgba(192,132,252,0.2)' }}>
                 {et.emoji} {et.label}
               </span>
             ) : null;
@@ -112,7 +112,7 @@ function ChefCard({ chef }) {
 
         <button onClick={() => setShowInquiry(true)}
           className="w-full py-3 rounded-full font-heading font-black text-sm flex items-center justify-center gap-2"
-          style={{ background: 'linear-gradient(135deg, #C084FC, #9333ea)', color: '#fff', boxShadow: '0 0 20px rgba(192,132,252,0.25)' }}>
+          style={{ background: 'linear-gradient(135deg, var(--cc-violet), #9333ea)', color: '#fff', boxShadow: '0 0 20px rgba(192,132,252,0.25)' }}>
           <Send className="w-3.5 h-3.5" /> Request Chef
         </button>
       </div>
@@ -148,7 +148,7 @@ function InquiryModal({ chef, onClose }) {
   };
 
   const inputClass = "w-full px-4 py-3 rounded-2xl text-sm font-medium outline-none";
-  const inputStyle = { background: '#1A1A1A', color: '#F5F0E8', border: '1px solid rgba(255,255,255,0.07)' };
+  const inputStyle = { background: 'var(--cc-surface-3)', color: 'var(--cc-cream)', border: '1px solid rgba(255,255,255,0.07)' };
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(8px)' }}
@@ -159,12 +159,12 @@ function InquiryModal({ chef, onClose }) {
           {done ? (
             <div className="text-center py-10">
               <div className="text-5xl mb-4">✨</div>
-              <h3 className="font-heading font-black text-xl mb-2" style={{ color: '#F5F0E8' }}>Inquiry Sent!</h3>
-              <p className="text-sm mb-6" style={{ color: '#A39E94' }}>
+              <h3 className="font-heading font-black text-xl mb-2" style={{ color: 'var(--cc-cream)' }}>Inquiry Sent!</h3>
+              <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-muted)' }}>
                 {chef.chef_name} will review your request and reach out within 24 hours.
               </p>
               <button onClick={onClose} className="px-8 py-3 rounded-full font-heading font-black text-sm"
-                style={{ background: 'linear-gradient(135deg,#C084FC,#9333ea)', color: '#fff' }}>
+                style={{ background: 'linear-gradient(135deg,var(--cc-violet),#9333ea)', color: '#fff' }}>
                 Close
               </button>
             </div>
@@ -172,24 +172,24 @@ function InquiryModal({ chef, onClose }) {
             <>
               <div className="flex items-center justify-between mb-5">
                 <div>
-                  <h3 className="font-heading font-black text-lg" style={{ color: '#F5F0E8' }}>Request {chef.chef_name}</h3>
-                  <p className="text-xs mt-0.5" style={{ color: '#A39E94' }}>No commitment — this is just an inquiry</p>
+                  <h3 className="font-heading font-black text-lg" style={{ color: 'var(--cc-cream)' }}>Request {chef.chef_name}</h3>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-muted)' }}>No commitment — this is just an inquiry</p>
                 </div>
-                <button onClick={onClose} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: '#1A1A1A' }}>
-                  <span style={{ color: '#A39E94' }}>✕</span>
+                <button onClick={onClose} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'var(--cc-surface-3)' }}>
+                  <span style={{ color: 'var(--cc-ink-muted)' }}>✕</span>
                 </button>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <p className="text-[11px] font-bold tracking-widest mb-2" style={{ color: '#A39E94' }}>EXPERIENCE TYPE *</p>
+                  <p className="text-[11px] font-bold tracking-widest mb-2" style={{ color: 'var(--cc-ink-muted)' }}>EXPERIENCE TYPE *</p>
                   <div className="flex flex-wrap gap-2">
                     {EXPERIENCE_TYPES.map(et => (
                       <button key={et.id} onClick={() => set('experience_type', et.id)}
                         className="px-3 py-1.5 rounded-full text-xs font-bold transition-all"
                         style={form.experience_type === et.id
-                          ? { background: 'linear-gradient(135deg,#C084FC,#9333ea)', color: '#fff' }
-                          : { background: '#1A1A1A', color: '#A39E94', border: '1px solid rgba(255,255,255,0.07)' }
+                          ? { background: 'linear-gradient(135deg,var(--cc-violet),#9333ea)', color: '#fff' }
+                          : { background: 'var(--cc-surface-3)', color: 'var(--cc-ink-muted)', border: '1px solid rgba(255,255,255,0.07)' }
                         }>
                         {et.emoji} {et.label}
                       </button>
@@ -206,14 +206,14 @@ function InquiryModal({ chef, onClose }) {
                   { key: 'event_location', label: 'EVENT LOCATION', placeholder: 'Address or neighborhood in Houston', type: 'text' },
                 ].map(({ key, label, placeholder, type }) => (
                   <div key={key}>
-                    <p className="text-[11px] font-bold tracking-widest mb-1.5" style={{ color: '#A39E94' }}>{label}</p>
+                    <p className="text-[11px] font-bold tracking-widest mb-1.5" style={{ color: 'var(--cc-ink-muted)' }}>{label}</p>
                     <input type={type} placeholder={placeholder} value={form[key]}
                       onChange={e => set(key, e.target.value)} className={inputClass} style={inputStyle} />
                   </div>
                 ))}
 
                 <div>
-                  <p className="text-[11px] font-bold tracking-widest mb-1.5" style={{ color: '#A39E94' }}>SPECIAL REQUESTS / DETAILS</p>
+                  <p className="text-[11px] font-bold tracking-widest mb-1.5" style={{ color: 'var(--cc-ink-muted)' }}>SPECIAL REQUESTS / DETAILS</p>
                   <textarea placeholder="Dietary restrictions, theme, occasion details..." value={form.special_requests}
                     onChange={e => set('special_requests', e.target.value)}
                     className={inputClass + ' min-h-[80px] resize-none'} style={inputStyle} />
@@ -221,11 +221,11 @@ function InquiryModal({ chef, onClose }) {
 
                 <button onClick={handleSubmit} disabled={submitting}
                   className="w-full py-4 rounded-full font-heading font-black text-sm flex items-center justify-center gap-2"
-                  style={{ background: 'linear-gradient(135deg,#C084FC,#9333ea)', color: '#fff', boxShadow: '0 0 24px rgba(192,132,252,0.3)', opacity: submitting ? 0.7 : 1 }}>
+                  style={{ background: 'linear-gradient(135deg,var(--cc-violet),#9333ea)', color: '#fff', boxShadow: '0 0 24px rgba(192,132,252,0.3)', opacity: submitting ? 0.7 : 1 }}>
                   <Send className="w-4 h-4" />
                   {submitting ? 'Sending...' : 'Send Inquiry'}
                 </button>
-                <p className="text-center text-[10px]" style={{ color: '#6B665C' }}>
+                <p className="text-center text-[10px]" style={{ color: 'var(--cc-ink-faint)' }}>
                   No payment required yet. Chef will contact you to confirm details.
                 </p>
               </div>
@@ -245,19 +245,19 @@ export default function Experiences() {
     : FEATURED_CHEFS;
 
   return (
-    <div className="min-h-screen pb-24" style={{ background: '#0A0A0A' }}>
+    <div className="min-h-screen pb-24" style={{ background: 'var(--cc-black)' }}>
       {/* Header */}
       <div className="flex items-center gap-3 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-20"
         style={{ background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-        <Link to="/" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#141414' }}>
-          <ChevronLeft className="w-5 h-5" style={{ color: '#F5F0E8' }} />
+        <Link to="/" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-surface)' }}>
+          <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-cream)' }} />
         </Link>
         <div className="flex-1">
-          <p className="font-heading font-black text-base" style={{ color: '#C084FC' }}>CurbChef Experiences</p>
-          <p className="text-xs" style={{ color: '#A39E94' }}>Private chefs · Curated events</p>
+          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-violet)' }}>CurbChef Experiences</p>
+          <p className="text-xs" style={{ color: 'var(--cc-ink-muted)' }}>Private chefs · Curated events</p>
         </div>
         <div className="px-2.5 py-1 rounded-full text-[10px] font-black"
-          style={{ background: 'rgba(192,132,252,0.12)', color: '#C084FC', border: '1px solid rgba(192,132,252,0.25)' }}>
+          style={{ background: 'rgba(192,132,252,0.12)', color: 'var(--cc-violet)', border: '1px solid rgba(192,132,252,0.25)' }}>
           ✦ BETA
         </div>
       </div>
@@ -273,8 +273,8 @@ export default function Experiences() {
           <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(10,10,10,0.85) 0%, rgba(80,0,160,0.6) 100%)' }} />
           <div className="relative z-10 p-6">
             <div className="flex items-center gap-2 mb-3">
-              <Sparkles className="w-4 h-4" style={{ color: '#C084FC' }} />
-              <span className="text-[10px] font-black tracking-widest" style={{ color: '#C084FC' }}>COMING TO HOUSTON</span>
+              <Sparkles className="w-4 h-4" style={{ color: 'var(--cc-violet)' }} />
+              <span className="text-[10px] font-black tracking-widest" style={{ color: 'var(--cc-violet)' }}>COMING TO HOUSTON</span>
             </div>
             <h1 className="font-heading font-black text-3xl leading-tight text-white mb-2">
               Book a chef.<br />Create a memory.
@@ -286,7 +286,7 @@ export default function Experiences() {
               <div className="flex -space-x-2">
                 {FEATURED_CHEFS.map((c, i) => (
                   <img key={i} src={c.profile_photo_url} alt={c.chef_name}
-                    className="w-8 h-8 rounded-full object-cover border-2" style={{ borderColor: '#0A0A0A' }} />
+                    className="w-8 h-8 rounded-full object-cover border-2" style={{ borderColor: 'var(--cc-black)' }} />
                 ))}
               </div>
               <p className="text-xs" style={{ color: 'rgba(245,240,232,0.6)' }}>
@@ -298,13 +298,13 @@ export default function Experiences() {
 
         {/* Experience type filter */}
         <div className="mb-5">
-          <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: '#A39E94' }}>WHAT ARE YOU PLANNING?</p>
+          <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: 'var(--cc-ink-muted)' }}>WHAT ARE YOU PLANNING?</p>
           <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
             <button onClick={() => setSelectedType(null)}
               className="px-3 py-2 rounded-full text-xs font-bold flex-shrink-0 transition-all"
               style={!selectedType
-                ? { background: 'linear-gradient(135deg,#C084FC,#9333ea)', color: '#fff' }
-                : { background: '#141414', color: '#A39E94', border: '1px solid rgba(255,255,255,0.06)' }
+                ? { background: 'linear-gradient(135deg,var(--cc-violet),#9333ea)', color: '#fff' }
+                : { background: 'var(--cc-surface)', color: 'var(--cc-ink-muted)', border: '1px solid rgba(255,255,255,0.06)' }
               }>
               All
             </button>
@@ -312,8 +312,8 @@ export default function Experiences() {
               <button key={et.id} onClick={() => setSelectedType(selectedType === et.id ? null : et.id)}
                 className="px-3 py-2 rounded-full text-xs font-bold flex-shrink-0 transition-all whitespace-nowrap"
                 style={selectedType === et.id
-                  ? { background: 'linear-gradient(135deg,#C084FC,#9333ea)', color: '#fff' }
-                  : { background: '#141414', color: '#A39E94', border: '1px solid rgba(255,255,255,0.06)' }
+                  ? { background: 'linear-gradient(135deg,var(--cc-violet),#9333ea)', color: '#fff' }
+                  : { background: 'var(--cc-surface)', color: 'var(--cc-ink-muted)', border: '1px solid rgba(255,255,255,0.06)' }
                 }>
                 {et.emoji} {et.label}
               </button>
@@ -323,7 +323,7 @@ export default function Experiences() {
 
         {/* Chef cards */}
         <div className="space-y-4 mb-8">
-          <p className="text-[10px] font-black tracking-widest" style={{ color: '#A39E94' }}>
+          <p className="text-[10px] font-black tracking-widest" style={{ color: 'var(--cc-ink-muted)' }}>
             FEATURED CHEFS · {filteredChefs.length} AVAILABLE
           </p>
           {filteredChefs.map(chef => (
@@ -334,7 +334,7 @@ export default function Experiences() {
         {/* How it works */}
         <div className="rounded-3xl p-5 mb-6"
           style={{ background: 'rgba(192,132,252,0.05)', border: '1px solid rgba(192,132,252,0.15)' }}>
-          <p className="text-[10px] font-black tracking-widest mb-4" style={{ color: '#C084FC' }}>HOW IT WORKS</p>
+          <p className="text-[10px] font-black tracking-widest mb-4" style={{ color: 'var(--cc-violet)' }}>HOW IT WORKS</p>
           <div className="space-y-4">
             {[
               { step: '01', title: 'Send a Request', body: 'Tell us your date, guest count, and the vibe you\'re going for.' },
@@ -344,12 +344,12 @@ export default function Experiences() {
             ].map(({ step, title, body }) => (
               <div key={step} className="flex gap-4">
                 <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 font-heading font-black text-xs"
-                  style={{ background: 'rgba(192,132,252,0.15)', color: '#C084FC' }}>
+                  style={{ background: 'rgba(192,132,252,0.15)', color: 'var(--cc-violet)' }}>
                   {step}
                 </div>
                 <div>
-                  <p className="font-heading font-bold text-sm" style={{ color: '#F5F0E8' }}>{title}</p>
-                  <p className="text-xs mt-0.5" style={{ color: '#A39E94' }}>{body}</p>
+                  <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-cream)' }}>{title}</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-muted)' }}>{body}</p>
                 </div>
               </div>
             ))}
@@ -359,13 +359,13 @@ export default function Experiences() {
         {/* Are you a chef CTA */}
         <div className="rounded-3xl p-5 mb-4"
           style={{ background: 'linear-gradient(135deg, #1a0a2e 0%, #0f0a1a 100%)', border: '1px solid rgba(192,132,252,0.2)' }}>
-          <p className="font-heading font-black text-lg mb-1" style={{ color: '#F5F0E8' }}>Are you a private chef?</p>
-          <p className="text-sm mb-4" style={{ color: '#A39E94' }}>
+          <p className="font-heading font-black text-lg mb-1" style={{ color: 'var(--cc-cream)' }}>Are you a private chef?</p>
+          <p className="text-sm mb-4" style={{ color: 'var(--cc-ink-muted)' }}>
             Join the CurbChef Experiences waitlist and be among the first chefs featured in Houston.
           </p>
           <Link to="/onboard-truck">
             <button className="flex items-center gap-2 px-5 py-3 rounded-full font-heading font-black text-sm"
-              style={{ background: 'linear-gradient(135deg,#C084FC,#9333ea)', color: '#fff', boxShadow: '0 0 20px rgba(192,132,252,0.3)' }}>
+              style={{ background: 'linear-gradient(135deg,var(--cc-violet),#9333ea)', color: '#fff', boxShadow: '0 0 20px rgba(192,132,252,0.3)' }}>
               Apply as Chef <ChevronRight className="w-4 h-4" />
             </button>
           </Link>

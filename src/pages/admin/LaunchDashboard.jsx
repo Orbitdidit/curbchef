@@ -6,18 +6,18 @@ import { ChevronLeft, Plus, X, Check, AlertTriangle, Zap, Clock, Flag, Edit2, Sa
 import { useToast } from '@/components/ui/use-toast';
 
 const PRIORITY_STYLE = {
-  Critical: { bg: 'rgba(255,59,48,0.15)', color: '#ff3b30', border: 'rgba(255,59,48,0.35)' },
-  High:     { bg: 'rgba(253,89,30,0.15)', color: '#fd591e', border: 'rgba(253,89,30,0.35)' },
-  Medium:   { bg: 'rgba(251,191,36,0.15)', color: '#fbbf24', border: 'rgba(251,191,36,0.35)' },
-  Low:      { bg: 'rgba(186,203,192,0.1)', color: '#bacbc0', border: 'rgba(186,203,192,0.2)' },
+  Critical: { bg: 'rgba(var(--cc-warm-red-rgb),0.15)', color: 'var(--cc-warm-red)', border: 'rgba(var(--cc-warm-red-rgb),0.35)' },
+  High:     { bg: 'rgba(var(--cc-warm-rgb),0.15)', color: 'var(--cc-warm)', border: 'rgba(var(--cc-warm-rgb),0.35)' },
+  Medium:   { bg: 'rgba(251,191,36,0.15)', color: 'var(--cc-amber)', border: 'rgba(251,191,36,0.35)' },
+  Low:      { bg: 'rgba(186,203,192,0.1)', color: 'var(--cc-ink-dim)', border: 'rgba(186,203,192,0.2)' },
 };
 
 const STATUS_STYLE = {
-  'Not Started': { bg: 'rgba(186,203,192,0.08)', color: '#bacbc0' },
-  'In Progress': { bg: 'rgba(119,255,200,0.1)', color: '#77ffc8' },
-  'Blocked':     { bg: 'rgba(255,59,48,0.15)', color: '#ff3b30' },
-  'Needs Test':  { bg: 'rgba(251,191,36,0.12)', color: '#fbbf24' },
-  'Complete':    { bg: 'rgba(119,255,200,0.15)', color: '#00e6a7' },
+  'Not Started': { bg: 'rgba(186,203,192,0.08)', color: 'var(--cc-ink-dim)' },
+  'In Progress': { bg: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)' },
+  'Blocked':     { bg: 'rgba(var(--cc-warm-red-rgb),0.15)', color: 'var(--cc-warm-red)' },
+  'Needs Test':  { bg: 'rgba(251,191,36,0.12)', color: 'var(--cc-amber)' },
+  'Complete':    { bg: 'rgba(var(--cc-accent-rgb),0.15)', color: 'var(--cc-accent-3)' },
 };
 
 const SCORECARD_ITEMS = [
@@ -72,34 +72,34 @@ function TaskRow({ task, onUpdate, onDelete }) {
 
   if (editing) {
     return (
-      <tr style={{ background: 'rgba(119,255,200,0.03)' }}>
+      <tr style={{ background: 'rgba(var(--cc-accent-rgb),0.03)' }}>
         <td className="px-3 py-2" colSpan={7}>
           <div className="flex flex-col gap-2">
             <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
               className="w-full rounded-lg px-3 py-1.5 text-sm outline-none"
-              style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(119,255,200,0.3)' }} />
+              style={{ background: 'var(--cc-bg-0)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }} />
             <div className="flex flex-wrap gap-2">
               {['priority', 'status', 'category', 'owner', 'affected_page'].map(field => (
                 field === 'priority' ? (
                   <select key={field} value={form[field] || ''} onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
                     className="rounded-lg px-2 py-1 text-xs outline-none"
-                    style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }}>
+                    style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }}>
                     {['Critical','High','Medium','Low'].map(v => <option key={v}>{v}</option>)}
                   </select>
                 ) : field === 'status' ? (
                   <select key={field} value={form[field] || ''} onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
                     className="rounded-lg px-2 py-1 text-xs outline-none"
-                    style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }}>
+                    style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }}>
                     {['Not Started','In Progress','Blocked','Needs Test','Complete'].map(v => <option key={v}>{v}</option>)}
                   </select>
                 ) : (
                   <input key={field} placeholder={field.replace('_', ' ')} value={form[field] || ''}
                     onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
                     className="rounded-lg px-2 py-1 text-xs outline-none"
-                    style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)', minWidth: 80 }} />
+                    style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)', minWidth: 80 }} />
                 )
               ))}
-              <label className="flex items-center gap-1.5 text-xs cursor-pointer" style={{ color: '#bacbc0' }}>
+              <label className="flex items-center gap-1.5 text-xs cursor-pointer" style={{ color: 'var(--cc-ink-dim)' }}>
                 <input type="checkbox" checked={form.launch_blocker || false}
                   onChange={e => setForm(f => ({ ...f, launch_blocker: e.target.checked }))} />
                 Blocker
@@ -107,16 +107,16 @@ function TaskRow({ task, onUpdate, onDelete }) {
             </div>
             <textarea placeholder="Notes" value={form.notes || ''} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
               rows={1} className="w-full rounded-lg px-3 py-1.5 text-xs outline-none resize-none"
-              style={{ background: '#0d1517', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }} />
+              style={{ background: 'var(--cc-bg-0)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }} />
             <div className="flex gap-2">
               <button onClick={save} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold"
-                style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+                style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
                 <Save className="w-3 h-3" /> Save
               </button>
               <button onClick={() => setEditing(false)} className="px-3 py-1.5 rounded-lg text-xs font-bold"
-                style={{ background: '#2e3638', color: '#bacbc0' }}>Cancel</button>
+                style={{ background: 'var(--cc-bg-3)', color: 'var(--cc-ink-dim)' }}>Cancel</button>
               <button onClick={() => onDelete(task.id)} className="px-3 py-1.5 rounded-lg text-xs font-bold ml-auto"
-                style={{ background: 'rgba(255,59,48,0.12)', color: '#ff3b30' }}>Delete</button>
+                style={{ background: 'rgba(var(--cc-warm-red-rgb),0.12)', color: 'var(--cc-warm-red)' }}>Delete</button>
             </div>
           </div>
         </td>
@@ -126,13 +126,13 @@ function TaskRow({ task, onUpdate, onDelete }) {
 
   return (
     <tr className="border-b transition-colors hover:bg-white/[0.02]"
-      style={{ borderColor: 'rgba(59,74,66,0.12)', background: task.launch_blocker && task.status === 'Blocked' ? 'rgba(255,59,48,0.03)' : 'transparent' }}>
+      style={{ borderColor: 'rgba(var(--cc-line-rgb),0.12)', background: task.launch_blocker && task.status === 'Blocked' ? 'rgba(var(--cc-warm-red-rgb),0.03)' : 'transparent' }}>
       <td className="px-3 py-3 min-w-[200px]">
         <div className="flex items-start gap-2">
-          {task.launch_blocker && <Flag className="w-3 h-3 flex-shrink-0 mt-0.5" style={{ color: '#ff3b30' }} />}
-          <span className="text-sm font-semibold" style={{ color: '#dff0e8' }}>{task.title}</span>
+          {task.launch_blocker && <Flag className="w-3 h-3 flex-shrink-0 mt-0.5" style={{ color: 'var(--cc-warm-red)' }} />}
+          <span className="text-sm font-semibold" style={{ color: 'var(--cc-ink)' }}>{task.title}</span>
         </div>
-        {task.notes && <p className="text-xs mt-0.5 ml-5 line-clamp-1" style={{ color: '#bacbc0' }}>{task.notes}</p>}
+        {task.notes && <p className="text-xs mt-0.5 ml-5 line-clamp-1" style={{ color: 'var(--cc-ink-dim)' }}>{task.notes}</p>}
       </td>
       <td className="px-3 py-3 whitespace-nowrap">
         <Badge label={task.priority} styleObj={ps} />
@@ -142,13 +142,13 @@ function TaskRow({ task, onUpdate, onDelete }) {
           {task.status}
         </span>
       </td>
-      <td className="px-3 py-3 text-xs" style={{ color: '#bacbc0' }}>{task.category}</td>
-      <td className="px-3 py-3 text-xs" style={{ color: '#bacbc0' }}>{task.owner || '—'}</td>
-      <td className="px-3 py-3 text-xs" style={{ color: '#bacbc0' }}>{task.affected_page || '—'}</td>
+      <td className="px-3 py-3 text-xs" style={{ color: 'var(--cc-ink-dim)' }}>{task.category}</td>
+      <td className="px-3 py-3 text-xs" style={{ color: 'var(--cc-ink-dim)' }}>{task.owner || '—'}</td>
+      <td className="px-3 py-3 text-xs" style={{ color: 'var(--cc-ink-dim)' }}>{task.affected_page || '—'}</td>
       <td className="px-3 py-3">
         <button onClick={() => setEditing(true)} className="w-7 h-7 rounded-lg flex items-center justify-center"
-          style={{ background: '#192123' }}>
-          <Edit2 className="w-3 h-3" style={{ color: '#bacbc0' }} />
+          style={{ background: 'var(--cc-bg-2)' }}>
+          <Edit2 className="w-3 h-3" style={{ color: 'var(--cc-ink-dim)' }} />
         </button>
       </td>
     </tr>
@@ -170,7 +170,7 @@ function AddTaskRow({ onAdd }) {
     <tr>
       <td colSpan={7} className="px-3 py-2">
         <button onClick={() => setOpen(true)} className="flex items-center gap-2 text-xs font-bold px-3 py-2 rounded-lg"
-          style={{ background: 'rgba(119,255,200,0.06)', color: '#77ffc8', border: '1px dashed rgba(119,255,200,0.25)' }}>
+          style={{ background: 'rgba(var(--cc-accent-rgb),0.06)', color: 'var(--cc-accent)', border: '1px dashed rgba(var(--cc-accent-rgb),0.25)' }}>
           <Plus className="w-3.5 h-3.5" /> Add task
         </button>
       </td>
@@ -178,12 +178,12 @@ function AddTaskRow({ onAdd }) {
   );
 
   return (
-    <tr style={{ background: 'rgba(119,255,200,0.03)' }}>
+    <tr style={{ background: 'rgba(var(--cc-accent-rgb),0.03)' }}>
       <td className="px-3 py-2" colSpan={7}>
         <div className="flex flex-col gap-2">
           <input autoFocus placeholder="Task title..." value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
             className="w-full rounded-lg px-3 py-1.5 text-sm outline-none"
-            style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(119,255,200,0.3)' }} />
+            style={{ background: 'var(--cc-bg-0)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }} />
           <div className="flex flex-wrap gap-2">
             {[
               { field: 'priority', opts: ['Critical','High','Medium','Low'] },
@@ -192,7 +192,7 @@ function AddTaskRow({ onAdd }) {
             ].map(({ field, opts }) => (
               <select key={field} value={form[field]} onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
                 className="rounded-lg px-2 py-1 text-xs outline-none"
-                style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }}>
+                style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }}>
                 {opts.map(v => <option key={v}>{v}</option>)}
               </select>
             ))}
@@ -200,9 +200,9 @@ function AddTaskRow({ onAdd }) {
               <input key={f} placeholder={f.replace('_', ' ')} value={form[f]}
                 onChange={e => setForm(fd => ({ ...fd, [f]: e.target.value }))}
                 className="rounded-lg px-2 py-1 text-xs outline-none"
-                style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)', minWidth: 80 }} />
+                style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)', minWidth: 80 }} />
             ))}
-            <label className="flex items-center gap-1.5 text-xs cursor-pointer" style={{ color: '#bacbc0' }}>
+            <label className="flex items-center gap-1.5 text-xs cursor-pointer" style={{ color: 'var(--cc-ink-dim)' }}>
               <input type="checkbox" checked={form.launch_blocker}
                 onChange={e => setForm(f => ({ ...f, launch_blocker: e.target.checked }))} />
               Launch Blocker
@@ -210,11 +210,11 @@ function AddTaskRow({ onAdd }) {
           </div>
           <div className="flex gap-2">
             <button onClick={submit} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold"
-              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
               <Plus className="w-3 h-3" /> Add
             </button>
             <button onClick={() => setOpen(false)} className="px-3 py-1.5 rounded-lg text-xs font-bold"
-              style={{ background: '#2e3638', color: '#bacbc0' }}>Cancel</button>
+              style={{ background: 'var(--cc-bg-3)', color: 'var(--cc-ink-dim)' }}>Cancel</button>
           </div>
         </div>
       </td>
@@ -264,7 +264,7 @@ export default function LaunchDashboard() {
   const criticalOpen = tasks.filter(t => t.priority === 'Critical' && t.status !== 'Complete').length;
   const pct = total > 0 ? Math.round((complete / total) * 100) : 0;
   const launchReady = criticalOpen === 0 && blocked === 0 ? 'green' : criticalOpen <= 2 && blocked <= 1 ? 'yellow' : 'red';
-  const launchReadyStyle = { green: { color: '#77ffc8', label: '🟢 Ready to Launch' }, yellow: { color: '#fbbf24', label: '🟡 Almost Ready' }, red: { color: '#ff3b30', label: '🔴 Not Ready' } }[launchReady];
+  const launchReadyStyle = { green: { color: 'var(--cc-accent)', label: '🟢 Ready to Launch' }, yellow: { color: 'var(--cc-amber)', label: '🟡 Almost Ready' }, red: { color: 'var(--cc-warm-red)', label: '🔴 Not Ready' } }[launchReady];
 
   const blockers = tasks.filter(t => t.launch_blocker || t.status === 'Blocked');
   const criticalLeft = tasks.filter(t => t.priority === 'Critical' && t.status !== 'Complete').sort((a, b) => (a.status === 'Blocked' ? -1 : 1));
@@ -282,19 +282,19 @@ export default function LaunchDashboard() {
   const displayedTasks = activeSection === 'all' ? tasks : tasks.filter(SECTIONS.find(s => s.id === activeSection)?.filter || (() => true));
 
   return (
-    <div className="min-h-screen dot-bg pb-16" style={{ background: '#0d1517' }}>
+    <div className="min-h-screen dot-bg pb-16" style={{ background: 'var(--cc-bg-0)' }}>
       {/* Header */}
       <div className="sticky top-0 z-10 px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4"
-        style={{ background: 'rgba(13,21,23,0.97)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(59,74,66,0.15)' }}>
+        style={{ background: 'rgba(13,21,23,0.97)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
         <div className="flex items-center gap-3">
-          <Link to="/admin" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-            <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
+          <Link to="/admin" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
+            <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
           </Link>
           <div className="flex-1">
-            <h1 className="font-heading font-black text-lg" style={{ color: '#dff0e8' }}>🚀 Launch Command Center</h1>
-            <p className="text-xs" style={{ color: '#bacbc0' }}>CurbChef pre-launch readiness tracker</p>
+            <h1 className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>🚀 Launch Command Center</h1>
+            <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>CurbChef pre-launch readiness tracker</p>
           </div>
-          <span className="text-sm font-black px-3 py-1.5 rounded-full" style={{ background: launchReady === 'green' ? 'rgba(119,255,200,0.12)' : launchReady === 'yellow' ? 'rgba(251,191,36,0.12)' : 'rgba(255,59,48,0.12)', color: launchReadyStyle.color }}>
+          <span className="text-sm font-black px-3 py-1.5 rounded-full" style={{ background: launchReady === 'green' ? 'rgba(var(--cc-accent-rgb),0.12)' : launchReady === 'yellow' ? 'rgba(251,191,36,0.12)' : 'rgba(var(--cc-warm-red-rgb),0.12)', color: launchReadyStyle.color }}>
             {launchReadyStyle.label}
           </span>
         </div>
@@ -305,47 +305,47 @@ export default function LaunchDashboard() {
         {/* ── STAT CARDS ── */}
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
           {[
-            { label: 'Total', value: total, color: '#bacbc0' },
-            { label: 'Complete', value: complete, color: '#77ffc8' },
-            { label: 'Blocked', value: blocked, color: '#ff3b30' },
-            { label: 'Critical Open', value: criticalOpen, color: '#fd591e' },
-            { label: '% Done', value: `${pct}%`, color: pct >= 80 ? '#77ffc8' : pct >= 50 ? '#fbbf24' : '#ff3b30' },
-            { label: 'Blockers', value: blockers.length, color: blockers.length === 0 ? '#77ffc8' : '#ff3b30' },
+            { label: 'Total', value: total, color: 'var(--cc-ink-dim)' },
+            { label: 'Complete', value: complete, color: 'var(--cc-accent)' },
+            { label: 'Blocked', value: blocked, color: 'var(--cc-warm-red)' },
+            { label: 'Critical Open', value: criticalOpen, color: 'var(--cc-warm)' },
+            { label: '% Done', value: `${pct}%`, color: pct >= 80 ? 'var(--cc-accent)' : pct >= 50 ? 'var(--cc-amber)' : 'var(--cc-warm-red)' },
+            { label: 'Blockers', value: blockers.length, color: blockers.length === 0 ? 'var(--cc-accent)' : 'var(--cc-warm-red)' },
           ].map(({ label, value, color }) => (
-            <div key={label} className="p-4 rounded-2xl text-center" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}>
+            <div key={label} className="p-4 rounded-2xl text-center" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
               <p className="font-heading font-black text-2xl" style={{ color }}>{value}</p>
-              <p className="text-[10px] font-bold mt-0.5" style={{ color: '#bacbc0' }}>{label}</p>
+              <p className="text-[10px] font-bold mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{label}</p>
             </div>
           ))}
         </div>
 
         {/* ── PROGRESS BAR ── */}
-        <div className="p-4 rounded-2xl" style={{ background: '#192123' }}>
+        <div className="p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)' }}>
           <div className="flex justify-between mb-2">
-            <span className="text-xs font-bold" style={{ color: '#bacbc0' }}>Launch Progress</span>
-            <span className="text-xs font-black" style={{ color: '#77ffc8' }}>{pct}%</span>
+            <span className="text-xs font-bold" style={{ color: 'var(--cc-ink-dim)' }}>Launch Progress</span>
+            <span className="text-xs font-black" style={{ color: 'var(--cc-accent)' }}>{pct}%</span>
           </div>
-          <div className="h-2.5 rounded-full overflow-hidden" style={{ background: '#2e3638' }}>
+          <div className="h-2.5 rounded-full overflow-hidden" style={{ background: 'var(--cc-bg-3)' }}>
             <div className="h-full rounded-full transition-all duration-700"
-              style={{ width: `${pct}%`, background: pct >= 80 ? 'linear-gradient(90deg,#77ffc8,#00e6a7)' : pct >= 50 ? 'linear-gradient(90deg,#fbbf24,#fd591e)' : 'linear-gradient(90deg,#ff3b30,#fd591e)' }} />
+              style={{ width: `${pct}%`, background: pct >= 80 ? 'linear-gradient(90deg,var(--cc-accent),var(--cc-accent-3))' : pct >= 50 ? 'linear-gradient(90deg,var(--cc-amber),var(--cc-warm))' : 'linear-gradient(90deg,var(--cc-warm-red),var(--cc-warm))' }} />
           </div>
         </div>
 
         {/* ── CURRENT BLOCKERS ── */}
         {blockers.length > 0 && (
-          <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(255,59,48,0.25)', background: 'rgba(255,59,48,0.03)' }}>
-            <div className="flex items-center gap-2 px-5 py-3" style={{ background: 'rgba(255,59,48,0.08)', borderBottom: '1px solid rgba(255,59,48,0.15)' }}>
-              <AlertTriangle className="w-4 h-4" style={{ color: '#ff3b30' }} />
-              <p className="font-heading font-black text-sm" style={{ color: '#ff3b30' }}>Current Blockers</p>
-              <span className="ml-auto text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,59,48,0.2)', color: '#ff3b30' }}>{blockers.length}</span>
+          <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(var(--cc-warm-red-rgb),0.25)', background: 'rgba(var(--cc-warm-red-rgb),0.03)' }}>
+            <div className="flex items-center gap-2 px-5 py-3" style={{ background: 'rgba(var(--cc-warm-red-rgb),0.08)', borderBottom: '1px solid rgba(var(--cc-warm-red-rgb),0.15)' }}>
+              <AlertTriangle className="w-4 h-4" style={{ color: 'var(--cc-warm-red)' }} />
+              <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-warm-red)' }}>Current Blockers</p>
+              <span className="ml-auto text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background: 'rgba(var(--cc-warm-red-rgb),0.2)', color: 'var(--cc-warm-red)' }}>{blockers.length}</span>
             </div>
-            <div className="divide-y" style={{ borderColor: 'rgba(255,59,48,0.1)' }}>
+            <div className="divide-y" style={{ borderColor: 'rgba(var(--cc-warm-red-rgb),0.1)' }}>
               {blockers.map(t => (
                 <div key={t.id} className="flex items-center gap-3 px-5 py-3">
-                  <Flag className="w-3.5 h-3.5 flex-shrink-0" style={{ color: '#ff3b30' }} />
+                  <Flag className="w-3.5 h-3.5 flex-shrink-0" style={{ color: 'var(--cc-warm-red)' }} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold" style={{ color: '#dff0e8' }}>{t.title}</p>
-                    {t.notes && <p className="text-xs" style={{ color: '#bacbc0' }}>{t.notes}</p>}
+                    <p className="text-sm font-bold" style={{ color: 'var(--cc-ink)' }}>{t.title}</p>
+                    {t.notes && <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>{t.notes}</p>}
                   </div>
                   <Badge label={t.priority} styleObj={PRIORITY_STYLE[t.priority] || PRIORITY_STYLE.Low} />
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"
@@ -358,18 +358,18 @@ export default function LaunchDashboard() {
 
         {/* ── WHAT'S LEFT ── */}
         {criticalLeft.length > 0 && (
-          <div className="rounded-2xl overflow-hidden" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}>
-            <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: '1px solid rgba(59,74,66,0.15)' }}>
-              <Zap className="w-4 h-4" style={{ color: '#77ffc8' }} />
-              <p className="font-heading font-black text-sm" style={{ color: '#dff0e8' }}>What's Left Before Launch</p>
+          <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+            <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
+              <Zap className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
+              <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>What's Left Before Launch</p>
             </div>
-            <div className="divide-y" style={{ borderColor: 'rgba(59,74,66,0.1)' }}>
+            <div className="divide-y" style={{ borderColor: 'rgba(var(--cc-line-rgb),0.1)' }}>
               {criticalLeft.map((t, i) => (
                 <div key={t.id} className="flex items-center gap-3 px-5 py-3">
-                  <span className="text-xs font-black w-5 flex-shrink-0" style={{ color: '#bacbc0' }}>{i + 1}.</span>
+                  <span className="text-xs font-black w-5 flex-shrink-0" style={{ color: 'var(--cc-ink-dim)' }}>{i + 1}.</span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold" style={{ color: '#dff0e8' }}>{t.title}</p>
-                    <p className="text-xs" style={{ color: '#bacbc0' }}>{t.category} · {t.affected_page || '—'}</p>
+                    <p className="text-sm font-bold" style={{ color: 'var(--cc-ink)' }}>{t.title}</p>
+                    <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>{t.category} · {t.affected_page || '—'}</p>
                   </div>
                   <Badge label={t.priority} styleObj={PRIORITY_STYLE[t.priority] || PRIORITY_STYLE.Low} />
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"
@@ -381,27 +381,27 @@ export default function LaunchDashboard() {
         )}
 
         {/* ── LAUNCH SCORECARD ── */}
-        <div className="rounded-2xl overflow-hidden" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}>
-          <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: '1px solid rgba(59,74,66,0.15)' }}>
-            <Check className="w-4 h-4" style={{ color: '#77ffc8' }} />
-            <p className="font-heading font-black text-sm" style={{ color: '#dff0e8' }}>Launch Scorecard</p>
-            <span className="ml-auto text-xs font-bold" style={{ color: '#bacbc0' }}>
+        <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+          <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
+            <Check className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
+            <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>Launch Scorecard</p>
+            <span className="ml-auto text-xs font-bold" style={{ color: 'var(--cc-ink-dim)' }}>
               {Object.values(scorecard).filter(Boolean).length} / {SCORECARD_ITEMS.length} passing
             </span>
           </div>
-          <div className="divide-y" style={{ borderColor: 'rgba(59,74,66,0.1)' }}>
+          <div className="divide-y" style={{ borderColor: 'rgba(var(--cc-line-rgb),0.1)' }}>
             {SCORECARD_ITEMS.map(item => {
               const passing = !!scorecard[item.key];
               return (
                 <div key={item.key} className="flex items-center gap-3 px-5 py-3 cursor-pointer select-none"
                   onClick={() => setScorecard(s => ({ ...s, [item.key]: !s[item.key] }))}>
                   <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
-                    style={{ background: passing ? 'rgba(119,255,200,0.15)' : 'rgba(255,59,48,0.1)', border: `1px solid ${passing ? 'rgba(119,255,200,0.4)' : 'rgba(255,59,48,0.25)'}` }}>
-                    {passing ? <Check className="w-3 h-3" style={{ color: '#77ffc8' }} /> : <X className="w-3 h-3" style={{ color: '#ff3b30' }} />}
+                    style={{ background: passing ? 'rgba(var(--cc-accent-rgb),0.15)' : 'rgba(var(--cc-warm-red-rgb),0.1)', border: `1px solid ${passing ? 'rgba(var(--cc-accent-rgb),0.4)' : 'rgba(var(--cc-warm-red-rgb),0.25)'}` }}>
+                    {passing ? <Check className="w-3 h-3" style={{ color: 'var(--cc-accent)' }} /> : <X className="w-3 h-3" style={{ color: 'var(--cc-warm-red)' }} />}
                   </div>
-                  <p className="flex-1 text-sm" style={{ color: '#dff0e8' }}>{item.label}</p>
+                  <p className="flex-1 text-sm" style={{ color: 'var(--cc-ink)' }}>{item.label}</p>
                   <span className="text-[10px] font-black px-2 py-0.5 rounded-full"
-                    style={{ background: passing ? 'rgba(119,255,200,0.12)' : 'rgba(255,59,48,0.1)', color: passing ? '#77ffc8' : '#ff3b30' }}>
+                    style={{ background: passing ? 'rgba(var(--cc-accent-rgb),0.12)' : 'rgba(var(--cc-warm-red-rgb),0.1)', color: passing ? 'var(--cc-accent)' : 'var(--cc-warm-red)' }}>
                     {passing ? 'PASS' : 'FAIL'}
                   </span>
                 </div>
@@ -411,17 +411,17 @@ export default function LaunchDashboard() {
         </div>
 
         {/* ── RECENTLY UPDATED ── */}
-        <div className="rounded-2xl overflow-hidden" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}>
-          <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: '1px solid rgba(59,74,66,0.15)' }}>
-            <Clock className="w-4 h-4" style={{ color: '#bacbc0' }} />
-            <p className="font-heading font-black text-sm" style={{ color: '#dff0e8' }}>Recently Updated</p>
+        <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+          <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
+            <Clock className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />
+            <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>Recently Updated</p>
           </div>
-          <div className="divide-y" style={{ borderColor: 'rgba(59,74,66,0.1)' }}>
+          <div className="divide-y" style={{ borderColor: 'rgba(var(--cc-line-rgb),0.1)' }}>
             {recentlyUpdated.map(t => (
               <div key={t.id} className="flex items-center gap-3 px-5 py-3">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold truncate" style={{ color: '#dff0e8' }}>{t.title}</p>
-                  <p className="text-xs" style={{ color: '#bacbc0' }}>{new Date(t.updated_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                  <p className="text-sm font-semibold truncate" style={{ color: 'var(--cc-ink)' }}>{t.title}</p>
+                  <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>{new Date(t.updated_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
                 </div>
                 <Badge label={t.priority} styleObj={PRIORITY_STYLE[t.priority] || PRIORITY_STYLE.Low} />
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"
@@ -432,16 +432,16 @@ export default function LaunchDashboard() {
         </div>
 
         {/* ── TASK TABLE ── */}
-        <div className="rounded-2xl overflow-hidden" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}>
-          <div className="flex items-center gap-2 px-5 py-3 flex-wrap" style={{ borderBottom: '1px solid rgba(59,74,66,0.15)' }}>
-            <p className="font-heading font-black text-sm" style={{ color: '#dff0e8' }}>All Tasks</p>
+        <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+          <div className="flex items-center gap-2 px-5 py-3 flex-wrap" style={{ borderBottom: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
+            <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>All Tasks</p>
             <div className="flex gap-1.5 ml-auto overflow-x-auto no-scrollbar">
               {SECTIONS.map(s => (
                 <button key={s.id} onClick={() => setActiveSection(s.id)}
                   className="flex-shrink-0 px-3 py-1 rounded-full text-xs font-bold transition-all"
                   style={activeSection === s.id
-                    ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }
-                    : { background: '#2e3638', color: '#bacbc0' }}>
+                    ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }
+                    : { background: 'var(--cc-bg-3)', color: 'var(--cc-ink-dim)' }}>
                   {s.label}
                 </button>
               ))}
@@ -450,17 +450,17 @@ export default function LaunchDashboard() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr style={{ borderBottom: '1px solid rgba(59,74,66,0.2)' }}>
+                <tr style={{ borderBottom: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
                   {['Task', 'Priority', 'Status', 'Category', 'Owner', 'Page', ''].map(h => (
-                    <th key={h} className="px-3 py-2 text-left text-[10px] font-black tracking-wider" style={{ color: '#bacbc0' }}>{h}</th>
+                    <th key={h} className="px-3 py-2 text-left text-[10px] font-black tracking-wider" style={{ color: 'var(--cc-ink-dim)' }}>{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {isLoading ? (
-                  <tr><td colSpan={7} className="text-center py-8 text-sm" style={{ color: '#bacbc0' }}>Loading...</td></tr>
+                  <tr><td colSpan={7} className="text-center py-8 text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Loading...</td></tr>
                 ) : displayedTasks.length === 0 ? (
-                  <tr><td colSpan={7} className="text-center py-8 text-sm" style={{ color: '#bacbc0' }}>No tasks in this section</td></tr>
+                  <tr><td colSpan={7} className="text-center py-8 text-sm" style={{ color: 'var(--cc-ink-dim)' }}>No tasks in this section</td></tr>
                 ) : displayedTasks.map(task => (
                   <TaskRow key={task.id} task={task}
                     onUpdate={(form) => updateMutation.mutate({ id: task.id, ...form })}

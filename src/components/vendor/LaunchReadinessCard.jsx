@@ -119,7 +119,7 @@ export default function LaunchReadinessCard({ truck, menuItems, onLaunchReadyCha
         <div className="relative z-10 flex items-center gap-4">
           <div className="text-3xl flex-shrink-0">🎉</div>
           <div>
-            <p className="font-heading font-black text-base" style={{ color: '#00F5D4' }}>You're launch ready!</p>
+            <p className="font-heading font-black text-base" style={{ color: 'var(--cc-accent-2)' }}>You're launch ready!</p>
             <p className="text-xs mt-0.5" style={{ color: 'rgba(0,245,212,0.7)' }}>
               Your truck is now live on CurbChef and visible to customers.
             </p>
@@ -127,7 +127,7 @@ export default function LaunchReadinessCard({ truck, menuItems, onLaunchReadyCha
           <div className="flex-shrink-0 ml-auto">
             <div className="w-10 h-10 rounded-full flex items-center justify-center"
               style={{ background: 'rgba(0,245,212,0.15)', border: '1px solid rgba(0,245,212,0.3)' }}>
-              <Rocket className="w-5 h-5" style={{ color: '#00F5D4' }} />
+              <Rocket className="w-5 h-5" style={{ color: 'var(--cc-accent-2)' }} />
             </div>
           </div>
         </div>
@@ -139,17 +139,17 @@ export default function LaunchReadinessCard({ truck, menuItems, onLaunchReadyCha
 
   return (
     <div className="mb-5 rounded-3xl overflow-hidden"
-      style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}>
+      style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
       {/* Header row */}
       <div className="p-5">
         <div className="flex items-center gap-4">
           {/* Circular progress ring */}
           <div className="relative flex-shrink-0 w-16 h-16">
             <svg width="64" height="64" className="transform -rotate-90">
-              <circle cx="32" cy="32" r={r} fill="none" stroke="rgba(59,74,66,0.4)" strokeWidth="5" />
+              <circle cx="32" cy="32" r={r} fill="none" stroke="rgba(var(--cc-line-rgb),0.4)" strokeWidth="5" />
               <circle
                 cx="32" cy="32" r={r} fill="none"
-                stroke={pct >= 75 ? '#00F5D4' : pct >= 40 ? '#fbbf24' : '#fd591e'}
+                stroke={pct >= 75 ? 'var(--cc-accent-2)' : pct >= 40 ? 'var(--cc-amber)' : 'var(--cc-warm)'}
                 strokeWidth="5"
                 strokeDasharray={circ}
                 strokeDashoffset={dashOffset}
@@ -158,56 +158,56 @@ export default function LaunchReadinessCard({ truck, menuItems, onLaunchReadyCha
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="font-heading font-black text-sm leading-none" style={{ color: '#dff0e8' }}>{passed}/{total}</span>
-              <span className="text-[9px] font-bold" style={{ color: '#bacbc0' }}>{pct}%</span>
+              <span className="font-heading font-black text-sm leading-none" style={{ color: 'var(--cc-ink)' }}>{passed}/{total}</span>
+              <span className="text-[9px] font-bold" style={{ color: 'var(--cc-ink-dim)' }}>{pct}%</span>
             </div>
           </div>
 
           <div className="flex-1 min-w-0">
-            <p className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>Launch Readiness</p>
-            <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>
+            <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>Launch Readiness</p>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>
               Complete {remaining} more {remaining === 1 ? 'step' : 'steps'} to start receiving orders.
             </p>
           </div>
 
           <button onClick={() => setExpanded(e => !e)} className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
-            style={{ background: 'rgba(59,74,66,0.3)' }}>
+            style={{ background: 'rgba(var(--cc-line-rgb),0.3)' }}>
             {expanded
-              ? <ChevronUp className="w-4 h-4" style={{ color: '#bacbc0' }} />
-              : <ChevronDown className="w-4 h-4" style={{ color: '#bacbc0' }} />
+              ? <ChevronUp className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />
+              : <ChevronDown className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />
             }
           </button>
         </div>
 
         {/* Quick progress bar */}
-        <div className="mt-4 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(59,74,66,0.3)' }}>
+        <div className="mt-4 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(var(--cc-line-rgb),0.3)' }}>
           <div className="h-full rounded-full transition-all duration-700"
             style={{
               width: `${pct}%`,
-              background: pct >= 75 ? 'linear-gradient(90deg,#00F5D4,#00e6a7)' : pct >= 40 ? 'linear-gradient(90deg,#fbbf24,#f59e0b)' : 'linear-gradient(90deg,#fd591e,#ff8c00)',
+              background: pct >= 75 ? 'linear-gradient(90deg,var(--cc-accent-2),var(--cc-accent-3))' : pct >= 40 ? 'linear-gradient(90deg,var(--cc-amber),#f59e0b)' : 'linear-gradient(90deg,var(--cc-warm),var(--cc-warm-3))',
             }} />
         </div>
       </div>
 
       {/* Expandable checklist */}
       {expanded && (
-        <div style={{ borderTop: '1px solid rgba(59,74,66,0.2)' }}>
+        <div style={{ borderTop: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
           {CHECKS.map((check) => {
             const done = checks[check.id];
             return (
               <div key={check.id} className="flex items-center gap-3 px-5 py-3"
-                style={{ borderBottom: '1px solid rgba(59,74,66,0.12)' }}>
+                style={{ borderBottom: '1px solid rgba(var(--cc-line-rgb),0.12)' }}>
                 {done
-                  ? <CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: '#00F5D4' }} />
-                  : <XCircle className="w-5 h-5 flex-shrink-0" style={{ color: '#fd591e' }} />
+                  ? <CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--cc-accent-2)' }} />
+                  : <XCircle className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--cc-warm)' }} />
                 }
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold" style={{ color: done ? '#dff0e8' : '#bacbc0' }}>{check.label}</p>
-                  <p className="text-xs" style={{ color: '#6B665C' }}>{check.sub}</p>
+                  <p className="text-sm font-bold" style={{ color: done ? 'var(--cc-ink)' : 'var(--cc-ink-dim)' }}>{check.label}</p>
+                  <p className="text-xs" style={{ color: 'var(--cc-ink-faint)' }}>{check.sub}</p>
                 </div>
                 {!done && (
                   <Link to={check.fixHref} className="flex-shrink-0 px-3 py-1.5 rounded-full text-[11px] font-black"
-                    style={{ background: 'rgba(253,89,30,0.12)', color: '#fd591e', border: '1px solid rgba(253,89,30,0.25)' }}>
+                    style={{ background: 'rgba(var(--cc-warm-rgb),0.12)', color: 'var(--cc-warm)', border: '1px solid rgba(var(--cc-warm-rgb),0.25)' }}>
                     Fix →
                   </Link>
                 )}

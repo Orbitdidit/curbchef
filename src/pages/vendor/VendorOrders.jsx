@@ -23,24 +23,24 @@ function OrderCard({ order, advance }) {
 
   const arrived = order.customer_eta_type === 'arrived';
   const minsLeft = etaMinsLeft(order);
-  let borderColor = 'rgba(59,74,66,0.2)';
-  let bg = '#192123';
-  if (arrived) { borderColor = 'rgba(119,255,200,0.5)'; bg = 'rgba(119,255,200,0.04)'; }
-  else if (minsLeft !== null && minsLeft <= 5) { borderColor = 'rgba(253,89,30,0.6)'; bg = 'rgba(253,89,30,0.04)'; }
+  let borderColor = 'rgba(var(--cc-line-rgb),0.2)';
+  let bg = 'var(--cc-bg-2)';
+  if (arrived) { borderColor = 'rgba(var(--cc-accent-rgb),0.5)'; bg = 'rgba(var(--cc-accent-rgb),0.04)'; }
+  else if (minsLeft !== null && minsLeft <= 5) { borderColor = 'rgba(var(--cc-warm-rgb),0.6)'; bg = 'rgba(var(--cc-warm-rgb),0.04)'; }
   else if (minsLeft !== null && minsLeft <= 10) { borderColor = 'rgba(251,191,36,0.5)'; bg = 'rgba(251,191,36,0.03)'; }
 
   return (
     <div className="p-4 rounded-3xl" style={{ background: bg, border: `1px solid ${borderColor}` }}>
       <div className="flex items-start justify-between mb-3">
         <div>
-          <p className="text-[10px] font-bold tracking-wide" style={{ color: '#bacbc0' }}>ORDER ID</p>
-          <p className="font-heading font-black text-xl" style={{ color: '#77ffc8' }}>
+          <p className="text-[10px] font-bold tracking-wide" style={{ color: 'var(--cc-ink-dim)' }}>ORDER ID</p>
+          <p className="font-heading font-black text-xl" style={{ color: 'var(--cc-accent)' }}>
             #{order.pickup_code || order.id.slice(-4).toUpperCase()}
           </p>
         </div>
         <div className="text-right">
-          <p className="text-[10px] font-bold" style={{ color: '#bacbc0' }}>RECEIVED</p>
-          <p className="text-xs font-semibold" style={{ color: '#dff0e8' }}>
+          <p className="text-[10px] font-bold" style={{ color: 'var(--cc-ink-dim)' }}>RECEIVED</p>
+          <p className="text-xs font-semibold" style={{ color: 'var(--cc-ink)' }}>
             {formatLocalTime(parseServerDate(order.created_date))}
           </p>
         </div>
@@ -54,18 +54,18 @@ function OrderCard({ order, advance }) {
 
       <div className="flex items-center gap-2 mb-3">
         <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-          style={{ background: 'rgba(119,255,200,0.12)', color: '#77ffc8' }}>
+          style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)' }}>
           {order.customer_name?.charAt(0) || 'C'}
         </div>
-        <p className="text-sm font-semibold" style={{ color: '#dff0e8' }}>{order.customer_name || order.customer_email}</p>
+        <p className="text-sm font-semibold" style={{ color: 'var(--cc-ink)' }}>{order.customer_name || order.customer_email}</p>
       </div>
 
       <div className="mb-4">
         {order.items?.map((item, i) => (
           <div key={i} className="flex items-baseline gap-2 mb-1">
-            <span className="text-sm font-bold" style={{ color: '#dff0e8' }}>{item.quantity}x {item.name}</span>
+            <span className="text-sm font-bold" style={{ color: 'var(--cc-ink)' }}>{item.quantity}x {item.name}</span>
             {item.add_ons?.map(a => (
-              <span key={a.name} className="text-xs italic" style={{ color: '#77ffc8' }}>{a.name}</span>
+              <span key={a.name} className="text-xs italic" style={{ color: 'var(--cc-accent)' }}>{a.name}</span>
             ))}
           </div>
         ))}
@@ -75,7 +75,7 @@ function OrderCard({ order, advance }) {
         onClick={() => advance.mutate(order)}
         disabled={advance.isPending}
         className="w-full py-3 rounded-2xl font-heading font-black text-sm"
-        style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 14px rgba(119,255,200,0.3)', opacity: advance.isPending ? 0.6 : 1 }}
+        style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 14px rgba(var(--cc-accent-rgb),0.3)', opacity: advance.isPending ? 0.6 : 1 }}
       >
         {BTN_LABEL[order.status]}
       </button>
@@ -182,21 +182,21 @@ export default function VendorOrders() {
     prevNewCount.current = newCount;
   }, [newCount]);
   return (
-    <div className="min-h-screen dot-bg" style={{ background: '#0d1517' }}>
+    <div className="min-h-screen dot-bg" style={{ background: 'var(--cc-bg-0)' }}>
       {/* Header */}
-      <div className="flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4" style={{ background: '#151d1f' }}>
+      <div className="flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4" style={{ background: 'var(--cc-bg-1)' }}>
         <div className="flex items-center gap-3">
-          <Link to="/vendor" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-            <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
+          <Link to="/vendor" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
+            <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
           </Link>
           <div>
-            <h1 className="font-heading font-bold text-base" style={{ color: '#dff0e8' }}>Order Queue</h1>
+            <h1 className="font-heading font-bold text-base" style={{ color: 'var(--cc-ink)' }}>Order Queue</h1>
           </div>
         </div>
-        <div className="relative w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-          <Bell className="w-4 h-4" style={{ color: '#bacbc0' }} />
+        <div className="relative w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
+          <Bell className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />
           {newCount > 0 && (
-            <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-black text-white" style={{ background: '#fd591e' }}>
+            <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-black text-white" style={{ background: 'var(--cc-warm)' }}>
               {newCount}
             </span>
           )}
@@ -211,15 +211,15 @@ export default function VendorOrders() {
             onClick={() => setActiveTab(tab.key)}
             className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold transition-all"
             style={activeTab === tab.key
-              ? { background: tab.key === 'placed' ? '#fd591e' : 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: tab.key === 'placed' ? 'white' : '#003826', boxShadow: tab.key === 'placed' ? '0 0 12px rgba(253,89,30,0.4)' : '0 0 12px rgba(119,255,200,0.3)' }
-              : { background: '#192123', color: '#bacbc0' }
+              ? { background: tab.key === 'placed' ? 'var(--cc-warm)' : 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: tab.key === 'placed' ? 'white' : 'var(--cc-accent-deep)', boxShadow: tab.key === 'placed' ? '0 0 12px rgba(var(--cc-warm-rgb),0.4)' : '0 0 12px rgba(var(--cc-accent-rgb),0.3)' }
+              : { background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }
             }
           >
             {tab.label}
             {countMap[tab.key] > 0 && (
               <span
                 className="text-[10px] font-black px-1.5 rounded-full"
-                style={{ background: activeTab === tab.key ? 'rgba(0,0,0,0.2)' : '#2e3638', color: activeTab === tab.key ? 'currentColor' : '#bacbc0' }}
+                style={{ background: activeTab === tab.key ? 'rgba(0,0,0,0.2)' : 'var(--cc-bg-3)', color: activeTab === tab.key ? 'currentColor' : 'var(--cc-ink-dim)' }}
               >
                 {countMap[tab.key]}
               </span>
@@ -233,7 +233,7 @@ export default function VendorOrders() {
         {tabOrders.length === 0 ? (
           <div className="py-16 text-center">
             <p className="text-4xl mb-2">✅</p>
-            <p className="text-sm" style={{ color: '#bacbc0' }}>No {activeTab} orders</p>
+            <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>No {activeTab} orders</p>
           </div>
         ) : (
           tabOrders.map(order => (
@@ -248,13 +248,13 @@ export default function VendorOrders() {
         style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(16px)' }}
       >
         <div className="w-full max-w-lg grid grid-cols-2 gap-4">
-          <div className="text-center p-3 rounded-2xl" style={{ background: '#192123' }}>
-            <p className="text-[10px] font-bold tracking-wide" style={{ color: '#bacbc0' }}>QUEUE TIME</p>
-            <p className="font-heading font-black text-2xl" style={{ color: '#dff0e8' }}>18 min</p>
+          <div className="text-center p-3 rounded-2xl" style={{ background: 'var(--cc-bg-2)' }}>
+            <p className="text-[10px] font-bold tracking-wide" style={{ color: 'var(--cc-ink-dim)' }}>QUEUE TIME</p>
+            <p className="font-heading font-black text-2xl" style={{ color: 'var(--cc-ink)' }}>18 min</p>
           </div>
-          <div className="text-center p-3 rounded-2xl" style={{ background: '#192123' }}>
-            <p className="text-[10px] font-bold tracking-wide" style={{ color: '#bacbc0' }}>REVENUE TODAY</p>
-            <p className="font-heading font-black text-2xl" style={{ color: '#77ffc8' }}>${Math.round(totalRevToday)}</p>
+          <div className="text-center p-3 rounded-2xl" style={{ background: 'var(--cc-bg-2)' }}>
+            <p className="text-[10px] font-bold tracking-wide" style={{ color: 'var(--cc-ink-dim)' }}>REVENUE TODAY</p>
+            <p className="font-heading font-black text-2xl" style={{ color: 'var(--cc-accent)' }}>${Math.round(totalRevToday)}</p>
           </div>
         </div>
       </div>

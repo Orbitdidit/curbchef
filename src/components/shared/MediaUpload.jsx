@@ -81,7 +81,7 @@ export default function MediaUpload({ value, onChange, type = 'any', label, hint
   return (
     <div>
       {label && (
-        <label className="block text-[10px] font-bold tracking-wider mb-1" style={{ color: '#bacbc0' }}>
+        <label className="block text-[10px] font-bold tracking-wider mb-1" style={{ color: 'var(--cc-ink-dim)' }}>
           {label.toUpperCase()}
         </label>
       )}
@@ -89,14 +89,14 @@ export default function MediaUpload({ value, onChange, type = 'any', label, hint
       {/* Spec hint */}
       {hint && (
         <p className="text-[10px] mb-2 leading-relaxed" style={{ color: 'rgba(186,203,192,0.55)' }}>
-          {aspectHint && <span className="font-bold" style={{ color: '#77ffc8' }}>{aspectHint} · </span>}
+          {aspectHint && <span className="font-bold" style={{ color: 'var(--cc-accent)' }}>{aspectHint} · </span>}
           {hint}
         </p>
       )}
 
       {value ? (
         /* Preview */
-        <div className="relative rounded-xl overflow-hidden mb-2" style={{ background: '#0d1517' }}>
+        <div className="relative rounded-xl overflow-hidden mb-2" style={{ background: 'var(--cc-bg-0)' }}>
           {isVideo ? (
             <video src={value} className="w-full max-h-48 object-cover" controls muted playsInline />
           ) : (
@@ -109,7 +109,7 @@ export default function MediaUpload({ value, onChange, type = 'any', label, hint
               style={{ background: 'rgba(13,21,23,0.85)', backdropFilter: 'blur(8px)' }}
               title="Replace"
             >
-              <RefreshCw className="w-3.5 h-3.5" style={{ color: '#77ffc8' }} />
+              <RefreshCw className="w-3.5 h-3.5" style={{ color: 'var(--cc-accent)' }} />
             </button>
             <button
               onClick={() => onChange('')}
@@ -117,7 +117,7 @@ export default function MediaUpload({ value, onChange, type = 'any', label, hint
               style={{ background: 'rgba(13,21,23,0.85)', backdropFilter: 'blur(8px)' }}
               title="Remove"
             >
-              <X className="w-3.5 h-3.5" style={{ color: '#ff3b30' }} />
+              <X className="w-3.5 h-3.5" style={{ color: 'var(--cc-warm-red)' }} />
             </button>
           </div>
         </div>
@@ -129,18 +129,18 @@ export default function MediaUpload({ value, onChange, type = 'any', label, hint
           onDragOver={e => e.preventDefault()}
           className="flex flex-col items-center justify-center gap-2 rounded-xl cursor-pointer transition-all"
           style={{
-            background: '#0d1517',
-            border: '2px dashed rgba(119,255,200,0.2)',
+            background: 'var(--cc-bg-0)',
+            border: '2px dashed rgba(var(--cc-accent-rgb),0.2)',
             minHeight: '96px',
             padding: '20px',
           }}
         >
           {uploading ? (
-            <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
+            <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'var(--cc-accent) transparent transparent transparent' }} />
           ) : (
             <>
-              {type === 'video' ? <Video className="w-6 h-6" style={{ color: '#77ffc8' }} /> : <Image className="w-6 h-6" style={{ color: '#77ffc8' }} />}
-              <p className="text-xs font-semibold" style={{ color: '#bacbc0' }}>
+              {type === 'video' ? <Video className="w-6 h-6" style={{ color: 'var(--cc-accent)' }} /> : <Image className="w-6 h-6" style={{ color: 'var(--cc-accent)' }} />}
+              <p className="text-xs font-semibold" style={{ color: 'var(--cc-ink-dim)' }}>
                 Tap to upload {type === 'video' ? 'video' : type === 'image' ? 'image' : 'media'}
               </p>
               <p className="text-[10px]" style={{ color: 'rgba(186,203,192,0.4)' }}>or drag & drop</p>
@@ -149,7 +149,7 @@ export default function MediaUpload({ value, onChange, type = 'any', label, hint
         </div>
       )}
 
-      {error && <p className="text-[10px] mt-1" style={{ color: '#ff3b30' }}>{error}</p>}
+      {error && <p className="text-[10px] mt-1" style={{ color: 'var(--cc-warm-red)' }}>{error}</p>}
 
       <input
         ref={inputRef}

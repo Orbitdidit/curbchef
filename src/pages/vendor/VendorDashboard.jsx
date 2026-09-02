@@ -83,21 +83,21 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
   });
 
   return (
-    <div className="min-h-screen dot-bg pb-10" style={{ background: '#0d1517' }}>
+    <div className="min-h-screen dot-bg pb-10" style={{ background: 'var(--cc-bg-0)' }}>
       {/* Header */}
       <div
         className="flex items-center gap-3 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4"
-        style={{ background: '#151d1f' }}
+        style={{ background: 'var(--cc-bg-1)' }}
       >
-        <Link to="/vendor-portal" className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#192123' }}>
-          <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
+        <Link to="/vendor-portal" className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--cc-bg-2)' }}>
+          <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </Link>
         <div className="flex-1">
-          <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>COMMAND CENTER</p>
-          <p className="text-xs" style={{ color: '#bacbc0' }}>Operator #{user?.id?.slice(-4).toUpperCase()}</p>
+          <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-accent)' }}>COMMAND CENTER</p>
+          <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Operator #{user?.id?.slice(-4).toUpperCase()}</p>
         </div>
-        <Link to="/vendor/profile" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-          <Pencil className="w-4 h-4" style={{ color: '#bacbc0' }} />
+        <Link to="/vendor/profile" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
+          <Pencil className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />
         </Link>
       </div>
 
@@ -107,34 +107,34 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         <div className="flex items-center justify-between mb-5">
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="font-heading font-black text-xl" style={{ color: '#dff0e8' }}>{truck.name}</h1>
+              <h1 className="font-heading font-black text-xl" style={{ color: 'var(--cc-ink)' }}>{truck.name}</h1>
               {truck.verified_status
                 ? <VerifiedBadge size="md" />
                 : (
                   <Link to="/vendor/verification">
                     <span className="text-[10px] font-black px-2 py-0.5 rounded-full flex items-center gap-1"
-                      style={{ background: 'rgba(251,191,36,0.1)', color: '#fbbf24', border: '1px solid rgba(251,191,36,0.25)' }}>
+                      style={{ background: 'rgba(251,191,36,0.1)', color: 'var(--cc-amber)', border: '1px solid rgba(251,191,36,0.25)' }}>
                       <Shield className="w-2.5 h-2.5" /> Get Verified
                     </span>
                   </Link>
                 )
               }
             </div>
-            <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>
               @{truck.slug || truck.name.toLowerCase().replace(/\s/g, '')} • {truck.cuisine_type?.replace('_', ' ')}
             </p>
           </div>
           {/* Go Live toggle */}
           <div className="flex flex-col items-end gap-1">
-            <p className="text-[10px] font-bold" style={{ color: truck.is_live ? '#77ffc8' : '#bacbc0' }}>
+            <p className="text-[10px] font-bold" style={{ color: truck.is_live ? 'var(--cc-accent)' : 'var(--cc-ink-dim)' }}>
               {truck.is_live ? 'LIVE NOW' : 'GO LIVE'}
             </p>
             <button
               onClick={() => updateTruck.mutate({ is_live: !truck.is_live })}
               className="relative w-14 h-7 rounded-full transition-all"
               style={{
-                background: truck.is_live ? 'linear-gradient(135deg,#77ffc8,#00e6a7)' : '#192123',
-                boxShadow: truck.is_live ? '0 0 12px rgba(119,255,200,0.4)' : 'none',
+                background: truck.is_live ? 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' : 'var(--cc-bg-2)',
+                boxShadow: truck.is_live ? '0 0 12px rgba(var(--cc-accent-rgb),0.4)' : 'none',
               }}
             >
               <div
@@ -157,14 +157,14 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
           to="/vendor/go-live"
           className="w-full flex items-center justify-center gap-3 py-5 rounded-2xl mb-5 font-heading font-black text-lg active:scale-95 transition-transform"
           style={{
-            background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
-            color: '#003826',
-            boxShadow: '0 0 32px rgba(119,255,200,0.45)',
+            background: 'linear-gradient(135deg, var(--cc-accent) 0%, var(--cc-accent-3) 100%)',
+            color: 'var(--cc-accent-deep)',
+            boxShadow: '0 0 32px rgba(var(--cc-accent-rgb),0.45)',
           }}
         >
           <span className="relative flex items-center justify-center w-6 h-6">
-            <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping" style={{ background: '#FF3B30' }} />
-            <span className="relative w-3 h-3 rounded-full" style={{ background: '#FF3B30' }} />
+            <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping" style={{ background: 'var(--cc-warm-red)' }} />
+            <span className="relative w-3 h-3 rounded-full" style={{ background: 'var(--cc-warm-red)' }} />
           </span>
           <Camera className="w-6 h-6" />
           📹 Go Live from Truck
@@ -173,14 +173,14 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         {/* Plan badge + Drop Tokens */}
         <div className="flex gap-2 mb-3">
           <Link to="/vendor/plans" className="flex-1 flex items-center justify-between px-4 py-3 rounded-2xl"
-            style={{ background: 'rgba(119,255,200,0.06)', border: '1px solid rgba(119,255,200,0.15)' }}>
+            style={{ background: 'rgba(var(--cc-accent-rgb),0.06)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
             <div>
-              <p className="text-[10px] font-bold tracking-widest" style={{ color: '#bacbc0' }}>YOUR PLAN</p>
-              <p className="font-heading font-black text-sm capitalize" style={{ color: '#77ffc8' }}>{truck.vendor_plan || 'Free'}</p>
+              <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-ink-dim)' }}>YOUR PLAN</p>
+              <p className="font-heading font-black text-sm capitalize" style={{ color: 'var(--cc-accent)' }}>{truck.vendor_plan || 'Free'}</p>
             </div>
             <div className="flex items-center gap-1.5">
-              <Zap className="w-3.5 h-3.5" style={{ color: '#77ffc8' }} />
-              <span className="font-bold text-sm" style={{ color: '#77ffc8' }}>{truck.boost_credits || 0} credits</span>
+              <Zap className="w-3.5 h-3.5" style={{ color: 'var(--cc-accent)' }} />
+              <span className="font-bold text-sm" style={{ color: 'var(--cc-accent)' }}>{truck.boost_credits || 0} credits</span>
             </div>
           </Link>
         </div>
@@ -193,10 +193,10 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
           className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl mb-5 font-heading font-black text-sm transition-all active:scale-95"
           style={{
             background: (truck.drop_tokens ?? 0) > 0
-              ? 'linear-gradient(135deg,rgba(253,89,30,0.15),rgba(253,89,30,0.08))'
-              : '#192123',
-            color: (truck.drop_tokens ?? 0) > 0 ? '#fd591e' : '#bacbc0',
-            border: `1px solid ${(truck.drop_tokens ?? 0) > 0 ? 'rgba(253,89,30,0.35)' : 'rgba(59,74,66,0.2)'}`,
+              ? 'linear-gradient(135deg,rgba(var(--cc-warm-rgb),0.15),rgba(var(--cc-warm-rgb),0.08))'
+              : 'var(--cc-bg-2)',
+            color: (truck.drop_tokens ?? 0) > 0 ? 'var(--cc-warm)' : 'var(--cc-ink-dim)',
+            border: `1px solid ${(truck.drop_tokens ?? 0) > 0 ? 'rgba(var(--cc-warm-rgb),0.35)' : 'rgba(var(--cc-line-rgb),0.2)'}`,
           }}>
           🪂 Create Curb Drop
           {(truck.drop_tokens ?? 0) > 0
@@ -240,11 +240,11 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
 
         {/* Earnings breakdown — only shown if Stripe connected */}
         {truck.stripe_onboarding_status === 'payouts_enabled' && (
-          <div className="mb-5 p-4 rounded-2xl" style={{ background: '#192123', border: '1px solid rgba(119,255,200,0.1)' }}>
+          <div className="mb-5 p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-accent-rgb),0.1)' }}>
             <div className="flex items-center gap-2 mb-3">
-              <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>EARNINGS BREAKDOWN</p>
+              <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-accent)' }}>EARNINGS BREAKDOWN</p>
               {orders.some(o => o.is_test_payment) && (
-                <span className="text-[9px] font-black px-2 py-0.5 rounded-full" style={{ background: 'rgba(251,191,36,0.15)', color: '#fbbf24' }}>TEST MODE</span>
+                <span className="text-[9px] font-black px-2 py-0.5 rounded-full" style={{ background: 'rgba(251,191,36,0.15)', color: 'var(--cc-amber)' }}>TEST MODE</span>
               )}
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -254,9 +254,9 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
                 { label: 'PLATFORM FEES', value: `$${orders.reduce((s, o) => s + (o.platform_fee_amount || 0), 0).toFixed(2)}` },
                 { label: 'PAID ORDERS', value: orders.filter(o => o.stripe_payment_intent_id).length },
               ].map(({ label, value, highlight }) => (
-                <div key={label} className="p-3 rounded-xl" style={{ background: '#0d1517' }}>
-                  <p className="text-[10px] font-bold tracking-wide mb-1" style={{ color: '#bacbc0' }}>{label}</p>
-                  <p className="font-heading font-black text-base" style={{ color: highlight ? '#77ffc8' : '#dff0e8' }}>{value}</p>
+                <div key={label} className="p-3 rounded-xl" style={{ background: 'var(--cc-bg-0)' }}>
+                  <p className="text-[10px] font-bold tracking-wide mb-1" style={{ color: 'var(--cc-ink-dim)' }}>{label}</p>
+                  <p className="font-heading font-black text-base" style={{ color: highlight ? 'var(--cc-accent)' : 'var(--cc-ink)' }}>{value}</p>
                 </div>
               ))}
             </div>
@@ -266,8 +266,8 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         {/* Stats */}
         <div className="mb-5">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>TODAY'S STATS</p>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: 'rgba(119,255,200,0.1)', color: '#77ffc8' }}>
+            <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-accent)' }}>TODAY'S STATS</p>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)' }}>
               REAL-TIME
             </span>
           </div>
@@ -277,9 +277,9 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
               { label: 'ORDERS', value: truck.total_orders || 0, icon: ShoppingBag },
               { label: 'FOLLOWERS', value: `+${truck.followers_count || 0}`, icon: Users },
             ].map(({ label, value, icon: Icon }) => (
-              <div key={label} className="p-3 rounded-2xl text-center" style={{ background: '#192123' }}>
-                <p className="text-[10px] font-bold tracking-wide mb-1" style={{ color: '#bacbc0' }}>{label}</p>
-                <p className="font-heading font-black text-lg" style={{ color: '#dff0e8' }}>{value}</p>
+              <div key={label} className="p-3 rounded-2xl text-center" style={{ background: 'var(--cc-bg-2)' }}>
+                <p className="text-[10px] font-bold tracking-wide mb-1" style={{ color: 'var(--cc-ink-dim)' }}>{label}</p>
+                <p className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>{value}</p>
               </div>
             ))}
           </div>
@@ -306,14 +306,14 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
               style={truck.status === s
                 ? {
                   background: s === 'open'
-                    ? 'linear-gradient(135deg,#77ffc8,#00e6a7)'
+                    ? 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))'
                     : s === 'sold_out'
-                    ? 'rgba(253,89,30,0.2)'
-                    : '#2e3638',
-                  color: s === 'open' ? '#003826' : s === 'sold_out' ? '#fd591e' : '#bacbc0',
-                  boxShadow: s === 'open' ? '0 0 12px rgba(119,255,200,0.25)' : 'none',
+                    ? 'rgba(var(--cc-warm-rgb),0.2)'
+                    : 'var(--cc-bg-3)',
+                  color: s === 'open' ? 'var(--cc-accent-deep)' : s === 'sold_out' ? 'var(--cc-warm)' : 'var(--cc-ink-dim)',
+                  boxShadow: s === 'open' ? '0 0 12px rgba(var(--cc-accent-rgb),0.25)' : 'none',
                 }
-                : { background: '#192123', color: '#bacbc0' }
+                : { background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }
               }
             >
               {s.replace('_', ' ')}
@@ -326,7 +326,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
 
         {/* Quick Actions */}
         <div className="mb-5">
-          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>QUICK ACTIONS</p>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: 'var(--cc-accent)' }}>QUICK ACTIONS</p>
           <div className="grid grid-cols-3 gap-3">
             {[
               { label: 'Edit Menu', icon: ShoppingBag, to: '/vendor/menu' },
@@ -337,15 +337,15 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
                 key={label}
                 to={to}
                 className="flex flex-col items-center gap-2 p-4 rounded-2xl"
-                style={{ background: '#192123' }}
+                style={{ background: 'var(--cc-bg-2)' }}
               >
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: 'rgba(119,255,200,0.1)' }}
+                  style={{ background: 'rgba(var(--cc-accent-rgb),0.1)' }}
                 >
-                  <Icon className="w-5 h-5" style={{ color: '#77ffc8' }} />
+                  <Icon className="w-5 h-5" style={{ color: 'var(--cc-accent)' }} />
                 </div>
-                <span className="text-[10px] font-semibold text-center" style={{ color: '#bacbc0' }}>{label}</span>
+                <span className="text-[10px] font-semibold text-center" style={{ color: 'var(--cc-ink-dim)' }}>{label}</span>
               </Link>
             ))}
           </div>
@@ -357,29 +357,29 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         {/* Right column on desktop — Active Orders */}
         <div id="tour-orders" className="lg:pt-0">
           <div className="flex items-center justify-between mb-3">
-            <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>
+            <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-accent)' }}>
               ACTIVE ORDERS ({activeOrders.length})
             </p>
-            <Link to="/vendor/orders" className="text-xs font-semibold" style={{ color: '#77ffc8' }}>View history</Link>
+            <Link to="/vendor/orders" className="text-xs font-semibold" style={{ color: 'var(--cc-accent)' }}>View history</Link>
           </div>
           {activeOrders.length === 0 ? (
-            <div className="py-8 text-center" style={{ background: '#192123', borderRadius: '1rem' }}>
-              <p className="text-sm" style={{ color: '#bacbc0' }}>No active orders</p>
+            <div className="py-8 text-center" style={{ background: 'var(--cc-bg-2)', borderRadius: '1rem' }}>
+              <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>No active orders</p>
             </div>
           ) : (
             <div className="flex flex-col gap-3">
               {activeOrders.slice(0, 3).map(order => (
-                <div key={order.id} className="p-4 rounded-2xl" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}>
+                <div key={order.id} className="p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <span className="font-heading font-black text-sm" style={{ color: '#dff0e8' }}>
+                      <span className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>
                         #{order.pickup_code || order.id.slice(-4).toUpperCase()}
                       </span>
                       <span
                         className="text-[10px] font-bold px-2 py-0.5 rounded-full"
                         style={{
-                          background: order.status === 'placed' ? 'rgba(119,255,200,0.15)' : 'rgba(253,89,30,0.15)',
-                          color: order.status === 'placed' ? '#77ffc8' : '#fd591e',
+                          background: order.status === 'placed' ? 'rgba(var(--cc-accent-rgb),0.15)' : 'rgba(var(--cc-warm-rgb),0.15)',
+                          color: order.status === 'placed' ? 'var(--cc-accent)' : 'var(--cc-warm)',
                         }}
                       >
                         {order.status.toUpperCase()}
@@ -388,12 +388,12 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
                     <Link
                       to="/vendor/orders"
                       className="py-1.5 px-4 rounded-full text-xs font-bold"
-                      style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}
+                      style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}
                     >
                       {order.status === 'placed' ? 'ACCEPT' : 'READY'}
                     </Link>
                   </div>
-                  <p className="text-xs" style={{ color: '#bacbc0' }}>
+                  <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>
                     {order.items?.map(i => `${i.quantity}x ${i.name}`).join(', ')}
                   </p>
                 </div>

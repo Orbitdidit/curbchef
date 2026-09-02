@@ -13,7 +13,7 @@ function ClipBadge({ clip, isTruckCard }) {
   if (!isTruckCard && clip.is_live) {
     return (
       <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-        style={{ background: 'rgba(255,59,48,0.9)', backdropFilter: 'blur(8px)' }}>
+        style={{ background: 'rgba(var(--cc-warm-red-rgb),0.9)', backdropFilter: 'blur(8px)' }}>
         <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
         <span className="text-white text-[11px] font-bold font-mono tracking-widest">LIVE FEED</span>
       </div>
@@ -22,7 +22,7 @@ function ClipBadge({ clip, isTruckCard }) {
   if (isTruckCard) {
     return (
       <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-        style={{ background: 'rgba(253,89,30,0.85)', backdropFilter: 'blur(8px)' }}>
+        style={{ background: 'rgba(var(--cc-warm-rgb),0.85)', backdropFilter: 'blur(8px)' }}>
         <span className="text-white text-[11px] font-black tracking-widest">🔥 COOKING NOW</span>
       </div>
     );
@@ -123,7 +123,7 @@ function LiveCard({ clip, isActive, isTruckCard }) {
           <div
             className="h-full rounded-full"
             style={{
-              background: '#00F5D4',
+              background: 'var(--cc-accent-2)',
               animation: `livePreviewProgress ${PREVIEW_DURATION}s linear infinite`,
             }}
           />
@@ -184,7 +184,7 @@ export default function LiveCarousel({ trucks = [] }) {
               style={{
                 width: i === active ? 20 : 6,
                 height: 6,
-                background: i === active ? '#00F5D4' : 'rgba(255,255,255,0.15)',
+                background: i === active ? 'var(--cc-accent-2)' : 'rgba(255,255,255,0.15)',
               }} />
           ))}
         </div>

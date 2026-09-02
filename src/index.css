@@ -7,28 +7,28 @@
 @layer base {
   :root {
     /* === THERMAL NIGHT PALETTE === */
-    --background: 0 0% 4%;           /* #0A0A0A pure near-black */
-    --foreground: 37 16% 95%;        /* #F5F0E8 warm off-white */
-    --card: 0 0% 8%;                 /* #141414 elevated surface */
+    --background: 0 0% 4%;           /* var(--cc-black) pure near-black */
+    --foreground: 37 16% 95%;        /* var(--cc-cream) warm off-white */
+    --card: 0 0% 8%;                 /* var(--cc-surface) elevated surface */
     --card-foreground: 37 16% 95%;
-    --popover: 0 0% 10%;             /* #1A1A1A */
+    --popover: 0 0% 10%;             /* var(--cc-surface-3) */
     --popover-foreground: 37 16% 95%;
 
     /* Neon Teal Primary */
-    --primary: 173 100% 48%;         /* #00F5D4 neon teal */
-    --primary-foreground: 0 0% 4%;   /* #0A0A0A on-primary */
+    --primary: 173 100% 48%;         /* var(--cc-accent-2) neon teal */
+    --primary-foreground: 0 0% 4%;   /* var(--cc-black) on-primary */
 
-    --secondary: 0 0% 10%;           /* #1A1A1A chips/secondary */
+    --secondary: 0 0% 10%;           /* var(--cc-surface-3) chips/secondary */
     --secondary-foreground: 37 16% 95%;
-    --muted: 0 0% 12%;               /* #1E1E1E input/divider */
-    --muted-foreground: 35 9% 62%;   /* #A39E94 warm gray */
-    --accent: 3 100% 59%;            /* #FF3B30 flame red */
+    --muted: 0 0% 12%;               /* var(--cc-surface-2) input/divider */
+    --muted-foreground: 35 9% 62%;   /* var(--cc-ink-muted) warm gray */
+    --accent: 3 100% 59%;            /* var(--cc-warm-red) flame red */
     --accent-foreground: 0 0% 100%;
-    --destructive: 3 100% 59%;       /* #FF3B30 */
+    --destructive: 3 100% 59%;       /* var(--cc-warm-red) */
     --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 14%;              /* #242424 subtle border */
-    --input: 0 0% 12%;               /* #1E1E1E */
+    --input: 0 0% 12%;               /* var(--cc-surface-2) */
     --ring: 173 100% 48%;            /* neon teal */
 
     --chart-1: 173 100% 48%;
@@ -48,17 +48,17 @@
     --sidebar-ring: 173 100% 48%;
 
     /* Thermal Night custom tokens */
-    --tn-bg: #0A0A0A;
-    --tn-card: #141414;
-    --tn-surface: #1A1A1A;
-    --tn-input: #1E1E1E;
-    --tn-teal: #00F5D4;
-    --tn-red: #FF3B30;
-    --tn-orange: #FF6B1A;
-    --tn-yellow: #FFD60A;
-    --tn-text: #F5F0E8;
-    --tn-text-secondary: #A39E94;
-    --tn-text-muted: #6B665C;
+    --tn-bg: var(--cc-black);
+    --tn-card: var(--cc-surface);
+    --tn-surface: var(--cc-surface-3);
+    --tn-input: var(--cc-surface-2);
+    --tn-teal: var(--cc-accent-2);
+    --tn-red: var(--cc-warm-red);
+    --tn-orange: var(--cc-warm-2);
+    --tn-yellow: var(--cc-yellow);
+    --tn-text: var(--cc-cream);
+    --tn-text-secondary: var(--cc-ink-muted);
+    --tn-text-muted: var(--cc-ink-faint);
     --font-heading: 'Plus Jakarta Sans', sans-serif;
     --font-body: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
@@ -106,7 +106,7 @@
   }
   body {
     @apply bg-background text-foreground font-body;
-    background-color: #0A0A0A;
+    background-color: var(--cc-black);
     overscroll-behavior: none;
   }
   button, a, nav {
@@ -130,7 +130,7 @@
   box-shadow: 0 0 18px rgba(255, 107, 26, 0.35);
 }
 .red-glow {
-  box-shadow: 0 0 18px rgba(255, 59, 48, 0.35);
+  box-shadow: 0 0 18px rgba(var(--cc-warm-red-rgb), 0.35);
 }
 
 /* Snap scroll */
@@ -168,7 +168,7 @@ button:active, a:active {
   100% { background-position: 200% center; }
 }
 .shimmer-text {
-  background: linear-gradient(90deg, #00F5D4 0%, #00d4b8 40%, #00F5D4 60%, #00d4b8 100%);
+  background: linear-gradient(90deg, var(--cc-accent-2) 0%, #00d4b8 40%, var(--cc-accent-2) 60%, #00d4b8 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -177,8 +177,8 @@ button:active, a:active {
 
 /* Pulsing LIVE dot */
 @keyframes livePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255,59,48,0.6); }
-  50%       { box-shadow: 0 0 0 5px rgba(255,59,48,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--cc-warm-red-rgb),0.6); }
+  50%       { box-shadow: 0 0 0 5px rgba(var(--cc-warm-red-rgb),0); }
 }
 .live-dot {
   animation: livePulse 1.4s ease-in-out infinite;
@@ -192,8 +192,8 @@ button:active, a:active {
 
 /* Teal primary button */
 .btn-neon {
-  background: #00F5D4;
-  color: #0A0A0A;
+  background: var(--cc-accent-2);
+  color: var(--cc-black);
   font-weight: 700;
   border-radius: 9999px;
 }

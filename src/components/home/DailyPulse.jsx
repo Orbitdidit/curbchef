@@ -59,7 +59,7 @@ export default function DailyPulse({ user, trucks }) {
 
   const points = rewards?.[0]?.points || 0;
   const tier = rewards?.[0]?.tier || 'starter';
-  const tierColors = { starter: '#bacbc0', regular: '#77ffc8', vip: '#fbbf24', legend: '#fd591e' };
+  const tierColors = { starter: 'var(--cc-ink-dim)', regular: 'var(--cc-accent)', vip: 'var(--cc-amber)', legend: 'var(--cc-warm)' };
   const greeting = getTimeGreeting();
   const firstName = user?.full_name?.split(' ')[0];
 
@@ -70,23 +70,23 @@ export default function DailyPulse({ user, trucks }) {
     <div className="px-5 pt-2 pb-1">
       {/* Greeting */}
       <div className="mb-4">
-        <p className="font-heading font-black text-2xl leading-tight" style={{ color: '#dff0e8' }}>
+        <p className="font-heading font-black text-2xl leading-tight" style={{ color: 'var(--cc-ink)' }}>
           {greeting.text}{firstName ? `, ${firstName}` : ''} {greeting.emoji}
         </p>
-        <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>{greeting.sub}</p>
+        <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{greeting.sub}</p>
       </div>
 
       {/* Stats strip */}
       <div className="flex gap-2 mb-5">
         {/* Streak */}
         <div className="flex-1 flex items-center gap-2.5 p-3 rounded-2xl"
-          style={{ background: streak > 0 ? 'rgba(253,89,30,0.1)' : '#192123', border: streak > 0 ? '1px solid rgba(253,89,30,0.25)' : '1px solid rgba(59,74,66,0.2)' }}>
+          style={{ background: streak > 0 ? 'rgba(var(--cc-warm-rgb),0.1)' : 'var(--cc-bg-2)', border: streak > 0 ? '1px solid rgba(var(--cc-warm-rgb),0.25)' : '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
           <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{ background: streak > 0 ? 'rgba(253,89,30,0.15)' : '#2e3638' }}>
-            <Flame className="w-4 h-4" style={{ color: streak > 0 ? '#fd591e' : '#bacbc0' }} />
+            style={{ background: streak > 0 ? 'rgba(var(--cc-warm-rgb),0.15)' : 'var(--cc-bg-3)' }}>
+            <Flame className="w-4 h-4" style={{ color: streak > 0 ? 'var(--cc-warm)' : 'var(--cc-ink-dim)' }} />
           </div>
           <div>
-            <p className="font-heading font-black text-lg leading-none" style={{ color: streak > 0 ? '#fd591e' : '#bacbc0' }}>{streak}</p>
+            <p className="font-heading font-black text-lg leading-none" style={{ color: streak > 0 ? 'var(--cc-warm)' : 'var(--cc-ink-dim)' }}>{streak}</p>
             <p className="text-[10px] font-bold" style={{ color: 'rgba(186,203,192,0.6)' }}>day streak</p>
           </div>
         </div>
@@ -94,13 +94,13 @@ export default function DailyPulse({ user, trucks }) {
         {/* Points */}
         <Link to="/rewards" className="flex-1">
           <div className="flex items-center gap-2.5 p-3 rounded-2xl h-full"
-            style={{ background: 'rgba(119,255,200,0.07)', border: '1px solid rgba(119,255,200,0.15)' }}>
+            style={{ background: 'rgba(var(--cc-accent-rgb),0.07)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
             <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ background: 'rgba(119,255,200,0.12)' }}>
-              <Star className="w-4 h-4" style={{ color: '#77ffc8' }} />
+              style={{ background: 'rgba(var(--cc-accent-rgb),0.12)' }}>
+              <Star className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
             </div>
             <div>
-              <p className="font-heading font-black text-lg leading-none" style={{ color: '#77ffc8' }}>{points.toLocaleString()}</p>
+              <p className="font-heading font-black text-lg leading-none" style={{ color: 'var(--cc-accent)' }}>{points.toLocaleString()}</p>
               <p className="text-[10px] font-bold" style={{ color: 'rgba(186,203,192,0.6)' }}>pts earned</p>
             </div>
           </div>
@@ -109,9 +109,9 @@ export default function DailyPulse({ user, trucks }) {
         {/* Tier */}
         <Link to="/rewards" className="flex-1">
           <div className="flex items-center gap-2.5 p-3 rounded-2xl h-full"
-            style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}>
+            style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
             <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ background: '#2e3638' }}>
+              style={{ background: 'var(--cc-bg-3)' }}>
               <Trophy className="w-4 h-4" style={{ color: tierColors[tier] }} />
             </div>
             <div>
@@ -134,8 +134,8 @@ export default function DailyPulse({ user, trucks }) {
               <button key={v.id} onClick={() => handleVibe(active ? null : v.id)}
                 className="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-black transition-all"
                 style={active
-                  ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 12px rgba(119,255,200,0.3)' }
-                  : { background: '#192123', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.25)' }
+                  ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 12px rgba(var(--cc-accent-rgb),0.3)' }
+                  : { background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.25)' }
                 }>
                 {v.emoji} {v.label}
               </button>

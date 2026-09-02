@@ -22,29 +22,29 @@ export default function CartFloatingButton() {
       <div
         className="w-full mx-4 flex items-center justify-between px-5 py-4 rounded-2xl"
         style={{
-          background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
-          boxShadow: '0 0 24px rgba(119,255,200,0.5)',
+          background: 'linear-gradient(135deg, var(--cc-accent) 0%, var(--cc-accent-3) 100%)',
+          boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.5)',
           minHeight: '56px',
         }}
       >
         <div className="flex items-center gap-3">
           <div
             className="w-7 h-7 rounded-full flex items-center justify-center font-heading font-black text-sm"
-            style={{ background: 'rgba(0,56,38,0.3)', color: '#003826' }}
+            style={{ background: 'rgba(0,56,38,0.3)', color: 'var(--cc-accent-deep)' }}
           >
             {count}
           </div>
-          <span className="font-heading font-bold text-sm" style={{ color: '#003826' }}>
+          <span className="font-heading font-bold text-sm" style={{ color: 'var(--cc-accent-deep)' }}>
             {cart.truckName || 'Your Feast'}
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="font-heading font-black text-sm" style={{ color: '#003826' }}>
+          <span className="font-heading font-black text-sm" style={{ color: 'var(--cc-accent-deep)' }}>
             VIEW BAG
           </span>
           <span
             className="font-heading font-black text-sm px-2 py-0.5 rounded-full"
-            style={{ background: 'rgba(0,56,38,0.2)', color: '#003826' }}
+            style={{ background: 'rgba(0,56,38,0.2)', color: 'var(--cc-accent-deep)' }}
           >
             ${total.toFixed(2)}
           </span>

@@ -21,7 +21,7 @@ export default function AdminPreviewPill() {
         className="flex items-center gap-2 px-4 py-2.5 rounded-full font-bold text-xs shadow-xl active:scale-95 transition-transform"
         style={{
           background: isOnAdminPage ? 'rgba(251,191,36,0.95)' : 'rgba(20,20,20,0.95)',
-          color: isOnAdminPage ? '#1a0f00' : '#fbbf24',
+          color: isOnAdminPage ? '#1a0f00' : 'var(--cc-amber)',
           border: '1px solid rgba(251,191,36,0.4)',
           backdropFilter: 'blur(12px)',
           boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
@@ -33,7 +33,7 @@ export default function AdminPreviewPill() {
       <button
         onClick={() => setDismissed(true)}
         className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
-        style={{ background: 'rgba(20,20,20,0.9)', color: '#6B665C', border: '1px solid rgba(255,255,255,0.08)' }}
+        style={{ background: 'rgba(20,20,20,0.9)', color: 'var(--cc-ink-faint)', border: '1px solid rgba(255,255,255,0.08)' }}
       >
         ✕
       </button>

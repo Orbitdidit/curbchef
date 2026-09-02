@@ -172,9 +172,9 @@ export default function VendorMenu() {
 
       {/* Native-feel Category Bottom Sheet */}
       <Drawer open={showCategoryDrawer} onOpenChange={setShowCategoryDrawer}>
-        <DrawerContent style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}>
+        <DrawerContent style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
           <DrawerHeader>
-            <DrawerTitle style={{ color: '#dff0e8' }}>Select Category</DrawerTitle>
+            <DrawerTitle style={{ color: 'var(--cc-ink)' }}>Select Category</DrawerTitle>
           </DrawerHeader>
           <div className="flex flex-col gap-1 px-4 pb-8">
             {CATEGORIES.map(cat => (
@@ -183,16 +183,16 @@ export default function VendorMenu() {
                 onClick={() => { setForm(f => ({ ...f, category: cat.value })); setShowCategoryDrawer(false); }}
                 className="flex items-center justify-between px-4 py-4 rounded-2xl text-sm font-semibold transition-all"
                 style={{
-                  background: form.category === cat.value ? 'rgba(119,255,200,0.1)' : 'transparent',
-                  color: form.category === cat.value ? '#77ffc8' : '#dff0e8',
-                  border: form.category === cat.value ? '1px solid rgba(119,255,200,0.3)' : '1px solid transparent',
+                  background: form.category === cat.value ? 'rgba(var(--cc-accent-rgb),0.1)' : 'transparent',
+                  color: form.category === cat.value ? 'var(--cc-accent)' : 'var(--cc-ink)',
+                  border: form.category === cat.value ? '1px solid rgba(var(--cc-accent-rgb),0.3)' : '1px solid transparent',
                   minHeight: '52px',
                 }}
               >
                 {cat.label}
                 {form.category === cat.value && (
                   <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none">
-                    <path d="M3 8l4 4 6-6" stroke="#77ffc8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M3 8l4 4 6-6" stroke="var(--cc-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 )}
               </button>

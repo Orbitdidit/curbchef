@@ -27,7 +27,7 @@ function TextFieldWithAI({ label, value, onChange, multiline, context }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-1">
-        <label className="text-[10px] font-bold tracking-wider" style={{ color: '#bacbc0' }}>
+        <label className="text-[10px] font-bold tracking-wider" style={{ color: 'var(--cc-ink-dim)' }}>
           {label.toUpperCase()}
         </label>
         <AIAssist value={value} context={context} onApply={onChange} />
@@ -38,7 +38,7 @@ function TextFieldWithAI({ label, value, onChange, multiline, context }) {
           onChange={e => onChange(e.target.value)}
           rows={2}
           className="w-full rounded-xl px-3 py-2 text-sm outline-none resize-none"
-          style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }}
+          style={{ background: 'var(--cc-bg-0)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }}
         />
       ) : (
         <input
@@ -46,7 +46,7 @@ function TextFieldWithAI({ label, value, onChange, multiline, context }) {
           value={value || ''}
           onChange={e => onChange(e.target.value)}
           className="w-full rounded-xl px-3 py-2 text-sm outline-none"
-          style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }}
+          style={{ background: 'var(--cc-bg-0)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }}
         />
       )}
     </div>
@@ -63,23 +63,23 @@ function ConfigCard({ item, onSave, onDelete }) {
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
 
   return (
-    <div className="rounded-2xl p-5" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}>
+    <div className="rounded-2xl p-5" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
       {/* Card header */}
       <div className="flex items-center gap-3 mb-5">
         <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-          style={{ background: 'rgba(119,255,200,0.1)', border: '1px solid rgba(119,255,200,0.2)' }}>
-          <Icon className="w-4 h-4" style={{ color: '#77ffc8' }} />
+          style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
+          <Icon className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>{item.label}</p>
-          <p className="text-[10px] font-mono" style={{ color: '#bacbc0' }}>{item.key}</p>
+          <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{item.label}</p>
+          <p className="text-[10px] font-mono" style={{ color: 'var(--cc-ink-dim)' }}>{item.key}</p>
         </div>
         <button
           onClick={() => set('is_active', !form.is_active)}
           className="px-3 py-1 rounded-full text-xs font-bold"
           style={form.is_active
-            ? { background: 'rgba(119,255,200,0.12)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.3)' }
-            : { background: '#2e3638', color: '#bacbc0' }
+            ? { background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }
+            : { background: 'var(--cc-bg-3)', color: 'var(--cc-ink-dim)' }
           }
         >
           {form.is_active ? 'Active' : 'Hidden'}
@@ -134,16 +134,16 @@ function ConfigCard({ item, onSave, onDelete }) {
           context={item.label}
         />
         <div>
-          <label className="block text-[10px] font-bold tracking-wider mb-1" style={{ color: '#bacbc0' }}>CTA BUTTON TEXT</label>
+          <label className="block text-[10px] font-bold tracking-wider mb-1" style={{ color: 'var(--cc-ink-dim)' }}>CTA BUTTON TEXT</label>
           <input type="text" value={form.cta_label || ''} onChange={e => set('cta_label', e.target.value)}
             className="w-full rounded-xl px-3 py-2 text-sm outline-none"
-            style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
+            style={{ background: 'var(--cc-bg-0)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }} />
         </div>
         <div>
-          <label className="block text-[10px] font-bold tracking-wider mb-1" style={{ color: '#bacbc0' }}>CTA LINK</label>
+          <label className="block text-[10px] font-bold tracking-wider mb-1" style={{ color: 'var(--cc-ink-dim)' }}>CTA LINK</label>
           <input type="text" value={form.cta_href || ''} onChange={e => set('cta_href', e.target.value)}
             className="w-full rounded-xl px-3 py-2 text-sm outline-none"
-            style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
+            style={{ background: 'var(--cc-bg-0)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }} />
         </div>
       </div>
 
@@ -153,8 +153,8 @@ function ConfigCard({ item, onSave, onDelete }) {
           disabled={!isDirty}
           className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all"
           style={isDirty
-            ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }
-            : { background: '#2e3638', color: '#bacbc0', opacity: 0.5 }
+            ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }
+            : { background: 'var(--cc-bg-3)', color: 'var(--cc-ink-dim)', opacity: 0.5 }
           }
         >
           <Save className="w-3.5 h-3.5" />
@@ -163,7 +163,7 @@ function ConfigCard({ item, onSave, onDelete }) {
         {!DEFAULT_CONFIGS.find(d => d.key === item.key) && (
           <button onClick={() => onDelete(item.id)}
             className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold"
-            style={{ background: 'rgba(255,59,48,0.1)', color: '#ff3b30', border: '1px solid rgba(255,59,48,0.2)' }}>
+            style={{ background: 'rgba(var(--cc-warm-red-rgb),0.1)', color: 'var(--cc-warm-red)', border: '1px solid rgba(var(--cc-warm-red-rgb),0.2)' }}>
             <Trash2 className="w-3 h-3" />Delete
           </button>
         )}
@@ -214,42 +214,42 @@ function LiveVideosManager() {
   });
 
   return (
-    <div className="rounded-2xl p-5" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}>
+    <div className="rounded-2xl p-5" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
       <div className="flex items-center gap-3 mb-5">
         <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-          style={{ background: 'rgba(255,59,48,0.12)', border: '1px solid rgba(255,59,48,0.25)' }}>
-          <Video className="w-4 h-4" style={{ color: '#ff3b30' }} />
+          style={{ background: 'rgba(var(--cc-warm-red-rgb),0.12)', border: '1px solid rgba(var(--cc-warm-red-rgb),0.25)' }}>
+          <Video className="w-4 h-4" style={{ color: 'var(--cc-warm-red)' }} />
         </div>
         <div className="flex-1">
-          <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>Live Now Videos</p>
-          <p className="text-[10px]" style={{ color: '#bacbc0' }}>Shown on homepage when no trucks are live · loops silently</p>
+          <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Live Now Videos</p>
+          <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>Shown on homepage when no trucks are live · loops silently</p>
         </div>
         <button onClick={() => setShowForm(s => !s)}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
-          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
           <Plus className="w-3 h-3" /> Add
         </button>
       </div>
 
       {/* Add form */}
       {showForm && (
-        <div className="mb-4 p-4 rounded-xl flex flex-col gap-3" style={{ background: '#0d1517', border: '1px solid rgba(119,255,200,0.15)' }}>
+        <div className="mb-4 p-4 rounded-xl flex flex-col gap-3" style={{ background: 'var(--cc-bg-0)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
           <input placeholder="Title (e.g. 14hr brisket slicing 🔥)" value={newClip.title}
             onChange={e => setNewClip(c => ({ ...c, title: e.target.value }))}
             className="w-full rounded-xl px-3 py-2 text-sm outline-none"
-            style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
+            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }} />
           <input placeholder="Truck name" value={newClip.truck_name}
             onChange={e => setNewClip(c => ({ ...c, truck_name: e.target.value }))}
             className="w-full rounded-xl px-3 py-2 text-sm outline-none"
-            style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
+            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }} />
           <MediaUpload type="video" label="Video File" value={newClip.video_url}
             onChange={v => setNewClip(c => ({ ...c, video_url: v }))}
             onThumbnailGenerated={t => setNewClip(c => ({ ...c, poster_url: t }))}
             hint="MP4 recommended · thumbnail auto-generated from video" />
           {newClip.poster_url && (
-            <div className="flex items-center gap-2 p-2 rounded-xl" style={{ background: '#0d1517' }}>
+            <div className="flex items-center gap-2 p-2 rounded-xl" style={{ background: 'var(--cc-bg-0)' }}>
               <img src={newClip.poster_url} alt="thumb" className="w-12 h-12 rounded-lg object-cover" />
-              <p className="text-xs" style={{ color: '#77ffc8' }}>✓ Thumbnail auto-generated</p>
+              <p className="text-xs" style={{ color: 'var(--cc-accent)' }}>✓ Thumbnail auto-generated</p>
             </div>
           )}
           <button
@@ -257,8 +257,8 @@ function LiveVideosManager() {
             disabled={!newClip.video_url || !newClip.title || createClip.isPending}
             className="py-2.5 rounded-xl font-bold text-sm"
             style={newClip.video_url && newClip.title
-              ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }
-              : { background: '#2e3638', color: '#bacbc0', opacity: 0.5 }}>
+              ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }
+              : { background: 'var(--cc-bg-3)', color: 'var(--cc-ink-dim)', opacity: 0.5 }}>
             {createClip.isPending ? 'Saving...' : 'Save Video'}
           </button>
         </div>
@@ -266,38 +266,38 @@ function LiveVideosManager() {
 
       {/* Clip list */}
       {clips.length === 0 ? (
-        <p className="text-xs text-center py-4" style={{ color: '#bacbc0' }}>No videos yet — add one above</p>
+        <p className="text-xs text-center py-4" style={{ color: 'var(--cc-ink-dim)' }}>No videos yet — add one above</p>
       ) : (
         <div className="flex flex-col gap-2">
           {clips.map(clip => (
             <div key={clip.id} className="flex items-center gap-3 p-3 rounded-xl"
-              style={{ background: '#0d1517', border: '1px solid rgba(59,74,66,0.2)' }}>
+              style={{ background: 'var(--cc-bg-0)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
               {clip.poster_url ? (
                 <img src={clip.poster_url} alt="" className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />
               ) : (
                 <div className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 text-xl"
-                  style={{ background: '#192123' }}>🎬</div>
+                  style={{ background: 'var(--cc-bg-2)' }}>🎬</div>
               )}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold truncate" style={{ color: '#dff0e8' }}>{clip.title}</p>
-                {clip.truck_name && <p className="text-xs truncate" style={{ color: '#bacbc0' }}>{clip.truck_name}</p>}
+                <p className="text-sm font-bold truncate" style={{ color: 'var(--cc-ink)' }}>{clip.title}</p>
+                {clip.truck_name && <p className="text-xs truncate" style={{ color: 'var(--cc-ink-dim)' }}>{clip.truck_name}</p>}
               </div>
               <button onClick={() => setEditingClip({ ...clip })}
                 className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ background: 'rgba(119,255,200,0.1)' }}>
-                <Pencil className="w-3 h-3" style={{ color: '#77ffc8' }} />
+                style={{ background: 'rgba(var(--cc-accent-rgb),0.1)' }}>
+                <Pencil className="w-3 h-3" style={{ color: 'var(--cc-accent)' }} />
               </button>
               <button onClick={() => toggleClip.mutate({ id: clip.id, is_active: !clip.is_active })}
                 className="px-2.5 py-1 rounded-full text-[10px] font-bold flex-shrink-0"
                 style={clip.is_active
-                  ? { background: 'rgba(119,255,200,0.12)', color: '#77ffc8' }
-                  : { background: '#2e3638', color: '#bacbc0' }}>
+                  ? { background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)' }
+                  : { background: 'var(--cc-bg-3)', color: 'var(--cc-ink-dim)' }}>
                 {clip.is_active ? 'On' : 'Off'}
               </button>
               <button onClick={() => deleteClip.mutate(clip.id)}
                 className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ background: 'rgba(255,59,48,0.1)' }}>
-                <Trash2 className="w-3 h-3" style={{ color: '#ff3b30' }} />
+                style={{ background: 'rgba(var(--cc-warm-red-rgb),0.1)' }}>
+                <Trash2 className="w-3 h-3" style={{ color: 'var(--cc-warm-red)' }} />
               </button>
             </div>
           ))}
@@ -308,36 +308,36 @@ function LiveVideosManager() {
       {editingClip && (
         <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)' }}>
           <div className="w-full max-w-lg rounded-t-3xl p-6 flex flex-col gap-4 max-h-[90vh] overflow-y-auto"
-            style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.4)' }}>
+            style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }}>
             <div className="flex items-center justify-between">
-              <p className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>Edit Video</p>
-              <button onClick={() => setEditingClip(null)} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: '#2e3638' }}>
-                <X className="w-4 h-4" style={{ color: '#bacbc0' }} />
+              <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>Edit Video</p>
+              <button onClick={() => setEditingClip(null)} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'var(--cc-bg-3)' }}>
+                <X className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />
               </button>
             </div>
             <input placeholder="Title" value={editingClip.title || ''}
               onChange={e => setEditingClip(c => ({ ...c, title: e.target.value }))}
               className="w-full rounded-xl px-3 py-2 text-sm outline-none"
-              style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
+              style={{ background: 'var(--cc-bg-0)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }} />
             <input placeholder="Truck name" value={editingClip.truck_name || ''}
               onChange={e => setEditingClip(c => ({ ...c, truck_name: e.target.value }))}
               className="w-full rounded-xl px-3 py-2 text-sm outline-none"
-              style={{ background: '#0d1517', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.4)' }} />
+              style={{ background: 'var(--cc-bg-0)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }} />
             <MediaUpload type="video" label="Video File" value={editingClip.video_url}
               onChange={v => setEditingClip(c => ({ ...c, video_url: v }))}
               onThumbnailGenerated={t => setEditingClip(c => ({ ...c, poster_url: t }))}
               hint="MP4 recommended · thumbnail auto-generated from video" />
             {editingClip.poster_url && (
-              <div className="flex items-center gap-2 p-2 rounded-xl" style={{ background: '#0d1517' }}>
+              <div className="flex items-center gap-2 p-2 rounded-xl" style={{ background: 'var(--cc-bg-0)' }}>
                 <img src={editingClip.poster_url} alt="thumb" className="w-12 h-12 rounded-lg object-cover" />
-                <p className="text-xs" style={{ color: '#77ffc8' }}>✓ Thumbnail auto-generated</p>
+                <p className="text-xs" style={{ color: 'var(--cc-accent)' }}>✓ Thumbnail auto-generated</p>
               </div>
             )}
             <button
               onClick={() => updateClip.mutate(editingClip)}
               disabled={updateClip.isPending}
               className="py-3 rounded-xl font-bold text-sm"
-              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
               {updateClip.isPending ? 'Saving...' : 'Save Changes'}
             </button>
           </div>
@@ -372,12 +372,12 @@ function LaunchModeToggle() {
 
   return (
     <div className="rounded-2xl p-5 flex items-center justify-between"
-      style={{ background: isLive ? 'rgba(119,255,200,0.07)' : 'rgba(253,89,30,0.07)', border: `1px solid ${isLive ? 'rgba(119,255,200,0.3)' : 'rgba(253,89,30,0.3)'}` }}>
+      style={{ background: isLive ? 'rgba(var(--cc-accent-rgb),0.07)' : 'rgba(var(--cc-warm-rgb),0.07)', border: `1px solid ${isLive ? 'rgba(var(--cc-accent-rgb),0.3)' : 'rgba(var(--cc-warm-rgb),0.3)'}` }}>
       <div>
-        <p className="font-heading font-black text-sm" style={{ color: '#dff0e8' }}>
+        <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>
           Launch Mode
         </p>
-        <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>
+        <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>
           {isLive
             ? '🟢 LIVE — All users see the full app'
             : '🔴 WAITLIST — Unauthenticated users see the landing page'}
@@ -387,8 +387,8 @@ function LaunchModeToggle() {
         onClick={toggle}
         className="flex items-center gap-2 px-4 py-2.5 rounded-full font-heading font-black text-sm transition-all"
         style={isLive
-          ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 14px rgba(119,255,200,0.3)' }
-          : { background: 'rgba(253,89,30,0.2)', color: '#fd591e', border: '1px solid rgba(253,89,30,0.4)' }
+          ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 14px rgba(var(--cc-accent-rgb),0.3)' }
+          : { background: 'rgba(var(--cc-warm-rgb),0.2)', color: 'var(--cc-warm)', border: '1px solid rgba(var(--cc-warm-rgb),0.4)' }
         }
       >
         {isLive ? '🟢 LIVE' : '🔴 WAITLIST'}
@@ -431,20 +431,20 @@ export default function HomepageCMS() {
   const allItems = [...merged, ...extras];
 
   return (
-    <div className="min-h-screen dot-bg" style={{ background: '#0d1517' }}>
+    <div className="min-h-screen dot-bg" style={{ background: 'var(--cc-bg-0)' }}>
       <div
         className="flex items-center gap-3 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-10"
-        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(59,74,66,0.15)' }}
+        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.15)' }}
       >
-        <Link to="/admin" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-          <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
+        <Link to="/admin" className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
+          <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </Link>
         <div>
-          <h1 className="font-heading font-black text-lg" style={{ color: '#dff0e8' }}>Homepage CMS</h1>
-          <p className="text-xs" style={{ color: '#bacbc0' }}>Upload media · Edit copy · Go live instantly</p>
+          <h1 className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>Homepage CMS</h1>
+          <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Upload media · Edit copy · Go live instantly</p>
         </div>
         <Link to="/" className="ml-auto px-4 py-2 rounded-full text-xs font-bold"
-          style={{ background: 'rgba(119,255,200,0.1)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.25)' }}>
+          style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}>
           Preview →
         </Link>
       </div>
@@ -460,7 +460,7 @@ export default function HomepageCMS() {
         <LiveVideosManager />
 
         {isLoading ? (
-          [1, 2, 3].map(i => <div key={i} className="h-40 rounded-2xl animate-pulse" style={{ background: '#192123' }} />)
+          [1, 2, 3].map(i => <div key={i} className="h-40 rounded-2xl animate-pulse" style={{ background: 'var(--cc-bg-2)' }} />)
         ) : (
           allItems.map(item => (
             <ConfigCard key={item.key} item={item}

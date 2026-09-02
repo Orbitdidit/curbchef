@@ -43,10 +43,10 @@ export default function HeroPromo() {
         <div className="absolute inset-0 flex flex-col justify-end p-5">
           <div
             className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3 self-start"
-            style={{ background: 'rgba(119,255,200,0.15)', border: '1px solid rgba(119,255,200,0.35)' }}
+            style={{ background: 'rgba(var(--cc-accent-rgb),0.15)', border: '1px solid rgba(var(--cc-accent-rgb),0.35)' }}
           >
-            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#77ffc8' }} />
-            <span className="text-[10px] font-black tracking-widest" style={{ color: '#77ffc8' }}>CURBCHEF LIVE</span>
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--cc-accent)' }} />
+            <span className="text-[10px] font-black tracking-widest" style={{ color: 'var(--cc-accent)' }}>CURBCHEF LIVE</span>
           </div>
 
           <h2
@@ -63,7 +63,7 @@ export default function HeroPromo() {
             <Link to={c.cta_href || '/live'}>
               <div
                 className="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-black"
-                style={{ background: 'linear-gradient(135deg, #77ffc8, #00e6a7)', color: '#003826', boxShadow: '0 0 16px rgba(119,255,200,0.4)' }}
+                style={{ background: 'linear-gradient(135deg, var(--cc-accent), var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 16px rgba(var(--cc-accent-rgb),0.4)' }}
               >
                 <Play className="w-3 h-3 fill-current" />
                 {c.cta_label || 'Watch Live'}

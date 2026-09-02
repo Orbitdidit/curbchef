@@ -27,12 +27,12 @@ const PROMOS = [
     cta: 'Apply Now',
     href: '/vendor',
     grad: 'linear-gradient(135deg, rgba(4,18,14,0.95) 0%, rgba(4,22,16,0.92) 100%)',
-    glow: '0 0 32px rgba(119,255,200,0.1), 0 2px 16px rgba(0,0,0,0.5)',
-    border: '1px solid rgba(119,255,200,0.18)',
-    tagColor: '#77ffc8',
-    ctaBg: 'rgba(119,255,200,0.12)',
-    ctaColor: '#77ffc8',
-    ctaBorder: '1px solid rgba(119,255,200,0.3)',
+    glow: '0 0 32px rgba(var(--cc-accent-rgb),0.1), 0 2px 16px rgba(0,0,0,0.5)',
+    border: '1px solid rgba(var(--cc-accent-rgb),0.18)',
+    tagColor: 'var(--cc-accent)',
+    ctaBg: 'rgba(var(--cc-accent-rgb),0.12)',
+    ctaColor: 'var(--cc-accent)',
+    ctaBorder: '1px solid rgba(var(--cc-accent-rgb),0.3)',
   },
 ];
 
@@ -65,7 +65,7 @@ export default function PromoCard({ variant = 0 }) {
           {/* Text */}
           <div className="flex-1 min-w-0">
             <p className="text-[9px] font-black tracking-widest mb-0.5" style={{ color: p.tagColor }}>{p.tag}</p>
-            <p className="font-heading font-black text-sm leading-snug" style={{ color: '#dff0e8' }}>{p.headline}</p>
+            <p className="font-heading font-black text-sm leading-snug" style={{ color: 'var(--cc-ink)' }}>{p.headline}</p>
             <p className="text-[11px] mt-0.5" style={{ color: 'rgba(186,203,192,0.65)' }}>{p.sub}</p>
           </div>
 

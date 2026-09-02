@@ -50,7 +50,7 @@ function HeroFoodCard({ trucks }) {
           <div className="absolute top-4 left-4 flex items-center gap-2">
             {truck.is_live && (
               <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full"
-                style={{ background: 'rgba(255,59,48,0.9)', backdropFilter: 'blur(8px)' }}>
+                style={{ background: 'rgba(var(--cc-warm-red-rgb),0.9)', backdropFilter: 'blur(8px)' }}>
                 <span className="w-1.5 h-1.5 rounded-full bg-white live-dot" />
                 <span className="text-white text-[10px] font-black tracking-widest">LIVE</span>
               </div>
@@ -58,8 +58,8 @@ function HeroFoodCard({ trucks }) {
             {truck.status === 'open' && !truck.is_live && (
               <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full"
                 style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(8px)', border: '1px solid rgba(0,245,212,0.3)' }}>
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#00F5D4' }} />
-                <span className="text-[10px] font-black" style={{ color: '#00F5D4' }}>OPEN</span>
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--cc-accent-2)' }} />
+                <span className="text-[10px] font-black" style={{ color: 'var(--cc-accent-2)' }}>OPEN</span>
               </div>
             )}
             <div className="flex items-center gap-1 px-2.5 py-1 rounded-full"
@@ -74,7 +74,7 @@ function HeroFoodCard({ trucks }) {
               {candidates.map((_, i) => (
                 <button key={i} onClick={e => { e.preventDefault(); setIdx(i); }}
                   className="rounded-full transition-all"
-                  style={{ width: i === idx % candidates.length ? 16 : 5, height: 5, background: i === idx % candidates.length ? '#00F5D4' : 'rgba(255,255,255,0.3)' }} />
+                  style={{ width: i === idx % candidates.length ? 16 : 5, height: 5, background: i === idx % candidates.length ? 'var(--cc-accent-2)' : 'rgba(255,255,255,0.3)' }} />
               ))}
             </div>
           )}
@@ -87,7 +87,7 @@ function HeroFoodCard({ trucks }) {
             </p>
             <div className="flex items-center gap-2 mb-4">
               <span className="text-xs font-semibold px-2.5 py-1 rounded-full"
-                style={{ background: 'rgba(0,245,212,0.18)', color: '#00F5D4', border: '1px solid rgba(0,245,212,0.2)' }}>
+                style={{ background: 'rgba(0,245,212,0.18)', color: 'var(--cc-accent-2)', border: '1px solid rgba(0,245,212,0.2)' }}>
                 {truck.cuisine_type?.replace('_', ' ')}
               </span>
               {truck.rating && (
@@ -99,7 +99,7 @@ function HeroFoodCard({ trucks }) {
             <div className="flex items-center gap-2">
               <Link to={`/truck/${truck.id}`} onClick={e => e.stopPropagation()}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-full font-heading font-black text-sm"
-                style={{ background: '#00F5D4', color: '#0A0A0A' }}>
+                style={{ background: 'var(--cc-accent-2)', color: 'var(--cc-black)' }}>
                 Order Ahead →
               </Link>
               {truck.is_live && (
@@ -130,14 +130,14 @@ function CompactStatsStrip({ user }) {
   return (
     <Link to="/rewards">
       <div className="mx-4 px-4 py-3 rounded-2xl flex items-center gap-3"
-        style={{ background: '#141414', border: '1px solid rgba(255,255,255,0.05)' }}>
+        style={{ background: 'var(--cc-surface)', border: '1px solid rgba(255,255,255,0.05)' }}>
         <span className="text-lg">🏆</span>
         <div className="flex-1">
-          <span className="text-xs font-black" style={{ color: '#00F5D4' }}>{points.toLocaleString()} pts</span>
-          <span className="text-xs mx-2" style={{ color: '#6B665C' }}>·</span>
-          <span className="text-xs font-semibold capitalize" style={{ color: '#A39E94' }}>{tier} tier</span>
+          <span className="text-xs font-black" style={{ color: 'var(--cc-accent-2)' }}>{points.toLocaleString()} pts</span>
+          <span className="text-xs mx-2" style={{ color: 'var(--cc-ink-faint)' }}>·</span>
+          <span className="text-xs font-semibold capitalize" style={{ color: 'var(--cc-ink-muted)' }}>{tier} tier</span>
         </div>
-        <span className="text-xs font-semibold" style={{ color: '#6B665C' }}>View rewards →</span>
+        <span className="text-xs font-semibold" style={{ color: 'var(--cc-ink-faint)' }}>View rewards →</span>
       </div>
     </Link>
   );
@@ -176,30 +176,30 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen pb-28" style={{ background: '#0A0A0A' }}>
+    <div className="min-h-screen pb-28" style={{ background: 'var(--cc-black)' }}>
 
       {/* ── 1. TOP BAR ── */}
       <div className="px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-3">
         <div className="flex items-center justify-between">
           <div>
-            <p className="font-heading font-black text-xl" style={{ color: '#F5F0E8' }}>
-              Curb<span style={{ color: '#00F5D4' }}>Chef</span>
+            <p className="font-heading font-black text-xl" style={{ color: 'var(--cc-cream)' }}>
+              Curb<span style={{ color: 'var(--cc-accent-2)' }}>Chef</span>
             </p>
             <div className="flex items-center gap-1 mt-0.5">
-              <span className="text-xs" style={{ color: '#6B665C' }}>📍</span>
-              <span className="text-xs font-semibold" style={{ color: '#A39E94' }}>Houston, TX</span>
-              <ChevronDown className="w-3 h-3" style={{ color: '#6B665C' }} />
+              <span className="text-xs" style={{ color: 'var(--cc-ink-faint)' }}>📍</span>
+              <span className="text-xs font-semibold" style={{ color: 'var(--cc-ink-muted)' }}>Houston, TX</span>
+              <ChevronDown className="w-3 h-3" style={{ color: 'var(--cc-ink-faint)' }} />
             </div>
           </div>
           <div className="flex items-center gap-2">
             <button className="w-9 h-9 rounded-xl flex items-center justify-center relative"
-              style={{ background: '#141414' }}>
-              <Bell className="w-4 h-4" style={{ color: '#A39E94' }} />
-              <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full" style={{ background: '#FF3B30' }} />
+              style={{ background: 'var(--cc-surface)' }}>
+              <Bell className="w-4 h-4" style={{ color: 'var(--cc-ink-muted)' }} />
+              <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full" style={{ background: 'var(--cc-warm-red)' }} />
             </button>
             <Link to="/search" className="w-9 h-9 rounded-xl flex items-center justify-center"
-              style={{ background: '#141414' }}>
-              <Search className="w-4 h-4" style={{ color: '#A39E94' }} />
+              style={{ background: 'var(--cc-surface)' }}>
+              <Search className="w-4 h-4" style={{ color: 'var(--cc-ink-muted)' }} />
             </Link>
           </div>
         </div>
@@ -209,16 +209,16 @@ export default function Home() {
       <div className="px-4 mt-1">
         <form onSubmit={handleSearch}>
           <div className="flex items-center gap-3 px-4 py-3.5 rounded-2xl"
-            style={{ background: '#141414', border: '1px solid rgba(255,255,255,0.06)' }}>
-            <Search className="w-4 h-4 flex-shrink-0" style={{ color: '#6B665C' }} />
+            style={{ background: 'var(--cc-surface)', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <Search className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--cc-ink-faint)' }} />
             <input
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="What's Cookin', chef?"
               className="flex-1 bg-transparent text-sm outline-none"
-              style={{ color: '#F5F0E8' }}
+              style={{ color: 'var(--cc-cream)' }}
             />
-            <button type="button"><Mic className="w-4 h-4" style={{ color: '#6B665C' }} /></button>
+            <button type="button"><Mic className="w-4 h-4" style={{ color: 'var(--cc-ink-faint)' }} /></button>
           </div>
         </form>
       </div>
@@ -229,7 +229,7 @@ export default function Home() {
           <button key={chip.label}
             onClick={() => navigate(`/search?q=${encodeURIComponent(chip.label)}`)}
             className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
-            style={{ background: '#141414', color: '#A39E94', border: '1px solid rgba(255,255,255,0.06)', whiteSpace: 'nowrap' }}>
+            style={{ background: 'var(--cc-surface)', color: 'var(--cc-ink-muted)', border: '1px solid rgba(255,255,255,0.06)', whiteSpace: 'nowrap' }}>
             <span>{chip.emoji}</span> {chip.label}
           </button>
         ))}
@@ -243,15 +243,15 @@ export default function Home() {
       {/* ── EMPTY STATE fallback ── */}
       {noTrucksVisible && (
         <div className="mx-4 mt-4 rounded-3xl p-8 text-center"
-          style={{ background: '#141414', border: '1px solid rgba(255,255,255,0.06)' }}>
+          style={{ background: 'var(--cc-surface)', border: '1px solid rgba(255,255,255,0.06)' }}>
           <div className="text-5xl mb-4">🚚</div>
-          <p className="font-heading font-black text-xl mb-2" style={{ color: '#F5F0E8' }}>
+          <p className="font-heading font-black text-xl mb-2" style={{ color: 'var(--cc-cream)' }}>
             We're populating Houston's best food trucks.
           </p>
-          <p className="text-sm mb-6" style={{ color: '#A39E94' }}>Check back hourly — new trucks are joining daily!</p>
+          <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-muted)' }}>Check back hourly — new trucks are joining daily!</p>
           <Link to="/onboard-truck"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-heading font-black text-sm"
-            style={{ background: 'linear-gradient(135deg,#00F5D4,#00e6a7)', color: '#0A0A0A' }}>
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent-2),var(--cc-accent-3))', color: 'var(--cc-black)' }}>
             Join the Waitlist →
           </Link>
         </div>
@@ -260,11 +260,11 @@ export default function Home() {
       {/* ── LIVE & FEATURED (moved up top for eye-popping motion) ── */}
       <div className="mt-5">
         <div className="flex items-center justify-between px-4 mb-3">
-          <h2 className="font-heading font-black text-lg flex items-center gap-2" style={{ color: '#F5F0E8' }}>
-            <span className="w-2 h-2 rounded-full inline-block live-dot" style={{ background: '#FF3B30' }} />
+          <h2 className="font-heading font-black text-lg flex items-center gap-2" style={{ color: 'var(--cc-cream)' }}>
+            <span className="w-2 h-2 rounded-full inline-block live-dot" style={{ background: 'var(--cc-warm-red)' }} />
             Live & Featured
           </h2>
-          <Link to="/live" className="text-xs font-semibold" style={{ color: '#00F5D4' }}>Watch all →</Link>
+          <Link to="/live" className="text-xs font-semibold" style={{ color: 'var(--cc-accent-2)' }}>Watch all →</Link>
         </div>
         <LiveCarousel trucks={liveTrucks} />
       </div>
@@ -291,8 +291,8 @@ export default function Home() {
       {/* ── 6. CURB DROPS ── */}
       <div className="mt-8">
         <div className="flex items-center justify-between px-4 mb-3">
-          <h2 className="font-heading font-black text-lg" style={{ color: '#F5F0E8' }}>⚡ Curb Drops</h2>
-          <Link to="/deals" className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#6B665C' }}>Flash Deals</Link>
+          <h2 className="font-heading font-black text-lg" style={{ color: 'var(--cc-cream)' }}>⚡ Curb Drops</h2>
+          <Link to="/deals" className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'var(--cc-ink-faint)' }}>Flash Deals</Link>
         </div>
         <DropsNearYou />
       </div>

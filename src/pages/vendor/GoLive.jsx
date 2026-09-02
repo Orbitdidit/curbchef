@@ -34,12 +34,12 @@ const MAX_DURATION = 60;
 function ErrorScreen({ message, onClose }) {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center px-8 text-center z-50"
-      style={{ background: '#0d1517' }}>
+      style={{ background: 'var(--cc-bg-0)' }}>
       <span className="text-5xl mb-4">📵</span>
       <p className="font-heading font-black text-xl text-white mb-3">{message}</p>
       <button onClick={onClose}
         className="mt-6 px-8 py-3 rounded-full font-heading font-black text-sm"
-        style={{ background: '#192123', color: '#bacbc0' }}>
+        style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }}>
         Go Back
       </button>
     </div>
@@ -51,23 +51,23 @@ function CaptionScreen({ videoBlob, caption, setCaption, onPost, onRetry, isPost
   const videoUrl = useRef(URL.createObjectURL(videoBlob)).current;
 
   return (
-    <div className="fixed inset-0 flex flex-col z-50 overflow-y-auto" style={{ background: '#0d1517' }}>
+    <div className="fixed inset-0 flex flex-col z-50 overflow-y-auto" style={{ background: 'var(--cc-bg-0)' }}>
       {/* video preview */}
       <div className="relative w-full flex-shrink-0" style={{ aspectRatio: '9/16', maxHeight: '45vh' }}>
         <video src={videoUrl} className="w-full h-full object-cover" controls playsInline />
       </div>
 
       <div className="flex-1 px-5 pt-5 pb-8 flex flex-col gap-4">
-        <p className="text-[10px] font-black tracking-widest" style={{ color: '#77ffc8' }}>ADD A CAPTION</p>
+        <p className="text-[10px] font-black tracking-widest" style={{ color: 'var(--cc-accent)' }}>ADD A CAPTION</p>
 
         <textarea
           value={caption}
           onChange={e => setCaption(e.target.value.slice(0, 100))}
           placeholder="What's happening at the truck?"
           className="w-full rounded-2xl px-4 py-3 text-sm resize-none outline-none"
-          style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(119,255,200,0.2)', minHeight: '80px' }}
+          style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)', minHeight: '80px' }}
         />
-        <p className="text-xs text-right -mt-2" style={{ color: '#bacbc0' }}>{caption.length}/100</p>
+        <p className="text-xs text-right -mt-2" style={{ color: 'var(--cc-ink-dim)' }}>{caption.length}/100</p>
 
         {/* suggestion chips */}
         <div className="flex flex-wrap gap-2">
@@ -75,7 +75,7 @@ function CaptionScreen({ videoBlob, caption, setCaption, onPost, onRetry, isPost
             <button key={chip}
               onClick={() => setCaption(chip)}
               className="px-3 py-1.5 rounded-full text-xs font-semibold"
-              style={{ background: '#192123', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.4)' }}>
+              style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }}>
               {chip}
             </button>
           ))}
@@ -84,14 +84,14 @@ function CaptionScreen({ videoBlob, caption, setCaption, onPost, onRetry, isPost
         <div className="flex gap-3 mt-auto pt-4">
           <button onClick={onRetry}
             className="flex-1 py-4 rounded-full font-heading font-black text-sm"
-            style={{ background: '#192123', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }}>
+            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
             Retry
           </button>
           <button onClick={onPost} disabled={isPosting}
             className="flex-[2] py-4 rounded-full font-heading font-black text-base flex items-center justify-center gap-2"
-            style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 24px rgba(119,255,200,0.35)', opacity: isPosting ? 0.7 : 1 }}>
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.35)', opacity: isPosting ? 0.7 : 1 }}>
             {isPosting ? (
-              <><div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#003826 transparent' }} /> Posting…</>
+              <><div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'var(--cc-accent-deep) transparent' }} /> Posting…</>
             ) : '🔴 Post Live'}
           </button>
         </div>
@@ -104,15 +104,15 @@ function CaptionScreen({ videoBlob, caption, setCaption, onPost, onRetry, isPost
 function SuccessScreen() {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center px-8 text-center z-50"
-      style={{ background: '#0d1517' }}>
+      style={{ background: 'var(--cc-bg-0)' }}>
       <div className="text-6xl mb-4 animate-bounce">🔴</div>
       <p className="font-heading font-black text-2xl text-white mb-3">You're LIVE!</p>
-      <p className="text-sm" style={{ color: '#bacbc0' }}>
+      <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>
         Customers will see your truck in the live feed for the next 15 minutes.
       </p>
       <div className="mt-6 w-6 h-6 border-2 border-t-transparent rounded-full animate-spin"
-        style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
-      <p className="text-xs mt-2" style={{ color: '#6B665C' }}>Redirecting to dashboard…</p>
+        style={{ borderColor: 'var(--cc-accent) transparent transparent transparent' }} />
+      <p className="text-xs mt-2" style={{ color: 'var(--cc-ink-faint)' }}>Redirecting to dashboard…</p>
     </div>
   );
 }
@@ -291,15 +291,15 @@ function GoLiveInner({ truck }) {
     return (
       <div className="fixed inset-0 flex flex-col z-50" style={{ background: '#000' }}>
         <video src={blobUrl} className="flex-1 w-full object-contain" controls playsInline autoPlay loop />
-        <div className="flex gap-3 px-5 py-6" style={{ background: '#0d1517' }}>
+        <div className="flex gap-3 px-5 py-6" style={{ background: 'var(--cc-bg-0)' }}>
           <button onClick={handleRetry}
             className="flex-1 py-4 rounded-full font-heading font-black text-sm"
-            style={{ background: '#192123', color: '#bacbc0' }}>
+            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }}>
             Retry
           </button>
           <button onClick={() => setScreen('caption')}
             className="flex-[2] py-4 rounded-full font-heading font-black text-base"
-            style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
             Continue →
           </button>
         </div>
@@ -373,7 +373,7 @@ function GoLiveInner({ truck }) {
           <div className="relative flex items-center justify-center">
             <svg width="100" height="100" style={{ transform: 'rotate(-90deg)' }}>
               <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="4" />
-              <circle cx="50" cy="50" r="44" fill="none" stroke="#FF3B30" strokeWidth="4"
+              <circle cx="50" cy="50" r="44" fill="none" stroke="var(--cc-warm-red)" strokeWidth="4"
                 strokeLinecap="round"
                 strokeDasharray={`${2 * Math.PI * 44}`}
                 strokeDashoffset={`${2 * Math.PI * 44 * (1 - elapsed / MAX_DURATION)}`}
@@ -399,11 +399,11 @@ function GoLiveInner({ truck }) {
             width: 84,
             height: 84,
             background: recording
-              ? 'linear-gradient(135deg,#ff3b30,#ff5e57)'
-              : 'linear-gradient(135deg,#ff3b30,#ff5e57)',
+              ? 'linear-gradient(135deg,var(--cc-warm-red),#ff5e57)'
+              : 'linear-gradient(135deg,var(--cc-warm-red),#ff5e57)',
             boxShadow: recording
-              ? '0 0 32px rgba(255,59,48,0.7), 0 0 0 6px rgba(255,255,255,0.15)'
-              : '0 0 20px rgba(255,59,48,0.5), 0 0 0 4px rgba(255,255,255,0.12)',
+              ? '0 0 32px rgba(var(--cc-warm-red-rgb),0.7), 0 0 0 6px rgba(255,255,255,0.15)'
+              : '0 0 20px rgba(var(--cc-warm-red-rgb),0.5), 0 0 0 4px rgba(255,255,255,0.12)',
           }}>
           {recording
             ? <Square className="w-9 h-9 text-white" fill="white" />

@@ -49,7 +49,7 @@ export default function WaitlistModal({ source, onClose, onSuccess }) {
       }
     }
 
-    confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 }, colors: ['#77ffc8', '#00e6a7', '#fd591e', '#ffffff'] });
+    confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 }, colors: ['var(--cc-accent)', 'var(--cc-accent-3)', 'var(--cc-warm)', '#ffffff'] });
     setLoading(false);
     onSuccess({ email, position });
   };
@@ -59,27 +59,27 @@ export default function WaitlistModal({ source, onClose, onSuccess }) {
       style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(8px)' }}
       onClick={onClose}>
       <div className="w-full max-w-md rounded-3xl p-6 pb-8"
-        style={{ background: '#151d1f', border: '1px solid rgba(119,255,200,0.25)' }}
+        style={{ background: 'var(--cc-bg-1)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}
         onClick={e => e.stopPropagation()}>
-        <h3 className="font-heading font-black text-xl mb-1" style={{ color: '#dff0e8' }}>Get early access 🚀</h3>
-        <p className="text-xs mb-5" style={{ color: '#bacbc0' }}>
+        <h3 className="font-heading font-black text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Get early access 🚀</h3>
+        <p className="text-xs mb-5" style={{ color: 'var(--cc-ink-dim)' }}>
           Founding members get lifetime perks — limited spots.
         </p>
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <input type="email" placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} required
             className="w-full px-4 py-3.5 rounded-2xl text-sm outline-none"
-            style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.5)' }} />
+            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.5)' }} />
           <input type="tel" placeholder="Phone (optional — for launch alerts)" value={phone} onChange={e => setPhone(e.target.value)}
             className="w-full px-4 py-3.5 rounded-2xl text-sm outline-none"
-            style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.5)' }} />
-          {error && <p className="text-xs px-1" style={{ color: '#fd591e' }}>{error}</p>}
+            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.5)' }} />
+          {error && <p className="text-xs px-1" style={{ color: 'var(--cc-warm)' }}>{error}</p>}
           <button type="submit" disabled={loading}
             className="w-full py-4 rounded-full font-heading font-black text-base transition-all active:scale-95"
-            style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 24px rgba(119,255,200,0.3)', opacity: loading ? 0.7 : 1 }}>
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.3)', opacity: loading ? 0.7 : 1 }}>
             {loading ? 'Joining...' : '🚀 Join the Waitlist'}
           </button>
         </form>
-        <button onClick={onClose} className="w-full mt-3 py-2 text-sm font-semibold" style={{ color: '#bacbc0' }}>
+        <button onClick={onClose} className="w-full mt-3 py-2 text-sm font-semibold" style={{ color: 'var(--cc-ink-dim)' }}>
           Maybe later
         </button>
       </div>

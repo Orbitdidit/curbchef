@@ -136,7 +136,7 @@ export default function CoverMediaCarousel({ media = [], fallbackUrl }) {
               style={{
                 width: i === idx ? 20 : 6,
                 height: 6,
-                background: i === idx ? '#77ffc8' : 'rgba(255,255,255,0.4)',
+                background: i === idx ? 'var(--cc-accent)' : 'rgba(255,255,255,0.4)',
               }}
             />
           ))}

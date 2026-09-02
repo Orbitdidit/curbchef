@@ -31,26 +31,26 @@ function UploadField({ label, hint, required, value, onChange, accept = 'image/*
   const hasValue = multiple ? (value?.length > 0) : !!value;
 
   return (
-    <div className="p-4 rounded-2xl" style={{ background: '#192123', border: `1px solid ${hasValue ? 'rgba(34,197,94,0.3)' : 'rgba(59,74,66,0.3)'}` }}>
+    <div className="p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)', border: `1px solid ${hasValue ? 'rgba(34,197,94,0.3)' : 'rgba(var(--cc-line-rgb),0.3)'}` }}>
       <div className="flex items-start justify-between gap-3 mb-2">
         <div className="flex-1">
           <div className="flex items-center gap-2">
             {hasValue
-              ? <CheckCircle className="w-4 h-4 flex-shrink-0" style={{ color: '#22C55E' }} />
-              : <div className="w-4 h-4 rounded-full border-2 flex-shrink-0" style={{ borderColor: required ? '#fd591e' : '#6B665C' }} />
+              ? <CheckCircle className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--cc-green)' }} />
+              : <div className="w-4 h-4 rounded-full border-2 flex-shrink-0" style={{ borderColor: required ? 'var(--cc-warm)' : 'var(--cc-ink-faint)' }} />
             }
-            <p className="font-heading font-black text-sm" style={{ color: '#dff0e8' }}>
+            <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>
               {label}
-              {required && <span className="ml-1 text-xs" style={{ color: '#fd591e' }}>*</span>}
+              {required && <span className="ml-1 text-xs" style={{ color: 'var(--cc-warm)' }}>*</span>}
             </p>
           </div>
-          {hint && <p className="text-xs mt-0.5 ml-6" style={{ color: '#bacbc0' }}>{hint}</p>}
+          {hint && <p className="text-xs mt-0.5 ml-6" style={{ color: 'var(--cc-ink-dim)' }}>{hint}</p>}
         </div>
         <button
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold flex-shrink-0 transition-all active:scale-95"
-          style={{ background: hasValue ? 'rgba(34,197,94,0.1)' : 'rgba(119,255,200,0.1)', color: hasValue ? '#22C55E' : '#77ffc8', border: `1px solid ${hasValue ? 'rgba(34,197,94,0.3)' : 'rgba(119,255,200,0.25)'}` }}
+          style={{ background: hasValue ? 'rgba(34,197,94,0.1)' : 'rgba(var(--cc-accent-rgb),0.1)', color: hasValue ? 'var(--cc-green)' : 'var(--cc-accent)', border: `1px solid ${hasValue ? 'rgba(34,197,94,0.3)' : 'rgba(var(--cc-accent-rgb),0.25)'}` }}
         >
           {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
           {uploading ? 'Uploading...' : hasValue ? (multiple ? 'Add more' : 'Replace') : 'Upload'}
@@ -76,7 +76,7 @@ function UploadField({ label, hint, required, value, onChange, accept = 'image/*
           {/\.(jpg|jpeg|png|gif|webp)$/i.test(value) ? (
             <img src={value} alt={label} className="w-24 h-16 rounded-xl object-cover" />
           ) : (
-            <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs" style={{ background: '#0d1517', color: '#77ffc8' }}>
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs" style={{ background: 'var(--cc-bg-0)', color: 'var(--cc-accent)' }}>
               <Image className="w-4 h-4" /> Document uploaded
             </div>
           )}
@@ -106,15 +106,15 @@ function SubmissionStatus({ truck, uploads }) {
   if (truck.verification_status === 'rejected') {
     status = 'Rejected — see notes below'; color = '#ef4444'; bg = 'rgba(239,68,68,0.08)'; icon = <XCircle className="w-4 h-4" />;
   } else if (truck.verification_status === 'needs_review') {
-    status = 'Needs more info — see notes below'; color = '#fbbf24'; bg = 'rgba(251,191,36,0.08)'; icon = <AlertTriangle className="w-4 h-4" />;
+    status = 'Needs more info — see notes below'; color = 'var(--cc-amber)'; bg = 'rgba(251,191,36,0.08)'; icon = <AlertTriangle className="w-4 h-4" />;
   } else if (isPendingReview) {
-    status = 'Pending Review — we\'ll reach out within 24-48 hrs'; color = '#77ffc8'; bg = 'rgba(119,255,200,0.06)'; icon = <Clock className="w-4 h-4" />;
+    status = 'Pending Review — we\'ll reach out within 24-48 hrs'; color = 'var(--cc-accent)'; bg = 'rgba(var(--cc-accent-rgb),0.06)'; icon = <Clock className="w-4 h-4" />;
   } else if (allRequired) {
-    status = 'Ready to submit'; color = '#22C55E'; bg = 'rgba(34,197,94,0.08)'; icon = <CheckCircle className="w-4 h-4" />;
+    status = 'Ready to submit'; color = 'var(--cc-green)'; bg = 'rgba(34,197,94,0.08)'; icon = <CheckCircle className="w-4 h-4" />;
   } else if (anyUploaded) {
-    status = 'In progress — finish uploading required items'; color = '#fbbf24'; bg = 'rgba(251,191,36,0.08)'; icon = <Clock className="w-4 h-4" />;
+    status = 'In progress — finish uploading required items'; color = 'var(--cc-amber)'; bg = 'rgba(251,191,36,0.08)'; icon = <Clock className="w-4 h-4" />;
   } else {
-    status = 'Not submitted yet'; color = '#6B665C'; bg = '#192123'; icon = <Clock className="w-4 h-4" />;
+    status = 'Not submitted yet'; color = 'var(--cc-ink-faint)'; bg = 'var(--cc-bg-2)'; icon = <Clock className="w-4 h-4" />;
   }
 
   return (
@@ -168,24 +168,24 @@ function VendorVerificationInner({ truck, user }) {
   // ── VERIFIED STATE ──
   if (isVerified) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6 pb-20 text-center" style={{ background: '#0d1517' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 pb-20 text-center" style={{ background: 'var(--cc-bg-0)' }}>
         <div className="w-24 h-24 rounded-full flex items-center justify-center mb-6"
           style={{ background: 'rgba(34,197,94,0.12)', border: '2px solid rgba(34,197,94,0.3)', boxShadow: '0 0 40px rgba(34,197,94,0.2)' }}>
-          <CheckCircle className="w-12 h-12" style={{ color: '#22C55E' }} />
+          <CheckCircle className="w-12 h-12" style={{ color: 'var(--cc-green)' }} />
         </div>
         <VerifiedBadge size="lg" showLabel className="mb-4 justify-center" />
-        <h1 className="font-heading font-black text-3xl mb-2" style={{ color: '#dff0e8' }}>You're Verified ✅</h1>
+        <h1 className="font-heading font-black text-3xl mb-2" style={{ color: 'var(--cc-ink)' }}>You're Verified ✅</h1>
         {truck.verification_date && (
-          <p className="text-sm mb-4" style={{ color: '#bacbc0' }}>
+          <p className="text-sm mb-4" style={{ color: 'var(--cc-ink-dim)' }}>
             Verified on {new Date(truck.verification_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
           </p>
         )}
-        <p className="text-sm mb-8 max-w-xs" style={{ color: '#bacbc0' }}>
+        <p className="text-sm mb-8 max-w-xs" style={{ color: 'var(--cc-ink-dim)' }}>
           You can now Go Live, access all features, and build your audience on CurbChef.
         </p>
         <Link to="/vendor">
           <button className="px-8 py-3.5 rounded-full font-heading font-black text-sm"
-            style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 20px rgba(119,255,200,0.3)' }}>
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}>
             ← Back to Dashboard
           </button>
         </Link>
@@ -195,29 +195,29 @@ function VendorVerificationInner({ truck, user }) {
 
   // ── SUBMISSION FORM ──
   return (
-    <div className="min-h-screen pb-24" style={{ background: '#0d1517' }}>
+    <div className="min-h-screen pb-24" style={{ background: 'var(--cc-bg-0)' }}>
       {/* Header */}
       <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-20"
-        style={{ background: 'rgba(13,21,23,0.97)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(59,74,66,0.2)' }}>
+        style={{ background: 'rgba(13,21,23,0.97)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
         <div className="flex items-center gap-3 max-w-lg mx-auto">
-          <Link to="/vendor" className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#192123' }}>
-            <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
+          <Link to="/vendor" className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--cc-bg-2)' }}>
+            <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
           </Link>
           <div className="flex-1">
-            <p className="font-heading font-black text-base" style={{ color: '#dff0e8' }}>Get Verified</p>
-            <p className="text-xs" style={{ color: '#bacbc0' }}>Unlock Live broadcasting & all features</p>
+            <p className="font-heading font-black text-base" style={{ color: 'var(--cc-ink)' }}>Get Verified</p>
+            <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Unlock Live broadcasting & all features</p>
           </div>
         </div>
       </div>
 
       <div className="px-5 pt-5 max-w-lg mx-auto">
         {/* Intro */}
-        <div className="p-5 rounded-3xl mb-6" style={{ background: 'rgba(119,255,200,0.04)', border: '1px solid rgba(119,255,200,0.15)' }}>
-          <h2 className="font-heading font-black text-lg mb-1" style={{ color: '#dff0e8' }}>
+        <div className="p-5 rounded-3xl mb-6" style={{ background: 'rgba(var(--cc-accent-rgb),0.04)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
+          <h2 className="font-heading font-black text-lg mb-1" style={{ color: 'var(--cc-ink)' }}>
             🛡️ Verify your truck to unlock Live broadcasting
           </h2>
-          <p className="text-sm leading-relaxed" style={{ color: '#bacbc0' }}>
-            Verification takes <strong style={{ color: '#77ffc8' }}>24–48 hours</strong>. We review every truck personally to protect customers and vendors alike.
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--cc-ink-dim)' }}>
+            Verification takes <strong style={{ color: 'var(--cc-accent)' }}>24–48 hours</strong>. We review every truck personally to protect customers and vendors alike.
           </p>
         </div>
 
@@ -225,15 +225,15 @@ function VendorVerificationInner({ truck, user }) {
         {(truck.verification_status === 'rejected' || truck.verification_status === 'needs_review') && truck.verification_notes && (
           <div className="p-4 rounded-2xl mb-5"
             style={{ background: truck.verification_status === 'rejected' ? 'rgba(239,68,68,0.08)' : 'rgba(251,191,36,0.08)', border: `1px solid ${truck.verification_status === 'rejected' ? 'rgba(239,68,68,0.3)' : 'rgba(251,191,36,0.3)'}` }}>
-            <p className="text-xs font-black mb-1" style={{ color: truck.verification_status === 'rejected' ? '#ef4444' : '#fbbf24' }}>
+            <p className="text-xs font-black mb-1" style={{ color: truck.verification_status === 'rejected' ? '#ef4444' : 'var(--cc-amber)' }}>
               {truck.verification_status === 'rejected' ? '❌ Rejection reason:' : '📋 What we need:'}
             </p>
-            <p className="text-sm" style={{ color: '#dff0e8' }}>{truck.verification_notes}</p>
+            <p className="text-sm" style={{ color: 'var(--cc-ink)' }}>{truck.verification_notes}</p>
           </div>
         )}
 
         {/* Upload checklist */}
-        <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: '#77ffc8' }}>REQUIRED DOCUMENTS</p>
+        <p className="text-[10px] font-black tracking-widest mb-3" style={{ color: 'var(--cc-accent)' }}>REQUIRED DOCUMENTS</p>
         <div className="flex flex-col gap-3 mb-6">
           <UploadField
             label="Business License / Permit"
@@ -272,7 +272,7 @@ function VendorVerificationInner({ truck, user }) {
 
         {/* Photo count indicator */}
         {uploads.truckPhotos?.length > 0 && uploads.truckPhotos?.length < 3 && (
-          <p className="text-xs mb-4 text-center" style={{ color: '#fbbf24' }}>
+          <p className="text-xs mb-4 text-center" style={{ color: 'var(--cc-amber)' }}>
             ⚠️ Need {3 - uploads.truckPhotos.length} more photo{3 - uploads.truckPhotos.length > 1 ? 's' : ''} (minimum 3 required)
           </p>
         )}
@@ -284,9 +284,9 @@ function VendorVerificationInner({ truck, user }) {
 
         {/* Success state after submit */}
         {submitted && (
-          <div className="p-4 rounded-2xl mb-5 text-center" style={{ background: 'rgba(119,255,200,0.08)', border: '1px solid rgba(119,255,200,0.25)' }}>
-            <p className="font-heading font-black text-base mb-1" style={{ color: '#77ffc8' }}>🎉 Submitted for review!</p>
-            <p className="text-xs" style={{ color: '#bacbc0' }}>We'll reach out within 24-48 hours. Watch your email.</p>
+          <div className="p-4 rounded-2xl mb-5 text-center" style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}>
+            <p className="font-heading font-black text-base mb-1" style={{ color: 'var(--cc-accent)' }}>🎉 Submitted for review!</p>
+            <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>We'll reach out within 24-48 hours. Watch your email.</p>
           </div>
         )}
 
@@ -297,9 +297,9 @@ function VendorVerificationInner({ truck, user }) {
             disabled={!allRequired || submitting}
             className="w-full py-4 rounded-full font-heading font-black text-base flex items-center justify-center gap-2 transition-all active:scale-95"
             style={{
-              background: allRequired ? 'linear-gradient(135deg,#77ffc8,#00e6a7)' : '#192123',
-              color: allRequired ? '#003826' : '#6B665C',
-              boxShadow: allRequired ? '0 0 24px rgba(119,255,200,0.3)' : 'none',
+              background: allRequired ? 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' : 'var(--cc-bg-2)',
+              color: allRequired ? 'var(--cc-accent-deep)' : 'var(--cc-ink-faint)',
+              boxShadow: allRequired ? '0 0 24px rgba(var(--cc-accent-rgb),0.3)' : 'none',
               opacity: submitting ? 0.7 : 1,
             }}
           >
@@ -310,14 +310,14 @@ function VendorVerificationInner({ truck, user }) {
 
         {alreadySubmitted && !submitted && (
           <div className="text-center py-4">
-            <p className="text-sm font-semibold" style={{ color: '#bacbc0' }}>
+            <p className="text-sm font-semibold" style={{ color: 'var(--cc-ink-dim)' }}>
               Documents already on file. Update any field and resubmit if needed.
             </p>
             <button
               onClick={handleSubmit}
               disabled={!allRequired || submitting}
               className="mt-3 px-6 py-3 rounded-full font-bold text-sm transition-all active:scale-95"
-              style={{ background: 'rgba(119,255,200,0.1)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.25)' }}>
+              style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}>
               {submitting ? 'Resubmitting...' : 'Resubmit for Review'}
             </button>
           </div>

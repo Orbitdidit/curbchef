@@ -17,11 +17,11 @@ export default function AssistantFAB() {
       style={{
         bottom: 'calc(6.5rem + env(safe-area-inset-bottom))',
         right: '1rem',
-        background: 'linear-gradient(135deg, #77ffc8 0%, #00e6a7 100%)',
-        boxShadow: '0 0 20px rgba(119,255,200,0.45), 0 4px 16px rgba(0,0,0,0.4)',
+        background: 'linear-gradient(135deg, var(--cc-accent) 0%, var(--cc-accent-3) 100%)',
+        boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.45), 0 4px 16px rgba(0,0,0,0.4)',
       }}
     >
-      <Sparkles className="w-6 h-6" style={{ color: '#003826' }} />
+      <Sparkles className="w-6 h-6" style={{ color: 'var(--cc-accent-deep)' }} />
     </button>
   );
 }

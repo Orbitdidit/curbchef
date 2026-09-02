@@ -55,13 +55,13 @@ export default function AIAssist({ value, context, onApply }) {
         disabled={!!loading}
         className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold transition-all"
         style={{
-          background: loading ? 'rgba(119,255,200,0.06)' : 'rgba(119,255,200,0.1)',
-          color: '#77ffc8',
-          border: '1px solid rgba(119,255,200,0.2)',
+          background: loading ? 'rgba(var(--cc-accent-rgb),0.06)' : 'rgba(var(--cc-accent-rgb),0.1)',
+          color: 'var(--cc-accent)',
+          border: '1px solid rgba(var(--cc-accent-rgb),0.2)',
         }}
       >
         {loading ? (
-          <div className="w-3 h-3 border border-t-transparent rounded-full animate-spin" style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
+          <div className="w-3 h-3 border border-t-transparent rounded-full animate-spin" style={{ borderColor: 'var(--cc-accent) transparent transparent transparent' }} />
         ) : (
           <Sparkles className="w-3 h-3" />
         )}
@@ -74,14 +74,14 @@ export default function AIAssist({ value, context, onApply }) {
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
           <div
             className="absolute right-0 top-full mt-1 z-50 rounded-2xl overflow-hidden shadow-xl"
-            style={{ background: '#192123', border: '1px solid rgba(119,255,200,0.2)', minWidth: '180px' }}
+            style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)', minWidth: '180px' }}
           >
             {ACTIONS.map(action => (
               <button
                 key={action.id}
                 onClick={() => handleAction(action)}
                 className="w-full text-left px-4 py-2.5 text-xs font-semibold transition-all hover:bg-white/5"
-                style={{ color: '#dff0e8' }}
+                style={{ color: 'var(--cc-ink)' }}
               >
                 {action.label}
               </button>

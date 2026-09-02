@@ -42,17 +42,17 @@ export default function ContentCuratorCard() {
   };
 
   return (
-    <div className="rounded-2xl p-5" style={{ background: '#192123', border: '1px solid rgba(119,255,200,0.15)' }}>
+    <div className="rounded-2xl p-5" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
       <div className="flex items-center gap-3 mb-4">
         <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-          style={{ background: 'rgba(119,255,200,0.1)', border: '1px solid rgba(119,255,200,0.2)' }}>
-          <Sparkles className="w-4 h-4" style={{ color: '#77ffc8' }} />
+          style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
+          <Sparkles className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
         </div>
         <div className="flex-1">
-          <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>AI Content Curator</p>
-          <p className="text-[10px]" style={{ color: '#bacbc0' }}>Analyzes clips · Promotes trending content to homepage</p>
+          <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>AI Content Curator</p>
+          <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>Analyzes clips · Promotes trending content to homepage</p>
         </div>
-        {status === 'done' && <CheckCircle2 className="w-5 h-5" style={{ color: '#77ffc8' }} />}
+        {status === 'done' && <CheckCircle2 className="w-5 h-5" style={{ color: 'var(--cc-accent)' }} />}
       </div>
 
       <button
@@ -60,8 +60,8 @@ export default function ContentCuratorCard() {
         disabled={status === 'running'}
         className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all active:scale-95"
         style={status === 'running'
-          ? { background: '#2e3638', color: '#bacbc0' }
-          : { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }
+          ? { background: 'var(--cc-bg-3)', color: 'var(--cc-ink-dim)' }
+          : { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }
         }
       >
         <RefreshCw className={`w-4 h-4 ${status === 'running' ? 'animate-spin' : ''}`} />
@@ -70,7 +70,7 @@ export default function ContentCuratorCard() {
 
       {log && (
         <div className="mt-4 p-3 rounded-xl text-xs leading-relaxed whitespace-pre-wrap"
-          style={{ background: '#0d1517', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }}>
+          style={{ background: 'var(--cc-bg-0)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
           {log}
         </div>
       )}

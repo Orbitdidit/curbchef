@@ -41,10 +41,10 @@ export default function CustomerEtaCard({ order, truck }) {
   if (arrived) {
     return (
       <div className="p-5 rounded-3xl mb-5 text-center"
-        style={{ background: 'rgba(119,255,200,0.08)', border: '2px solid rgba(119,255,200,0.4)' }}>
+        style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border: '2px solid rgba(var(--cc-accent-rgb),0.4)' }}>
         <p className="text-3xl mb-2">👋</p>
-        <p className="font-heading font-black text-base" style={{ color: '#77ffc8' }}>You've arrived!</p>
-        <p className="text-xs mt-1" style={{ color: '#bacbc0' }}>The vendor has been notified. Show your pickup code.</p>
+        <p className="font-heading font-black text-base" style={{ color: 'var(--cc-accent)' }}>You've arrived!</p>
+        <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-dim)' }}>The vendor has been notified. Show your pickup code.</p>
       </div>
     );
   }
@@ -56,11 +56,11 @@ export default function CustomerEtaCard({ order, truck }) {
 
   return (
     <div className="p-5 rounded-3xl mb-5"
-      style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}>
-      <p className="font-heading font-black text-base mb-1" style={{ color: '#dff0e8' }}>
+      style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
+      <p className="font-heading font-black text-base mb-1" style={{ color: 'var(--cc-ink)' }}>
         When will you arrive?
       </p>
-      <p className="text-xs mb-4" style={{ color: '#bacbc0' }}>
+      <p className="text-xs mb-4" style={{ color: 'var(--cc-ink-dim)' }}>
         Let the vendor know so your order is hot and ready
       </p>
 
@@ -69,32 +69,32 @@ export default function CustomerEtaCard({ order, truck }) {
           onClick={() => setEta('walking')}
           disabled={saving}
           className="flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all active:scale-95"
-          style={{ background: 'rgba(59,74,66,0.25)', border: '1px solid rgba(59,74,66,0.3)' }}
+          style={{ background: 'rgba(var(--cc-line-rgb),0.25)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}
         >
           <div className="flex items-center gap-3">
             <span className="text-xl">🚶</span>
             <div className="text-left">
-              <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>I'm walking</p>
-              <p className="text-xs" style={{ color: '#bacbc0' }}>~{walkEta} min away</p>
+              <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>I'm walking</p>
+              <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>~{walkEta} min away</p>
             </div>
           </div>
-          <span className="font-heading font-black text-lg" style={{ color: '#77ffc8' }}>{walkEta}m</span>
+          <span className="font-heading font-black text-lg" style={{ color: 'var(--cc-accent)' }}>{walkEta}m</span>
         </button>
 
         <button
           onClick={() => setEta('driving')}
           disabled={saving}
           className="flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all active:scale-95"
-          style={{ background: 'rgba(59,74,66,0.25)', border: '1px solid rgba(59,74,66,0.3)' }}
+          style={{ background: 'rgba(var(--cc-line-rgb),0.25)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}
         >
           <div className="flex items-center gap-3">
             <span className="text-xl">🚗</span>
             <div className="text-left">
-              <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>I'm driving</p>
-              <p className="text-xs" style={{ color: '#bacbc0' }}>~{driveEta} min away</p>
+              <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>I'm driving</p>
+              <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>~{driveEta} min away</p>
             </div>
           </div>
-          <span className="font-heading font-black text-lg" style={{ color: '#77ffc8' }}>{driveEta}m</span>
+          <span className="font-heading font-black text-lg" style={{ color: 'var(--cc-accent)' }}>{driveEta}m</span>
         </button>
 
         <button
@@ -102,9 +102,9 @@ export default function CustomerEtaCard({ order, truck }) {
           disabled={saving}
           className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl font-heading font-black text-sm transition-all active:scale-95"
           style={{
-            background: 'linear-gradient(135deg,#77ffc8,#00e6a7)',
-            color: '#003826',
-            boxShadow: '0 0 16px rgba(119,255,200,0.3)',
+            background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))',
+            color: 'var(--cc-accent-deep)',
+            boxShadow: '0 0 16px rgba(var(--cc-accent-rgb),0.3)',
           }}
         >
           👋 I'm here!
@@ -131,18 +131,18 @@ function EtaCountdown({ order, onArrive, saving }) {
   }, [order.customer_eta_set_at, order.customer_eta_minutes]);
 
   const emoji = order.customer_eta_type === 'walking' ? '🚶' : '🚗';
-  const color = minsLeft === 0 ? '#77ffc8' : minsLeft <= 3 ? '#fd591e' : '#dff0e8';
+  const color = minsLeft === 0 ? 'var(--cc-accent)' : minsLeft <= 3 ? 'var(--cc-warm)' : 'var(--cc-ink)';
 
   return (
     <div className="p-5 rounded-3xl mb-5 flex items-center justify-between"
-      style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}>
+      style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
       <div className="flex items-center gap-3">
         <span className="text-2xl">{emoji}</span>
         <div>
           <p className="font-heading font-black text-base" style={{ color }}>
             {minsLeft === 0 ? 'Almost there!' : `~${minsLeft} min away`}
           </p>
-          <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>
+          <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>
             {order.customer_eta_type === 'walking' ? 'Walking' : 'Driving'} to you
           </p>
         </div>
@@ -151,7 +151,7 @@ function EtaCountdown({ order, onArrive, saving }) {
         onClick={onArrive}
         disabled={saving}
         className="px-4 py-2 rounded-full font-heading font-black text-sm active:scale-95 transition-all"
-        style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}
+        style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}
       >
         I'm here!
       </button>

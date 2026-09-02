@@ -10,12 +10,12 @@ export default function AssistantNudge() {
       onClick={() => { reset(); setOpen(true); }}
       className="flex items-center gap-2 px-5 py-3 rounded-full mx-auto active:scale-95 transition-transform"
       style={{
-        background: 'rgba(119,255,200,0.08)',
-        border: '1px solid rgba(119,255,200,0.2)',
+        background: 'rgba(var(--cc-accent-rgb),0.08)',
+        border: '1px solid rgba(var(--cc-accent-rgb),0.2)',
       }}
     >
-      <Sparkles className="w-4 h-4" style={{ color: '#77ffc8' }} />
-      <span className="text-sm font-bold" style={{ color: '#77ffc8' }}>
+      <Sparkles className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
+      <span className="text-sm font-bold" style={{ color: 'var(--cc-accent)' }}>
         Need help choosing?
       </span>
     </button>

@@ -103,12 +103,12 @@ export default function AdminDashboard() {
   // Not authorized (user loaded but not in ADMIN_EMAILS)
   if (!adminLoading && adminUser && !isAdmin) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-8 text-center" style={{ background: '#0d1517' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-8 text-center" style={{ background: 'var(--cc-bg-0)' }}>
         <p className="text-4xl">🔒</p>
-        <p className="font-heading font-bold text-lg" style={{ color: '#dff0e8' }}>Not Authorized</p>
-        <p className="text-sm" style={{ color: '#bacbc0' }}>You don't have admin access.</p>
+        <p className="font-heading font-bold text-lg" style={{ color: 'var(--cc-ink)' }}>Not Authorized</p>
+        <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>You don't have admin access.</p>
         <button onClick={() => navigate('/')} className="px-6 py-3 rounded-full font-bold text-sm"
-          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
           Back to Home
         </button>
       </div>
@@ -118,11 +118,11 @@ export default function AdminDashboard() {
   // Auth error
   if (adminError) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-8 text-center" style={{ background: '#0d1517' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-8 text-center" style={{ background: 'var(--cc-bg-0)' }}>
         <p className="text-4xl">⚠️</p>
-        <p className="font-heading font-bold text-lg" style={{ color: '#dff0e8' }}>Authentication Error</p>
+        <p className="font-heading font-bold text-lg" style={{ color: 'var(--cc-ink)' }}>Authentication Error</p>
         <button onClick={() => navigate('/')} className="px-6 py-3 rounded-full font-bold text-sm"
-          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
           Back to Home
         </button>
       </div>
@@ -132,8 +132,8 @@ export default function AdminDashboard() {
   // Still loading
   if (!isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0d1517' }}>
-        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--cc-bg-0)' }}>
+        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'var(--cc-accent) transparent transparent transparent' }} />
       </div>
     );
   }
@@ -143,21 +143,21 @@ export default function AdminDashboard() {
   const liveTrucks = trucks.filter(t => t.is_live).length;
 
   return (
-    <div className="min-h-screen dot-bg" style={{ background: '#0d1517' }}>
+    <div className="min-h-screen dot-bg" style={{ background: 'var(--cc-bg-0)' }}>
       {/* Header */}
-      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-0 lg:max-w-5xl lg:mx-auto" style={{ background: '#151d1f' }}>
+      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-0 lg:max-w-5xl lg:mx-auto" style={{ background: 'var(--cc-bg-1)' }}>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/')} className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#192123' }}>
-              <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
+            <button onClick={() => navigate('/')} className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--cc-bg-2)' }}>
+              <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
             </button>
             <div>
-              <p className="font-heading font-bold text-base" style={{ color: '#dff0e8' }}>Admin</p>
-              <p className="text-xs" style={{ color: '#bacbc0' }}>Platform Overview</p>
+              <p className="font-heading font-bold text-base" style={{ color: 'var(--cc-ink)' }}>Admin</p>
+              <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Platform Overview</p>
             </div>
           </div>
-          <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-            <Bell className="w-4 h-4" style={{ color: '#bacbc0' }} />
+          <button className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
+            <Bell className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />
           </button>
         </div>
 
@@ -174,14 +174,14 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab(tab.id)}
               className="relative flex items-center gap-2 px-5 py-2.5 rounded-t-xl text-sm font-bold transition-all"
               style={activeTab === tab.id
-                ? { background: '#0d1517', color: '#77ffc8', borderTop: '2px solid #77ffc8' }
-                : { background: 'transparent', color: '#bacbc0' }
+                ? { background: 'var(--cc-bg-0)', color: 'var(--cc-accent)', borderTop: '2px solid var(--cc-accent)' }
+                : { background: 'transparent', color: 'var(--cc-ink-dim)' }
               }
             >
               {tab.label}
               {tab.badge > 0 && (
                 <span className="text-[10px] font-black px-1.5 py-0.5 rounded-full"
-                  style={{ background: '#fbbf24', color: '#0d1517' }}>
+                  style={{ background: 'var(--cc-amber)', color: 'var(--cc-bg-0)' }}>
                   {tab.badge}
                 </span>
               )}
@@ -207,10 +207,10 @@ export default function AdminDashboard() {
       {/* Beta Users Tab */}
       {activeTab === 'beta' && (
         <div className="px-5 pt-5 pb-16 lg:max-w-5xl lg:mx-auto">
-          <div className="mb-4 p-4 rounded-2xl" style={{ background: 'rgba(119,255,200,0.05)', border: '1px solid rgba(119,255,200,0.15)' }}>
-            <p className="text-xs font-bold mb-1" style={{ color: '#77ffc8' }}>Soft Launch Gate</p>
-            <p className="text-xs" style={{ color: '#bacbc0' }}>
-              Users added here can access the app when Gate Mode is set to <strong style={{ color: '#fbbf24' }}>Soft Launch</strong>. Admins always bypass the gate.
+          <div className="mb-4 p-4 rounded-2xl" style={{ background: 'rgba(var(--cc-accent-rgb),0.05)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
+            <p className="text-xs font-bold mb-1" style={{ color: 'var(--cc-accent)' }}>Soft Launch Gate</p>
+            <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>
+              Users added here can access the app when Gate Mode is set to <strong style={{ color: 'var(--cc-amber)' }}>Soft Launch</strong>. Admins always bypass the gate.
             </p>
           </div>
           <BetaUsersPanel adminEmail={adminUser?.email} />
@@ -222,38 +222,38 @@ export default function AdminDashboard() {
         {/* CMS Quick Access */}
         <Link to="/admin/launch">
           <div className="flex items-center gap-3 p-4 rounded-2xl mb-3"
-            style={{ background: 'rgba(253,89,30,0.06)', border: '1px solid rgba(253,89,30,0.2)' }}>
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(253,89,30,0.12)' }}>
-              <Rocket className="w-4 h-4" style={{ color: '#fd591e' }} />
+            style={{ background: 'rgba(var(--cc-warm-rgb),0.06)', border: '1px solid rgba(var(--cc-warm-rgb),0.2)' }}>
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(var(--cc-warm-rgb),0.12)' }}>
+              <Rocket className="w-4 h-4" style={{ color: 'var(--cc-warm)' }} />
             </div>
             <div className="flex-1">
-              <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>Launch Command Center</p>
-              <p className="text-xs" style={{ color: '#bacbc0' }}>Track launch readiness & blockers</p>
+              <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Launch Command Center</p>
+              <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Track launch readiness & blockers</p>
             </div>
-            <span className="text-xs font-bold" style={{ color: '#fd591e' }}>Open →</span>
+            <span className="text-xs font-bold" style={{ color: 'var(--cc-warm)' }}>Open →</span>
           </div>
         </Link>
         <Link to="/admin/homepage">
           <div
             className="flex items-center gap-3 p-4 rounded-2xl mb-5"
-            style={{ background: 'rgba(119,255,200,0.06)', border: '1px solid rgba(119,255,200,0.2)' }}>
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(119,255,200,0.12)' }}>
-              <Layout className="w-4 h-4" style={{ color: '#77ffc8' }} />
+            style={{ background: 'rgba(var(--cc-accent-rgb),0.06)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(var(--cc-accent-rgb),0.12)' }}>
+              <Layout className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
             </div>
             <div className="flex-1">
-              <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>Homepage CMS</p>
-              <p className="text-xs" style={{ color: '#bacbc0' }}>Edit videos, promo cards & copy</p>
+              <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Homepage CMS</p>
+              <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Edit videos, promo cards & copy</p>
             </div>
-            <span className="text-xs font-bold" style={{ color: '#77ffc8' }}>Edit →</span>
+            <span className="text-xs font-bold" style={{ color: 'var(--cc-accent)' }}>Edit →</span>
           </div>
         </Link>
 
         {/* Platform Stats */}
         <div className="flex items-center justify-between mb-3">
-          <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>PLATFORM STATS</p>
+          <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-accent)' }}>PLATFORM STATS</p>
           <span
             className="text-[10px] font-bold px-2.5 py-0.5 rounded-full"
-            style={{ background: 'rgba(119,255,200,0.1)', color: '#77ffc8' }}
+            style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)' }}
           >
             Live Data
           </span>
@@ -264,19 +264,19 @@ export default function AdminDashboard() {
             { label: 'Active Vendors', value: trucks.filter(t => t.is_approved).length, icon: Users, trend: '+12%' },
             { label: 'Live Streams', value: liveTrucks, icon: Radio, hot: true },
           ].map(({ label, value, icon: Icon, trend, hot }) => (
-            <div key={label} className="p-4 rounded-3xl" style={{ background: '#192123' }}>
+            <div key={label} className="p-4 rounded-3xl" style={{ background: 'var(--cc-bg-2)' }}>
               <div className="flex items-center justify-between mb-3">
                 <div
                   className="w-8 h-8 rounded-xl flex items-center justify-center"
-                  style={{ background: 'rgba(119,255,200,0.1)' }}
+                  style={{ background: 'rgba(var(--cc-accent-rgb),0.1)' }}
                 >
-                  <Icon className="w-4 h-4" style={{ color: '#77ffc8' }} />
+                  <Icon className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
                 </div>
-                {trend && <span className="text-[10px] font-bold" style={{ color: '#77ffc8' }}>{trend}</span>}
+                {trend && <span className="text-[10px] font-bold" style={{ color: 'var(--cc-accent)' }}>{trend}</span>}
                 {hot && <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />}
               </div>
-              <p className="font-heading font-black text-3xl" style={{ color: '#dff0e8' }}>{value}</p>
-              <p className="text-xs mt-1" style={{ color: '#bacbc0' }}>{label}</p>
+              <p className="font-heading font-black text-3xl" style={{ color: 'var(--cc-ink)' }}>{value}</p>
+              <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-dim)' }}>{label}</p>
             </div>
           ))}
         </div>
@@ -284,11 +284,11 @@ export default function AdminDashboard() {
         {/* Total Orders */}
         <div
           className="p-5 rounded-3xl mb-5 flex items-center justify-between"
-          style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}
+          style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}
         >
           <div>
-            <p className="text-[10px] font-bold tracking-widest" style={{ color: '#bacbc0' }}>TOTAL ORDERS (TODAY)</p>
-            <p className="font-heading font-black text-4xl mt-1" style={{ color: '#dff0e8' }}>
+            <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-ink-dim)' }}>TOTAL ORDERS (TODAY)</p>
+            <p className="font-heading font-black text-4xl mt-1" style={{ color: 'var(--cc-ink)' }}>
               {orders.length.toLocaleString()}
             </p>
           </div>
@@ -299,7 +299,7 @@ export default function AdminDashboard() {
                 className="w-3 rounded-sm"
                 style={{
                   height: `${h * 10}%`,
-                  background: i === 6 ? '#77ffc8' : 'rgba(119,255,200,0.2)',
+                  background: i === 6 ? 'var(--cc-accent)' : 'rgba(var(--cc-accent-rgb),0.2)',
                   minHeight: '6px',
                 }}
               />
@@ -310,7 +310,7 @@ export default function AdminDashboard() {
         {/* Admin Quick Add */}
         {pendingTrucks.length === 0 && (
           <div className="flex items-center justify-between mb-5">
-            <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>ONBOARD A VENDOR</p>
+            <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-accent)' }}>ONBOARD A VENDOR</p>
             <AdminQuickAddTruck />
           </div>
         )}
@@ -319,7 +319,7 @@ export default function AdminDashboard() {
         {pendingTrucks.length > 0 && (
           <div className="mb-5">
             <div className="flex items-center justify-between mb-3">
-              <p className="text-[10px] font-bold tracking-widest" style={{ color: '#77ffc8' }}>PENDING APPROVALS</p>
+              <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-accent)' }}>PENDING APPROVALS</p>
               <AdminQuickAddTruck />
             </div>
             <div className="flex flex-col gap-3">
@@ -327,22 +327,22 @@ export default function AdminDashboard() {
                 <div
                   key={truck.id}
                   className="flex items-center gap-3 p-4 rounded-2xl"
-                  style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}
+                  style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm flex-shrink-0"
-                    style={{ background: '#2e3638', color: '#77ffc8' }}
+                    style={{ background: 'var(--cc-bg-3)', color: 'var(--cc-accent)' }}
                   >
                     {truck.name.charAt(0)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-heading font-bold text-sm truncate" style={{ color: '#dff0e8' }}>{truck.name}</p>
-                    <p className="text-xs" style={{ color: '#bacbc0' }}>New Vendor Application</p>
+                    <p className="font-heading font-bold text-sm truncate" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
+                    <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>New Vendor Application</p>
                   </div>
                   <button
                     onClick={() => approveTruck.mutate(truck.id)}
                     className="px-4 py-2 rounded-full text-xs font-bold flex-shrink-0"
-                    style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}
+                    style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}
                   >
                     Review
                   </button>
@@ -354,32 +354,32 @@ export default function AdminDashboard() {
 
         {/* Flagged Content */}
         <div>
-          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>FLAGGED CONTENT</p>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: 'var(--cc-accent)' }}>FLAGGED CONTENT</p>
           <div className="flex flex-col gap-3">
             {[
-              { type: 'report', title: 'Inappropriate Content Report', sub: 'Comment on "Spicy Wings" — User reported this review for hate speech...', time: '2m ago', actions: ['Ignore', 'Moderate'], actionColor: ['#2e3638', '#fd591e'] },
-              { type: 'live', title: 'Late Night Grill Stream', sub: '"Potential copyright music violation detected..."', time: '30m ago', actions: ['Ignore', 'Shutdown'], actionColor: ['#2e3638', '#fd591e'] },
+              { type: 'report', title: 'Inappropriate Content Report', sub: 'Comment on "Spicy Wings" — User reported this review for hate speech...', time: '2m ago', actions: ['Ignore', 'Moderate'], actionColor: ['var(--cc-bg-3)', 'var(--cc-warm)'] },
+              { type: 'live', title: 'Late Night Grill Stream', sub: '"Potential copyright music violation detected..."', time: '30m ago', actions: ['Ignore', 'Shutdown'], actionColor: ['var(--cc-bg-3)', 'var(--cc-warm)'] },
             ].map((item, i) => (
               <div
                 key={i}
                 className="p-4 rounded-2xl"
-                style={{ background: '#192123', border: '1px solid rgba(253,89,30,0.15)' }}
+                style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-warm-rgb),0.15)' }}
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <AlertTriangle className="w-3.5 h-3.5" style={{ color: '#fd591e' }} />
-                  <span className="text-xs font-bold" style={{ color: '#fd591e' }}>
+                  <AlertTriangle className="w-3.5 h-3.5" style={{ color: 'var(--cc-warm)' }} />
+                  <span className="text-xs font-bold" style={{ color: 'var(--cc-warm)' }}>
                     {item.type === 'live' ? '● LIVE' : '⚑'}
                   </span>
-                  <span className="font-semibold text-xs flex-1" style={{ color: '#dff0e8' }}>{item.title}</span>
-                  <span className="text-[10px]" style={{ color: '#bacbc0' }}>{item.time}</span>
+                  <span className="font-semibold text-xs flex-1" style={{ color: 'var(--cc-ink)' }}>{item.title}</span>
+                  <span className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>{item.time}</span>
                 </div>
-                <p className="text-xs mb-3" style={{ color: '#bacbc0' }}>{item.sub}</p>
+                <p className="text-xs mb-3" style={{ color: 'var(--cc-ink-dim)' }}>{item.sub}</p>
                 <div className="flex gap-2">
                   {item.actions.map((action, j) => (
                     <button
                       key={action}
                       className="flex-1 py-2 rounded-xl text-xs font-bold"
-                      style={{ background: item.actionColor[j], color: j === 0 ? '#bacbc0' : 'white' }}
+                      style={{ background: item.actionColor[j], color: j === 0 ? 'var(--cc-ink-dim)' : 'white' }}
                     >
                       {action}
                     </button>
@@ -393,11 +393,11 @@ export default function AdminDashboard() {
         {/* Stripe TEST MODE banner */}
         <div className="mt-5 p-4 rounded-2xl flex items-center gap-3"
           style={{ background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.35)' }}>
-          <span className="text-[10px] font-black px-2 py-1 rounded-full flex-shrink-0" style={{ background: 'rgba(251,191,36,0.2)', color: '#fbbf24' }}>
+          <span className="text-[10px] font-black px-2 py-1 rounded-full flex-shrink-0" style={{ background: 'rgba(251,191,36,0.2)', color: 'var(--cc-amber)' }}>
             ⚠️ TEST MODE
           </span>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-bold" style={{ color: '#fbbf24' }}>No real payments are being processed.</p>
+            <p className="text-xs font-bold" style={{ color: 'var(--cc-amber)' }}>No real payments are being processed.</p>
             <a href="/support" className="text-[10px] underline" style={{ color: 'rgba(251,191,36,0.6)' }}>
               How to switch to live mode →
             </a>
@@ -405,8 +405,8 @@ export default function AdminDashboard() {
         </div>
 
         {/* Launch Mode toggle */}
-        <div className="mt-5 p-4 rounded-2xl" style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}>
-          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>LAUNCH MODE</p>
+        <div className="mt-5 p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: 'var(--cc-accent)' }}>LAUNCH MODE</p>
           <div className="flex gap-2">
             {[
               { id: 'waitlist', label: '🚫 Waitlist', desc: 'Closed — landing page only' },
@@ -416,15 +416,15 @@ export default function AdminDashboard() {
               <button key={m.id} onClick={() => setLaunchMode.mutate(m.id)}
                 className="flex-1 py-2.5 px-2 rounded-xl text-[10px] font-black transition-all text-center"
                 style={currentLaunchMode === m.id
-                  ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }
-                  : { background: '#0d1517', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }
+                  ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }
+                  : { background: 'var(--cc-bg-0)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }
                 }>
                 {m.label}
               </button>
             ))}
           </div>
-          <p className="text-[10px] mt-2" style={{ color: '#6B665C' }}>
-            Current: <span style={{ color: '#77ffc8' }}>{currentLaunchMode}</span>
+          <p className="text-[10px] mt-2" style={{ color: 'var(--cc-ink-faint)' }}>
+            Current: <span style={{ color: 'var(--cc-accent)' }}>{currentLaunchMode}</span>
           </p>
         </div>
 
@@ -435,7 +435,7 @@ export default function AdminDashboard() {
               onClick={() => approveAllPending.mutate()}
               disabled={approveAllPending.isPending}
               className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-heading font-black text-sm transition-all"
-              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', opacity: approveAllPending.isPending ? 0.6 : 1 }}
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', opacity: approveAllPending.isPending ? 0.6 : 1 }}
             >
               <CheckCheck className="w-4 h-4" />
               Approve All {pendingTrucks.length} Pending Trucks
@@ -447,22 +447,22 @@ export default function AdminDashboard() {
         {orders.some(o => o.is_test_payment) && (
           <div className="mt-5 p-3 rounded-2xl flex items-center gap-3"
             style={{ background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.25)' }}>
-            <span className="text-[10px] font-black px-2 py-1 rounded-full" style={{ background: 'rgba(251,191,36,0.2)', color: '#fbbf24' }}>TEST MODE</span>
-            <p className="text-xs" style={{ color: '#fbbf24' }}>App is running Stripe in test mode. Switch to live keys when ready.</p>
+            <span className="text-[10px] font-black px-2 py-1 rounded-full" style={{ background: 'rgba(251,191,36,0.2)', color: 'var(--cc-amber)' }}>TEST MODE</span>
+            <p className="text-xs" style={{ color: 'var(--cc-amber)' }}>App is running Stripe in test mode. Switch to live keys when ready.</p>
           </div>
         )}
 
         {/* Payment stats */}
         <div className="mt-5">
-          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>PLATFORM FEES COLLECTED</p>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: 'var(--cc-accent)' }}>PLATFORM FEES COLLECTED</p>
           <div className="grid grid-cols-2 gap-3 mb-5">
             {[
               { label: 'Total Platform Revenue', value: `$${orders.reduce((s, o) => s + (o.platform_fee_amount || 0), 0).toFixed(2)}` },
               { label: 'Paid via Stripe', value: orders.filter(o => o.stripe_payment_intent_id || o.stripe_checkout_session_id).length },
             ].map(({ label, value }) => (
-              <div key={label} className="p-4 rounded-2xl" style={{ background: '#192123' }}>
-                <p className="text-[10px] font-bold tracking-wide mb-1" style={{ color: '#bacbc0' }}>{label}</p>
-                <p className="font-heading font-black text-2xl" style={{ color: '#77ffc8' }}>{value}</p>
+              <div key={label} className="p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)' }}>
+                <p className="text-[10px] font-bold tracking-wide mb-1" style={{ color: 'var(--cc-ink-dim)' }}>{label}</p>
+                <p className="font-heading font-black text-2xl" style={{ color: 'var(--cc-accent)' }}>{value}</p>
               </div>
             ))}
           </div>
@@ -470,20 +470,20 @@ export default function AdminDashboard() {
 
         {/* Vendor payment status */}
         <div className="mt-2">
-          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>VENDOR PAYMENT STATUS</p>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: 'var(--cc-accent)' }}>VENDOR PAYMENT STATUS</p>
           <div className="flex flex-col gap-2 mb-5">
             {trucks.filter(t => t.is_approved).slice(0, 6).map(truck => {
               const statusColors = {
-                payouts_enabled: '#77ffc8',
-                charges_enabled: '#fbbf24',
-                onboarding_started: '#fd591e',
-                not_connected: '#bacbc0',
+                payouts_enabled: 'var(--cc-accent)',
+                charges_enabled: 'var(--cc-amber)',
+                onboarding_started: 'var(--cc-warm)',
+                not_connected: 'var(--cc-ink-dim)',
               };
               const s = truck.stripe_onboarding_status || 'not_connected';
               return (
-                <div key={truck.id} className="flex items-center gap-3 px-4 py-3 rounded-xl" style={{ background: '#192123' }}>
+                <div key={truck.id} className="flex items-center gap-3 px-4 py-3 rounded-xl" style={{ background: 'var(--cc-bg-2)' }}>
                   <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: statusColors[s] }} />
-                  <p className="flex-1 text-sm font-semibold truncate" style={{ color: '#dff0e8' }}>{truck.name}</p>
+                  <p className="flex-1 text-sm font-semibold truncate" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
                   <span className="text-[10px] font-bold" style={{ color: statusColors[s] }}>
                     {s.replace(/_/g, ' ').toUpperCase()}
                   </span>
@@ -495,15 +495,15 @@ export default function AdminDashboard() {
 
         {/* Admin: Launch Ready Override */}
         <div className="mt-2">
-          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#fbbf24' }}>LAUNCH READY OVERRIDE</p>
-          <p className="text-xs mb-3" style={{ color: '#bacbc0' }}>Manually mark trucks as launch-ready (bypasses the 8-step checklist).</p>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: 'var(--cc-amber)' }}>LAUNCH READY OVERRIDE</p>
+          <p className="text-xs mb-3" style={{ color: 'var(--cc-ink-dim)' }}>Manually mark trucks as launch-ready (bypasses the 8-step checklist).</p>
           <div className="flex flex-col gap-2 mb-5">
             {trucks.filter(t => t.is_approved).map(truck => (
               <div key={truck.id} className="flex items-center gap-3 px-4 py-3 rounded-xl"
-                style={{ background: '#192123', border: truck.launch_ready_override ? '1px solid rgba(251,191,36,0.3)' : '1px solid transparent' }}>
+                style={{ background: 'var(--cc-bg-2)', border: truck.launch_ready_override ? '1px solid rgba(251,191,36,0.3)' : '1px solid transparent' }}>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold truncate" style={{ color: '#dff0e8' }}>{truck.name}</p>
-                  <p className="text-[10px]" style={{ color: truck.launch_ready ? '#77ffc8' : '#bacbc0' }}>
+                  <p className="text-sm font-semibold truncate" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
+                  <p className="text-[10px]" style={{ color: truck.launch_ready ? 'var(--cc-accent)' : 'var(--cc-ink-dim)' }}>
                     {truck.launch_ready ? '✓ Launch Ready' : '○ Not Ready'}
                     {truck.launch_ready_override ? ' (admin override)' : ''}
                   </p>
@@ -512,7 +512,7 @@ export default function AdminDashboard() {
                   onClick={() => toggleLaunchOverride.mutate({ id: truck.id, override: !truck.launch_ready_override })}
                   className="relative w-12 h-6 rounded-full flex-shrink-0 transition-all"
                   style={{
-                    background: truck.launch_ready_override ? 'linear-gradient(135deg,#fbbf24,#f59e0b)' : '#2e3638',
+                    background: truck.launch_ready_override ? 'linear-gradient(135deg,var(--cc-amber),#f59e0b)' : 'var(--cc-bg-3)',
                     boxShadow: truck.launch_ready_override ? '0 0 10px rgba(251,191,36,0.35)' : 'none',
                   }}
                 >
@@ -526,27 +526,27 @@ export default function AdminDashboard() {
 
         {/* Recent orders */}
         <div className="mt-2">
-          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>RECENT PAID ORDERS</p>
-          <div className="rounded-2xl overflow-hidden" style={{ background: '#192123' }}>
+          <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: 'var(--cc-accent)' }}>RECENT PAID ORDERS</p>
+          <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--cc-bg-2)' }}>
             {orders.slice(0, 5).map((order, i) => (
               <div key={order.id} className="flex items-center gap-3 px-4 py-3"
-                style={{ borderBottom: i < 4 ? '1px solid rgba(59,74,66,0.15)' : 'none' }}>
+                style={{ borderBottom: i < 4 ? '1px solid rgba(var(--cc-line-rgb),0.15)' : 'none' }}>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <p className="font-semibold text-sm truncate" style={{ color: '#dff0e8' }}>{order.truck_name}</p>
+                    <p className="font-semibold text-sm truncate" style={{ color: 'var(--cc-ink)' }}>{order.truck_name}</p>
                     {order.is_test_payment && (
-                      <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full flex-shrink-0" style={{ background: 'rgba(251,191,36,0.15)', color: '#fbbf24' }}>TEST</span>
+                      <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full flex-shrink-0" style={{ background: 'rgba(251,191,36,0.15)', color: 'var(--cc-amber)' }}>TEST</span>
                     )}
                   </div>
-                  <p className="text-xs" style={{ color: '#bacbc0' }}>{order.customer_email}</p>
+                  <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>{order.customer_email}</p>
                 </div>
                 <div className="text-right">
-                  <p className="font-heading font-bold text-sm" style={{ color: '#77ffc8' }}>${order.total?.toFixed(2)}</p>
+                  <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-accent)' }}>${order.total?.toFixed(2)}</p>
                   {order.platform_fee_amount > 0 && (
-                    <p className="text-[10px]" style={{ color: '#bacbc0' }}>fee: ${order.platform_fee_amount?.toFixed(2)}</p>
+                    <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>fee: ${order.platform_fee_amount?.toFixed(2)}</p>
                   )}
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                    style={{ background: order.stripe_payment_intent_id ? 'rgba(119,255,200,0.1)' : '#2e3638', color: order.stripe_payment_intent_id ? '#77ffc8' : '#bacbc0' }}>
+                    style={{ background: order.stripe_payment_intent_id ? 'rgba(var(--cc-accent-rgb),0.1)' : 'var(--cc-bg-3)', color: order.stripe_payment_intent_id ? 'var(--cc-accent)' : 'var(--cc-ink-dim)' }}>
                     {order.stripe_payment_intent_id ? 'PAID' : order.status}
                   </span>
                 </div>

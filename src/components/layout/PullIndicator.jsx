@@ -12,7 +12,7 @@ export default function PullIndicator({ pullDist, refreshing }) {
       <div
         className="w-6 h-6 rounded-full border-2"
         style={{
-          borderColor: '#77ffc8 rgba(119,255,200,0.2) rgba(119,255,200,0.2) rgba(119,255,200,0.2)',
+          borderColor: 'var(--cc-accent) rgba(var(--cc-accent-rgb),0.2) rgba(var(--cc-accent-rgb),0.2) rgba(var(--cc-accent-rgb),0.2)',
           animation: refreshing ? 'spin 0.7s linear infinite' : 'none',
           transform: refreshing ? 'none' : `rotate(${(pullDist / 72) * 270}deg)`,
           transition: refreshing ? 'none' : 'transform 0.05s linear',

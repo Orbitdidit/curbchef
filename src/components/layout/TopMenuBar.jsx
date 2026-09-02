@@ -38,7 +38,7 @@ export default function TopMenuBar() {
           <button
             onClick={() => base44.auth.redirectToLogin(window.location.pathname)}
             className="px-4 py-2 rounded-full text-sm font-bold transition-all"
-            style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}
           >
             Sign In
           </button>
@@ -49,9 +49,9 @@ export default function TopMenuBar() {
           aria-haspopup="dialog"
           aria-expanded={open}
           className="w-11 h-11 rounded-xl flex items-center justify-center transition-all"
-          style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}
+          style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}
         >
-          <Menu className="w-4 h-4" style={{ color: '#bacbc0' }} aria-hidden="true" />
+          <Menu className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} aria-hidden="true" />
         </button>
       </div>
 
@@ -73,8 +73,8 @@ export default function TopMenuBar() {
         className="fixed top-0 right-0 bottom-0 z-[101] flex flex-col"
         style={{
           width: '280px',
-          background: '#151d1f',
-          borderLeft: '1px solid rgba(59,74,66,0.3)',
+          background: 'var(--cc-bg-1)',
+          borderLeft: '1px solid rgba(var(--cc-line-rgb),0.3)',
           transform: open ? 'translateX(0)' : 'translateX(100%)',
           transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)',
           paddingTop: 'env(safe-area-inset-top)',
@@ -82,18 +82,18 @@ export default function TopMenuBar() {
         }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(59,74,66,0.2)' }}>
+        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
           <div>
-            <p className="font-heading font-black text-base" style={{ color: '#77ffc8' }}>CurbChef</p>
-            {user && <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>{user.full_name}</p>}
+            <p className="font-heading font-black text-base" style={{ color: 'var(--cc-accent)' }}>CurbChef</p>
+            {user && <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{user.full_name}</p>}
           </div>
           <button
             onClick={() => setOpen(false)}
             aria-label="Close menu"
             className="w-11 h-11 rounded-xl flex items-center justify-center"
-            style={{ background: '#192123' }}
+            style={{ background: 'var(--cc-bg-2)' }}
           >
-            <X className="w-4 h-4" style={{ color: '#bacbc0' }} aria-hidden="true" />
+            <X className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} aria-hidden="true" />
           </button>
         </div>
 
@@ -110,19 +110,19 @@ export default function TopMenuBar() {
                 minHeight: '52px',
                 alignItems: 'center',
                 display: 'flex',
-                background: admin ? 'rgba(253,89,30,0.04)' : highlight ? 'rgba(119,255,200,0.04)' : 'transparent',
-                borderBottom: '1px solid rgba(59,74,66,0.08)',
+                background: admin ? 'rgba(var(--cc-warm-rgb),0.04)' : highlight ? 'rgba(var(--cc-accent-rgb),0.04)' : 'transparent',
+                borderBottom: '1px solid rgba(var(--cc-line-rgb),0.08)',
               }}
             >
               <div
                 className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: admin ? 'rgba(253,89,30,0.1)' : highlight ? 'rgba(119,255,200,0.1)' : '#192123' }}
+                style={{ background: admin ? 'rgba(var(--cc-warm-rgb),0.1)' : highlight ? 'rgba(var(--cc-accent-rgb),0.1)' : 'var(--cc-bg-2)' }}
               >
-                <Icon className="w-4 h-4" style={{ color: admin ? '#fd591e' : highlight ? '#77ffc8' : '#bacbc0' }} />
+                <Icon className="w-4 h-4" style={{ color: admin ? 'var(--cc-warm)' : highlight ? 'var(--cc-accent)' : 'var(--cc-ink-dim)' }} />
               </div>
               <span
                 className="flex-1 text-sm font-semibold"
-                style={{ color: admin ? '#fd591e' : highlight ? '#77ffc8' : '#dff0e8' }}
+                style={{ color: admin ? 'var(--cc-warm)' : highlight ? 'var(--cc-accent)' : 'var(--cc-ink)' }}
               >
                 {label}
               </span>
@@ -132,12 +132,12 @@ export default function TopMenuBar() {
         </div>
 
         {/* Footer */}
-        <div className="px-5 py-4" style={{ borderTop: '1px solid rgba(59,74,66,0.2)' }}>
+        <div className="px-5 py-4" style={{ borderTop: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
           {user ? (
             <button
               onClick={() => { base44.auth.logout(); setOpen(false); }}
               className="w-full py-3 rounded-2xl text-sm font-bold"
-              style={{ background: '#192123', color: '#bacbc0' }}
+              style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }}
             >
               Sign Out
             </button>
@@ -145,7 +145,7 @@ export default function TopMenuBar() {
             <button
               onClick={() => { base44.auth.redirectToLogin(); setOpen(false); }}
               className="w-full py-3 rounded-2xl text-sm font-bold"
-              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}
             >
               Sign In
             </button>

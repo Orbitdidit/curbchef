@@ -78,23 +78,23 @@ export default function AssistantSteps() {
           {state.step > 0 && (
             <button onClick={goBack}
               className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ background: '#2e3638' }}>
-              <ChevronLeft className="w-4 h-4" style={{ color: '#dff0e8' }} />
+              style={{ background: 'var(--cc-bg-3)' }}>
+              <ChevronLeft className="w-4 h-4" style={{ color: 'var(--cc-ink)' }} />
             </button>
           )}
-          <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: '#2e3638' }}>
+          <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--cc-bg-3)' }}>
             <div className="h-full rounded-full transition-all duration-500"
-              style={{ width: `${progress}%`, background: 'linear-gradient(90deg,#77ffc8,#00e6a7)' }} />
+              style={{ width: `${progress}%`, background: 'linear-gradient(90deg,var(--cc-accent),var(--cc-accent-3))' }} />
           </div>
-          <span className="text-[10px] font-bold" style={{ color: '#bacbc0' }}>
+          <span className="text-[10px] font-bold" style={{ color: 'var(--cc-ink-dim)' }}>
             {state.step + 1}/{STEPS.length}
           </span>
         </div>
 
-        <h2 className="font-heading font-black text-xl leading-tight" style={{ color: '#dff0e8' }}>
+        <h2 className="font-heading font-black text-xl leading-tight" style={{ color: 'var(--cc-ink)' }}>
           {step.question}
         </h2>
-        <p className="text-xs mt-1 mb-5" style={{ color: '#bacbc0' }}>{step.sub}</p>
+        <p className="text-xs mt-1 mb-5" style={{ color: 'var(--cc-ink-dim)' }}>{step.sub}</p>
       </div>
 
       {/* Options */}
@@ -106,13 +106,13 @@ export default function AssistantSteps() {
               onClick={() => setAnswer(step.key, opt.value)}
               className="flex flex-col items-center justify-center gap-1 py-4 px-3 rounded-2xl text-center transition-all active:scale-95"
               style={{
-                background: '#192123',
-                border: '1px solid rgba(59,74,66,0.25)',
+                background: 'var(--cc-bg-2)',
+                border: '1px solid rgba(var(--cc-line-rgb),0.25)',
                 minHeight: '72px',
               }}
             >
               <span className="text-2xl leading-none">{opt.label.split(' ')[0]}</span>
-              <span className="text-xs font-semibold" style={{ color: '#dff0e8' }}>
+              <span className="text-xs font-semibold" style={{ color: 'var(--cc-ink)' }}>
                 {opt.label.split(' ').slice(1).join(' ')}
               </span>
             </button>

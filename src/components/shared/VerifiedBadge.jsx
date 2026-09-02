@@ -22,7 +22,7 @@ export default function VerifiedBadge({ size = 'md', showLabel = false, classNam
         style={{
           width: circle,
           height: circle,
-          background: '#22C55E',
+          background: 'var(--cc-green)',
           boxShadow: '0 0 6px rgba(34,197,94,0.4)',
         }}
       >
@@ -30,17 +30,17 @@ export default function VerifiedBadge({ size = 'md', showLabel = false, classNam
       </div>
 
       {showLabel && (
-        <span className="text-xs font-bold" style={{ color: '#22C55E' }}>Verified</span>
+        <span className="text-xs font-bold" style={{ color: 'var(--cc-green)' }}>Verified</span>
       )}
 
       {showTooltip && (
         <div
           className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap z-50 pointer-events-none"
-          style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(34,197,94,0.3)', boxShadow: '0 4px 16px rgba(0,0,0,0.4)' }}
+          style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(34,197,94,0.3)', boxShadow: '0 4px 16px rgba(0,0,0,0.4)' }}
         >
           This truck has been verified by CurbChef
           <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 rotate-45"
-            style={{ background: '#192123', borderRight: '1px solid rgba(34,197,94,0.3)', borderBottom: '1px solid rgba(34,197,94,0.3)', marginTop: -5 }} />
+            style={{ background: 'var(--cc-bg-2)', borderRight: '1px solid rgba(34,197,94,0.3)', borderBottom: '1px solid rgba(34,197,94,0.3)', marginTop: -5 }} />
         </div>
       )}
     </div>

@@ -32,7 +32,7 @@ export default function MidVideoBlock() {
           style={{ background: 'linear-gradient(90deg, rgba(13,21,23,0.75) 0%, transparent 60%, rgba(13,21,23,0.6) 100%)' }}
         />
         <div className="absolute inset-0 flex flex-col justify-center px-6">
-          <p className="text-[10px] font-black tracking-widest mb-1" style={{ color: '#77ffc8' }}>
+          <p className="text-[10px] font-black tracking-widest mb-1" style={{ color: 'var(--cc-accent)' }}>
             {c.subline}
           </p>
           <p className="font-heading font-black text-xl text-white leading-tight" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.8)', whiteSpace: 'pre-line' }}>

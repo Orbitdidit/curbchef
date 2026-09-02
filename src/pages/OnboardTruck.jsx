@@ -115,43 +115,43 @@ export default function OnboardTruck() {
   };
 
   const inputClass = "w-full px-4 py-3 rounded-2xl text-sm font-medium outline-none";
-  const inputStyle = { background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.35)' };
-  const labelStyle = { color: '#bacbc0', fontSize: '11px', fontWeight: '700', letterSpacing: '0.08em' };
+  const inputStyle = { background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.35)' };
+  const labelStyle = { color: 'var(--cc-ink-dim)', fontSize: '11px', fontWeight: '700', letterSpacing: '0.08em' };
 
   // Success screen
   if (submitted) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#0d1517' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: 'var(--cc-bg-0)' }}>
         <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-6"
-          style={{ background: 'linear-gradient(135deg,rgba(119,255,200,0.15),rgba(119,255,200,0.05))', border: '1px solid rgba(119,255,200,0.3)' }}>
+          style={{ background: 'linear-gradient(135deg,rgba(var(--cc-accent-rgb),0.15),rgba(var(--cc-accent-rgb),0.05))', border: '1px solid rgba(var(--cc-accent-rgb),0.3)' }}>
           <span className="text-4xl">🎉</span>
         </div>
-        <h1 className="font-heading font-black text-3xl mb-3" style={{ color: '#dff0e8' }}>Application Submitted!</h1>
-        <p className="text-sm mb-2 max-w-sm" style={{ color: '#bacbc0' }}>
-          <span className="font-bold" style={{ color: '#77ffc8' }}>{form.truck_name}</span> is now under review by the CurbChef team.
+        <h1 className="font-heading font-black text-3xl mb-3" style={{ color: 'var(--cc-ink)' }}>Application Submitted!</h1>
+        <p className="text-sm mb-2 max-w-sm" style={{ color: 'var(--cc-ink-dim)' }}>
+          <span className="font-bold" style={{ color: 'var(--cc-accent)' }}>{form.truck_name}</span> is now under review by the CurbChef team.
         </p>
-        <p className="text-sm mb-8 max-w-sm" style={{ color: '#bacbc0' }}>
-          We'll review your application and approve your truck within <strong style={{ color: '#dff0e8' }}>24 hours</strong>. You'll receive a confirmation email at <strong style={{ color: '#77ffc8' }}>{form.email}</strong>.
+        <p className="text-sm mb-8 max-w-sm" style={{ color: 'var(--cc-ink-dim)' }}>
+          We'll review your application and approve your truck within <strong style={{ color: 'var(--cc-ink)' }}>24 hours</strong>. You'll receive a confirmation email at <strong style={{ color: 'var(--cc-accent)' }}>{form.email}</strong>.
         </p>
         <div className="w-full max-w-sm space-y-3">
-          <div className="p-4 rounded-2xl text-left" style={{ background: '#192123', border: '1px solid rgba(119,255,200,0.12)' }}>
-            <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: '#77ffc8' }}>WHAT HAPPENS NEXT</p>
+          <div className="p-4 rounded-2xl text-left" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-accent-rgb),0.12)' }}>
+            <p className="text-[10px] font-bold tracking-widest mb-2" style={{ color: 'var(--cc-accent)' }}>WHAT HAPPENS NEXT</p>
             {[
               '✅ CurbChef reviews your menu, photos & kitchen check',
               '📧 You\'ll get an approval email within 24 hours',
               '🔐 Log in to your vendor dashboard to connect Stripe & go live',
             ].map((step, i) => (
-              <p key={i} className="text-xs mb-1.5" style={{ color: '#bacbc0' }}>{step}</p>
+              <p key={i} className="text-xs mb-1.5" style={{ color: 'var(--cc-ink-dim)' }}>{step}</p>
             ))}
           </div>
           <button onClick={() => navigate('/')}
             className="w-full py-4 rounded-full font-heading font-black text-base"
-            style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 24px rgba(119,255,200,0.35)' }}>
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.35)' }}>
             Back to CurbChef
           </button>
           <button onClick={() => base44.auth.redirectToLogin('/vendor-portal')}
             className="w-full py-3 rounded-full font-heading font-black text-sm"
-            style={{ background: '#192123', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.2)' }}>
+            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
             Sign In to Vendor Portal
           </button>
         </div>
@@ -160,28 +160,28 @@ export default function OnboardTruck() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#0d1517' }}>
+    <div className="min-h-screen" style={{ background: 'var(--cc-bg-0)' }}>
       {/* Header */}
       <div className="flex items-center gap-3 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-20"
-        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(59,74,66,0.15)' }}>
+        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
         <button onClick={() => step > 0 ? setStep(s => s - 1) : navigate(-1)}
-          className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-          <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
+          className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
+          <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </button>
         <div className="flex-1">
-          <p className="font-heading font-black text-base" style={{ color: '#77ffc8' }}>Truck Onboarding</p>
-          <p className="text-xs" style={{ color: '#bacbc0' }}>Step {step + 1} of {STEPS.length} — {STEPS[step]}</p>
+          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-accent)' }}>Truck Onboarding</p>
+          <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Step {step + 1} of {STEPS.length} — {STEPS[step]}</p>
         </div>
         <div className="flex items-center gap-1">
-          <Flame className="w-4 h-4" style={{ color: '#fd591e' }} />
-          <span className="text-xs font-bold" style={{ color: '#bacbc0' }}>{Math.round(((step) / STEPS.length) * 100)}%</span>
+          <Flame className="w-4 h-4" style={{ color: 'var(--cc-warm)' }} />
+          <span className="text-xs font-bold" style={{ color: 'var(--cc-ink-dim)' }}>{Math.round(((step) / STEPS.length) * 100)}%</span>
         </div>
       </div>
 
       {/* Progress bar */}
-      <div className="h-1 w-full" style={{ background: '#192123' }}>
+      <div className="h-1 w-full" style={{ background: 'var(--cc-bg-2)' }}>
         <div className="h-full transition-all duration-500"
-          style={{ width: `${((step + 1) / STEPS.length) * 100}%`, background: 'linear-gradient(90deg,#77ffc8,#00e6a7)' }} />
+          style={{ width: `${((step + 1) / STEPS.length) * 100}%`, background: 'linear-gradient(90deg,var(--cc-accent),var(--cc-accent-3))' }} />
       </div>
 
       <div className="px-5 pt-6 pb-40">
@@ -189,48 +189,48 @@ export default function OnboardTruck() {
         {/* STEP 0 — Vendor Type */}
         {step === 0 && (
           <div className="space-y-4">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: '#dff0e8' }}>What kind of vendor are you? 🏷️</h2>
-            <p className="text-sm mb-6" style={{ color: '#bacbc0' }}>
+            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>What kind of vendor are you? 🏷️</h2>
+            <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>
               CurbChef only accepts verified, permitted vendors. Choose the type that best describes your operation.
             </p>
             {VENDOR_TYPES.map(({ id, label, emoji, sub }) => (
               <button key={id} onClick={() => set('vendor_type', id)}
                 className="w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all"
                 style={{
-                  background: form.vendor_type === id ? 'rgba(119,255,200,0.08)' : '#192123',
-                  border: form.vendor_type === id ? '1px solid rgba(119,255,200,0.4)' : '1px solid rgba(59,74,66,0.2)',
+                  background: form.vendor_type === id ? 'rgba(var(--cc-accent-rgb),0.08)' : 'var(--cc-bg-2)',
+                  border: form.vendor_type === id ? '1px solid rgba(var(--cc-accent-rgb),0.4)' : '1px solid rgba(var(--cc-line-rgb),0.2)',
                 }}>
                 <span className="text-3xl flex-shrink-0">{emoji}</span>
                 <div className="flex-1">
-                  <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>{label}</p>
-                  <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>{sub}</p>
+                  <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{label}</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{sub}</p>
                 </div>
                 <div className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center"
-                  style={{ background: form.vendor_type === id ? '#77ffc8' : '#2e3638' }}>
-                  {form.vendor_type === id && <Check className="w-3 h-3" style={{ color: '#003826' }} />}
+                  style={{ background: form.vendor_type === id ? 'var(--cc-accent)' : 'var(--cc-bg-3)' }}>
+                  {form.vendor_type === id && <Check className="w-3 h-3" style={{ color: 'var(--cc-accent-deep)' }} />}
                 </div>
               </button>
             ))}
             {/* Coming Soon */}
             {COMING_SOON_TYPES.map(({ id, label, emoji, sub }) => (
               <div key={id} className="flex items-center gap-4 p-4 rounded-2xl opacity-50 cursor-not-allowed"
-                style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.15)' }}>
+                style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
                 <span className="text-3xl flex-shrink-0">{emoji}</span>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>{label}</p>
+                    <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{label}</p>
                     <span className="text-[9px] font-black px-2 py-0.5 rounded-full"
-                      style={{ background: 'rgba(192,132,252,0.15)', color: '#C084FC', border: '1px solid rgba(192,132,252,0.25)' }}>
+                      style={{ background: 'rgba(192,132,252,0.15)', color: 'var(--cc-violet)', border: '1px solid rgba(192,132,252,0.25)' }}>
                       COMING SOON
                     </span>
                   </div>
-                  <p className="text-xs mt-0.5" style={{ color: '#6B665C' }}>{sub}</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-faint)' }}>{sub}</p>
                 </div>
               </div>
             ))}
 
-            <div className="p-3 rounded-xl" style={{ background: 'rgba(253,89,30,0.07)', border: '1px solid rgba(253,89,30,0.2)' }}>
-              <p className="text-xs" style={{ color: '#fd591e' }}>
+            <div className="p-3 rounded-xl" style={{ background: 'rgba(var(--cc-warm-rgb),0.07)', border: '1px solid rgba(var(--cc-warm-rgb),0.2)' }}>
+              <p className="text-xs" style={{ color: 'var(--cc-warm)' }}>
                 ⚠️ Home kitchen hot plates without a permit or commissary agreement are not eligible. All vendors must hold a valid health permit or cottage food license.
               </p>
             </div>
@@ -240,8 +240,8 @@ export default function OnboardTruck() {
         {/* STEP 1 — Basic Info */}
         {step === 1 && (
           <div className="space-y-4">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: '#dff0e8' }}>Let's get started 🚚</h2>
-            <p className="text-sm mb-6" style={{ color: '#bacbc0' }}>Tell us about your food truck.</p>
+            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Let's get started 🚚</h2>
+            <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Tell us about your food truck.</p>
             {[
               { key: 'truck_name', label: 'TRUCK NAME', placeholder: 'e.g. Smoke & Soul BBQ' },
               { key: 'owner_name', label: 'YOUR NAME', placeholder: 'Full name' },
@@ -268,8 +268,8 @@ export default function OnboardTruck() {
                   <button key={c} onClick={() => set('cuisine_type', c)}
                     className="px-3 py-1.5 rounded-full text-xs font-bold capitalize transition-all"
                     style={form.cuisine_type === c
-                      ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }
-                      : { background: '#192123', color: '#bacbc0', border: '1px solid rgba(59,74,66,0.3)' }
+                      ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }
+                      : { background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }
                     }>
                     {c.replace('_', ' ')}
                   </button>
@@ -282,8 +282,8 @@ export default function OnboardTruck() {
         {/* STEP 2 — Location */}
         {step === 2 && (
           <div className="space-y-4">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: '#dff0e8' }}>Where are you parked? 📍</h2>
-            <p className="text-sm mb-6" style={{ color: '#bacbc0' }}>Set your current zone or location.</p>
+            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Where are you parked? 📍</h2>
+            <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Set your current zone or location.</p>
             <div>
               <p className="mb-1.5" style={labelStyle}>CITY / ZONE</p>
               <input type="text" placeholder="Houston, TX" value={form.city}
@@ -291,7 +291,7 @@ export default function OnboardTruck() {
             </div>
             <button onClick={handleGeolocate}
               className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-sm"
-              style={{ background: 'rgba(119,255,200,0.08)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.25)' }}>
+              style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}>
               <MapPin className="w-4 h-4" />
               {form.latitude ? `📍 ${form.latitude.toFixed(4)}, ${form.longitude.toFixed(4)}` : 'Use My Current Location'}
             </button>
@@ -313,8 +313,8 @@ export default function OnboardTruck() {
         {/* STEP 4 — Media */}
         {step === 4 && (
           <div className="space-y-5">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: '#dff0e8' }}>Show us your vibe 📸</h2>
-            <p className="text-sm mb-6" style={{ color: '#bacbc0' }}>Upload your logo, truck photo, and food shots.</p>
+            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Show us your vibe 📸</h2>
+            <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Upload your logo, truck photo, and food shots.</p>
             {[
               { key: 'logo_url', label: 'LOGO' },
               { key: 'truck_photo_url', label: 'TRUCK PHOTO' },
@@ -332,10 +332,10 @@ export default function OnboardTruck() {
                   </div>
                 ) : (
                   <label className="block w-full h-28 rounded-2xl flex items-center justify-center cursor-pointer"
-                    style={{ background: '#192123', border: '2px dashed rgba(119,255,200,0.2)' }}>
+                    style={{ background: 'var(--cc-bg-2)', border: '2px dashed rgba(var(--cc-accent-rgb),0.2)' }}>
                     <div className="flex flex-col items-center gap-2">
-                      <Upload className="w-6 h-6" style={{ color: '#77ffc8' }} />
-                      <span className="text-xs" style={{ color: '#bacbc0' }}>Tap to upload</span>
+                      <Upload className="w-6 h-6" style={{ color: 'var(--cc-accent)' }} />
+                      <span className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Tap to upload</span>
                     </div>
                     <input type="file" accept="image/*" className="hidden" onChange={e => handleFileUpload(e, key)} />
                   </label>
@@ -357,8 +357,8 @@ export default function OnboardTruck() {
                 ))}
                 {form.food_images.length < 5 && (
                   <label className="aspect-square rounded-xl flex items-center justify-center cursor-pointer"
-                    style={{ background: '#192123', border: '2px dashed rgba(119,255,200,0.2)' }}>
-                    <Plus className="w-6 h-6" style={{ color: '#77ffc8' }} />
+                    style={{ background: 'var(--cc-bg-2)', border: '2px dashed rgba(var(--cc-accent-rgb),0.2)' }}>
+                    <Plus className="w-6 h-6" style={{ color: 'var(--cc-accent)' }} />
                     <input type="file" accept="image/*" className="hidden" onChange={handleFoodImageUpload} />
                   </label>
                 )}
@@ -370,12 +370,12 @@ export default function OnboardTruck() {
         {/* STEP 5 — Menu */}
         {step === 5 && (
           <div className="space-y-4">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: '#dff0e8' }}>Build your menu 🍽️</h2>
-            <p className="text-sm mb-6" style={{ color: '#bacbc0' }}>Add your key items. You can add more later.</p>
+            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Build your menu 🍽️</h2>
+            <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Add your key items. You can add more later.</p>
             {form.menu_items.map((item, i) => (
-              <div key={i} className="p-4 rounded-2xl space-y-3" style={{ background: '#192123' }}>
+              <div key={i} className="p-4 rounded-2xl space-y-3" style={{ background: 'var(--cc-bg-2)' }}>
                 <div className="flex items-center justify-between">
-                  <p className="text-xs font-bold" style={{ color: '#77ffc8' }}>ITEM {i + 1}</p>
+                  <p className="text-xs font-bold" style={{ color: 'var(--cc-accent)' }}>ITEM {i + 1}</p>
                   {form.menu_items.length > 1 && (
                     <button onClick={() => removeMenuItem(i)}>
                       <Trash2 className="w-4 h-4 text-red-400" />
@@ -394,7 +394,7 @@ export default function OnboardTruck() {
             ))}
             <button onClick={addMenuItem}
               className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-bold"
-              style={{ background: 'rgba(119,255,200,0.08)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.2)' }}>
+              style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
               <Plus className="w-4 h-4" /> Add Another Item
             </button>
           </div>
@@ -403,8 +403,8 @@ export default function OnboardTruck() {
         {/* STEP 6 — Go Live */}
         {step === 6 && (
           <div className="space-y-5">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: '#dff0e8' }}>Go Live Setup 🔴</h2>
-            <p className="text-sm mb-6" style={{ color: '#bacbc0' }}>Set your current status so customers can find you.</p>
+            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Go Live Setup 🔴</h2>
+            <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Set your current status so customers can find you.</p>
             {[
               { key: 'is_open_now', label: 'Open Now', sub: 'Start accepting orders immediately' },
               { key: 'is_opening_soon', label: 'Opening Soon', sub: 'Let customers know you\'re coming' },
@@ -412,20 +412,20 @@ export default function OnboardTruck() {
               <button key={key} onClick={() => set(key, !form[key])}
                 className="w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all"
                 style={{
-                  background: form[key] ? 'rgba(119,255,200,0.08)' : '#192123',
-                  border: form[key] ? '1px solid rgba(119,255,200,0.35)' : '1px solid rgba(59,74,66,0.2)',
+                  background: form[key] ? 'rgba(var(--cc-accent-rgb),0.08)' : 'var(--cc-bg-2)',
+                  border: form[key] ? '1px solid rgba(var(--cc-accent-rgb),0.35)' : '1px solid rgba(var(--cc-line-rgb),0.2)',
                 }}>
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: form[key] ? 'rgba(119,255,200,0.15)' : '#2e3638' }}>
+                  style={{ background: form[key] ? 'rgba(var(--cc-accent-rgb),0.15)' : 'var(--cc-bg-3)' }}>
                   <span className="text-xl">{key === 'is_open_now' ? '🟢' : '⏱️'}</span>
                 </div>
                 <div className="flex-1">
-                  <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>{label}</p>
-                  <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>{sub}</p>
+                  <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{label}</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{sub}</p>
                 </div>
                 <div className="w-6 h-6 rounded-full flex items-center justify-center"
-                  style={{ background: form[key] ? '#77ffc8' : '#2e3638' }}>
-                  {form[key] && <Check className="w-3.5 h-3.5" style={{ color: '#003826' }} />}
+                  style={{ background: form[key] ? 'var(--cc-accent)' : 'var(--cc-bg-3)' }}>
+                  {form[key] && <Check className="w-3.5 h-3.5" style={{ color: 'var(--cc-accent-deep)' }} />}
                 </div>
               </button>
             ))}
@@ -442,8 +442,8 @@ export default function OnboardTruck() {
         {/* STEP 7 — Kitchen Check */}
         {step === 7 && (
           <div className="space-y-5">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: '#dff0e8' }}>Kitchen Check ✅</h2>
-            <p className="text-sm mb-2" style={{ color: '#bacbc0' }}>
+            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Kitchen Check ✅</h2>
+            <p className="text-sm mb-2" style={{ color: 'var(--cc-ink-dim)' }}>
               Snap a quick photo of your kitchen interior to build customer trust. This is auto-timestamped as "Checked Today."
             </p>
             {form.kitchen_check_photo ? (
@@ -452,8 +452,8 @@ export default function OnboardTruck() {
                 <div className="absolute bottom-3 left-3 right-3">
                   <div className="flex items-center gap-2 px-3 py-2 rounded-xl"
                     style={{ background: 'rgba(13,21,23,0.85)', backdropFilter: 'blur(10px)' }}>
-                    <Check className="w-4 h-4" style={{ color: '#77ffc8' }} />
-                    <span className="text-xs font-bold" style={{ color: '#77ffc8' }}>
+                    <Check className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
+                    <span className="text-xs font-bold" style={{ color: 'var(--cc-accent)' }}>
                       Checked: {new Date(form.kitchen_check_time).toLocaleTimeString()}
                     </span>
                   </div>
@@ -466,20 +466,20 @@ export default function OnboardTruck() {
               </div>
             ) : (
               <label className="block w-full h-48 rounded-3xl flex items-center justify-center cursor-pointer"
-                style={{ background: '#192123', border: '2px dashed rgba(119,255,200,0.2)' }}>
+                style={{ background: 'var(--cc-bg-2)', border: '2px dashed rgba(var(--cc-accent-rgb),0.2)' }}>
                 <div className="flex flex-col items-center gap-3 text-center">
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(119,255,200,0.1)' }}>
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(var(--cc-accent-rgb),0.1)' }}>
                     <span className="text-2xl">📸</span>
                   </div>
                   <div>
-                    <p className="font-bold text-sm" style={{ color: '#dff0e8' }}>Snap Kitchen Photo</p>
-                    <p className="text-xs mt-1" style={{ color: '#bacbc0' }}>Auto-timestamped for customers</p>
+                    <p className="font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Snap Kitchen Photo</p>
+                    <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-dim)' }}>Auto-timestamped for customers</p>
                   </div>
                 </div>
                 <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleKitchenCheck} />
               </label>
             )}
-            <p className="text-xs text-center" style={{ color: '#bacbc0' }}>
+            <p className="text-xs text-center" style={{ color: 'var(--cc-ink-dim)' }}>
               Optional but strongly recommended. Increases customer trust by 40%.
             </p>
           </div>
@@ -488,54 +488,54 @@ export default function OnboardTruck() {
         {/* STEP 8 — Preview & Submit */}
         {step === 8 && (
           <div className="space-y-5">
-            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: '#dff0e8' }}>You're ready! 🎉</h2>
-            <p className="text-sm mb-6" style={{ color: '#bacbc0' }}>Review your details and go live on CurbChef.</p>
+            <h2 className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>You're ready! 🎉</h2>
+            <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Review your details and go live on CurbChef.</p>
 
-            <div className="p-5 rounded-3xl space-y-3" style={{ background: '#192123', border: '1px solid rgba(119,255,200,0.15)' }}>
+            <div className="p-5 rounded-3xl space-y-3" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
               {form.truck_photo_url && (
                 <img src={form.truck_photo_url} alt="Truck" className="w-full h-36 object-cover rounded-2xl" />
               )}
-              <h3 className="font-heading font-black text-xl" style={{ color: '#dff0e8' }}>{form.truck_name || '—'}</h3>
-              <p className="text-sm capitalize" style={{ color: '#bacbc0' }}>{form.cuisine_type?.replace('_', ' ')} • {form.city}</p>
+              <h3 className="font-heading font-black text-xl" style={{ color: 'var(--cc-ink)' }}>{form.truck_name || '—'}</h3>
+              <p className="text-sm capitalize" style={{ color: 'var(--cc-ink-dim)' }}>{form.cuisine_type?.replace('_', ' ')} • {form.city}</p>
               <div className="flex gap-2 flex-wrap">
                 {form.vendor_type && (
-                  <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: 'rgba(119,255,200,0.12)', color: '#77ffc8' }}>
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)' }}>
                     {VENDOR_TYPES.find(v => v.id === form.vendor_type)?.emoji} {VENDOR_TYPES.find(v => v.id === form.vendor_type)?.label}
                   </span>
                 )}
                 {form.health_permit_status === 'approved' && (
-                  <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: 'rgba(119,255,200,0.12)', color: '#77ffc8' }}>✓ Permit Approved</span>
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)' }}>✓ Permit Approved</span>
                 )}
                 {form.is_open_now && (
-                  <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: 'rgba(119,255,200,0.12)', color: '#77ffc8' }}>● Open Now</span>
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)' }}>● Open Now</span>
                 )}
                 {form.menu_items.filter(m => m.name).length > 0 && (
-                  <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: '#2e3638', color: '#bacbc0' }}>
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: 'var(--cc-bg-3)', color: 'var(--cc-ink-dim)' }}>
                     {form.menu_items.filter(m => m.name).length} menu items
                   </span>
                 )}
                 {form.kitchen_check_photo && (
-                  <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: 'rgba(119,255,200,0.12)', color: '#77ffc8' }}>✓ Kitchen Checked</span>
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', color: 'var(--cc-accent)' }}>✓ Kitchen Checked</span>
                 )}
               </div>
             </div>
 
-            <div className="p-4 rounded-2xl" style={{ background: '#192123', border: '1px solid rgba(119,255,200,0.12)' }}>
-              <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: '#77ffc8' }}>NEXT STEP AFTER APPROVAL</p>
-              <p className="text-xs" style={{ color: '#bacbc0' }}>
+            <div className="p-4 rounded-2xl" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-accent-rgb),0.12)' }}>
+              <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: 'var(--cc-accent)' }}>NEXT STEP AFTER APPROVAL</p>
+              <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>
                 Once approved, visit your Vendor Dashboard to connect your Stripe account and start accepting card payments. CurbChef collects a 12% platform fee per order.
               </p>
             </div>
-            <p className="text-xs text-center px-4" style={{ color: '#bacbc0' }}>
+            <p className="text-xs text-center px-4" style={{ color: 'var(--cc-ink-dim)' }}>
               After submitting, our team will review your application and approve your truck within 24 hours.
             </p>
 
             <button onClick={handleSubmit} disabled={submitting}
               className="w-full py-4 rounded-full font-heading font-black text-base"
               style={{
-                background: 'linear-gradient(135deg,#77ffc8,#00e6a7)',
-                color: '#003826',
-                boxShadow: '0 0 24px rgba(119,255,200,0.4)',
+                background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))',
+                color: 'var(--cc-accent-deep)',
+                boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.4)',
                 opacity: submitting ? 0.7 : 1,
               }}>
               {submitting ? 'Submitting...' : '🚀 Submit & Go Live'}
@@ -556,14 +556,14 @@ export default function OnboardTruck() {
           <button onClick={() => setStep(s => s + 1)} disabled={!canNext()}
             className="w-full flex items-center justify-center gap-2 py-4 rounded-full font-heading font-black text-base transition-all"
             style={{
-              background: canNext() ? 'linear-gradient(135deg,#77ffc8,#00e6a7)' : '#192123',
-              color: canNext() ? '#003826' : '#bacbc0',
-              boxShadow: canNext() ? '0 0 24px rgba(119,255,200,0.35)' : 'none',
+              background: canNext() ? 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' : 'var(--cc-bg-2)',
+              color: canNext() ? 'var(--cc-accent-deep)' : 'var(--cc-ink-dim)',
+              boxShadow: canNext() ? '0 0 24px rgba(var(--cc-accent-rgb),0.35)' : 'none',
             }}>
             Continue <ChevronRight className="w-5 h-5" />
           </button>
           {step >= 2 && (
-            <button onClick={() => setStep(s => s + 1)} className="w-full text-center mt-3 text-sm font-semibold" style={{ color: '#bacbc0' }}>
+            <button onClick={() => setStep(s => s + 1)} className="w-full text-center mt-3 text-sm font-semibold" style={{ color: 'var(--cc-ink-dim)' }}>
               Skip this step
             </button>
           )}

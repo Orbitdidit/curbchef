@@ -23,31 +23,31 @@ export default function OnboardingStep5Payments({ truck }) {
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <p className="font-heading font-black text-xl mb-1" style={{ color: '#dff0e8' }}>Get paid</p>
-        <p className="text-sm" style={{ color: '#bacbc0' }}>Connect your bank account through Stripe to receive payments.</p>
+        <p className="font-heading font-black text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Get paid</p>
+        <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Connect your bank account through Stripe to receive payments.</p>
       </div>
 
       <div className="p-4 rounded-2xl flex flex-col gap-3"
-        style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.3)' }}>
+        style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-            style={{ background: 'rgba(119,255,200,0.1)' }}>
-            <DollarSign className="w-5 h-5" style={{ color: '#77ffc8' }} />
+            style={{ background: 'rgba(var(--cc-accent-rgb),0.1)' }}>
+            <DollarSign className="w-5 h-5" style={{ color: 'var(--cc-accent)' }} />
           </div>
           <div>
-            <p className="font-bold text-sm" style={{ color: '#dff0e8' }}>CurbChef takes 12%</p>
-            <p className="text-xs" style={{ color: '#bacbc0' }}>You keep 88% of every order.</p>
+            <p className="font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>CurbChef takes 12%</p>
+            <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>You keep 88% of every order.</p>
           </div>
         </div>
       </div>
 
       {isConnected ? (
         <div className="flex items-center gap-3 px-4 py-4 rounded-2xl"
-          style={{ background: 'rgba(119,255,200,0.07)', border: '1px solid rgba(119,255,200,0.25)' }}>
-          <CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: '#77ffc8' }} />
+          style={{ background: 'rgba(var(--cc-accent-rgb),0.07)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}>
+          <CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--cc-accent)' }} />
           <div>
-            <p className="font-bold text-sm" style={{ color: '#77ffc8' }}>Stripe connected!</p>
-            <p className="text-xs" style={{ color: '#bacbc0' }}>You're all set to receive payments.</p>
+            <p className="font-bold text-sm" style={{ color: 'var(--cc-accent)' }}>Stripe connected!</p>
+            <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>You're all set to receive payments.</p>
           </div>
         </div>
       ) : (
@@ -59,7 +59,7 @@ export default function OnboardingStep5Payments({ truck }) {
         </button>
       )}
 
-      <p className="text-xs text-center" style={{ color: '#6B665C' }}>
+      <p className="text-xs text-center" style={{ color: 'var(--cc-ink-faint)' }}>
         You can skip this and set it up later from your dashboard.
       </p>
     </div>

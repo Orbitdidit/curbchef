@@ -39,15 +39,15 @@ export default function AppLayout() {
       {/* Left side panel — desktop only */}
       <div className="hidden lg:flex flex-1 items-center justify-end pr-8 max-w-xs">
         <div className="text-right">
-          <p className="font-heading font-black text-2xl"><span style={{ color: '#F5F0E8' }}>Curb</span><span style={{ color: '#00F5D4' }}>Chef</span></p>
-          <p className="text-xs mt-1" style={{ color: '#6B665C' }}>Street food, elevated.</p>
+          <p className="font-heading font-black text-2xl"><span style={{ color: 'var(--cc-cream)' }}>Curb</span><span style={{ color: 'var(--cc-accent-2)' }}>Chef</span></p>
+          <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-faint)' }}>Street food, elevated.</p>
         </div>
       </div>
 
       {/* Phone frame */}
       <div
         className="relative w-full lg:w-[480px] lg:shadow-2xl"
-        style={{ background: '#0A0A0A', maxWidth: '480px', minHeight: '100dvh' }}
+        style={{ background: 'var(--cc-black)', maxWidth: '480px', minHeight: '100dvh' }}
       >
         {/* Top-right hamburger menu */}
         <div className="fixed top-[max(1rem,env(safe-area-inset-top))] z-30" style={{ right: 'max(1rem, calc(50% - 225px))' }}>
@@ -70,13 +70,13 @@ export default function AppLayout() {
       {/* Right side panel — desktop only */}
       <div className="hidden lg:flex flex-1 items-center justify-start pl-8 max-w-xs">
         <div className="space-y-3">
-          <div className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(119,255,200,0.05)', border: '1px solid rgba(119,255,200,0.1)' }}>
-            <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: '#77ffc8' }}>OPEN NOW</p>
-            <p className="font-heading font-black text-lg" style={{ color: '#dff0e8' }}>Houston, TX</p>
+          <div className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(var(--cc-accent-rgb),0.05)', border: '1px solid rgba(var(--cc-accent-rgb),0.1)' }}>
+            <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: 'var(--cc-accent)' }}>OPEN NOW</p>
+            <p className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>Houston, TX</p>
           </div>
-          <div className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(253,89,30,0.05)', border: '1px solid rgba(253,89,30,0.12)' }}>
-            <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: '#fd591e' }}>GET THE APP</p>
-            <p className="text-xs" style={{ color: '#bacbc0' }}>iOS &amp; Android coming soon</p>
+          <div className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(var(--cc-warm-rgb),0.05)', border: '1px solid rgba(var(--cc-warm-rgb),0.12)' }}>
+            <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: 'var(--cc-warm)' }}>GET THE APP</p>
+            <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>iOS &amp; Android coming soon</p>
           </div>
         </div>
       </div>

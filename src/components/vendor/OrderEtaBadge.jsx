@@ -24,7 +24,7 @@ export default function OrderEtaBadge({ order }) {
     return (
       <span
         className="inline-flex items-center gap-1 text-[10px] font-black px-2.5 py-1 rounded-full"
-        style={{ background: 'rgba(119,255,200,0.2)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.5)' }}
+        style={{ background: 'rgba(var(--cc-accent-rgb),0.2)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.5)' }}
       >
         👋 ARRIVED
       </span>
@@ -40,7 +40,7 @@ export default function OrderEtaBadge({ order }) {
     return (
       <span
         className="inline-flex items-center gap-1 text-[10px] font-black px-2.5 py-1 rounded-full animate-pulse"
-        style={{ background: 'rgba(253,89,30,0.2)', color: '#fd591e', border: '1px solid rgba(253,89,30,0.5)', boxShadow: '0 0 8px rgba(253,89,30,0.35)' }}
+        style={{ background: 'rgba(var(--cc-warm-rgb),0.2)', color: 'var(--cc-warm)', border: '1px solid rgba(var(--cc-warm-rgb),0.5)', boxShadow: '0 0 8px rgba(var(--cc-warm-rgb),0.35)' }}
       >
         {emoji} {minsLeft}m — READY NOW
       </span>
@@ -52,7 +52,7 @@ export default function OrderEtaBadge({ order }) {
     return (
       <span
         className="inline-flex items-center gap-1 text-[10px] font-black px-2.5 py-1 rounded-full"
-        style={{ background: 'rgba(251,191,36,0.15)', color: '#fbbf24', border: '1px solid rgba(251,191,36,0.4)' }}
+        style={{ background: 'rgba(251,191,36,0.15)', color: 'var(--cc-amber)', border: '1px solid rgba(251,191,36,0.4)' }}
       >
         {emoji} {minsLeft}m — START COOKING
       </span>
@@ -63,7 +63,7 @@ export default function OrderEtaBadge({ order }) {
   return (
     <span
       className="inline-flex items-center gap-1 text-[10px] font-black px-2.5 py-1 rounded-full"
-      style={{ background: 'rgba(119,255,200,0.1)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.25)' }}
+      style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}
     >
       {emoji} {minsLeft}m away
     </span>

@@ -36,23 +36,23 @@ export default function VendorPortal() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0d1517' }}>
-        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#77ffc8 transparent transparent transparent' }} />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--cc-bg-0)' }}>
+        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'var(--cc-accent) transparent transparent transparent' }} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#0d1517' }}>
+    <div className="min-h-screen" style={{ background: 'var(--cc-bg-0)' }}>
       {/* Header */}
       <div className="flex items-center gap-3 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sticky top-0 z-20"
-        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(59,74,66,0.12)' }}>
-        <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#192123' }}>
-          <ChevronLeft className="w-5 h-5" style={{ color: '#dff0e8' }} />
+        style={{ background: 'rgba(13,21,23,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(var(--cc-line-rgb),0.12)' }}>
+        <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>
+          <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
         </button>
         <div>
-          <p className="font-heading font-black text-base" style={{ color: '#77ffc8' }}>Vendor Portal</p>
-          <p className="text-xs" style={{ color: '#bacbc0' }}>Manage your food truck on CurbChef</p>
+          <p className="font-heading font-black text-base" style={{ color: 'var(--cc-accent)' }}>Vendor Portal</p>
+          <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Manage your food truck on CurbChef</p>
         </div>
       </div>
 
@@ -62,32 +62,32 @@ export default function VendorPortal() {
         {truck && (
           <div className="mb-6">
             <div className="p-5 rounded-3xl mb-4"
-              style={{ background: 'linear-gradient(135deg,rgba(119,255,200,0.08),rgba(119,255,200,0.03))', border: '1px solid rgba(119,255,200,0.2)' }}>
+              style={{ background: 'linear-gradient(135deg,rgba(var(--cc-accent-rgb),0.08),rgba(var(--cc-accent-rgb),0.03))', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl" style={{ background: '#192123' }}>🚚</div>
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl" style={{ background: 'var(--cc-bg-2)' }}>🚚</div>
                 <div>
-                  <p className="font-heading font-black text-lg" style={{ color: '#dff0e8' }}>{truck.name}</p>
+                  <p className="font-heading font-black text-lg" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
                   <div className="flex items-center gap-2 mt-0.5">
                     {truck.is_approved ? (
-                      <span className="flex items-center gap-1 text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background: 'rgba(119,255,200,0.15)', color: '#77ffc8' }}>
+                      <span className="flex items-center gap-1 text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background: 'rgba(var(--cc-accent-rgb),0.15)', color: 'var(--cc-accent)' }}>
                         <Check className="w-3 h-3" /> APPROVED
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1 text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background: 'rgba(251,191,36,0.15)', color: '#fbbf24' }}>
+                      <span className="flex items-center gap-1 text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background: 'rgba(251,191,36,0.15)', color: 'var(--cc-amber)' }}>
                         <Clock className="w-3 h-3" /> PENDING APPROVAL
                       </span>
                     )}
-                    <span className="text-[10px] font-bold capitalize" style={{ color: '#bacbc0' }}>{truck.cuisine_type?.replace('_', ' ')}</span>
+                    <span className="text-[10px] font-bold capitalize" style={{ color: 'var(--cc-ink-dim)' }}>{truck.cuisine_type?.replace('_', ' ')}</span>
                   </div>
                 </div>
               </div>
 
               {/* Stripe status indicator */}
               <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl mb-4"
-                style={{ background: '#0d1517' }}>
+                style={{ background: 'var(--cc-bg-0)' }}>
                 <div className="w-2 h-2 rounded-full flex-shrink-0"
-                  style={{ background: truck.stripe_onboarding_status === 'payouts_enabled' ? '#77ffc8' : truck.stripe_onboarding_status === 'not_connected' ? '#bacbc0' : '#fbbf24' }} />
-                <p className="text-xs font-semibold" style={{ color: '#bacbc0' }}>
+                  style={{ background: truck.stripe_onboarding_status === 'payouts_enabled' ? 'var(--cc-accent)' : truck.stripe_onboarding_status === 'not_connected' ? 'var(--cc-ink-dim)' : 'var(--cc-amber)' }} />
+                <p className="text-xs font-semibold" style={{ color: 'var(--cc-ink-dim)' }}>
                   Stripe: {truck.stripe_onboarding_status === 'payouts_enabled' ? 'Fully Connected' :
                     truck.stripe_onboarding_status === 'charges_enabled' ? 'Payments Active' :
                     truck.stripe_onboarding_status === 'onboarding_started' ? 'Setup Incomplete' :
@@ -97,7 +97,7 @@ export default function VendorPortal() {
 
               <Link to="/vendor">
                 <button className="w-full py-3.5 rounded-full font-heading font-black text-sm"
-                  style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 20px rgba(119,255,200,0.3)' }}>
+                  style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.3)' }}>
                   Go to Vendor Dashboard →
                 </button>
               </Link>
@@ -113,9 +113,9 @@ export default function VendorPortal() {
               ].map(({ label, icon: Icon, to }) => (
                 <Link key={label} to={to}>
                   <div className="p-4 rounded-2xl flex items-center gap-2.5"
-                    style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.15)' }}>
-                    <Icon className="w-4 h-4" style={{ color: '#77ffc8' }} />
-                    <span className="font-semibold text-sm" style={{ color: '#dff0e8' }}>{label}</span>
+                    style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.15)' }}>
+                    <Icon className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
+                    <span className="font-semibold text-sm" style={{ color: 'var(--cc-ink)' }}>{label}</span>
                   </div>
                 </Link>
               ))}
@@ -128,20 +128,20 @@ export default function VendorPortal() {
           <div className="p-5 rounded-3xl mb-6"
             style={{ background: 'rgba(251,191,36,0.06)', border: '1px solid rgba(251,191,36,0.2)' }}>
             <div className="flex items-center gap-3 mb-3">
-              <AlertCircle className="w-6 h-6 flex-shrink-0" style={{ color: '#fbbf24' }} />
+              <AlertCircle className="w-6 h-6 flex-shrink-0" style={{ color: 'var(--cc-amber)' }} />
               <div>
-                <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>Application Under Review</p>
-                <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>Submitted for {onboarding.truck_name}</p>
+                <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Application Under Review</p>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>Submitted for {onboarding.truck_name}</p>
               </div>
             </div>
-            <p className="text-xs mb-4" style={{ color: '#bacbc0' }}>
+            <p className="text-xs mb-4" style={{ color: 'var(--cc-ink-dim)' }}>
               Our team reviews applications within 24 hours. Once approved, your truck will go live and you'll receive full dashboard access.
             </p>
             <div className="flex items-center gap-2">
-              <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: '#192123' }}>
-                <div className="h-full rounded-full" style={{ width: '66%', background: 'linear-gradient(90deg,#fbbf24,#f59e0b)' }} />
+              <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--cc-bg-2)' }}>
+                <div className="h-full rounded-full" style={{ width: '66%', background: 'linear-gradient(90deg,var(--cc-amber),#f59e0b)' }} />
               </div>
-              <span className="text-[10px] font-bold" style={{ color: '#fbbf24' }}>REVIEWING</span>
+              <span className="text-[10px] font-bold" style={{ color: 'var(--cc-amber)' }}>REVIEWING</span>
             </div>
           </div>
         )}
@@ -149,20 +149,20 @@ export default function VendorPortal() {
         {/* === CASE 2b: Application rejected === */}
         {!truck && onboarding && onboarding.status === 'rejected' && (
           <div className="p-5 rounded-3xl mb-6"
-            style={{ background: 'rgba(255,59,48,0.06)', border: '1px solid rgba(255,59,48,0.2)' }}>
+            style={{ background: 'rgba(var(--cc-warm-red-rgb),0.06)', border: '1px solid rgba(var(--cc-warm-red-rgb),0.2)' }}>
             <div className="flex items-center gap-3 mb-3">
-              <AlertCircle className="w-6 h-6 flex-shrink-0" style={{ color: '#ff3b30' }} />
+              <AlertCircle className="w-6 h-6 flex-shrink-0" style={{ color: 'var(--cc-warm-red)' }} />
               <div>
-                <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>Application Not Approved</p>
-                <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>For {onboarding.truck_name}</p>
+                <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Application Not Approved</p>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>For {onboarding.truck_name}</p>
               </div>
             </div>
-            <p className="text-xs mb-4" style={{ color: '#bacbc0' }}>
+            <p className="text-xs mb-4" style={{ color: 'var(--cc-ink-dim)' }}>
               Unfortunately your application wasn't approved this time. Please contact support or re-apply with updated information.
             </p>
             <Link to="/onboard-truck">
               <button className="w-full py-3 rounded-full font-heading font-black text-sm"
-                style={{ background: 'rgba(119,255,200,0.1)', color: '#77ffc8', border: '1px solid rgba(119,255,200,0.25)' }}>
+                style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)', border: '1px solid rgba(var(--cc-accent-rgb),0.25)' }}>
                 Re-apply
               </button>
             </Link>
@@ -175,10 +175,10 @@ export default function VendorPortal() {
             {/* Hero */}
             <div className="text-center mb-8">
               <div className="text-5xl mb-3">🚚</div>
-              <h1 className="font-heading font-black text-2xl mb-2" style={{ color: '#dff0e8' }}>
+              <h1 className="font-heading font-black text-2xl mb-2" style={{ color: 'var(--cc-ink)' }}>
                 {user ? `Hey ${user.full_name?.split(' ')[0]}!` : 'Own a Food Truck?'}
               </h1>
-              <p className="text-sm" style={{ color: '#bacbc0' }}>
+              <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>
                 Join Houston's fastest-growing food truck platform. Free to apply. Payments via Stripe.
               </p>
             </div>
@@ -186,13 +186,13 @@ export default function VendorPortal() {
             {/* Sign-in prompt if not logged in */}
             {!user && (
               <div className="p-4 rounded-2xl mb-5"
-                style={{ background: 'rgba(119,255,200,0.06)', border: '1px solid rgba(119,255,200,0.2)' }}>
-                <p className="text-sm font-semibold mb-2" style={{ color: '#dff0e8' }}>Create your vendor account first</p>
-                <p className="text-xs mb-3" style={{ color: '#bacbc0' }}>You'll need an account so we can link your truck to your profile and enable payments.</p>
+                style={{ background: 'rgba(var(--cc-accent-rgb),0.06)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
+                <p className="text-sm font-semibold mb-2" style={{ color: 'var(--cc-ink)' }}>Create your vendor account first</p>
+                <p className="text-xs mb-3" style={{ color: 'var(--cc-ink-dim)' }}>You'll need an account so we can link your truck to your profile and enable payments.</p>
                 <button
                   onClick={() => base44.auth.redirectToLogin('/vendor-portal')}
                   className="w-full py-3 rounded-full font-heading font-black text-sm"
-                  style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+                  style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
                   Sign In / Create Account
                 </button>
               </div>
@@ -200,14 +200,14 @@ export default function VendorPortal() {
 
             {/* Features */}
             <div className="mb-6">
-              <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: '#77ffc8' }}>WHAT YOU GET</p>
+              <p className="text-[10px] font-bold tracking-widest mb-3" style={{ color: 'var(--cc-accent)' }}>WHAT YOU GET</p>
               <div className="flex flex-col gap-2">
                 {FEATURES.map(({ icon, title, sub }) => (
-                  <div key={title} className="flex items-center gap-3 p-3.5 rounded-2xl" style={{ background: '#192123' }}>
+                  <div key={title} className="flex items-center gap-3 p-3.5 rounded-2xl" style={{ background: 'var(--cc-bg-2)' }}>
                     <span className="text-xl flex-shrink-0">{icon}</span>
                     <div>
-                      <p className="font-heading font-bold text-sm" style={{ color: '#dff0e8' }}>{title}</p>
-                      <p className="text-xs mt-0.5" style={{ color: '#bacbc0' }}>{sub}</p>
+                      <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{title}</p>
+                      <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{sub}</p>
                     </div>
                   </div>
                 ))}
@@ -216,17 +216,17 @@ export default function VendorPortal() {
 
             {/* Platform fee note */}
             <div className="p-4 rounded-2xl mb-6"
-              style={{ background: '#192123', border: '1px solid rgba(59,74,66,0.2)' }}>
-              <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: '#bacbc0' }}>PRICING</p>
-              <p className="font-heading font-black text-2xl mb-1" style={{ color: '#77ffc8' }}>Free to list</p>
-              <p className="text-xs" style={{ color: '#bacbc0' }}>CurbChef takes a 12% platform fee per order. No monthly fees, no setup costs.</p>
+              style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
+              <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: 'var(--cc-ink-dim)' }}>PRICING</p>
+              <p className="font-heading font-black text-2xl mb-1" style={{ color: 'var(--cc-accent)' }}>Free to list</p>
+              <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>CurbChef takes a 12% platform fee per order. No monthly fees, no setup costs.</p>
             </div>
 
             {/* Apply CTA */}
             {user ? (
               <Link to="/onboard-truck">
                 <button className="w-full py-4 rounded-full font-heading font-black text-base"
-                  style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 24px rgba(119,255,200,0.4)' }}>
+                  style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.4)' }}>
                   🚀 Start Truck Application
                 </button>
               </Link>
@@ -234,12 +234,12 @@ export default function VendorPortal() {
               <button
                 onClick={() => base44.auth.redirectToLogin('/onboard-truck')}
                 className="w-full py-4 rounded-full font-heading font-black text-base"
-                style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 24px rgba(119,255,200,0.4)' }}>
+                style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.4)' }}>
                 🚀 Create Account & Apply
               </button>
             )}
 
-            <p className="text-center text-xs mt-4" style={{ color: '#bacbc0' }}>
+            <p className="text-center text-xs mt-4" style={{ color: 'var(--cc-ink-dim)' }}>
               Already applied? Check your email for status updates.
             </p>
           </>

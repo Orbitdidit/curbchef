@@ -48,19 +48,19 @@ export default function BottomNav() {
                 <div className="relative">
                   <Icon
                     className="w-5 h-5 transition-colors"
-                    style={{ color: active ? '#00F5D4' : '#3D3D3D' }}
+                    style={{ color: active ? 'var(--cc-accent-2)' : '#3D3D3D' }}
                     strokeWidth={active ? 2.2 : 1.6}
                     aria-hidden="true"
                   />
                   {path === '/' && cartCount > 0 && (
                     <span className="absolute -top-1.5 -right-2 min-w-[16px] h-4 rounded-full flex items-center justify-center text-[9px] font-black text-white px-1"
-                      style={{ background: '#FF3B30' }}>
+                      style={{ background: 'var(--cc-warm-red)' }}>
                       {cartCount}
                     </span>
                   )}
                 </div>
                 <span className="text-[10px] font-medium transition-colors"
-                  style={{ color: active ? '#00F5D4' : '#3D3D3D' }}>
+                  style={{ color: active ? 'var(--cc-accent-2)' : '#3D3D3D' }}>
                   {label}
                 </span>
               </button>

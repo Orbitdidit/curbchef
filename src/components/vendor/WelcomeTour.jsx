@@ -99,9 +99,9 @@ function SpotlightOverlay({ rect, onNext, onBack, onSkip, stepIndex, totalSteps,
             width={spotW} height={spotH}
             rx={16} ry={16}
             fill="none"
-            stroke="#77ffc8"
+            stroke="var(--cc-accent)"
             strokeWidth="2"
-            style={{ filter: 'drop-shadow(0 0 8px rgba(119,255,200,0.6))' }}
+            style={{ filter: 'drop-shadow(0 0 8px rgba(var(--cc-accent-rgb),0.6))' }}
           />
         )}
       </svg>
@@ -113,30 +113,30 @@ function SpotlightOverlay({ rect, onNext, onBack, onSkip, stepIndex, totalSteps,
         className="absolute left-4 right-4 rounded-3xl p-5"
         style={{
           top: Math.max(12, Math.min(tooltipTop, window.innerHeight - 220)),
-          background: '#151d1f',
-          border: '1px solid rgba(119,255,200,0.2)',
+          background: 'var(--cc-bg-1)',
+          border: '1px solid rgba(var(--cc-accent-rgb),0.2)',
           boxShadow: '0 8px 40px rgba(0,0,0,0.6)',
           zIndex: 10,
         }}
       >
         {/* Step counter */}
-        <p className="text-[10px] font-black tracking-widest mb-2" style={{ color: '#77ffc8' }}>
+        <p className="text-[10px] font-black tracking-widest mb-2" style={{ color: 'var(--cc-accent)' }}>
           {stepIndex} OF {totalSteps - 2}
         </p>
-        <p className="font-heading font-black text-base leading-snug mb-2" style={{ color: '#dff0e8' }}>
+        <p className="font-heading font-black text-base leading-snug mb-2" style={{ color: 'var(--cc-ink)' }}>
           {content.title}
         </p>
-        <p className="text-sm leading-relaxed mb-4" style={{ color: '#bacbc0' }}>
+        <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--cc-ink-dim)' }}>
           {content.body}
         </p>
         <div className="flex items-center justify-between">
           <button onClick={onBack} className="flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-full"
-            style={{ background: '#192123', color: '#bacbc0' }}>
+            style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink-dim)' }}>
             <ArrowLeft className="w-3 h-3" /> Back
           </button>
-          <button onClick={onSkip} className="text-xs" style={{ color: '#6B665C' }}>Skip tour</button>
+          <button onClick={onSkip} className="text-xs" style={{ color: 'var(--cc-ink-faint)' }}>Skip tour</button>
           <button onClick={onNext} className="flex items-center gap-1.5 text-xs font-black px-4 py-2 rounded-full"
-            style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }}>
+            style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
             Next <ArrowRight className="w-3 h-3" />
           </button>
         </div>
@@ -155,38 +155,38 @@ function ModalStep({ content, onNext, onSkip, isLast, firstName, stepIndex, tota
         exit={{ opacity: 0, scale: 0.92, y: 20 }}
         className="w-full max-w-sm rounded-3xl p-7 text-center"
         style={{
-          background: '#151d1f',
-          border: '1px solid rgba(119,255,200,0.2)',
-          boxShadow: '0 0 60px rgba(119,255,200,0.1), 0 20px 60px rgba(0,0,0,0.6)',
+          background: 'var(--cc-bg-1)',
+          border: '1px solid rgba(var(--cc-accent-rgb),0.2)',
+          boxShadow: '0 0 60px rgba(var(--cc-accent-rgb),0.1), 0 20px 60px rgba(0,0,0,0.6)',
         }}
       >
         {isLast ? (
           <>
             <div className="text-5xl mb-4">🚐</div>
-            <p className="font-heading font-black text-2xl mb-3" style={{ color: '#dff0e8' }}>{content.title}</p>
-            <p className="text-sm leading-relaxed mb-2" style={{ color: '#bacbc0' }}>{content.body}</p>
-            {content.sub && <p className="text-xs mb-6" style={{ color: '#6B665C' }}>{content.sub}</p>}
+            <p className="font-heading font-black text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>{content.title}</p>
+            <p className="text-sm leading-relaxed mb-2" style={{ color: 'var(--cc-ink-dim)' }}>{content.body}</p>
+            {content.sub && <p className="text-xs mb-6" style={{ color: 'var(--cc-ink-faint)' }}>{content.sub}</p>}
             <button onClick={onNext}
               className="w-full py-4 rounded-full font-heading font-black text-base"
-              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 24px rgba(119,255,200,0.35)' }}>
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.35)' }}>
               Let's Go! 🚀
             </button>
           </>
         ) : (
           <>
             <div className="text-5xl mb-4">🎉</div>
-            <p className="font-heading font-black text-2xl mb-3" style={{ color: '#dff0e8' }}>
+            <p className="font-heading font-black text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>
               Welcome to CurbChef, {firstName}!
             </p>
-            <p className="text-sm leading-relaxed mb-6" style={{ color: '#bacbc0' }}>
+            <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--cc-ink-dim)' }}>
               {content.body}
             </p>
             <button onClick={onNext}
               className="w-full py-4 rounded-full font-heading font-black text-base mb-3"
-              style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826', boxShadow: '0 0 24px rgba(119,255,200,0.35)' }}>
+              style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)', boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.35)' }}>
               Start Tour →
             </button>
-            <button onClick={onSkip} className="text-sm" style={{ color: '#6B665C' }}>
+            <button onClick={onSkip} className="text-sm" style={{ color: 'var(--cc-ink-faint)' }}>
               Skip for now
             </button>
           </>

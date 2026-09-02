@@ -8,13 +8,13 @@ import { X } from 'lucide-react';
 function getTipTheme(emoji) {
   const e = emoji || '';
   if (['📹', '🎬', '📺', '🎥'].includes(e))
-    return { grad: 'linear-gradient(135deg,rgba(253,89,30,0.18),rgba(253,89,30,0.06))', border: 'rgba(253,89,30,0.3)', accent: '#fd591e' };
+    return { grad: 'linear-gradient(135deg,rgba(var(--cc-warm-rgb),0.18),rgba(var(--cc-warm-rgb),0.06))', border: 'rgba(var(--cc-warm-rgb),0.3)', accent: 'var(--cc-warm)' };
   if (['💸', '🏆', '🚀', '⭐'].includes(e))
-    return { grad: 'linear-gradient(135deg,rgba(119,255,200,0.12),rgba(0,230,167,0.05))', border: 'rgba(119,255,200,0.25)', accent: '#77ffc8' };
+    return { grad: 'linear-gradient(135deg,rgba(var(--cc-accent-rgb),0.12),rgba(0,230,167,0.05))', border: 'rgba(var(--cc-accent-rgb),0.25)', accent: 'var(--cc-accent)' };
   if (['🎟️', '🎉', '🎊', '🎁'].includes(e))
-    return { grad: 'linear-gradient(135deg,rgba(251,191,36,0.14),rgba(245,158,11,0.05))', border: 'rgba(251,191,36,0.25)', accent: '#fbbf24' };
+    return { grad: 'linear-gradient(135deg,rgba(251,191,36,0.14),rgba(245,158,11,0.05))', border: 'rgba(251,191,36,0.25)', accent: 'var(--cc-amber)' };
   if (['🎬', '📸', '🖼️', '🎨'].includes(e))
-    return { grad: 'linear-gradient(135deg,rgba(192,132,252,0.14),rgba(167,139,250,0.05))', border: 'rgba(192,132,252,0.25)', accent: '#c084fc' };
+    return { grad: 'linear-gradient(135deg,rgba(192,132,252,0.14),rgba(167,139,250,0.05))', border: 'rgba(192,132,252,0.25)', accent: 'var(--cc-violet)' };
   // default blue/system
   return { grad: 'linear-gradient(135deg,rgba(96,165,250,0.14),rgba(59,130,246,0.05))', border: 'rgba(96,165,250,0.25)', accent: '#60a5fa' };
 }
@@ -41,7 +41,7 @@ function TipCard({ tip, onDismiss, prominent = false }) {
       {/* NEW badge */}
       {isNew(tip.created_date) && (
         <span className="absolute top-3 left-3 text-[9px] font-black px-2 py-0.5 rounded-full"
-          style={{ background: theme.accent, color: '#0d1517' }}>
+          style={{ background: theme.accent, color: 'var(--cc-bg-0)' }}>
           NEW
         </span>
       )}
@@ -59,7 +59,7 @@ function TipCard({ tip, onDismiss, prominent = false }) {
       <div className="text-3xl mb-3 mt-2">{tip.icon_emoji || '💡'}</div>
 
       {/* Title */}
-      <p className="font-heading font-black text-sm leading-snug mb-2" style={{ color: '#dff0e8' }}>
+      <p className="font-heading font-black text-sm leading-snug mb-2" style={{ color: 'var(--cc-ink)' }}>
         {tip.title}
       </p>
 
@@ -72,7 +72,7 @@ function TipCard({ tip, onDismiss, prominent = false }) {
       {tip.cta_label && tip.cta_link && (
         <Link to={tip.cta_link} className="mt-4 inline-block">
           <div className="px-4 py-2 rounded-full text-xs font-black w-fit"
-            style={{ background: theme.accent, color: '#0d1517' }}>
+            style={{ background: theme.accent, color: 'var(--cc-bg-0)' }}>
             {tip.cta_label} →
           </div>
         </Link>
@@ -120,9 +120,9 @@ export default function VendorTipsSection({ user }) {
   return (
     <div className="mb-6">
       <div className="flex items-center justify-between mb-3">
-        <p className="text-[10px] font-black tracking-widest" style={{ color: '#77ffc8' }}>💡 VENDOR TIPS</p>
+        <p className="text-[10px] font-black tracking-widest" style={{ color: 'var(--cc-accent)' }}>💡 VENDOR TIPS</p>
         <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-          style={{ background: 'rgba(119,255,200,0.1)', color: '#77ffc8' }}>
+          style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color: 'var(--cc-accent)' }}>
           {visibleTips.length} tips
         </span>
       </div>

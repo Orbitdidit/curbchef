@@ -19,12 +19,12 @@ function MessageBubble({ message }) {
     return (
       <div className="flex gap-2 justify-start">
         <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 text-sm"
-          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}>🚚</div>
-        <div className="px-4 py-3 rounded-2xl rounded-tl-sm" style={{ background: '#2e3638' }}>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>🚚</div>
+        <div className="px-4 py-3 rounded-2xl rounded-tl-sm" style={{ background: 'var(--cc-bg-3)' }}>
           <div className="flex items-center gap-1.5">
             {[0, 1, 2].map(i => (
               <div key={i} className="w-1.5 h-1.5 rounded-full animate-bounce"
-                style={{ background: '#77ffc8', animationDelay: `${i * 0.15}s` }} />
+                style={{ background: 'var(--cc-accent)', animationDelay: `${i * 0.15}s` }} />
             ))}
           </div>
         </div>
@@ -35,12 +35,12 @@ function MessageBubble({ message }) {
     <div className={`flex gap-2 ${isUser ? 'justify-end' : 'justify-start'}`}>
       {!isUser && (
         <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 text-sm"
-          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}>🚚</div>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>🚚</div>
       )}
       <div className={`max-w-[84%] px-4 py-2.5 text-sm leading-relaxed ${isUser ? 'rounded-2xl rounded-tr-sm' : 'rounded-2xl rounded-tl-sm'}`}
         style={isUser
-          ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)', color: '#003826' }
-          : { background: '#2e3638', color: '#dff0e8' }
+          ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }
+          : { background: 'var(--cc-bg-3)', color: 'var(--cc-ink)' }
         }>
         <ReactMarkdown
           components={{
@@ -111,32 +111,32 @@ export default function OnboardingGuideChat({ currentStep, vendorEmail }) {
   };
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(119,255,200,0.2)', background: '#151d1f' }}>
+    <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(var(--cc-accent-rgb),0.2)', background: 'var(--cc-bg-1)' }}>
       {/* Header toggle */}
       <button
         onClick={() => setOpen(o => !o)}
         className="w-full flex items-center gap-3 px-4 py-3"
-        style={{ background: open ? '#192123' : 'rgba(119,255,200,0.04)' }}
+        style={{ background: open ? 'var(--cc-bg-2)' : 'rgba(var(--cc-accent-rgb),0.04)' }}
       >
         <div className="w-8 h-8 rounded-xl flex items-center justify-center text-base flex-shrink-0"
-          style={{ background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }}>🚚</div>
+          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>🚚</div>
         <div className="flex-1 text-left">
-          <p className="font-heading font-black text-sm" style={{ color: '#dff0e8' }}>Launch Coach</p>
-          <p className="text-[10px]" style={{ color: '#bacbc0' }}>Ask anything about this step</p>
+          <p className="font-heading font-black text-sm" style={{ color: 'var(--cc-ink)' }}>Launch Coach</p>
+          <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>Ask anything about this step</p>
         </div>
-        <Sparkles className="w-3.5 h-3.5 mr-1" style={{ color: '#77ffc8' }} />
-        {open ? <ChevronUp className="w-4 h-4" style={{ color: '#bacbc0' }} /> : <ChevronDown className="w-4 h-4" style={{ color: '#bacbc0' }} />}
+        <Sparkles className="w-3.5 h-3.5 mr-1" style={{ color: 'var(--cc-accent)' }} />
+        {open ? <ChevronUp className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} /> : <ChevronDown className="w-4 h-4" style={{ color: 'var(--cc-ink-dim)' }} />}
       </button>
 
       {open && (
         <>
           {/* Quick prompts (only if no messages yet) */}
           {messages.length === 0 && stepPrompts.length > 0 && (
-            <div className="px-4 pt-3 pb-2 flex flex-col gap-2" style={{ borderTop: '1px solid rgba(59,74,66,0.2)' }}>
+            <div className="px-4 pt-3 pb-2 flex flex-col gap-2" style={{ borderTop: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
               {stepPrompts.map(p => (
                 <button key={p} onClick={() => sendMessage(p)}
                   className="text-left px-3 py-2 rounded-xl text-xs font-semibold transition-all active:scale-95"
-                  style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.3)' }}>
+                  style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
                   {p}
                 </button>
               ))}
@@ -146,7 +146,7 @@ export default function OnboardingGuideChat({ currentStep, vendorEmail }) {
           {/* Messages */}
           {messages.length > 0 && (
             <div className="px-4 py-3 flex flex-col gap-3 max-h-64 overflow-y-auto no-scrollbar"
-              style={{ borderTop: '1px solid rgba(59,74,66,0.2)' }}>
+              style={{ borderTop: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
               {messages.filter(m => m.role !== 'system').map((msg, i) => (
                 <MessageBubble key={i} message={msg} />
               ))}
@@ -155,22 +155,22 @@ export default function OnboardingGuideChat({ currentStep, vendorEmail }) {
           )}
 
           {/* Input */}
-          <div className="px-4 pb-3 pt-2 flex gap-2" style={{ borderTop: messages.length ? '1px solid rgba(59,74,66,0.2)' : 'none' }}>
+          <div className="px-4 pb-3 pt-2 flex gap-2" style={{ borderTop: messages.length ? '1px solid rgba(var(--cc-line-rgb),0.2)' : 'none' }}>
             <input
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && sendMessage()}
               placeholder="Ask your launch coach..."
               className="flex-1 px-3 py-2 rounded-xl text-xs outline-none"
-              style={{ background: '#192123', color: '#dff0e8', border: '1px solid rgba(59,74,66,0.3)' }}
+              style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.3)' }}
             />
             <button onClick={() => sendMessage()} disabled={loading || !input.trim()}
               className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all active:scale-95"
               style={input.trim() && !loading
-                ? { background: 'linear-gradient(135deg,#77ffc8,#00e6a7)' }
-                : { background: '#2e3638' }
+                ? { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }
+                : { background: 'var(--cc-bg-3)' }
               }>
-              <Send className="w-3.5 h-3.5" style={{ color: input.trim() && !loading ? '#003826' : '#bacbc0' }} />
+              <Send className="w-3.5 h-3.5" style={{ color: input.trim() && !loading ? 'var(--cc-accent-deep)' : 'var(--cc-ink-dim)' }} />
             </button>
           </div>
         </>

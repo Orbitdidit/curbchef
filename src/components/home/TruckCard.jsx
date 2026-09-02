@@ -16,7 +16,7 @@ export default function TruckCard({ truck, rank }) {
       <div
         className="rounded-2xl overflow-hidden"
         style={{
-          background: '#141414',
+          background: 'var(--cc-surface)',
           border: '1px solid rgba(255,255,255,0.04)',
           transition: 'transform 0.2s ease',
         }}
@@ -41,7 +41,7 @@ export default function TruckCard({ truck, rank }) {
               {truck.status === 'open' && (
                 <span
                   className="text-[10px] font-bold px-2.5 py-1 rounded-full self-start font-mono"
-                  style={{ background: 'rgba(0,245,212,0.15)', color: '#00F5D4', border: '1px solid rgba(0,245,212,0.3)', backdropFilter: 'blur(8px)' }}
+                  style={{ background: 'rgba(0,245,212,0.15)', color: 'var(--cc-accent-2)', border: '1px solid rgba(0,245,212,0.3)', backdropFilter: 'blur(8px)' }}
                 >
                   ● OPEN
                 </span>
@@ -49,7 +49,7 @@ export default function TruckCard({ truck, rank }) {
               {truck.is_live && (
                 <span
                   className="text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 self-start"
-                  style={{ background: 'rgba(255,59,48,0.9)', color: 'white', backdropFilter: 'blur(8px)' }}
+                  style={{ background: 'rgba(var(--cc-warm-red-rgb),0.9)', color: 'white', backdropFilter: 'blur(8px)' }}
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                   LIVE
@@ -60,8 +60,8 @@ export default function TruckCard({ truck, rank }) {
               <div
                 className="w-7 h-7 rounded-lg flex items-center justify-center font-heading font-black text-xs flex-shrink-0"
                 style={{
-                  background: rank === 1 ? '#FFD60A' : rank === 2 ? 'rgba(200,200,200,0.9)' : 'rgba(205,127,50,0.9)',
-                  color: '#0A0A0A',
+                  background: rank === 1 ? 'var(--cc-yellow)' : rank === 2 ? 'rgba(200,200,200,0.9)' : 'rgba(205,127,50,0.9)',
+                  color: 'var(--cc-black)',
                 }}
               >
                 #{rank}
@@ -74,7 +74,7 @@ export default function TruckCard({ truck, rank }) {
             <div className="flex items-center gap-2 mb-1">
               <span
                 className="text-[9px] font-bold px-2 py-0.5 rounded-full font-mono"
-                style={{ background: 'rgba(255,59,48,0.2)', color: '#FF3B30', border: '1px solid rgba(255,59,48,0.3)' }}
+                style={{ background: 'rgba(var(--cc-warm-red-rgb),0.2)', color: 'var(--cc-warm-red)', border: '1px solid rgba(var(--cc-warm-red-rgb),0.3)' }}
               >
                 {truck.cuisine_type?.replace('_', ' ')?.toUpperCase()}
               </span>
@@ -101,35 +101,35 @@ export default function TruckCard({ truck, rank }) {
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">
-              <Star className="w-3 h-3" style={{ fill: '#FFD60A', color: '#FFD60A' }} />
-              <span className="text-xs font-bold font-mono" style={{ color: '#F5F0E8' }}>{truck.rating?.toFixed(1) || '4.8'}</span>
-              <span className="text-[10px] font-mono" style={{ color: '#6B665C' }}>({truck.review_count || 500}+)</span>
+              <Star className="w-3 h-3" style={{ fill: 'var(--cc-yellow)', color: 'var(--cc-yellow)' }} />
+              <span className="text-xs font-bold font-mono" style={{ color: 'var(--cc-cream)' }}>{truck.rating?.toFixed(1) || '4.8'}</span>
+              <span className="text-[10px] font-mono" style={{ color: 'var(--cc-ink-faint)' }}>({truck.review_count || 500}+)</span>
             </div>
             <div className="flex items-center gap-1">
               {closeVariant === 'last_call' && (
-                <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse" style={{ background: '#FF3B30' }} />
+                <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse" style={{ background: 'var(--cc-warm-red)' }} />
               )}
               <span
                 className="text-[11px] font-mono"
                 style={{
-                  color: closeVariant === 'last_call' ? '#FF3B30'
-                    : closeVariant === 'soon' ? '#FF6B1A'
-                    : '#6B665C'
+                  color: closeVariant === 'last_call' ? 'var(--cc-warm-red)'
+                    : closeVariant === 'soon' ? 'var(--cc-warm-2)'
+                    : 'var(--cc-ink-faint)'
                 }}
               >
                 {closeLabel || <><Clock className="w-3 h-3 inline mr-0.5" />15–20 min</>}
               </span>
             </div>
             <div className="flex items-center gap-1">
-              <MapPin className="w-3 h-3" style={{ color: '#6B665C' }} />
-              <span className="text-[11px] font-mono" style={{ color: '#6B665C' }}>{distance}</span>
+              <MapPin className="w-3 h-3" style={{ color: 'var(--cc-ink-faint)' }} />
+              <span className="text-[11px] font-mono" style={{ color: 'var(--cc-ink-faint)' }}>{distance}</span>
             </div>
           </div>
           <div
             className="px-3 py-1.5 rounded-full text-[11px] font-bold"
             style={{
-              background: '#00F5D4',
-              color: '#0A0A0A',
+              background: 'var(--cc-accent-2)',
+              color: 'var(--cc-black)',
             }}
           >
             Order →
