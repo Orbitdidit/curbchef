@@ -71,7 +71,7 @@ function ConfigCard({ item, onSave, onDelete }) {
           <Icon className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{item.label}</p>
+          <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>{item.label}</p>
           <p className="text-[10px] font-mono" style={{ color: 'var(--cc-ink-dim)' }}>{item.key}</p>
         </div>
         <button
@@ -221,7 +221,7 @@ function LiveVideosManager() {
           <Video className="w-4 h-4" style={{ color: 'var(--cc-warm-red)' }} />
         </div>
         <div className="flex-1">
-          <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Live Now Videos</p>
+          <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Live Now Videos</p>
           <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>Shown on homepage when no trucks are live · loops silently</p>
         </div>
         <button onClick={() => setShowForm(s => !s)}

@@ -278,7 +278,7 @@ export default function VerificationQueue() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-8 text-center" style={{ background: 'var(--cc-bg-0)' }}>
         <p className="text-4xl">🔒</p>
-        <p className="font-heading font-bold text-lg" style={{ color: 'var(--cc-ink)' }}>Admin access required</p>
+        <p className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>Admin access required</p>
         <button onClick={() => navigate('/')} className="px-6 py-3 rounded-full font-bold text-sm"
           style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
           Back to Home

@@ -7,7 +7,7 @@ export default function SignIn({ navigateToLogin }) {
       <p className="text-xs tracking-widest mt-2 mb-10" style={{ color: '#8A857C' }}>Houston street food. Live.</p>
       <button
         onClick={() => navigateToLogin()}
-        className="w-full py-3.5 rounded-full font-heading font-bold text-sm"
+        className="w-full py-3.5 rounded-full font-display text-sm"
         style={{ maxWidth: 280, background: '#E8442A', color: '#FFF3EF' }}
       >
         Sign in

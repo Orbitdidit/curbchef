@@ -49,7 +49,7 @@ export default function ContentCuratorCard() {
           <Sparkles className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
         </div>
         <div className="flex-1">
-          <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>AI Content Curator</p>
+          <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>AI Content Curator</p>
           <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>Analyzes clips · Promotes trending content to homepage</p>
         </div>
         {status === 'done' && <CheckCircle2 className="w-5 h-5" style={{ color: 'var(--cc-accent)' }} />}

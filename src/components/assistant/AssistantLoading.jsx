@@ -24,7 +24,7 @@ export default function AssistantLoading() {
           <span className="text-2xl">🍽️</span>
         </div>
       </div>
-      <p className="font-heading font-bold text-sm transition-opacity" style={{ color: 'var(--cc-ink)' }}>
+      <p className="font-display text-sm transition-opacity" style={{ color: 'var(--cc-ink)' }}>
         {PHRASES[idx]}
       </p>
       <div className="flex gap-1 mt-4">

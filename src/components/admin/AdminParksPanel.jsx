@@ -184,7 +184,7 @@ export default function AdminParksPanel() {
               <img src={park.hero_image_url || 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=100'}
                 alt={park.name} className="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
               <div className="flex-1 min-w-0">
-                <p className="font-heading font-bold text-sm truncate" style={{ color: 'var(--cc-ink)' }}>{park.name}</p>
+                <p className="font-display text-sm truncate" style={{ color: 'var(--cc-ink)' }}>{park.name}</p>
                 <p className="text-xs truncate" style={{ color: 'var(--cc-ink-dim)' }}>{park.address}</p>
                 <div className="flex items-center gap-2 mt-0.5">
                   {park.is_featured && <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(0,245,212,0.1)', color: 'var(--cc-accent-2)' }}>FEATURED</span>}

@@ -105,7 +105,7 @@ export default function AdminDashboard() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-8 text-center" style={{ background: 'var(--cc-bg-0)' }}>
         <p className="text-4xl">🔒</p>
-        <p className="font-heading font-bold text-lg" style={{ color: 'var(--cc-ink)' }}>Not Authorized</p>
+        <p className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>Not Authorized</p>
         <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>You don't have admin access.</p>
         <button onClick={() => navigate('/')} className="px-6 py-3 rounded-full font-bold text-sm"
           style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
@@ -120,7 +120,7 @@ export default function AdminDashboard() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-8 text-center" style={{ background: 'var(--cc-bg-0)' }}>
         <p className="text-4xl">⚠️</p>
-        <p className="font-heading font-bold text-lg" style={{ color: 'var(--cc-ink)' }}>Authentication Error</p>
+        <p className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>Authentication Error</p>
         <button onClick={() => navigate('/')} className="px-6 py-3 rounded-full font-bold text-sm"
           style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
           Back to Home
@@ -152,7 +152,7 @@ export default function AdminDashboard() {
               <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
             </button>
             <div>
-              <p className="font-heading font-bold text-base" style={{ color: 'var(--cc-ink)' }}>Admin</p>
+              <p className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>Admin</p>
               <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Platform Overview</p>
             </div>
           </div>
@@ -227,7 +227,7 @@ export default function AdminDashboard() {
               <Rocket className="w-4 h-4" style={{ color: 'var(--cc-warm)' }} />
             </div>
             <div className="flex-1">
-              <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Launch Command Center</p>
+              <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Launch Command Center</p>
               <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Track launch readiness & blockers</p>
             </div>
             <span className="text-xs font-bold" style={{ color: 'var(--cc-warm)' }}>Open →</span>
@@ -241,7 +241,7 @@ export default function AdminDashboard() {
               <Layout className="w-4 h-4" style={{ color: 'var(--cc-accent)' }} />
             </div>
             <div className="flex-1">
-              <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Homepage CMS</p>
+              <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Homepage CMS</p>
               <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Edit videos, promo cards & copy</p>
             </div>
             <span className="text-xs font-bold" style={{ color: 'var(--cc-accent)' }}>Edit →</span>
@@ -336,7 +336,7 @@ export default function AdminDashboard() {
                     {truck.name.charAt(0)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-heading font-bold text-sm truncate" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
+                    <p className="font-display text-sm truncate" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
                     <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>New Vendor Application</p>
                   </div>
                   <button
@@ -541,7 +541,7 @@ export default function AdminDashboard() {
                   <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>{order.customer_email}</p>
                 </div>
                 <div className="text-right">
-                  <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-accent)' }}>${order.total?.toFixed(2)}</p>
+                  <p className="font-display text-sm" style={{ color: 'var(--cc-accent)' }}>${order.total?.toFixed(2)}</p>
                   {order.platform_fee_amount > 0 && (
                     <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>fee: ${order.platform_fee_amount?.toFixed(2)}</p>
                   )}

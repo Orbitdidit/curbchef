@@ -46,7 +46,7 @@ export default function QuickReorder({ user }) {
           <div className="w-full h-full flex items-center justify-center text-2xl"><Truck className="w-5 h-5" style={{ color: 'var(--cc-ink-faint)' }} /></div>
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-heading font-bold text-sm truncate" style={{ color:'var(--cc-cream)', letterSpacing:'-0.01em'}}>{last.truck_name}</p>
+          <p className="font-display text-sm truncate" style={{ color:'var(--cc-cream)', letterSpacing:'-0.01em'}}>{last.truck_name}</p>
           <p className="text-xs truncate" style={{ color:'var(--cc-ink-muted)'}}>
             {last.items.slice(0, 2).map(i => i.name).join(',')}{last.items.length > 2 ? ` +${last.items.length - 2}` :''}
           </p>

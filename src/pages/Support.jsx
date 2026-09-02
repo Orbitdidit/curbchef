@@ -20,7 +20,7 @@ function FaqItem({ q, a }) {
     <button className="w-full text-left p-4 rounded-2xl transition-all" onClick={() => setOpen(o => !o)}
       style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
       <div className="flex items-start justify-between gap-3">
-        <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{q}</p>
+        <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>{q}</p>
         {open ? <ChevronUp className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: 'var(--cc-accent)' }} />
                : <ChevronDown className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: 'var(--cc-ink-dim)' }} />}
       </div>
@@ -54,7 +54,7 @@ export default function Support() {
             style={{ background: 'rgba(var(--cc-accent-rgb),0.07)', border: '1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
             <Mail className="w-6 h-6" style={{ color: 'var(--cc-accent)' }} />
             <div>
-              <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Email Us</p>
+              <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Email Us</p>
               <p className="text-[10px] mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>support@curbchef.com</p>
               <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>~2 hr response</p>
             </div>
@@ -64,7 +64,7 @@ export default function Support() {
             style={{ background: 'rgba(var(--cc-warm-rgb),0.07)', border: '1px solid rgba(var(--cc-warm-rgb),0.2)' }}>
             <Phone className="w-6 h-6" style={{ color: 'var(--cc-warm)' }} />
             <div>
-              <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Call Us</p>
+              <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Call Us</p>
               <p className="text-[10px] mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>1-888-555-0199</p>
               <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>Mon–Fri 9am–6pm CST</p>
             </div>

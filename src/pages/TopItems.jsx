@@ -91,7 +91,7 @@ export default function TopItems() {
         ) : ranked.length === 0 ? (
           <div className="py-16 text-center rounded-2xl" style={{ background: 'var(--cc-surface)' }}>
             <ShoppingBag className="w-10 h-10 mx-auto mb-3" style={{ color: '#242424' }} />
-            <p className="font-heading font-bold" style={{ color: 'var(--cc-ink-muted)' }}>No completed orders this week yet</p>
+            <p className="font-display" style={{ color: 'var(--cc-ink-muted)' }}>No completed orders this week yet</p>
           </div>
         ) : (
           <div className="flex flex-col gap-3">
@@ -109,7 +109,7 @@ export default function TopItems() {
                       {medal || `#${idx + 1}`}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <p className="font-heading font-bold text-sm truncate" style={{ color: 'var(--cc-cream)' }}>{item.name}</p>
+                      <p className="font-display text-sm truncate" style={{ color: 'var(--cc-cream)' }}>{item.name}</p>
                       {item.trucks.length > 0 && (
                         <p className="text-[10px] truncate" style={{ color: 'var(--cc-ink-faint)' }}>
                           {item.trucks.slice(0, 2).join(' · ')}

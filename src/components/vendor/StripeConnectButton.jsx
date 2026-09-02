@@ -88,7 +88,7 @@ export default function StripeConnectButton({ truck, onStatusUpdate }) {
           <Icon className="w-5 h-5" style={{ color: config.color }} />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-heading font-bold text-sm" style={{ color: config.textColor }}>{config.label}</p>
+          <p className="font-display text-sm" style={{ color: config.textColor }}>{config.label}</p>
           <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{config.sub}</p>
         </div>
       </div>

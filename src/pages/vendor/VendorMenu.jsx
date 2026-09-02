@@ -75,7 +75,7 @@ export default function VendorMenu() {
           <button onClick={() => navigate('/vendor')} className="w-10 h-10 bg-secondary rounded-xl flex items-center justify-center">
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <h1 className="font-heading font-bold text-lg">Menu</h1>
+          <h1 className="font-display text-lg">Menu</h1>
         </div>
         <button
           onClick={() => { setEditItem(null); setForm({ name: '', description: '', price: '', category: 'mains', image_url: '', is_available: true, is_special: false, has_spice_option: false }); setShowForm(true); }}

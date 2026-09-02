@@ -324,7 +324,7 @@ export default function ApplicationsPanel() {
       ) : (
         <div className="text-center py-10 mb-6">
           <p className="text-3xl mb-2">🎉</p>
-          <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>No pending applications</p>
+          <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>No pending applications</p>
           <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-dim)' }}>All caught up!</p>
         </div>
       )}

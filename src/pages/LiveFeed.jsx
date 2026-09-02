@@ -150,7 +150,7 @@ function ClipCard({ clip, isActive, liked, saved, onLike, onSave }) {
             <img src={clip.truck_image || thumbUrl} alt={clip.truck_name} className="w-full h-full object-cover" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-heading font-bold text-white text-sm truncate">{clip.truck_name}</p>
+            <p className="font-display text-white text-sm truncate">{clip.truck_name}</p>
             <p className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>
               {isLive ? <span style={{ color: 'var(--cc-accent)' }}>● Live now</span> : timeAgo(clip.created_date)}
             </p>

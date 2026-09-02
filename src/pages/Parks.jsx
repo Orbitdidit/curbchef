@@ -74,7 +74,7 @@ function ParkCard({ park, featured = false }) {
         alt={park.name} className="w-20 h-20 rounded-xl object-cover flex-shrink-0" />
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-2">
-          <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{park.name}</p>
+          <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>{park.name}</p>
           {park.avg_rating && (
             <div className="flex items-center gap-0.5 flex-shrink-0">
               <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
@@ -173,7 +173,7 @@ export default function Parks() {
         {filtered.length === 0 && !isLoading && (
           <div className="text-center py-16">
             <p className="text-4xl mb-3">🏛️</p>
-            <p className="font-heading font-bold" style={{ color: 'var(--cc-ink)' }}>No parks match this filter</p>
+            <p className="font-display" style={{ color: 'var(--cc-ink)' }}>No parks match this filter</p>
             <button onClick={() => setFilter('all')} className="mt-3 text-sm font-semibold" style={{ color: 'var(--cc-accent-2)' }}>
               Show all parks
             </button>

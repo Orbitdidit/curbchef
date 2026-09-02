@@ -130,7 +130,7 @@ export default function VendorPortal() {
             <div className="flex items-center gap-3 mb-3">
               <AlertCircle className="w-6 h-6 flex-shrink-0" style={{ color: 'var(--cc-amber)' }} />
               <div>
-                <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Application Under Review</p>
+                <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Application Under Review</p>
                 <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>Submitted for {onboarding.truck_name}</p>
               </div>
             </div>
@@ -153,7 +153,7 @@ export default function VendorPortal() {
             <div className="flex items-center gap-3 mb-3">
               <AlertCircle className="w-6 h-6 flex-shrink-0" style={{ color: 'var(--cc-warm-red)' }} />
               <div>
-                <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Application Not Approved</p>
+                <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Application Not Approved</p>
                 <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>For {onboarding.truck_name}</p>
               </div>
             </div>
@@ -206,7 +206,7 @@ export default function VendorPortal() {
                   <div key={title} className="flex items-center gap-3 p-3.5 rounded-2xl" style={{ background: 'var(--cc-bg-2)' }}>
                     <span className="text-xl flex-shrink-0">{icon}</span>
                     <div>
-                      <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{title}</p>
+                      <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>{title}</p>
                       <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{sub}</p>
                     </div>
                   </div>

@@ -19,7 +19,7 @@ export default function AssistantResults() {
           Try widening your distance or budget.
         </p>
         <button onClick={reset}
-          className="flex items-center gap-2 px-6 py-3 rounded-full font-heading font-bold text-sm"
+          className="flex items-center gap-2 px-6 py-3 rounded-full font-display text-sm"
           style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color: 'var(--cc-accent-deep)' }}>
           <RotateCcw className="w-4 h-4" /> Try Again
         </button>
@@ -84,7 +84,7 @@ export default function AssistantResults() {
                 <div className="flex-1 min-w-0 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <p className="font-heading font-bold text-sm truncate" style={{ color: 'var(--cc-ink)' }}>
+                      <p className="font-display text-sm truncate" style={{ color: 'var(--cc-ink)' }}>
                         {truck.name}
                       </p>
                       {truck.status === 'open' && (

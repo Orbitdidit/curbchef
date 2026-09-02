@@ -24,7 +24,7 @@ export default function MenuItemCard({ item, truckId }) {
           </div>
           <p className="text-muted-foreground text-xs mt-0.5 line-clamp-2">{item.description}</p>
           <div className="flex items-center justify-between mt-2">
-            <span className="font-heading font-bold text-sm text-primary">${item.price?.toFixed(2)}</span>
+            <span className="font-display text-sm text-primary">${item.price?.toFixed(2)}</span>
             {!item.is_available && (
               <span className="text-[10px] text-destructive font-medium">Sold out</span>
             )}

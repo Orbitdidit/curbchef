@@ -68,7 +68,7 @@ export default function Terms() {
         <div className="flex flex-col gap-5">
           {SECTIONS.map(({ title, body }) => (
             <div key={title} className="p-5 rounded-2xl" style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
-              <p className="font-heading font-bold text-sm mb-2" style={{ color: 'var(--cc-ink)' }}>{title}</p>
+              <p className="font-display text-sm mb-2" style={{ color: 'var(--cc-ink)' }}>{title}</p>
               <p className="text-sm leading-relaxed" style={{ color: 'var(--cc-ink-dim)' }}>{body}</p>
             </div>
           ))}

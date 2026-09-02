@@ -53,7 +53,7 @@ function TruckCard({ truck, view }) {
           </div>
         </div>
         <div className="p-2.5">
-          <p className="font-heading font-bold text-xs truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
+          <p className="font-display text-xs truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
           <div className="flex items-center gap-1.5 mt-1">
             <Star className="w-3 h-3 fill-yellow-400 text-yellow-400"/>
             <span className="text-[10px] font-bold" style={{ color:'var(--cc-ink)'}}>{truck.rating?.toFixed(1) ||'4.8'}</span>
@@ -70,7 +70,7 @@ function TruckCard({ truck, view }) {
         <img src={truck.image_url ||'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=100'}
           alt={truck.name} className="w-10 h-10 rounded-xl object-cover flex-shrink-0"/>
         <div className="flex-1 min-w-0">
-          <p className="font-heading font-bold text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
+          <p className="font-display text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
           <p className="text-xs capitalize" style={{ color:'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')}</p>
         </div>
         <div className="flex items-center gap-1 flex-shrink-0">
@@ -96,7 +96,7 @@ function TruckCard({ truck, view }) {
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 mb-0.5">
-          <p className="font-heading font-bold text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
+          <p className="font-display text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
           {truck.is_sample ? (
             <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full flex-shrink-0" style={{ background:'rgba(251,191,36,0.15)', color:'var(--cc-amber)'}}>DEMO</span>
           ) : truck.status ==='open'&& (
@@ -282,7 +282,7 @@ export default function Explore() {
                     <img src={park.hero_image_url ||'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200'}
                       alt={park.name} className="w-10 h-10 rounded-xl object-cover flex-shrink-0"/>
                     <div className="flex-1 min-w-0">
-                      <p className="font-heading font-bold text-sm" style={{ color:'var(--cc-ink)'}}>{park.name}</p>
+                      <p className="font-display text-sm" style={{ color:'var(--cc-ink)'}}>{park.name}</p>
                       <p className="text-xs" style={{ color:'var(--cc-ink-dim)'}}>{parkTrucks.length} trucks · {park.address?.split(',')[0]}</p>
                     </div>
                     <span className="text-xs font-bold" style={{ color:'var(--cc-accent-2)'}}>View →</span>
@@ -306,7 +306,7 @@ export default function Explore() {
               if (!unparked.length) return null;
               return (
                 <div>
-                  <p className="font-heading font-bold text-sm mb-2.5" style={{ color:'var(--cc-ink)'}}> Independent Trucks</p>
+                  <p className="font-display text-sm mb-2.5" style={{ color:'var(--cc-ink)'}}> Independent Trucks</p>
                   <div className="flex flex-col gap-2">
                     {unparked.map(t => <TruckCard key={t.id} truck={t} view="list"/>)}
                   </div>
@@ -337,7 +337,7 @@ export default function Explore() {
             {filtered.length === 0 && (
               <div className="text-center py-16">
                 <p className="text-4xl mb-3"></p>
-                <p className="font-heading font-bold" style={{ color:'var(--cc-ink)'}}>No trucks found</p>
+                <p className="font-display" style={{ color:'var(--cc-ink)'}}>No trucks found</p>
                 <p className="text-sm mt-1" style={{ color:'var(--cc-ink-dim)'}}>Try a different search</p>
               </div>
             )}

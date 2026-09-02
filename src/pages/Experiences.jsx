@@ -348,7 +348,7 @@ export default function Experiences() {
                   {step}
                 </div>
                 <div>
-                  <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-cream)' }}>{title}</p>
+                  <p className="font-display text-sm" style={{ color: 'var(--cc-cream)' }}>{title}</p>
                   <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-muted)' }}>{body}</p>
                 </div>
               </div>

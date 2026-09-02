@@ -240,7 +240,7 @@ function VendorPlansInner({ truck, user }) {
                   style={{ background: 'var(--cc-bg-2)', border: '1px solid rgba(var(--cc-line-rgb),0.2)' }}>
                   <span className="text-2xl flex-shrink-0">{boost.emoji}</span>
                   <div className="flex-1 min-w-0">
-                    <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{boost.label}</p>
+                    <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>{boost.label}</p>
                     <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{boost.desc}</p>
                   </div>
                   <button

@@ -2,7 +2,7 @@ import React from 'react';
 import { useHomepageConfig } from '@/hooks/useHomepageConfig';
 
 const DEFAULTS = {
-  video_url: 'https://assets.mixkit.co/videos/preview/mixkit-man-eating-in-a-food-truck-1231-large.mp4',
+  video_url: '',
   poster_url: 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=800',
   headline: 'Real Food.\nReal Trucks.',
   subline: 'STREET FOOD CULTURE',
@@ -18,6 +18,7 @@ export default function MidVideoBlock() {
         className="relative overflow-hidden rounded-3xl"
         style={{ height: '40vw', maxHeight: '200px', minHeight: '130px' }}
       >
+        {c.video_url ? (
         <video
           src={c.video_url}
           poster={c.poster_url}
@@ -27,6 +28,10 @@ export default function MidVideoBlock() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         />
+        ) : (
+          <div className="absolute inset-0 w-full h-full bg-cover bg-center"
+            style={{ backgroundImage: `url(${c.poster_url})` }} />
+        )}
         <div
           className="absolute inset-0"
           style={{ background: 'linear-gradient(90deg, rgba(13,21,23,0.75) 0%, transparent 60%, rgba(13,21,23,0.6) 100%)' }}

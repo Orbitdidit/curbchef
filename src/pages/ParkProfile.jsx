@@ -53,7 +53,7 @@ function TruckRow({ truck }) {
       <img src={truck.image_url || 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=200'}
         alt={truck.name} className="w-14 h-14 rounded-xl object-cover flex-shrink-0" />
       <div className="flex-1 min-w-0">
-        <p className="font-heading font-bold text-sm truncate" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
+        <p className="font-display text-sm truncate" style={{ color: 'var(--cc-ink)' }}>{truck.name}</p>
         <p className="text-xs capitalize mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{truck.cuisine_type?.replace(/_/g, ' ')}</p>
         {truck.truck_park_member_status && (
           <span className="text-[10px] font-semibold capitalize" style={{ color: 'var(--cc-ink-muted)' }}>
@@ -221,7 +221,7 @@ export default function ParkProfile() {
             {trucks.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-3xl mb-2">🚚</p>
-                <p className="font-heading font-bold" style={{ color: 'var(--cc-ink)' }}>No trucks listed yet</p>
+                <p className="font-display" style={{ color: 'var(--cc-ink)' }}>No trucks listed yet</p>
               </div>
             ) : trucks.map(t => <TruckRow key={t.id} truck={t} />)}
           </div>
@@ -232,7 +232,7 @@ export default function ParkProfile() {
             {liveTrucks.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-3xl mb-2">📡</p>
-                <p className="font-heading font-bold" style={{ color: 'var(--cc-ink)' }}>No trucks live right now</p>
+                <p className="font-display" style={{ color: 'var(--cc-ink)' }}>No trucks live right now</p>
                 <p className="text-sm mt-1" style={{ color: 'var(--cc-ink-muted)' }}>Check back soon — things heat up fast.</p>
               </div>
             ) : liveTrucks.map(t => <TruckRow key={t.id} truck={t} />)}
@@ -249,7 +249,7 @@ export default function ParkProfile() {
             {galleryMedia.length === 0 && (
               <div className="col-span-2 text-center py-12">
                 <p className="text-3xl mb-2">📸</p>
-                <p className="font-heading font-bold" style={{ color: 'var(--cc-ink)' }}>No photos yet</p>
+                <p className="font-display" style={{ color: 'var(--cc-ink)' }}>No photos yet</p>
               </div>
             )}
           </div>
@@ -261,7 +261,7 @@ export default function ParkProfile() {
               <div className="p-4 rounded-2xl" style={{ background: 'var(--cc-surface)' }}>
                 <div className="flex items-center gap-2 mb-3">
                   <Clock className="w-4 h-4" style={{ color: 'var(--cc-accent-2)' }} />
-                  <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Hours</p>
+                  <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Hours</p>
                 </div>
                 {Object.entries(park.operating_hours).map(([day, hours]) => (
                   <div key={day} className="flex justify-between py-1.5"
@@ -274,7 +274,7 @@ export default function ParkProfile() {
             )}
 
             <div className="p-4 rounded-2xl flex flex-col gap-3" style={{ background: 'var(--cc-surface)' }}>
-              <p className="font-heading font-bold text-sm mb-1" style={{ color: 'var(--cc-ink)' }}>Contact & Directions</p>
+              <p className="font-display text-sm mb-1" style={{ color: 'var(--cc-ink)' }}>Contact & Directions</p>
               <a href={`https://maps.google.com/?q=${encodeURIComponent(park.address)}`}
                 target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-3">

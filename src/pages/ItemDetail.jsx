@@ -152,7 +152,7 @@ export default function ItemDetail() {
         ) && (
           <div className="mb-6">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>SPICE LEVEL</h3>
+              <h3 className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>SPICE LEVEL</h3>
               <span className="text-[10px]" style={{ color: 'var(--cc-ink-dim)' }}>Optional</span>
             </div>
             <div className="flex gap-3">
@@ -176,7 +176,7 @@ export default function ItemDetail() {
         {/* Add-ons */}
         {item.add_ons?.length > 0 && (
           <div className="mb-6">
-            <h3 className="font-heading font-bold text-sm mb-3" style={{ color: 'var(--cc-ink)' }}>ADD-ONS</h3>
+            <h3 className="font-display text-sm mb-3" style={{ color: 'var(--cc-ink)' }}>ADD-ONS</h3>
             <div className="flex flex-col gap-2">
               {item.add_ons.map((addon) => {
                 const selected = selectedAddOns.find(a => a.name === addon.name);

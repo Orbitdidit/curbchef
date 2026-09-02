@@ -176,7 +176,7 @@ export default function Deals() {
                         <img src={truck.image_url ||'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=200'}
                           alt={truck.name} className="w-14 h-14 rounded-xl object-cover flex-shrink-0"/>
                         <div className="flex-1 min-w-0">
-                          <p className="font-heading font-bold text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
+                          <p className="font-display text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
                           <p className="text-xs capitalize mt-0.5" style={{ color:'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')} · Special today</p>
                           <span className="text-[9px] font-black px-2 py-0.5 rounded-full mt-1 inline-block" style={{ background:'rgba(var(--cc-accent-rgb),0.12)', color:'var(--cc-accent)'}}>
                             VIEW MENU
@@ -207,7 +207,7 @@ export default function Deals() {
                     </div>
                   </div>
                   <div className="p-3">
-                    <p className="font-heading font-bold text-sm leading-tight" style={{ color:'var(--cc-ink)'}}>{item.name}</p>
+                    <p className="font-display text-sm leading-tight" style={{ color:'var(--cc-ink)'}}>{item.name}</p>
                     <p className="text-xs mt-0.5" style={{ color:'var(--cc-ink-dim)'}}>{item.truck}</p>
                     <button className="mt-2 w-full py-2 rounded-full text-xs font-bold" style={{ background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)'}}>
                       Add to Cart

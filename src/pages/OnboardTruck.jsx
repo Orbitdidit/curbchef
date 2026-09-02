@@ -202,7 +202,7 @@ export default function OnboardTruck() {
                 }}>
                 <span className="text-3xl flex-shrink-0">{emoji}</span>
                 <div className="flex-1">
-                  <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{label}</p>
+                  <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>{label}</p>
                   <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{sub}</p>
                 </div>
                 <div className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center"
@@ -218,7 +218,7 @@ export default function OnboardTruck() {
                 <span className="text-3xl flex-shrink-0">{emoji}</span>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{label}</p>
+                    <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>{label}</p>
                     <span className="text-[9px] font-black px-2 py-0.5 rounded-full"
                       style={{ background: 'rgba(192,132,252,0.15)', color: 'var(--cc-violet)', border: '1px solid rgba(192,132,252,0.25)' }}>
                       COMING SOON
@@ -420,7 +420,7 @@ export default function OnboardTruck() {
                   <span className="text-xl">{key === 'is_open_now' ? '🟢' : '⏱️'}</span>
                 </div>
                 <div className="flex-1">
-                  <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{label}</p>
+                  <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>{label}</p>
                   <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>{sub}</p>
                 </div>
                 <div className="w-6 h-6 rounded-full flex items-center justify-center"

@@ -125,7 +125,7 @@ export default function FoodScan() {
                   style={{ background: 'rgba(13,21,23,0.7)', backdropFilter: 'blur(8px)' }}>
                   <div className="w-10 h-10 border-3 border-t-transparent rounded-full animate-spin"
                     style={{ borderColor: 'var(--cc-accent) transparent transparent transparent', borderWidth: 3 }} />
-                  <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-accent)' }}>
+                  <p className="font-display text-sm" style={{ color: 'var(--cc-accent)' }}>
                     {uploading ? 'Uploading...' : 'Analyzing with AI...'}
                   </p>
                 </div>
@@ -146,7 +146,7 @@ export default function FoodScan() {
                 <Camera className="w-7 h-7" style={{ color: 'var(--cc-accent)' }} />
               </div>
               <div className="text-center">
-                <p className="font-heading font-bold text-base mb-1" style={{ color: 'var(--cc-ink)' }}>Scan Your Food</p>
+                <p className="font-display text-base mb-1" style={{ color: 'var(--cc-ink)' }}>Scan Your Food</p>
                 <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Take a photo or upload from gallery</p>
                 <p className="text-xs mt-1" style={{ color: 'rgba(186,203,192,0.4)' }}>AI detects food type + estimates calories & macros</p>
               </div>

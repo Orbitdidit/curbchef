@@ -163,14 +163,14 @@ export default function OrderDetail() {
             <MapPin className="w-5 h-5" style={{ color: 'var(--cc-accent-2)' }} />
           </div>
           <div className="flex-1">
-            <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-cream)' }}>{order.truck_name}</p>
+            <p className="font-display text-sm" style={{ color: 'var(--cc-cream)' }}>{order.truck_name}</p>
             <p className="text-xs" style={{ color: 'var(--cc-ink-muted)' }}>{truck?.address || truck?.city || 'Houston, TX'}</p>
           </div>
         </div>
 
         {/* Order Details */}
         <div>
-          <h3 className="font-heading font-bold text-sm mb-3" style={{ color: 'var(--cc-cream)' }}>Order Details</h3>
+          <h3 className="font-display text-sm mb-3" style={{ color: 'var(--cc-cream)' }}>Order Details</h3>
           <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--cc-surface)' }}>
             {order.items?.map((item, i) => (
               <div key={i} className="flex justify-between px-4 py-3"
@@ -194,8 +194,8 @@ export default function OrderDetail() {
               <span className="text-xs" style={{ color: 'var(--cc-ink-muted)' }}>${(order.tip || 0).toFixed(2)}</span>
             </div>
             <div className="flex justify-between px-4 py-3" style={{ borderTop: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
-              <span className="font-heading font-bold" style={{ color: 'var(--cc-cream)' }}>Total</span>
-              <span className="font-heading font-bold" style={{ color: 'var(--cc-accent-2)' }}>${order.total?.toFixed(2)}</span>
+              <span className="font-display" style={{ color: 'var(--cc-cream)' }}>Total</span>
+              <span className="font-display" style={{ color: 'var(--cc-accent-2)' }}>${order.total?.toFixed(2)}</span>
             </div>
           </div>
         </div>

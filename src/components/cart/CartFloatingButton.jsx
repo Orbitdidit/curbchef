@@ -34,7 +34,7 @@ export default function CartFloatingButton() {
           >
             {count}
           </div>
-          <span className="font-heading font-bold text-sm" style={{ color: 'var(--cc-accent-deep)' }}>
+          <span className="font-display text-sm" style={{ color: 'var(--cc-accent-deep)' }}>
             {cart.truckName || 'Your Feast'}
           </span>
         </div>

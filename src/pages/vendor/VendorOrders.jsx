@@ -190,7 +190,7 @@ export default function VendorOrders() {
             <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-ink)' }} />
           </Link>
           <div>
-            <h1 className="font-heading font-bold text-base" style={{ color: 'var(--cc-ink)' }}>Order Queue</h1>
+            <h1 className="font-display text-base" style={{ color: 'var(--cc-ink)' }}>Order Queue</h1>
           </div>
         </div>
         <div className="relative w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>

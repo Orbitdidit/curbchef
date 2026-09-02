@@ -71,7 +71,7 @@ function MenuAvailabilityToggle({ truckId }) {
                   <img src={item.image_url} alt={item.name} className="w-10 h-10 rounded-xl object-cover flex-shrink-0" />
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="font-heading font-bold text-sm truncate" style={{ color: item.is_available ? 'var(--cc-ink)' : 'var(--cc-ink-faint)' }}>
+                  <p className="font-display text-sm truncate" style={{ color: item.is_available ? 'var(--cc-ink)' : 'var(--cc-ink-faint)' }}>
                     {item.name}
                   </p>
                   <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>${item.price?.toFixed(2)}</p>

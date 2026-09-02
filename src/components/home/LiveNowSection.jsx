@@ -11,7 +11,7 @@ export default function LiveNowSection({ trucks }) {
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 bg-accent rounded-full animate-pulse" />
-          <h2 className="font-heading font-bold text-lg">Live Now</h2>
+          <h2 className="font-display text-lg">Live Now</h2>
         </div>
         <Link to="/live" className="text-xs text-primary font-semibold">Watch all</Link>
       </div>

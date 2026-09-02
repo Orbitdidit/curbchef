@@ -79,7 +79,7 @@ export default function TruckCard({ truck, rank }) {
                 {truck.cuisine_type?.replace('_', ' ')?.toUpperCase()}
               </span>
             </div>
-            <p className="font-heading font-bold text-xl text-white leading-tight" style={{ letterSpacing: '-0.02em', textShadow: '0 2px 12px rgba(0,0,0,0.9)' }}>
+            <p className="font-display text-xl text-white leading-tight" style={{ letterSpacing: '-0.02em', textShadow: '0 2px 12px rgba(0,0,0,0.9)' }}>
               {truck.name}
             </p>
             {truck.description && (

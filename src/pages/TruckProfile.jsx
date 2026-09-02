@@ -437,7 +437,7 @@ export default function TruckProfile() {
             {menuItems.length === 0 && (
               <div className="text-center py-16">
                 <p className="text-4xl mb-3">🍽️</p>
-                <p className="font-heading font-bold text-base mb-1" style={{ color: 'var(--cc-ink)' }}>Menu coming soon</p>
+                <p className="font-display text-base mb-1" style={{ color: 'var(--cc-ink)' }}>Menu coming soon</p>
                 <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Check back later</p>
               </div>
             )}
@@ -450,7 +450,7 @@ export default function TruckProfile() {
             {specials.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-4xl mb-3">🔥</p>
-                <p className="font-heading font-bold text-base mb-1" style={{ color: 'var(--cc-ink)' }}>No specials right now</p>
+                <p className="font-display text-base mb-1" style={{ color: 'var(--cc-ink)' }}>No specials right now</p>
                 <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Check back soon</p>
               </div>
             ) : (
@@ -498,7 +498,7 @@ export default function TruckProfile() {
             {clips.length === 0 ? (
               <div className="text-center py-16">
                 <div className="text-4xl mb-3">🎬</div>
-                <p className="font-heading font-bold text-base mb-1" style={{ color: 'var(--cc-ink)' }}>No clips yet</p>
+                <p className="font-display text-base mb-1" style={{ color: 'var(--cc-ink)' }}>No clips yet</p>
                 <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Check back when they go live</p>
               </div>
             ) : (

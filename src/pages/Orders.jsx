@@ -82,7 +82,7 @@ export default function Orders() {
                       <img src={truck.image_url ||'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=200'}
                         alt={truck.name} className="w-14 h-14 rounded-xl object-cover flex-shrink-0"/>
                       <div className="flex-1 min-w-0">
-                        <p className="font-heading font-bold text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
+                        <p className="font-display text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
                         <p className="text-xs capitalize" style={{ color:'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')} • 15–20 min</p>
                         <div className="flex items-center gap-1 mt-0.5">
                           <Star className="w-3 h-3 fill-yellow-400 text-yellow-400"/>
@@ -104,7 +104,7 @@ export default function Orders() {
         <>
           {activeOrders.length > 0 && (
             <div className="mb-6">
-              <h2 className="font-heading font-bold text-xs tracking-widest mb-3" style={{ color:'var(--cc-accent)'}}>ACTIVE ORDERS</h2>
+              <h2 className="font-display text-xs tracking-widest mb-3" style={{ color:'var(--cc-accent)'}}>ACTIVE ORDERS</h2>
               <div className="space-y-3">
                 {activeOrders.map(order => {
                   const config = statusConfig[order.status];
@@ -113,7 +113,7 @@ export default function Orders() {
                     <Link key={order.id} to={`/order/${order.id}`} className="block bg-card rounded-3xl p-4">
                       <div className="flex items-center justify-between mb-3">
                         <div>
-                          <h3 className="font-heading font-bold text-sm">{order.truck_name}</h3>
+                          <h3 className="font-display text-sm">{order.truck_name}</h3>
                           <p className="text-xs text-muted-foreground mt-0.5">
                             {order.items?.length} item{order.items?.length > 1 ?'s':''} · ${order.total?.toFixed(2)}
                           </p>
@@ -148,7 +148,7 @@ export default function Orders() {
 
           {pastOrders.length > 0 && (
             <div>
-              <h2 className="font-heading font-bold text-xs tracking-widest mb-3 mt-6" style={{ color:'var(--cc-ink-dim)'}}>PAST ORDERS</h2>
+              <h2 className="font-display text-xs tracking-widest mb-3 mt-6" style={{ color:'var(--cc-ink-dim)'}}>PAST ORDERS</h2>
               <div className="space-y-2">
                 {pastOrders.map(order => (
                   <div key={order.id} className="bg-secondary/50 rounded-2xl p-3.5 flex items-center justify-between">

@@ -117,7 +117,7 @@ export default function Cart() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-8 text-center dot-bg" style={{ background: 'var(--cc-black)' }}>
         <div className="text-6xl mb-4">🛒</div>
-        <h2 className="font-heading font-bold text-xl mb-2" style={{ color: 'var(--cc-cream)' }}>Your bag is empty</h2>
+        <h2 className="font-display text-xl mb-2" style={{ color: 'var(--cc-cream)' }}>Your bag is empty</h2>
         <p className="text-sm mb-8" style={{ color: 'var(--cc-ink-muted)' }}>Add items from a truck to get started</p>
         <Link to="/">
           <div className="px-8 py-3 rounded-full font-bold text-sm"
@@ -140,7 +140,7 @@ export default function Cart() {
         <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-surface)' }}>
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-cream)' }} />
         </button>
-        <h1 className="font-heading font-bold text-lg" style={{ color: 'var(--cc-cream)', letterSpacing: '-0.02em' }}>Your Bag</h1>
+        <h1 className="font-display text-lg" style={{ color: 'var(--cc-cream)', letterSpacing: '-0.02em' }}>Your Bag</h1>
       </div>
 
       <div className="px-5 pb-40">
@@ -152,7 +152,7 @@ export default function Cart() {
               <Truck className="w-5 h-5" style={{ color: 'var(--cc-accent-2)' }} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-heading font-bold text-sm truncate" style={{ color: 'var(--cc-cream)' }}>{cart.truckName}</p>
+              <p className="font-display text-sm truncate" style={{ color: 'var(--cc-cream)' }}>{cart.truckName}</p>
               <p className="text-xs" style={{ color: 'var(--cc-ink-muted)' }}>{truckAddress}</p>
             </div>
             <span className="text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0"
@@ -173,13 +173,13 @@ export default function Cart() {
                   <img src={item.image_url} alt={item.name} className="w-14 h-14 rounded-xl object-cover flex-shrink-0" />
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-cream)' }}>{item.name}</p>
+                  <p className="font-display text-sm" style={{ color: 'var(--cc-cream)' }}>{item.name}</p>
                   {item.add_ons?.map((a, j) => (
                     <p key={j} className="text-xs" style={{ color: 'var(--cc-ink-muted)' }}>+ {a.name}</p>
                   ))}
                   <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-muted)' }}>Qty: {item.quantity}</p>
                 </div>
-                <span className="font-heading font-bold text-sm" style={{ color: 'var(--cc-cream)' }}>
+                <span className="font-display text-sm" style={{ color: 'var(--cc-cream)' }}>
                   ${(item.price * item.quantity).toFixed(2)}
                 </span>
               </div>
@@ -243,8 +243,8 @@ export default function Cart() {
             </div>
           ))}
           <div className="pt-2 flex justify-between" style={{ borderTop: '1px solid rgba(var(--cc-line-rgb),0.3)' }}>
-            <span className="font-heading font-bold" style={{ color: 'var(--cc-cream)' }}>Total</span>
-            <span className="font-heading font-bold text-lg" style={{ color: 'var(--cc-accent-2)' }}>${total.toFixed(2)}</span>
+            <span className="font-display" style={{ color: 'var(--cc-cream)' }}>Total</span>
+            <span className="font-display text-lg" style={{ color: 'var(--cc-accent-2)' }}>${total.toFixed(2)}</span>
           </div>
         </div>
         <p className="text-center text-[10px] mb-6" style={{ color: 'var(--cc-ink-muted)' }}>Secure payment via Stripe · Tax included</p>

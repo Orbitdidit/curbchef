@@ -51,7 +51,7 @@ function SmallTruckCard({ truck, userLat, userLng }) {
 
         {/* Info */}
         <div className="px-3 pt-2 pb-3">
-          <p className="font-heading font-bold text-sm leading-tight truncate" style={{ color: 'var(--cc-cream)', letterSpacing: '-0.01em' }}>{truck.name}</p>
+          <p className="font-display text-sm leading-tight truncate" style={{ color: 'var(--cc-cream)', letterSpacing: '-0.01em' }}>{truck.name}</p>
           <div className="flex items-center justify-between mt-1.5">
             <div className="flex items-center gap-0.5">
               <Star className="w-3 h-3" style={{ fill: 'var(--cc-yellow)', color: 'var(--cc-yellow)' }} />
@@ -79,7 +79,7 @@ export default function CarouselSection({ title, emoji, badge, trucks, seeAllHre
       <div className="flex items-center justify-between px-4 mb-3">
         <div className="flex items-center gap-2">
           {emoji && <span className="text-base">{emoji}</span>}
-          <h2 className="font-heading font-bold text-base" style={{ color: 'var(--cc-cream)', letterSpacing: '-0.02em' }}>{title}</h2>
+          <h2 className="font-display text-base" style={{ color: 'var(--cc-cream)', letterSpacing: '-0.02em' }}>{title}</h2>
           {badge && badge !== 'live' && (
             <span
               className="text-[9px] font-bold px-2 py-0.5 rounded-full font-mono"

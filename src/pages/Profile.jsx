@@ -292,13 +292,13 @@ export default function Profile() {
                       
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-heading font-bold text-sm truncate" style={{ color:'var(--cc-cream)'}}>{order.truck_name}</p>
+                      <p className="font-display text-sm truncate" style={{ color:'var(--cc-cream)'}}>{order.truck_name}</p>
                       <p className="text-xs truncate" style={{ color:'var(--cc-ink-muted)'}}>
                         {order.items?.slice(0, 2).map(i => i.name).join(',')}{order.items?.length > 2 ? ` +${order.items.length - 2}` :''}
                       </p>
                     </div>
                     <div className="text-right flex-shrink-0">
-                      <p className="font-heading font-bold text-sm" style={{ color:'var(--cc-accent-2)'}}>${order.total?.toFixed(2)}</p>
+                      <p className="font-display text-sm" style={{ color:'var(--cc-accent-2)'}}>${order.total?.toFixed(2)}</p>
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: order.status ==='picked_up'?'rgba(0,245,212,0.1)':'rgba(255,214,10,0.1)', color: order.status ==='picked_up'?'var(--cc-accent-2)':'var(--cc-yellow)'}}>
                         {order.status ==='picked_up'?'Done': order.status ==='ready'?'Ready':'⏳'}
                       </span>
@@ -331,7 +331,7 @@ export default function Profile() {
                 </button>
               </Link>
               <Link to="/quiz">
-                <button className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-bold text-xs" style={{ background:'rgba(255,255,255,0.07)', color:'var(--cc-cream)', border:'1px solid rgba(255,255,255,0.12)'}}>
+                <button className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-display text-xs" style={{ background:'rgba(255,255,255,0.07)', color:'var(--cc-cream)', border:'1px solid rgba(255,255,255,0.12)'}}>
                   Update Taste
                 </button>
               </Link>
@@ -369,7 +369,7 @@ export default function Profile() {
                 <div className="flex items-center gap-3 p-3.5 rounded-2xl" style={{ background:'var(--cc-surface)', border:'1px solid rgba(255,255,255,0.04)'}}>
                   <span className="text-xl">{item.icon}</span>
                   <div className="min-w-0">
-                    <p className="font-heading font-bold text-xs" style={{ color:'var(--cc-cream)'}}>{item.label}</p>
+                    <p className="font-display text-xs" style={{ color:'var(--cc-cream)'}}>{item.label}</p>
                     <p className="text-[10px]" style={{ color:'var(--cc-ink-faint)'}}>{item.sub}</p>
                   </div>
                 </div>

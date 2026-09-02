@@ -74,7 +74,7 @@ export default function CustomerEtaCard({ order, truck }) {
           <div className="flex items-center gap-3">
             <span className="text-xl">🚶</span>
             <div className="text-left">
-              <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>I'm walking</p>
+              <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>I'm walking</p>
               <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>~{walkEta} min away</p>
             </div>
           </div>
@@ -90,7 +90,7 @@ export default function CustomerEtaCard({ order, truck }) {
           <div className="flex items-center gap-3">
             <span className="text-xl">🚗</span>
             <div className="text-left">
-              <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>I'm driving</p>
+              <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>I'm driving</p>
               <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>~{driveEta} min away</p>
             </div>
           </div>

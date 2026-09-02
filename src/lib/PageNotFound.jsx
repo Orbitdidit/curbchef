@@ -25,11 +25,11 @@ export default function PageNotFound({}) {
                 <div className="text-center space-y-6">
                     <div className="space-y-2">
                         <div className="text-6xl mb-2">🚚</div>
-                        <h1 className="text-7xl font-heading font-bold text-muted-foreground/30">404</h1>
+                        <h1 className="text-7xl font-display text-muted-foreground/30">404</h1>
                     </div>
                     
                     <div className="space-y-3">
-                        <h2 className="text-2xl font-heading font-bold text-foreground">
+                        <h2 className="text-2xl font-display text-foreground">
                             Wrong Turn
                         </h2>
                         <p className="text-muted-foreground leading-relaxed">
@@ -48,7 +48,7 @@ export default function PageNotFound({}) {
                     <div className="pt-6">
                         <button 
                             onClick={() => window.location.href = '/'} 
-                            className="bg-primary text-primary-foreground px-6 py-3 rounded-2xl font-heading font-bold text-sm"
+                            className="bg-primary text-primary-foreground px-6 py-3 rounded-2xl font-display text-sm"
                         >
                             Back to CurbChef
                         </button>

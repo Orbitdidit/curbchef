@@ -94,7 +94,7 @@ export default function Rewards() {
         </div>
 
         {/* Redeemable Rewards */}
-        <h2 className="font-heading font-bold text-base mb-4 flex items-center gap-2" style={{ color:'var(--cc-ink)'}}>
+        <h2 className="font-display text-base mb-4 flex items-center gap-2" style={{ color:'var(--cc-ink)'}}>
           Redeemable Rewards <span style={{ color:'var(--cc-accent)'}}></span>
         </h2>
 
@@ -124,7 +124,7 @@ export default function Rewards() {
                       {r.icon}
                     </div>
                     <div className="flex-1">
-                      <p className="font-heading font-bold text-sm" style={{ color:'var(--cc-ink)'}}>{r.label}</p>
+                      <p className="font-display text-sm" style={{ color:'var(--cc-ink)'}}>{r.label}</p>
                       <p className="text-xs mt-0.5" style={{ color:'var(--cc-ink-dim)'}}>{r.sub}</p>
                       {r.locked && (
                         <div className="flex items-center gap-1 mt-1">
@@ -135,7 +135,7 @@ export default function Rewards() {
                     </div>
                     <div className="text-right flex-shrink-0">
                       <p className="text-[10px] font-bold tracking-wide" style={{ color:'var(--cc-ink-dim)'}}>COST</p>
-                      <p className="font-heading font-bold text-sm" style={{ color:'var(--cc-accent)'}}>{r.cost.toLocaleString()} pts</p>
+                      <p className="font-display text-sm" style={{ color:'var(--cc-accent)'}}>{r.cost.toLocaleString()} pts</p>
                     </div>
                   </div>
                 )}
@@ -185,16 +185,16 @@ export default function Rewards() {
 
         {/* Rewards Coach AI */}
         <div className="mt-8 mb-6">
-          <h2 className="font-heading font-bold text-base mb-4" style={{ color:'var(--cc-ink)'}}>Your Rewards Coach </h2>
+          <h2 className="font-display text-base mb-4" style={{ color:'var(--cc-ink)'}}>Your Rewards Coach </h2>
           <RewardsCoach user={user} reward={reward} />
         </div>
 
         {/* Tier list */}
-        <h2 className="font-heading font-bold text-base mt-8 mb-4" style={{ color:'var(--cc-ink)'}}>All Tiers</h2>
+        <h2 className="font-display text-base mt-8 mb-4" style={{ color:'var(--cc-ink)'}}>All Tiers</h2>
         <div className="grid grid-cols-2 gap-3 mb-10">
           {TIERS.map(tier => (
             <div key={tier.key} className="p-4 rounded-2xl text-center" style={{ background: reward.tier === tier.key ?'rgba(var(--cc-accent-rgb),0.08)':'var(--cc-bg-2)', border: reward.tier === tier.key ?'1px solid rgba(var(--cc-accent-rgb),0.3)':'1px solid transparent'}}>
-              <p className="font-heading font-bold text-sm" style={{ color: reward.tier === tier.key ?'var(--cc-accent)':'var(--cc-ink)'}}>{tier.label}</p>
+              <p className="font-display text-sm" style={{ color: reward.tier === tier.key ?'var(--cc-accent)':'var(--cc-ink)'}}>{tier.label}</p>
               <p className="text-xs mt-1" style={{ color:'var(--cc-ink-dim)'}}>{tier.min.toLocaleString()}+ pts</p>
             </div>
           ))}

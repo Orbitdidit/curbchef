@@ -63,7 +63,7 @@ export default function AdminQuickAddTruck() {
             {/* Header */}
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-heading font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>Quick Add Truck</p>
+                <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>Quick Add Truck</p>
                 <p className="text-[10px] mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>Admin-created · vendor will connect Stripe later</p>
               </div>
               <button onClick={() => setOpen(false)} className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: 'var(--cc-bg-2)' }}>

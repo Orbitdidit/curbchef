@@ -97,7 +97,7 @@ function HeroFoodCard({ trucks }) {
               </Link>
               {truck.is_live && (
                 <Link to="/live" onClick={e => e.stopPropagation()}
-                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-bold text-sm" style={{ background:'rgba(255,255,255,0.1)', color:'#fff', border:'1px solid rgba(255,255,255,0.2)', backdropFilter:'blur(8px)'}}>
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-display text-sm" style={{ background:'rgba(255,255,255,0.1)', color:'#fff', border:'1px solid rgba(255,255,255,0.2)', backdropFilter:'blur(8px)'}}>
                   ▶ Watch
                 </Link>
               )}
