@@ -13,46 +13,50 @@
        the comment beside each token. ===================================== */
 
     /* Surfaces */
-    --cc-bg-0: #0d1517;        /* B: #17191C  page base    */
-    --cc-bg-1: #151d1f;        /* B: #1B1E22  raised       */
-    --cc-bg-2: #192123;        /* B: #212429  card         */
-    --cc-bg-3: #2e3638;        /* B: #2B2F35  chip / well  */
-    --cc-black: #0A0A0A;       /* B: #101214               */
-    --cc-surface: #141414;     /* B: #1B1E22               */
-    --cc-surface-2: #1E1E1E;   /* B: #212429               */
-    --cc-surface-3: #1A1A1A;   /* B: #1B1E22               */
+    --cc-bg-0: #17191C;        /* B: #17191C  page base    */
+    --cc-bg-1: #1B1E22;        /* B: #1B1E22  raised       */
+    --cc-bg-2: #212429;        /* B: #212429  card         */
+    --cc-bg-3: #2B2F35;        /* B: #2B2F35  chip / well  */
+    --cc-black: #101214;       /* B: #101214               */
+    --cc-surface: #1B1E22;     /* B: #1B1E22               */
+    --cc-surface-2: #212429;   /* B: #212429               */
+    --cc-surface-3: #1B1E22;   /* B: #1B1E22               */
 
     /* Text */
-    --cc-ink: #dff0e8;         /* B: #F7F2E7               */
-    --cc-ink-dim: #bacbc0;     /* B: #C9C4BA               */
-    --cc-ink-muted: #a39e94;   /* B: #8A857C               */
-    --cc-ink-faint: #6b665c;   /* B: #6E6961               */
-    --cc-cream: #F5F0E8;       /* B: #F7F2E7               */
+    --cc-ink: #F7F2E7;         /* B: #F7F2E7               */
+    --cc-ink-dim: #C9C4BA;     /* B: #C9C4BA               */
+    --cc-ink-muted: #8A857C;   /* B: #8A857C               */
+    --cc-ink-faint: #6E6961;   /* B: #6E6961               */
+    --cc-cream: #F7F2E7;       /* B: #F7F2E7               */
 
     /* Accent — currently mint. Direction B splits these:
        warm = food / price / CTA,  teal = live / map / status */
-    --cc-accent: #77ffc8;      /* B: #E8442A  warm primary */
-    --cc-accent-2: #00F5D4;    /* B: #4FB3AD  teal status  */
-    --cc-accent-3: #00e6a7;    /* B: #4FB3AD               */
-    --cc-accent-deep: #003826; /* B: #3D1005  on-warm text */
+    --cc-accent: #4FB3AD;      /* B: #E8442A  warm primary */
+    --cc-accent-2: #4FB3AD;    /* B: #4FB3AD  teal status  */
+    --cc-accent-3: #4FB3AD;    /* B: #4FB3AD               */
+    --cc-accent-deep: #3D1005; /* B: #3D1005  on-warm text */
 
     /* Warm ramp */
-    --cc-warm: #fd591e;        /* B: #E8442A               */
-    --cc-warm-red: #FF3B30;    /* B: #E8442A               */
-    --cc-warm-2: #FF6B1A;      /* B: #F5A623               */
-    --cc-warm-3: #FF8C00;      /* B: #F5A623               */
-    --cc-amber: #fbbf24;       /* B: #F5A623               */
-    --cc-yellow: #FFD60A;      /* B: #F5A623               */
+    --cc-warm: #E8442A;        /* B: #E8442A               */
+    --cc-warm-red: #E8442A;    /* B: #E8442A               */
+    --cc-warm-2: #F5A623;      /* B: #F5A623               */
+    --cc-warm-3: #F5A623;      /* B: #F5A623               */
+    --cc-amber: #F5A623;       /* B: #F5A623               */
+    --cc-yellow: #F5A623;      /* B: #F5A623               */
+
+    --cc-cta: #E8442A;
+    --cc-on-cta: #FFF3EF;
+    --cc-teal-on-cream: #2E8A85;
 
     /* Utility */
-    --cc-violet: #c084fc;
-    --cc-green: #22c55e;
+    --cc-violet: #F5A623;
+    --cc-green: #4FB3AD;
 
     /* RGB triplets — used by rgba() calls for alpha washes */
-    --cc-accent-rgb: 119,255,200;   /* B: 232,68,42   */
-    --cc-line-rgb: 59,74,66;        /* B: 62,66,74    */
-    --cc-warm-rgb: 253,89,30;       /* B: 232,68,42   */
-    --cc-warm-red-rgb: 255,59,48;   /* B: 232,68,42   */
+    --cc-accent-rgb: 79,179,173;   /* B: 232,68,42   */
+    --cc-line-rgb: 62,66,74;        /* B: 62,66,74    */
+    --cc-warm-rgb: 232,68,42;       /* B: 232,68,42   */
+    --cc-warm-red-rgb: 232,68,42;   /* B: 232,68,42   */
 
     /* === THERMAL NIGHT PALETTE === */
     --background: 0 0% 4%;           /* var(--cc-black) pure near-black */
