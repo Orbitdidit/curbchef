@@ -23,7 +23,7 @@ export default function VendorGate({ children }) {
       const u = await base44.auth.me().catch(() => null);
       if (!u) { setState('no_auth'); return; }
       setUser(u);
-      const trucks = await base44.entities.FoodTruck.filter({ owner_email: u.email });
+      const trucks = await base44.entities.FoodTruck.filter({ owner_email: (u?.email || '').toLowerCase() });
       if (!trucks?.length) { setState('no_truck'); return; }
       const t = trucks[0];
       setTruck(t);

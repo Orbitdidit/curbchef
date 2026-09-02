@@ -24,7 +24,7 @@ export default function VendorPortal() {
       setUser(u);
       if (u) {
         const [trucks, applications] = await Promise.all([
-          base44.entities.FoodTruck.filter({ owner_email: u.email }),
+          base44.entities.FoodTruck.filter({ owner_email: (u?.email || '').toLowerCase() }),
           base44.entities.TruckOnboarding.filter({ email: u.email }, '-created_date', 1),
         ]);
         if (trucks?.length) setTruck(trucks[0]);

@@ -35,7 +35,7 @@ export default function VendorOnboarding() {
   useEffect(() => {
     const init = async () => {
       const me = await base44.auth.me();
-      const trucks = await base44.entities.FoodTruck.filter({ owner_email: me.email });
+      const trucks = await base44.entities.FoodTruck.filter({ owner_email: (me?.email || '').toLowerCase() });
       if (trucks.length > 0) {
         const t = trucks[0];
         setTruck(t);

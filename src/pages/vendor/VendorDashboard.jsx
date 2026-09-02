@@ -37,7 +37,7 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
 
   const { data: trucks = [initialTruck] } = useQuery({
     queryKey: ['vendor-truck'],
-    queryFn: () => base44.entities.FoodTruck.filter({ owner_email: user?.email }),
+    queryFn: () => base44.entities.FoodTruck.filter({ owner_email: (user?.email || '').toLowerCase() }),
     enabled: !!user?.email,
     initialData: [initialTruck],
   });

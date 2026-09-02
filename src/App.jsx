@@ -53,6 +53,7 @@ import ParkProfile from './pages/ParkProfile.jsx';
 import TopItems from './pages/TopItems.jsx';
 import VendorOnboarding from './pages/vendor/VendorOnboarding';
 import NotApproved from './pages/NotApproved.jsx';
+import SignIn from './pages/SignIn.jsx';
 
 const SPLASH_URL = 'https://curbchef.app';
 
@@ -87,7 +88,7 @@ const AuthenticatedApp = () => {
     // Check BetaUser OR approved FoodTruck
     Promise.all([
       base44.entities.BetaUser.filter({ email, is_active: true }),
-      base44.entities.FoodTruck.filter({ owner_email: user.email, is_approved: true }),
+      base44.entities.FoodTruck.filter({ owner_email: (user?.email || '').toLowerCase(), is_approved: true }),
     ]).then(([betaRows, truckRows]) => {
       setIsApproved(betaRows.length > 0 || truckRows.length > 0);
     }).catch(() => setIsApproved(false));
@@ -110,9 +111,7 @@ const AuthenticatedApp = () => {
     if (authError.type === 'user_not_registered') {
       return <UserNotRegisteredError />;
     } else if (authError.type === 'auth_required') {
-      // Not signed in → send to Netlify splash
-      window.location.replace(SPLASH_URL);
-      return null;
+      return <SignIn navigateToLogin={navigateToLogin} />;
     }
   }
 
@@ -122,10 +121,9 @@ const AuthenticatedApp = () => {
   // Gate only applies when not in public mode
   const gateApplies = launchMode !== 'public';
 
-  // Not signed in + gate applies → Netlify splash
+  // Not signed in + gate applies → sign-in screen
   if (gateApplies && !isAuthenticated && !isOnboardRoute) {
-    window.location.replace(SPLASH_URL);
-    return null;
+    return <SignIn navigateToLogin={navigateToLogin} />;
   }
 
   // Signed in but not approved → friendly waitlist screen

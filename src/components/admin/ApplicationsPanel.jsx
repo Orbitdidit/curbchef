@@ -223,7 +223,7 @@ export default function ApplicationsPanel() {
         address: app.city || 'Houston, TX',
         city: app.city || 'Houston',
         phone: app.phone || '',
-        owner_email: app.email,
+        owner_email: (app.email || '').trim().toLowerCase(),
         latitude: app.latitude || null,
         longitude: app.longitude || null,
         status: 'closed',   // vendor opens it themselves
@@ -268,7 +268,7 @@ export default function ApplicationsPanel() {
       await base44.integrations.Core.SendEmail({
         to: app.email,
         subject: `🎉 ${app.truck_name} is approved on CurbChef!`,
-        body: `Hi ${app.owner_name},\n\nGreat news — your food truck "${app.truck_name}" has been approved on CurbChef!\n\nSign in to your Vendor Dashboard to:\n• Connect Stripe to accept card payments (12% platform fee per order)\n• Turn your truck OPEN and GO LIVE to start receiving orders\n• Manage your menu and food photos\n\nDashboard: https://www.curbchef.app/vendor\n\nSign in with: ${app.email}\n\nWelcome to CurbChef! 🚚🔥\n\n— The CurbChef Team`,
+        body: `Hi ${app.owner_name},\n\nGreat news — your food truck "${app.truck_name}" has been approved on CurbChef!\n\nSign in to your Vendor Dashboard to:\n• Connect Stripe to accept card payments (12% platform fee per order)\n• Turn your truck OPEN and GO LIVE to start receiving orders\n• Manage your menu and food photos\n\nDashboard: https://app.curbchef.app/vendor\n\nSign in with: ${app.email}\n\nWelcome to CurbChef! 🚚🔥\n\n— The CurbChef Team`,
       });
 
       return truck;

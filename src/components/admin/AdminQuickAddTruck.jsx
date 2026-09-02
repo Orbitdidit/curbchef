@@ -21,6 +21,7 @@ export default function AdminQuickAddTruck() {
     setSaving(true);
     await base44.entities.FoodTruck.create({
       ...form,
+      owner_email: (form.owner_email || '').trim().toLowerCase(),
       status: 'closed',
       is_live: false,
       is_approved: true,

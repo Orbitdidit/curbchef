@@ -29,7 +29,7 @@ export default function VendorMenu() {
     queryKey: ['my-truck'],
     queryFn: async () => {
       const user = await base44.auth.me();
-      const trucks = await base44.entities.FoodTruck.filter({ owner_email: user.email });
+      const trucks = await base44.entities.FoodTruck.filter({ owner_email: (user?.email || '').toLowerCase() });
       return trucks[0];
     },
   });
