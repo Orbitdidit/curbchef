@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 import { ChevronLeft, Bell } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import OrderEtaBadge from '@/components/vendor/OrderEtaBadge';
-import { parseServerDate } from '@/lib/timeUtils';
+import { parseServerDate, formatLocalTime } from '@/lib/timeUtils';
 
 function etaMinsLeft(order) {
   if (!order.customer_eta_set_at || order.customer_eta_minutes == null) return null;
-  const setAt = new Date(order.customer_eta_set_at).getTime();
+  const setAt = parseServerDate(order.customer_eta_set_at).getTime();
   const arrivalMs = setAt + order.customer_eta_minutes * 60 * 1000;
   return Math.max(0, Math.round((arrivalMs - Date.now()) / 60000));
 }
@@ -41,7 +41,7 @@ function OrderCard({ order, advance }) {
         <div className="text-right">
           <p className="text-[10px] font-bold" style={{ color: '#bacbc0' }}>RECEIVED</p>
           <p className="text-xs font-semibold" style={{ color: '#dff0e8' }}>
-            {parseServerDate(order.created_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            {formatLocalTime(parseServerDate(order.created_date))}
           </p>
         </div>
       </div>

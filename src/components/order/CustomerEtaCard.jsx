@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQueryClient } from '@tanstack/react-query';
 import { distanceMiles, useUserLocation } from '@/lib/geoUtils';
+import { parseServerDate } from '@/lib/timeUtils';
 
 // Walking 3 mph, driving 20 mph (city + parking)
 function calcEta(distMiles, mode) {
@@ -119,7 +120,7 @@ function EtaCountdown({ order, onArrive, saving }) {
   useEffect(() => {
     const calc = () => {
       if (!order.customer_eta_set_at || !order.customer_eta_minutes) return;
-      const setAt = new Date(order.customer_eta_set_at).getTime();
+      const setAt = parseServerDate(order.customer_eta_set_at).getTime();
       const arrivalMs = setAt + order.customer_eta_minutes * 60 * 1000;
       const diff = Math.max(0, Math.round((arrivalMs - Date.now()) / 60000));
       setMinsLeft(diff);

@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { CheckCircle, XCircle, Clock, ChevronDown, ChevronUp, Phone, Instagram, ShieldCheck, FileText } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { parseServerDate, formatLocalDateTime } from '@/lib/timeUtils';
 
 const VENDOR_TYPE_LABELS = {
   food_truck:          '🚚 Food Truck',
@@ -58,7 +59,7 @@ function ApplicationCard({ app, onApprove, onReject, isPending }) {
             </div>
             <p className="text-[10px] mt-1.5 flex items-center gap-1" style={{ color: 'rgba(186,203,192,0.5)' }}>
               <Clock className="w-3 h-3" />
-              {new Date(app.created_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+              {formatLocalDateTime(parseServerDate(app.created_date))}
             </p>
           </div>
         </div>

@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ExternalLink, CheckCircle, XCircle, MessageSquare, Shield, Loader2 } from 'lucide-react';
-import { format } from 'date-fns';
+import { parseServerDate, formatLocalDate } from '@/lib/timeUtils';
 
 const ADMIN_EMAILS = ['orbitdidit@gmail.com'];
 
@@ -157,7 +157,7 @@ function TruckRow({ truck, onApprove, onReject, onRequestInfo, loading }) {
             </div>
             <p className="text-xs" style={{ color: '#bacbc0' }}>{truck.owner_email || '—'}</p>
             <p className="text-[10px] mt-0.5" style={{ color: '#6B665C' }}>
-              Submitted {truck.created_date ? format(new Date(truck.created_date), 'MMM d, yyyy') : '—'}
+              Submitted {truck.created_date ? formatLocalDate(parseServerDate(truck.created_date)) : '—'}
             </p>
           </div>
         </div>

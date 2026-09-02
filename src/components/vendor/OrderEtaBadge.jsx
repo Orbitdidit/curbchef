@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { parseServerDate } from '@/lib/timeUtils';
 
 export default function OrderEtaBadge({ order }) {
   const [minsLeft, setMinsLeft] = useState(null);
@@ -9,7 +10,7 @@ export default function OrderEtaBadge({ order }) {
         setMinsLeft(null);
         return;
       }
-      const setAt = new Date(order.customer_eta_set_at).getTime();
+      const setAt = parseServerDate(order.customer_eta_set_at).getTime();
       const arrivalMs = setAt + order.customer_eta_minutes * 60 * 1000;
       const diff = Math.max(0, Math.round((arrivalMs - Date.now()) / 60000));
       setMinsLeft(diff);

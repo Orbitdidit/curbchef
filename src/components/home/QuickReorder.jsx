@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { RotateCcw, Clock } from 'lucide-react';
 import { addToCart } from '@/lib/cartStore';
 import { useToast } from '@/components/ui/use-toast';
+import { parseServerDate, localDayKey } from '@/lib/timeUtils';
 
 export default function QuickReorder({ user }) {
   const { toast } = useToast();
@@ -17,14 +18,15 @@ export default function QuickReorder({ user }) {
 
   if (!user || orders.length === 0) return null;
 
-  const last = [...orders].sort((a, b) => new Date(b.created_date) - new Date(a.created_date))[0];
+  const last = [...orders].sort((a, b) => parseServerDate(b.created_date) - parseServerDate(a.created_date))[0];
   if (!last?.items?.length) return null;
 
   const timeAgo = () => {
-    const diff = Date.now() - new Date(last.created_date).getTime();
-    const days = Math.floor(diff / 86400000);
-    if (days === 0) return 'Today';
-    if (days === 1) return 'Yesterday';
+    const placed = parseServerDate(last.created_date);
+    if (localDayKey(placed) === localDayKey(new Date())) return 'Today';
+    const yesterday = new Date(Date.now() - 86400000);
+    if (localDayKey(placed) === localDayKey(yesterday)) return 'Yesterday';
+    const days = Math.floor((Date.now() - placed.getTime()) / 86400000);
     return `${days} days ago`;
   };
 

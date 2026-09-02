@@ -13,6 +13,7 @@ import {
   AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import ReferFriendModal from '@/components/profile/ReferFriendModal';
+import { parseServerDate, localDayKey } from '@/lib/timeUtils';
 
 const TIERS = [
   { key: 'starter', label: 'Starter', min: 0, emoji: '🌱', color: '#A39E94' },
@@ -50,13 +51,13 @@ function getPersonalityLabel(orders, follows) {
 
 function getStreak(orders) {
   if (!orders?.length) return 0;
-  const days = new Set(orders.map(o => new Date(o.created_date).toDateString()));
+  const days = new Set(orders.map(o => localDayKey(parseServerDate(o.created_date))));
   let s = 0;
   const today = new Date();
   for (let i = 0; i < 30; i++) {
     const d = new Date(today);
     d.setDate(d.getDate() - i);
-    if (days.has(d.toDateString())) s++;
+    if (days.has(localDayKey(d))) s++;
     else if (i > 0) break;
   }
   return s;
@@ -106,7 +107,7 @@ export default function Profile() {
     .filter(Boolean);
 
   const recentOrders = [...orders]
-    .sort((a, b) => new Date(b.created_date) - new Date(a.created_date))
+    .sort((a, b) => parseServerDate(b.created_date) - parseServerDate(a.created_date))
     .slice(0, 4);
 
   const totalSpent = orders.reduce((sum, o) => sum + (o.total || 0), 0);
