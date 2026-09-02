@@ -13,6 +13,7 @@ import { AssistantProvider } from '@/components/assistant/AssistantContext';
 import AssistantSheet from '@/components/assistant/AssistantSheet';
 
 import AppLayout from './components/layout/AppLayout';
+import FrameLayout from './components/layout/FrameLayout';
 import AdminPreviewPill from './components/admin/AdminPreviewPill';
 import Home from './pages/Home.jsx';
 import LiveFeed from './pages/LiveFeed';
@@ -155,12 +156,6 @@ const AuthenticatedApp = () => {
           </Route>
 
           {/* Full-screen routes (no bottom nav) */}
-          <Route path="/search" element={<Search />} />
-          <Route path="/live" element={<LiveFeed />} />
-          <Route path="/truck/:id" element={<TruckProfile />} />
-          <Route path="/truck/:id/item/:itemId" element={<ItemDetail />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/order/:id" element={<OrderDetail />} />
 
           {/* Vendor routes */}
           <Route path="/vendor" element={<VendorDashboard />} />
@@ -177,22 +172,30 @@ const AuthenticatedApp = () => {
           <Route path="/admin/homepage" element={<HomepageCMS />} />
           <Route path="/admin/launch" element={<LaunchDashboard />} />
           <Route path="/admin/verification" element={<VerificationQueue />} />
-          <Route path="/scan" element={<FoodScan />} />
-          <Route path="/radar" element={<TruckRadar />} />
-          <Route path="/concierge" element={<FoodConcierge />} />
 
           <Route path="/onboard-truck" element={<OnboardTruck />} />
           <Route path="/vendor-portal" element={<VendorPortal />} />
-          <Route path="/quiz" element={<UserQuiz />} />
 
-          <Route path="/experiences" element={<Experiences />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/support" element={<Support />} />
-          <Route path="/parks" element={<Parks />} />
-          <Route path="/parks/:slug" element={<ParkProfile />} />
-          <Route path="/top-items" element={<TopItems />} />
 
+          <Route element={<FrameLayout />}>
+            <Route path="/search" element={<Search />} />
+            <Route path="/live" element={<LiveFeed />} />
+            <Route path="/truck/:id" element={<TruckProfile />} />
+            <Route path="/truck/:id/item/:itemId" element={<ItemDetail />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/order/:id" element={<OrderDetail />} />
+            <Route path="/scan" element={<FoodScan />} />
+            <Route path="/radar" element={<TruckRadar />} />
+            <Route path="/concierge" element={<FoodConcierge />} />
+            <Route path="/quiz" element={<UserQuiz />} />
+            <Route path="/experiences" element={<Experiences />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/parks" element={<Parks />} />
+            <Route path="/parks/:slug" element={<ParkProfile />} />
+            <Route path="/top-items" element={<TopItems />} />
+          </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </motion.div>
