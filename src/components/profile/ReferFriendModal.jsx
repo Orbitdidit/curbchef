@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from'@/api/base44Client';
-import { X, Copy, Check, Share2 } from'lucide-react';
-import { useToast } from'@/components/ui/use-toast';
+import { base44 } from '@/api/base44Client';
+import { X, Copy, Check, Share2 } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 export default function ReferFriendModal({ user, onClose }) {
   const { toast } = useToast();

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { parseServerDate } from'@/lib/timeUtils';
+import { parseServerDate } from '@/lib/timeUtils';
 
 export default function OrderEtaBadge({ order }) {
   const [minsLeft, setMinsLeft] = useState(null);

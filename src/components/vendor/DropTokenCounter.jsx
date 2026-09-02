@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { base44 } from'@/api/base44Client';
-import { Link } from'react-router-dom';
-import { ShoppingBag } from'lucide-react';
+import { base44 } from '@/api/base44Client';
+import { Link } from 'react-router-dom';
+import { ShoppingBag } from 'lucide-react';
 
 const PLAN_MAX = { free: 2, standard: 10, plus: 25, premium: 60 };
 
@@ -37,25 +37,25 @@ export default function DropTokenCounter({ truck }) {
   };
 
   return (
-    <div className="mb-5 p-4 rounded-2xl"style={{ background: bgColor, border: `1px solid ${borderColor}` }}>
+    <div className="mb-5 p-4 rounded-2xl" style={{ background: bgColor, border: `1px solid ${borderColor}` }}>
       <div className="flex items-center gap-4">
         {/* SVG ring */}
-        <div className="relative flex-shrink-0"style={{ width: 72, height: 72 }}>
-          <svg width="72"height="72"viewBox="0 0 72 72" style={{ transform: 'rotate(-90deg)' }}>
+        <div className="relative flex-shrink-0" style={{ width: 72, height: 72 }}>
+          <svg width="72" height="72" viewBox="0 0 72 72" style={{ transform: 'rotate(-90deg)' }}>
             {/* Track */}
-            <circle cx="36"cy="36"r={R} fill="none"stroke="rgba(186,203,192,0.1)"strokeWidth="6"/>
+            <circle cx="36" cy="36" r={R} fill="none" stroke="rgba(186,203,192,0.1)" strokeWidth="6"/>
             {/* Fill */}
             {pct > 0 && (
               <circle
-                cx="36"cy="36"r={R}
-                fill="none"stroke={ringColor}
-                strokeWidth="6"strokeDasharray={`${dash} ${gap}`}
-                strokeLinecap="round"style={{ filter: `drop-shadow(0 0 6px ${ringColor}66)` }}
+                cx="36" cy="36" r={R}
+                fill="none" stroke={ringColor}
+                strokeWidth="6" strokeDasharray={`${dash} ${gap}`}
+                strokeLinecap="round" style={{ filter: `drop-shadow(0 0 6px ${ringColor}66)` }}
               />
             )}
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="font-display text-xl leading-none"style={{ color: ringColor }}>{tokens}</span>
+            <span className="font-display text-xl leading-none" style={{ color: ringColor }}>{tokens}</span>
             <span className="text-[9px] font-bold" style={{ color: 'var(--cc-ink-dim)' }}>drops</span>
           </div>
         </div>
@@ -94,7 +94,7 @@ export default function DropTokenCounter({ truck }) {
               {buying ? 'Loading...':'+3 for $5'}
             </button>
             {isEmpty && (
-              <Link to="/vendor/plans"className="px-3 py-1.5 rounded-full text-xs font-bold"
+              <Link to="/vendor/plans" className="px-3 py-1.5 rounded-full text-xs font-bold"
                 style={{ background: 'rgba(var(--cc-accent-rgb),0.1)', color:'var(--cc-accent)', border:'1px solid rgba(var(--cc-accent-rgb),0.25)' }}>
                 Upgrade Plan
               </Link>

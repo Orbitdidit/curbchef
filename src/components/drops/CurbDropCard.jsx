@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from'react-router-dom';
-import { Clock, Users, Zap } from'lucide-react';
-import { base44 } from'@/api/base44Client';
-import { useQueryClient } from'@tanstack/react-query';
+import { Link } from 'react-router-dom';
+import { Clock, Users, Zap } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
+import { useQueryClient } from '@tanstack/react-query';
 
 function useCountdown(expiresAt) {
   const [remaining, setRemaining] = useState('');

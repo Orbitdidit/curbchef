@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { base44 } from'@/api/base44Client';
-import { X, Send, Loader2 } from'lucide-react';
+import { base44 } from '@/api/base44Client';
+import { X, Send, Loader2 } from 'lucide-react';
 
 const STEP_CONTEXT = {
   1:'The vendor is on Step 1: Basics — entering their truck name, cuisine type, description, and contact info.',
@@ -101,7 +101,7 @@ export default function OnboardingAssistantPanel({ truck, currentStep, onClose }
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={handleKey}
-              placeholder="Ask anything about setting up your truck…"className="flex-1 bg-transparent outline-none resize-none text-sm"
+              placeholder="Ask anything about setting up your truck…" className="flex-1 bg-transparent outline-none resize-none text-sm"
               style={{ color: 'var(--cc-ink)', maxHeight: 80 }}
             />
             <button onClick={sendMessage} disabled={!input.trim() || loading}

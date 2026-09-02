@@ -1,5 +1,5 @@
 import React from 'react';
-import { Upload, Check, ExternalLink, ShieldCheck, AlertTriangle } from'lucide-react';
+import { Upload, Check, ExternalLink, ShieldCheck, AlertTriangle } from 'lucide-react';
 
 const OFFICIAL_RESOURCES = [
   {
@@ -47,7 +47,7 @@ function UploadRow({ label, fieldKey, value, onUpload, onRemove, required, hint 
           style={{ background: 'rgba(var(--cc-accent-rgb),0.07)', border:'1px solid rgba(var(--cc-accent-rgb),0.2)' }}>
           <ShieldCheck className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--cc-accent)' }} />
           <span className="text-xs font-bold flex-1" style={{ color: 'var(--cc-accent)' }}>Uploaded </span>
-          <a href={value} target="_blank"rel="noopener noreferrer"className="text-xs font-semibold mr-2" style={{ color: 'var(--cc-accent)' }}>View</a>
+          <a href={value} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold mr-2" style={{ color: 'var(--cc-accent)' }}>View</a>
           <button onClick={onRemove} className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Remove</button>
         </div>
       ) : (
@@ -57,7 +57,7 @@ function UploadRow({ label, fieldKey, value, onUpload, onRemove, required, hint 
           <span className="text-xs" style={{ color: required ? 'var(--cc-ink-dim)':'var(--cc-ink-faint)'}}>
             {required ?'Upload document (PDF or photo)':'Upload (optional)'}
           </span>
-          <input type="file"accept="image/*,application/pdf"className="hidden" onChange={onUpload} />
+          <input type="file" accept="image/*,application/pdf" className="hidden" onChange={onUpload} />
         </label>
       )}
     </div>
@@ -123,7 +123,7 @@ export default function PermitsStep({ form, set, handleFileUpload, labelStyle, i
       {/* Cottage Food License Status */}
       {vendorType ==='cottage_goods' && (
         <div>
-          <p className="mb-2"style={labelStyle}>COTTAGE FOOD LICENSE / REGISTRATION</p>
+          <p className="mb-2" style={labelStyle}>COTTAGE FOOD LICENSE / REGISTRATION</p>
           <div className="flex flex-wrap gap-2">
             {[
               { id: 'approved', label:'Registered' },
@@ -155,7 +155,7 @@ export default function PermitsStep({ form, set, handleFileUpload, labelStyle, i
 
       {/* Food Handler Cert */}
       <UploadRow
-        label="FOOD HANDLER / FOOD MANAGER CERTIFICATE"fieldKey="food_handler_cert_url"
+        label="FOOD HANDLER / FOOD MANAGER CERTIFICATE" fieldKey="food_handler_cert_url"
         value={form.food_handler_cert_url}
         onUpload={e => handleFileUpload(e, 'food_handler_cert_url')}
         onRemove={() => set('food_handler_cert_url','')}
@@ -166,7 +166,7 @@ export default function PermitsStep({ form, set, handleFileUpload, labelStyle, i
       {/* Temporary Event Permit — pop-ups */}
       {needs('event_permit') && (
         <UploadRow
-          label="TEMPORARY FOOD EVENT PERMIT"fieldKey="event_permit_url"
+          label="TEMPORARY FOOD EVENT PERMIT" fieldKey="event_permit_url"
           value={form.event_permit_url || ''}
           onUpload={e => handleFileUpload(e,'event_permit_url')}
           onRemove={() => set('event_permit_url','')}
@@ -205,10 +205,10 @@ export default function PermitsStep({ form, set, handleFileUpload, labelStyle, i
 
       {/* Official Resources */}
       <div>
-        <p className="mb-3"style={{ ...labelStyle }}>OFFICIAL PERMIT RESOURCES</p>
+        <p className="mb-3" style={{ ...labelStyle }}>OFFICIAL PERMIT RESOURCES</p>
         <div className="flex flex-col gap-2">
           {OFFICIAL_RESOURCES.map(r => (
-            <a key={r.label} href={r.url} target="_blank"rel="noopener noreferrer"className="flex items-start gap-3 p-3 rounded-2xl transition-all"
+            <a key={r.label} href={r.url} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 p-3 rounded-2xl transition-all"
               style={{ background: 'var(--cc-bg-0)', border:'1px solid rgba(var(--cc-line-rgb),0.2)' }}>
               <ExternalLink className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" style={{ color: 'var(--cc-accent)' }} />
               <div>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from'react-router-dom';
-import { base44 } from'@/api/base44Client';
-import { useQuery } from'@tanstack/react-query';
+import { Link } from 'react-router-dom';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 
 const VENDOR_BENEFITS = ['Free truck profile + Live Clips','Built-in Stripe payments','Featured in Houston\'s hottest truck parks','Real-time order management','Customer rewards funnel','Early-vendor pricing perks (locked-in for early applicants)',
 ];

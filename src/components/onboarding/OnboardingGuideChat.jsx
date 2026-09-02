@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { base44 } from'@/api/base44Client';
-import { Send, ChevronDown, ChevronUp, Sparkles } from'lucide-react';
-import ReactMarkdown from'react-markdown';
+import { base44 } from '@/api/base44Client';
+import { Send, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 const STEP_PROMPTS = {
   0: ["What makes a great truck name?","What info do I need to get started?"],
@@ -160,7 +160,7 @@ export default function OnboardingGuideChat({ currentStep, vendorEmail }) {
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key ==='Enter' && sendMessage()}
-              placeholder="Ask your launch coach..."className="flex-1 px-3 py-2 rounded-xl text-xs outline-none"
+              placeholder="Ask your launch coach..." className="flex-1 px-3 py-2 rounded-xl text-xs outline-none"
               style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}
             />
             <button onClick={() => sendMessage()} disabled={loading || !input.trim()}

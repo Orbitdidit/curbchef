@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { base44 } from'@/api/base44Client';
-import { Link, useNavigate } from'react-router-dom';
-import { ChevronLeft, Truck, CreditCard, ShoppingBag, BarChart3, ChevronRight, Check, Clock, AlertCircle } from'lucide-react';
+import { base44 } from '@/api/base44Client';
+import { Link, useNavigate } from 'react-router-dom';
+import { ChevronLeft, Truck, CreditCard, ShoppingBag, BarChart3, ChevronRight, Check, Clock, AlertCircle } from 'lucide-react';
 
 const FEATURES = [
   { icon:'', title:'Menu Management', sub:'Add items, pricing, and food photos'},

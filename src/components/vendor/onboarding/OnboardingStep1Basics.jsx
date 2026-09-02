@@ -22,7 +22,7 @@ export default function OnboardingStep1Basics({ truck, saveTruck }) {
 
       <div className="flex flex-col gap-1">
         <label className="text-xs font-bold" style={{ color: 'var(--cc-accent)'}}>Truck Name *</label>
-        <input defaultValue={truck?.name ||''} onBlur={update('name')} placeholder="e.g. El Fuego Tacos"className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+        <input defaultValue={truck?.name ||''} onBlur={update('name')} placeholder="e.g. El Fuego Tacos" className="w-full px-4 py-3 rounded-xl text-sm outline-none"
           style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.5)' }} />
       </div>
 
@@ -59,13 +59,13 @@ export default function OnboardingStep1Basics({ truck, saveTruck }) {
       <div className="flex flex-col gap-1">
         <label className="text-xs font-bold" style={{ color: 'var(--cc-accent)'}}>Description</label>
         <textarea defaultValue={truck?.description ||''} onBlur={update('description')}
-          rows={3} placeholder="Tell customers what makes your food special…"className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none"
+          rows={3} placeholder="Tell customers what makes your food special…" className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none"
           style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.5)' }} />
       </div>
 
       <div className="flex flex-col gap-1">
         <label className="text-xs font-bold" style={{ color: 'var(--cc-accent)' }}>Phone Number</label>
-        <input type="tel" defaultValue={truck?.phone || ''} onBlur={update('phone')} placeholder="(713) 555-0100"className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+        <input type="tel" defaultValue={truck?.phone || ''} onBlur={update('phone')} placeholder="(713) 555-0100" className="w-full px-4 py-3 rounded-xl text-sm outline-none"
           style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.5)' }} />
       </div>
     </div>

@@ -40,7 +40,7 @@ export default function OnboardingStep6Extras() {
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
                 <p className="font-bold text-sm" style={{ color: 'var(--cc-ink)' }}>{f.name}</p>
-                <span className="text-[10px] font-black px-2 py-0.5 rounded-full"style={f.badgeStyle}>{f.badge}</span>
+                <span className="text-[10px] font-black px-2 py-0.5 rounded-full" style={f.badgeStyle}>{f.badge}</span>
               </div>
               <p className="text-xs leading-relaxed" style={{ color: 'var(--cc-ink-dim)' }}>{f.desc}</p>
             </div>

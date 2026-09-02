@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck } from'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 
 const BADGE_CONFIG = {
   food_truck: {

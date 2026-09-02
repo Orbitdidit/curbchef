@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from'framer-motion';
-import { base44 } from'@/api/base44Client';
-import { useQueryClient } from'@tanstack/react-query';
-import { X, ArrowLeft, ArrowRight } from'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { base44 } from '@/api/base44Client';
+import { useQueryClient } from '@tanstack/react-query';
+import { X, ArrowLeft, ArrowRight } from 'lucide-react';
 
 const STEPS = [
   { id:'welcome', type:'modal'},
@@ -75,7 +75,7 @@ function SpotlightOverlay({ rect, onNext, onBack, onSkip, stepIndex, totalSteps,
       <svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
         <defs>
           <mask id="spotlight-mask">
-            <rect width="100%"height="100%"fill="white"/>
+            <rect width="100%" height="100%" fill="white"/>
             {rect && (
               <rect
                 x={spotLeft} y={spotTop}
@@ -86,14 +86,14 @@ function SpotlightOverlay({ rect, onNext, onBack, onSkip, stepIndex, totalSteps,
           </mask>
         </defs>
         <rect
-          width="100%"height="100%"fill="rgba(0,0,0,0.82)"mask="url(#spotlight-mask)"/>
+          width="100%" height="100%" fill="rgba(0,0,0,0.82)" mask="url(#spotlight-mask)"/>
         {/* Mint green glow border around spotlight */}
         {rect && (
           <rect
             x={spotLeft} y={spotTop}
             width={spotW} height={spotH}
             rx={16} ry={16}
-            fill="none"stroke="var(--cc-accent)"strokeWidth="2"
+            fill="none" stroke="var(--cc-accent)" strokeWidth="2"
             style={{ filter: 'drop-shadow(0 0 8px rgba(var(--cc-accent-rgb),0.6))' }}
           />
         )}

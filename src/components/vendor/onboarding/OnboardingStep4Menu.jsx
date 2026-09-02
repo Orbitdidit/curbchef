@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { base44 } from'@/api/base44Client';
-import { Plus, Trash2 } from'lucide-react';
+import { base44 } from '@/api/base44Client';
+import { Plus, Trash2 } from 'lucide-react';
 
 const CATEGORIES = ['mains','sides','drinks','desserts','specials'];
 const MIN_ITEMS = 3;
@@ -17,10 +17,10 @@ function MenuItemRow({ item, onDelete }) {
   return (
     <div className="p-4 rounded-2xl flex flex-col gap-3" style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}>
       <div className="flex gap-2">
-        <input defaultValue={local.name} onBlur={e => save({ name: e.target.value })} placeholder="Item name"className="flex-1 px-3 py-2 rounded-xl text-sm outline-none"
+        <input defaultValue={local.name} onBlur={e => save({ name: e.target.value })} placeholder="Item name" className="flex-1 px-3 py-2 rounded-xl text-sm outline-none"
           style={{ background: 'var(--cc-bg-0)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.4)' }} />
-        <input type="number"defaultValue={local.price} onBlur={e => save({ price: parseFloat(e.target.value) || 0 })}
-          placeholder="$0.00"className="w-20 px-3 py-2 rounded-xl text-sm outline-none"
+        <input type="number" defaultValue={local.price} onBlur={e => save({ price: parseFloat(e.target.value) || 0 })}
+          placeholder="$0.00" className="w-20 px-3 py-2 rounded-xl text-sm outline-none"
           style={{ background: 'var(--cc-bg-0)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.4)' }} />
       </div>
       <div className="flex items-center justify-between">

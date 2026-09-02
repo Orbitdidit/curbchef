@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { base44 } from'@/api/base44Client';
-import { useQuery, useQueryClient } from'@tanstack/react-query';
-import { Link } from'react-router-dom';
-import { X } from'lucide-react';
+import { base44 } from '@/api/base44Client';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
+import { X } from 'lucide-react';
 
 // Gradient themes keyed by emoji "mood"
 function getTipTheme(emoji) {

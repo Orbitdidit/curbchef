@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from'@/api/base44Client';
-import { useQuery, useMutation, useQueryClient } from'@tanstack/react-query';
-import { Bike, Store, Clock, DollarSign, Bell } from'lucide-react';
-import { useToast } from'@/components/ui/use-toast';
+import { base44 } from '@/api/base44Client';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Bike, Store, Clock, DollarSign, Bell } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 const DELIVERY_MODES = {
   pickup_only: null,
@@ -59,9 +59,9 @@ export default function DeliveryBadge({ truck }) {
 
       {/* Delivery badge or Coming Soon */}
       {deliveryInfo ? (
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"style={{ background: deliveryInfo.bg, border: `1px solid ${deliveryInfo.border}` }}>
-          <Bike className="w-3 h-3"style={{ color: deliveryInfo.color }} />
-          <span className="text-[11px] font-black"style={{ color: deliveryInfo.color }}>{deliveryInfo.label}</span>
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full" style={{ background: deliveryInfo.bg, border: `1px solid ${deliveryInfo.border}` }}>
+          <Bike className="w-3 h-3" style={{ color: deliveryInfo.color }} />
+          <span className="text-[11px] font-black" style={{ color: deliveryInfo.color }}>{deliveryInfo.label}</span>
         </div>
       ) : (
         <button

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { X, Zap, Upload } from'lucide-react';
-import { base44 } from'@/api/base44Client';
-import { useQueryClient } from'@tanstack/react-query';
+import { X, Zap, Upload } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
+import { useQueryClient } from '@tanstack/react-query';
 
 const DURATIONS = [
   { label:'30 min', value: 30 },
@@ -109,7 +109,7 @@ export default function CreateCurbDropModal({ truck, onClose }) {
             <textarea
               value={form.description}
               onChange={e => set('description', e.target.value)}
-              placeholder="What makes this drop special?"rows={2}
+              placeholder="What makes this drop special?" rows={2}
               className="w-full rounded-xl px-4 py-3 text-sm outline-none resize-none"
               style={{ background: 'var(--cc-bg-0)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.4)' }}
             />
@@ -121,10 +121,10 @@ export default function CreateCurbDropModal({ truck, onClose }) {
               <label className="block text-[10px] font-bold tracking-widest mb-1.5" style={{ color: 'var(--cc-ink-dim)' }}>DEAL PRICE *</label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 font-bold text-sm" style={{ color: 'var(--cc-warm)' }}>$</span>
-                <input type="number"min="0"step="0.01"
+                <input type="number" min="0" step="0.01"
                   value={form.deal_price}
                   onChange={e => set('deal_price', e.target.value)}
-                  placeholder="5.00"className="w-full rounded-xl pl-7 pr-4 py-3 text-sm outline-none"
+                  placeholder="5.00" className="w-full rounded-xl pl-7 pr-4 py-3 text-sm outline-none"
                   style={{ background: 'var(--cc-bg-0)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-warm-rgb),0.3)' }}
                 />
               </div>
@@ -133,10 +133,10 @@ export default function CreateCurbDropModal({ truck, onClose }) {
               <label className="block text-[10px] font-bold tracking-widest mb-1.5" style={{ color: 'var(--cc-ink-dim)' }}>ORIGINAL PRICE</label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 font-bold text-sm" style={{ color: 'var(--cc-ink-dim)' }}>$</span>
-                <input type="number"min="0"step="0.01"
+                <input type="number" min="0" step="0.01"
                   value={form.original_price}
                   onChange={e => set('original_price', e.target.value)}
-                  placeholder="12.00"className="w-full rounded-xl pl-7 pr-4 py-3 text-sm outline-none"
+                  placeholder="12.00" className="w-full rounded-xl pl-7 pr-4 py-3 text-sm outline-none"
                   style={{ background: 'var(--cc-bg-0)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.4)' }}
                 />
               </div>
@@ -182,7 +182,7 @@ export default function CreateCurbDropModal({ truck, onClose }) {
             <label className="block text-[10px] font-bold tracking-widest mb-1.5" style={{ color: 'var(--cc-ink-dim)' }}>PHOTO (optional)</label>
             {form.image_url ? (
               <div className="relative rounded-2xl overflow-hidden" style={{ height: '120px' }}>
-                <img src={form.image_url} alt="drop"className="w-full h-full object-cover" />
+                <img src={form.image_url} alt="drop" className="w-full h-full object-cover" />
                 <button onClick={() => set('image_url','')}
                   className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center"
                   style={{ background: 'rgba(13,21,23,0.8)' }}>
@@ -196,7 +196,7 @@ export default function CreateCurbDropModal({ truck, onClose }) {
                 <span className="text-xs font-semibold" style={{ color: 'var(--cc-ink-dim)'}}>
                   {uploading ?'Uploading...':'Tap to upload'}
                 </span>
-                <input type="file"accept="image/*"className="hidden"onChange={handleImageUpload} disabled={uploading} />
+                <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploading} />
               </label>
             )}
           </div>

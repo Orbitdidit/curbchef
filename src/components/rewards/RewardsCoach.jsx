@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { base44 } from'@/api/base44Client';
-import { Send, Sparkles, X } from'lucide-react';
-import ReactMarkdown from'react-markdown';
+import { base44 } from '@/api/base44Client';
+import { Send, Sparkles, X } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 const STARTER_PROMPTS = [
   "How close am I to VIP?",
@@ -209,7 +209,7 @@ export default function RewardsCoach({ user, reward }) {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && sendMessage()}
-            placeholder="Ask about your rewards..."className="flex-1 px-4 py-2.5 rounded-xl text-sm outline-none"
+            placeholder="Ask about your rewards..." className="flex-1 px-4 py-2.5 rounded-xl text-sm outline-none"
             style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}
           />
           <button onClick={sendMessage} disabled={loading || !input.trim()}

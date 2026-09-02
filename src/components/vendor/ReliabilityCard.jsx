@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, AlertTriangle } from'lucide-react';
+import { ShieldCheck, AlertTriangle } from 'lucide-react';
 
 /**
  * Vendor-facing reliability score card shown on the dashboard.
@@ -35,24 +35,24 @@ export default function ReliabilityCard({ truck }) {
 
       <div className="p-4">
         <div className="flex items-center gap-2 mb-4">
-          <ShieldCheck className="w-4 h-4"style={{ color: ringColor }} />
-          <p className="text-[10px] font-bold tracking-widest"style={{ color: ringColor }}>RELIABILITY SCORE</p>
+          <ShieldCheck className="w-4 h-4" style={{ color: ringColor }} />
+          <p className="text-[10px] font-bold tracking-widest" style={{ color: ringColor }}>RELIABILITY SCORE</p>
         </div>
 
         <div className="flex items-center gap-5 mb-4">
           {/* Score ring */}
           <div className="flex-shrink-0 relative">
-            <svg width="72"height="72"viewBox="0 0 72 72">
-              <circle cx="36"cy="36"r={r} fill="none"stroke="rgba(var(--cc-line-rgb),0.4)"strokeWidth="6"/>
+            <svg width="72" height="72" viewBox="0 0 72 72">
+              <circle cx="36" cy="36" r={r} fill="none" stroke="rgba(var(--cc-line-rgb),0.4)" strokeWidth="6"/>
               <circle
-                cx="36"cy="36"r={r}
-                fill="none"stroke={ringColor}
-                strokeWidth="6"strokeDasharray={`${dash} ${circ}`}
-                strokeLinecap="round"transform="rotate(-90 36 36)"style={{ filter: `drop-shadow(0 0 6px ${ringColor}60)` }}
+                cx="36" cy="36" r={r}
+                fill="none" stroke={ringColor}
+                strokeWidth="6" strokeDasharray={`${dash} ${circ}`}
+                strokeLinecap="round" transform="rotate(-90 36 36)" style={{ filter: `drop-shadow(0 0 6px ${ringColor}60)` }}
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="font-display text-lg"style={{ color: ringColor }}>{score}</span>
+              <span className="font-display text-lg" style={{ color: ringColor }}>{score}</span>
             </div>
           </div>
 
@@ -68,7 +68,7 @@ export default function ReliabilityCard({ truck }) {
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-black" style={{ color: count > 0 ? color : 'var(--cc-ink-dim)' }}>{count}×</span>
                   {count > 0 && (
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"style={{ background: `${color}20`, color }}>
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: `${color}20`, color }}>
                       −{penalty} pts
                     </span>
                   )}

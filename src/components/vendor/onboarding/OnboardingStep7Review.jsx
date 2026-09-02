@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, AlertCircle } from'lucide-react';
+import { CheckCircle2, AlertCircle } from 'lucide-react';
 
 export default function OnboardingStep7Review({ truck, menuItems, onComplete }) {
   const checks = [

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { base44 } from'@/api/base44Client';
-import { useNavigate } from'react-router-dom';
-import { ChevronLeft, ChevronRight, MapPin, Upload, Plus, Trash2, Check, Flame } from'lucide-react';
-import { useToast } from'@/components/ui/use-toast';
-import OnboardingGuideChat from'@/components/onboarding/OnboardingGuideChat';
-import PermitsStep from'@/components/onboarding/PermitsStep';
+import { base44 } from '@/api/base44Client';
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, MapPin, Upload, Plus, Trash2, Check, Flame } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
+import OnboardingGuideChat from '@/components/onboarding/OnboardingGuideChat';
+import PermitsStep from '@/components/onboarding/PermitsStep';
 
 const STEPS = ['Vendor Type','Basic Info','Location','Permits','Media','Menu','Go Live','Kitchen Check','Preview'];
 
@@ -259,7 +259,7 @@ export default function OnboardTruck() {
               </div>
             ))}
             <div>
-              <p className="mb-2"style={labelStyle}>CUISINE TYPE</p>
+              <p className="mb-2" style={labelStyle}>CUISINE TYPE</p>
               <div className="flex flex-wrap gap-2">
                 {CUISINES.map(c => (
                   <button key={c} onClick={() => set('cuisine_type', c)}
@@ -282,8 +282,8 @@ export default function OnboardTruck() {
             <h2 className="font-display text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Where are you parked? </h2>
             <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Set your current zone or location.</p>
             <div>
-              <p className="mb-1.5"style={labelStyle}>CITY / ZONE</p>
-              <input type="text"placeholder="Houston, TX" value={form.city}
+              <p className="mb-1.5" style={labelStyle}>CITY / ZONE</p>
+              <input type="text" placeholder="Houston, TX" value={form.city}
                 onChange={e => set('city', e.target.value)} className={inputClass} style={inputStyle} />
             </div>
             <button onClick={handleGeolocate}
@@ -317,7 +317,7 @@ export default function OnboardTruck() {
               { key:'truck_photo_url', label:'TRUCK PHOTO' },
             ].map(({ key, label }) => (
               <div key={key}>
-                <p className="mb-2"style={labelStyle}>{label}</p>
+                <p className="mb-2" style={labelStyle}>{label}</p>
                 {form[key] ? (
                   <div className="relative h-32 rounded-2xl overflow-hidden">
                     <img src={form[key]} alt={label} className="w-full h-full object-cover" />
@@ -334,17 +334,17 @@ export default function OnboardTruck() {
                       <Upload className="w-6 h-6" style={{ color: 'var(--cc-accent)' }} />
                       <span className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>Tap to upload</span>
                     </div>
-                    <input type="file"accept="image/*"className="hidden"onChange={e => handleFileUpload(e, key)} />
+                    <input type="file" accept="image/*" className="hidden" onChange={e => handleFileUpload(e, key)} />
                   </label>
                 )}
               </div>
             ))}
             <div>
-              <p className="mb-2"style={labelStyle}>FOOD IMAGES ({form.food_images.length}/5)</p>
+              <p className="mb-2" style={labelStyle}>FOOD IMAGES ({form.food_images.length}/5)</p>
               <div className="grid grid-cols-3 gap-2">
                 {form.food_images.map((url, i) => (
                   <div key={i} className="relative aspect-square rounded-xl overflow-hidden">
-                    <img src={url} alt=""className="w-full h-full object-cover" />
+                    <img src={url} alt="" className="w-full h-full object-cover" />
                     <button onClick={() => set('food_images', form.food_images.filter((_, idx) => idx !== i))}
                       className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center"
                       style={{ background: 'rgba(13,21,23,0.85)' }}>
@@ -356,7 +356,7 @@ export default function OnboardTruck() {
                   <label className="aspect-square rounded-xl flex items-center justify-center cursor-pointer"
                     style={{ background: 'var(--cc-bg-2)', border:'2px dashed rgba(var(--cc-accent-rgb),0.2)' }}>
                     <Plus className="w-6 h-6" style={{ color: 'var(--cc-accent)' }} />
-                    <input type="file"accept="image/*"className="hidden"onChange={handleFoodImageUpload} />
+                    <input type="file" accept="image/*" className="hidden" onChange={handleFoodImageUpload} />
                   </label>
                 )}
               </div>
@@ -382,7 +382,7 @@ export default function OnboardTruck() {
                 <input placeholder="Item name" value={item.name} onChange={e => updateMenuItem(i, 'name', e.target.value)}
                   className={inputClass} style={{ ...inputStyle, background:'#0f1a1c' }} />
                 <div className="flex gap-2">
-                  <input placeholder="Price ($)"type="number" value={item.price} onChange={e => updateMenuItem(i, 'price', e.target.value)}
+                  <input placeholder="Price ($)" type="number" value={item.price} onChange={e => updateMenuItem(i, 'price', e.target.value)}
                     className={inputClass} style={{ ...inputStyle, background:'#0f1a1c', flex: 1 }} />
                   <input placeholder="Prep time" value={item.prep_time} onChange={e => updateMenuItem(i, 'prep_time', e.target.value)}
                     className={inputClass} style={{ ...inputStyle, background:'#0f1a1c', flex: 1 }} />
@@ -428,7 +428,7 @@ export default function OnboardTruck() {
             ))}
             {form.is_opening_soon && (
               <div>
-                <p className="mb-1.5"style={labelStyle}>COUNTDOWN (MINUTES)</p>
+                <p className="mb-1.5" style={labelStyle}>COUNTDOWN (MINUTES)</p>
                 <input type="number" value={form.countdown_minutes} onChange={e => set('countdown_minutes', parseInt(e.target.value))}
                   className={inputClass} style={inputStyle} />
               </div>
@@ -444,7 +444,7 @@ export default function OnboardTruck() {
               Snap a quick photo of your kitchen interior to build customer trust. This is auto-timestamped as "Checked Today."</p>
             {form.kitchen_check_photo ? (
               <div className="relative rounded-3xl overflow-hidden">
-                <img src={form.kitchen_check_photo} alt="Kitchen"className="w-full h-48 object-cover"/>
+                <img src={form.kitchen_check_photo} alt="Kitchen" className="w-full h-48 object-cover"/>
                 <div className="absolute bottom-3 left-3 right-3">
                   <div className="flex items-center gap-2 px-3 py-2 rounded-xl"
                     style={{ background: 'rgba(13,21,23,0.85)', backdropFilter:'blur(10px)' }}>
@@ -472,7 +472,7 @@ export default function OnboardTruck() {
                     <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-dim)' }}>Auto-timestamped for customers</p>
                   </div>
                 </div>
-                <input type="file"accept="image/*"capture="environment"className="hidden"onChange={handleKitchenCheck} />
+                <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleKitchenCheck} />
               </label>
             )}
             <p className="text-xs text-center" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -489,7 +489,7 @@ export default function OnboardTruck() {
 
             <div className="p-5 rounded-3xl space-y-3" style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-accent-rgb),0.15)' }}>
               {form.truck_photo_url && (
-                <img src={form.truck_photo_url} alt="Truck"className="w-full h-36 object-cover rounded-2xl"/>
+                <img src={form.truck_photo_url} alt="Truck" className="w-full h-36 object-cover rounded-2xl"/>
               )}
               <h3 className="font-display text-xl" style={{ color: 'var(--cc-ink)'}}>{form.truck_name ||'—'}</h3>
               <p className="text-sm capitalize" style={{ color: 'var(--cc-ink-dim)'}}>{form.cuisine_type?.replace('_','')} • {form.city}</p>

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from'react-router-dom';
-import { useAssistant } from'./AssistantContext';
-import { Star, MapPin, ChevronRight, RotateCcw } from'lucide-react';
-import { formatDist } from'@/lib/geoUtils';
+import { Link } from 'react-router-dom';
+import { useAssistant } from './AssistantContext';
+import { Star, MapPin, ChevronRight, RotateCcw } from 'lucide-react';
+import { formatDist } from '@/lib/geoUtils';
 
 export default function AssistantResults() {
   const { state, reset, setOpen } = useAssistant();

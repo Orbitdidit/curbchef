@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { base44 } from'@/api/base44Client';
-import { useQuery } from'@tanstack/react-query';
-import { Star, Lock } from'lucide-react';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
+import { Star, Lock } from 'lucide-react';
 
 function TruckModal({ truck, onClose, onJoin }) {
   return (
@@ -84,7 +84,7 @@ export default function TruckPeekSection({ onJoinWaitlist }) {
               className="flex-shrink-0 rounded-3xl overflow-hidden relative active:scale-95 transition-transform text-left"
               style={{ width: 200, background: 'var(--cc-bg-1)', border:'1px solid rgba(var(--cc-line-rgb),0.3)' }}>
               {/* Image */}
-              <div className="relative"style={{ height: 140 }}>
+              <div className="relative" style={{ height: 140 }}>
                 <img src={img} alt={truck.name} className="w-full h-full object-cover"/>
                 {/* Blur overlay on bottom 30% for deal teaser */}
                 <div className="absolute bottom-0 left-0 right-0 h-14 flex items-center justify-center"

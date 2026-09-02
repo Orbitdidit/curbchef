@@ -1,16 +1,16 @@
 import React, { useState, useRef } from 'react';
-import { base44 } from'@/api/base44Client';
-import { useQuery } from'@tanstack/react-query';
-import { Copy, Check, Flame } from'lucide-react';
-import confetti from'canvas-confetti';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
+import { Copy, Check, Flame } from 'lucide-react';
+import confetti from 'canvas-confetti';
 
-import TruckPeekSection from'@/components/landing/TruckPeekSection';
-import DropsPreviewSection from'@/components/landing/DropsPreviewSection';
-import PerksSection from'@/components/landing/PerksSection';
-import VendorSection from'@/components/landing/VendorSection';
-import ParkPartnershipsSection from'@/components/landing/ParkPartnershipsSection';
-import StickyBottomCTA from'@/components/landing/StickyBottomCTA';
-import WaitlistModal from'@/components/landing/WaitlistModal';
+import TruckPeekSection from '@/components/landing/TruckPeekSection';
+import DropsPreviewSection from '@/components/landing/DropsPreviewSection';
+import PerksSection from '@/components/landing/PerksSection';
+import VendorSection from '@/components/landing/VendorSection';
+import ParkPartnershipsSection from '@/components/landing/ParkPartnershipsSection';
+import StickyBottomCTA from '@/components/landing/StickyBottomCTA';
+import WaitlistModal from '@/components/landing/WaitlistModal';
 
 function getReferralCode() {
   const params = new URLSearchParams(window.location.search);
@@ -68,12 +68,12 @@ function ReferralSuccess({ email }) {
       </div>
       <div className="flex gap-2">
         <a href={`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`}
-          target="_blank"rel="noopener noreferrer"className="flex-1 py-2.5 rounded-xl text-xs font-bold text-center"
+          target="_blank" rel="noopener noreferrer" className="flex-1 py-2.5 rounded-xl text-xs font-bold text-center"
           style={{ background: '#1d9bf0', color:'white' }}>𝕏 Tweet</a>
         <a href={`https://wa.me/?text=${shareText}%20${encodeURIComponent(shareUrl)}`}
-          target="_blank"rel="noopener noreferrer"className="flex-1 py-2.5 rounded-xl text-xs font-bold text-center"
+          target="_blank" rel="noopener noreferrer" className="flex-1 py-2.5 rounded-xl text-xs font-bold text-center"
           style={{ background: '#25D366', color:'white' }}>WhatsApp</a>
-        <a href="https://www.instagram.com/"target="_blank"rel="noopener noreferrer"className="flex-1 py-2.5 rounded-xl text-xs font-bold text-center"
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="flex-1 py-2.5 rounded-xl text-xs font-bold text-center"
           style={{ background: 'linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)', color:'white'}}>Instagram</a>
       </div>
     </div>
@@ -123,14 +123,14 @@ function HeroForm({ onSuccess }) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-      <input type="email"placeholder="your@email.com"value={email} onChange={e => setEmail(e.target.value)} required
+      <input type="email" placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} required
         className="w-full px-4 py-3.5 rounded-2xl text-sm outline-none"
         style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.5)' }} />
-      <input type="tel"placeholder="Phone number (optional — for launch alerts)"value={phone} onChange={e => setPhone(e.target.value)}
+      <input type="tel" placeholder="Phone number (optional — for launch alerts)" value={phone} onChange={e => setPhone(e.target.value)}
         className="w-full px-4 py-3.5 rounded-2xl text-sm outline-none"
         style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.5)' }} />
       {error && <p className="text-xs px-1" style={{ color: 'var(--cc-warm)' }}>{error}</p>}
-      <button type="submit"disabled={loading}
+      <button type="submit" disabled={loading}
         className="w-full py-4 rounded-full font-display text-base transition-all active:scale-95"
         style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 28px rgba(var(--cc-accent-rgb),0.35)', opacity: loading ? 0.7 : 1 }}>
         {loading ?'Joining...':' Join the Waitlist'}
@@ -174,7 +174,7 @@ export default function LandingPage() {
       {/* ── HERO ── */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden" style={{ position: 'relative' }}>
         {heroConfig?.video_url ? (
-          <video className="absolute inset-0 w-full h-full object-cover"src={heroConfig.video_url} autoPlay loop muted playsInline
+          <video className="absolute inset-0 w-full h-full object-cover" src={heroConfig.video_url} autoPlay loop muted playsInline
             poster={heroConfig.poster_url || undefined} />
         ) : (
           <div className="absolute inset-0 dot-bg" style={{ background: '#080f11' }} />

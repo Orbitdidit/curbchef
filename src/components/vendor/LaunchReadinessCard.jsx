@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from'@/api/base44Client';
-import { useQuery, useQueryClient } from'@tanstack/react-query';
-import { Link } from'react-router-dom';
-import { CheckCircle2, XCircle, ChevronDown, ChevronUp, Rocket } from'lucide-react';
+import { base44 } from '@/api/base44Client';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
+import { CheckCircle2, XCircle, ChevronDown, ChevronUp, Rocket } from 'lucide-react';
 
 const CHECKS = [
   {
@@ -145,12 +145,12 @@ export default function LaunchReadinessCard({ truck, menuItems, onLaunchReadyCha
         <div className="flex items-center gap-4">
           {/* Circular progress ring */}
           <div className="relative flex-shrink-0 w-16 h-16">
-            <svg width="64"height="64"className="transform -rotate-90">
-              <circle cx="32"cy="32"r={r} fill="none"stroke="rgba(var(--cc-line-rgb),0.4)"strokeWidth="5"/>
+            <svg width="64" height="64" className="transform -rotate-90">
+              <circle cx="32" cy="32" r={r} fill="none" stroke="rgba(var(--cc-line-rgb),0.4)" strokeWidth="5"/>
               <circle
-                cx="32"cy="32"r={r} fill="none"
+                cx="32" cy="32" r={r} fill="none"
                 stroke={pct >= 75 ? 'var(--cc-accent-2)': pct >= 40 ?'var(--cc-amber)':'var(--cc-warm)'}
-                strokeWidth="5"strokeDasharray={circ}
+                strokeWidth="5" strokeDasharray={circ}
                 strokeDashoffset={dashOffset}
                 strokeLinecap="round"
                 style={{ transition: 'stroke-dashoffset 0.6s ease' }}

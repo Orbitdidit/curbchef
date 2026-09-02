@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { base44 } from'@/api/base44Client';
-import { Sparkles, Zap, TrendingUp, Tag, ChevronRight, Star, CheckCircle2, Loader2 } from'lucide-react';
-import { useToast } from'@/components/ui/use-toast';
+import { base44 } from '@/api/base44Client';
+import { Sparkles, Zap, TrendingUp, Tag, ChevronRight, Star, CheckCircle2, Loader2 } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 function getVisibilityScore(truck, menuItems) {
   let score = 0;
@@ -56,10 +56,10 @@ export default function DashboardDave({ truck, menuItems = [] }) {
 
   const getSuggestion = () => {
     if (!truck.image_url) return "Add a logo photo to get 3× more profile clicks.";
-    if (menuItems.length < 5) return"Add more menu items — trucks with 5+ items get discovered more.";
-    if (!menuItems.some(i => i.price <= 8)) return"Add a $5–$8 item to appear in Cheap Eats listings.";
-    if (!truck.cover_image_url) return"A cover photo makes your truck page look pro and trustworthy.";
-    return" You're looking good! Go live today to boost visibility.";
+    if (menuItems.length < 5) return "Add more menu items — trucks with 5+ items get discovered more.";
+    if (!menuItems.some(i => i.price <= 8)) return "Add a $5–$8 item to appear in Cheap Eats listings.";
+    if (!truck.cover_image_url) return "A cover photo makes your truck page look pro and trustworthy.";
+    return " You're looking good! Go live today to boost visibility.";
   };
 
   const handleBoost = async () => {
@@ -101,11 +101,11 @@ export default function DashboardDave({ truck, menuItems = [] }) {
         <div>
           <div className="flex items-center justify-between mb-2">
             <p className="text-[10px] font-bold tracking-widest" style={{ color: 'var(--cc-ink-dim)' }}>VISIBILITY SCORE</p>
-            <span className="text-[11px] font-black"style={{ color: scoreColor }}>{scoreLabel}</span>
+            <span className="text-[11px] font-black" style={{ color: scoreColor }}>{scoreLabel}</span>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex-1 h-2.5 rounded-full overflow-hidden" style={{ background: 'var(--cc-bg-0)' }}>
-              <div className="h-full rounded-full transition-all duration-700"style={{ width: `${score}%`, background: `linear-gradient(90deg, ${scoreColor}, ${scoreColor}aa)` }} />
+              <div className="h-full rounded-full transition-all duration-700" style={{ width: `${score}%`, background: `linear-gradient(90deg, ${scoreColor}, ${scoreColor}aa)` }} />
             </div>
             <span className="font-display text-lg flex-shrink-0" style={{ color: scoreColor }}>{score}</span>
           </div>

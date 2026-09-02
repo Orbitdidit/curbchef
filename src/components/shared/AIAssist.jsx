@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { base44 } from'@/api/base44Client';
-import { Sparkles, ChevronDown } from'lucide-react';
+import { base44 } from '@/api/base44Client';
+import { Sparkles, ChevronDown } from 'lucide-react';
 
 const ACTIONS = [
   { id:'headline', label:'Suggest Headline'},
@@ -50,7 +50,7 @@ export default function AIAssist({ value, context, onApply }) {
   return (
     <div className="relative inline-block">
       <button
-        type="button"onClick={() => setOpen(o => !o)}
+        type="button" onClick={() => setOpen(o => !o)}
         disabled={!!loading}
         className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold transition-all"
         style={{
@@ -70,7 +70,7 @@ export default function AIAssist({ value, context, onApply }) {
 
       {open && (
         <>
-          <div className="fixed inset-0 z-40"onClick={() => setOpen(false)} />
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
           <div
             className="absolute right-0 top-full mt-1 z-50 rounded-2xl overflow-hidden shadow-xl"
             style={{ background: 'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-accent-rgb),0.2)', minWidth:'180px' }}

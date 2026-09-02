@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { base44 } from'@/api/base44Client';
-import confetti from'canvas-confetti';
+import { base44 } from '@/api/base44Client';
+import confetti from 'canvas-confetti';
 
 export default function WaitlistModal({ source, onClose, onSuccess }) {
   const [email, setEmail] = useState('');
@@ -66,14 +66,14 @@ export default function WaitlistModal({ source, onClose, onSuccess }) {
           Founding members get lifetime perks — limited spots.
         </p>
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <input type="email"placeholder="your@email.com"value={email} onChange={e => setEmail(e.target.value)} required
+          <input type="email" placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} required
             className="w-full px-4 py-3.5 rounded-2xl text-sm outline-none"
             style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.5)' }} />
-          <input type="tel"placeholder="Phone (optional — for launch alerts)"value={phone} onChange={e => setPhone(e.target.value)}
+          <input type="tel" placeholder="Phone (optional — for launch alerts)" value={phone} onChange={e => setPhone(e.target.value)}
             className="w-full px-4 py-3.5 rounded-2xl text-sm outline-none"
             style={{ background: 'var(--cc-bg-2)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.5)' }} />
           {error && <p className="text-xs px-1" style={{ color: 'var(--cc-warm)' }}>{error}</p>}
-          <button type="submit"disabled={loading}
+          <button type="submit" disabled={loading}
             className="w-full py-4 rounded-full font-display text-base transition-all active:scale-95"
             style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 24px rgba(var(--cc-accent-rgb),0.3)', opacity: loading ? 0.7 : 1 }}>
             {loading ?'Joining...':' Join the Waitlist'}
