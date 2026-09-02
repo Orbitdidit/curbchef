@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Search as SearchIcon } from 'lucide-react';
+import { ChevronLeft, Search as SearchIcon, SearchX } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import TruckCard from '../components/home/TruckCard';
 
@@ -44,7 +44,7 @@ export default function Search() {
 
       {filtered.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-4xl mb-2"></p>
+          <SearchX className="w-10 h-10 mb-2 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
           <p className="text-muted-foreground text-sm">No trucks found</p>
         </div>
       ) : (

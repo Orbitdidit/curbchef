@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Package, ChefHat, CheckCircle, QrCode, ChevronRight, Star } from 'lucide-react';
+import { Package, ChefHat, CheckCircle, QrCode, ChevronRight, Star, ClipboardList } from 'lucide-react';
 import { usePullToRefresh } from '@/hooks/usePullToRefresh';
 import PullIndicator from '@/components/layout/PullIndicator';
 import AssistantNudge from '@/components/assistant/AssistantNudge';
@@ -58,7 +58,7 @@ export default function Orders() {
         <div>
           {/* Empty hero */}
           <div className="text-center py-10">
-            <div className="text-5xl mb-3"></div>
+            <ClipboardList className="w-12 h-12 mb-3 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
             <h2 className="font-display text-xl mb-1" style={{ color:'var(--cc-ink)'}}>No orders yet</h2>
             <p className="text-sm mb-5" style={{ color:'var(--cc-ink-dim)'}}>Find a truck and start your first order</p>
             <Link to="/">

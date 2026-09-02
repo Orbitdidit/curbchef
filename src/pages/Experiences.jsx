@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Star, MapPin, Users, DollarSign, Send, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, MapPin, Users, DollarSign, Send, Sparkles, ChefHat } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
 const EXPERIENCE_TYPES = [
@@ -158,7 +158,7 @@ function InquiryModal({ chef, onClose }) {
         <div className="p-5">
           {done ? (
             <div className="text-center py-10">
-              <div className="text-5xl mb-4"></div>
+              <ChefHat className="w-12 h-12 mb-4 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
               <h3 className="font-display text-xl mb-2" style={{ color: 'var(--cc-cream)' }}>Inquiry Sent!</h3>
               <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-muted)' }}>
                 {chef.chef_name} will review your request and reach out within 24 hours.

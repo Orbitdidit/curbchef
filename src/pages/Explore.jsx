@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Search, Star, MapPin, Clock, LayoutGrid, List, AlignJustify, SlidersHorizontal } from 'lucide-react';
+import { Search, Star, MapPin, Clock, LayoutGrid, List, AlignJustify, SlidersHorizontal, SearchX } from 'lucide-react';
 import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
 import AssistantFAB from '@/components/assistant/AssistantFAB';
 
@@ -336,7 +336,7 @@ export default function Explore() {
             )}
             {filtered.length === 0 && (
               <div className="text-center py-16">
-                <p className="text-4xl mb-3"></p>
+                <SearchX className="w-10 h-10 mb-3 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
                 <p className="font-display" style={{ color:'var(--cc-ink)'}}>No trucks found</p>
                 <p className="text-sm mt-1" style={{ color:'var(--cc-ink-dim)'}}>Try a different search</p>
               </div>

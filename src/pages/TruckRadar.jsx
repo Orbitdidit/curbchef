@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, Link } from 'react-router-dom';
-import { ChevronLeft, Radio } from 'lucide-react';
+import { ChevronLeft, Radio, Radar, Truck } from 'lucide-react';
 import { distanceMiles } from '@/lib/geoUtils';
 
 // ── Bearing calculation (degrees 0-360) ──────────────────────────────────────
@@ -229,7 +229,7 @@ export default function TruckRadar() {
   if (!isSupported || status === 'unsupported') {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-8 text-center" style={{ background: 'var(--cc-bg-0)' }}>
-        <div className="text-6xl mb-6"></div>
+        <Radar className="w-14 h-14 mb-6 mx-auto" style={{ color: 'var(--cc-ink-muted)' }} />
         <h1 className="font-display text-2xl mb-3" style={{ color: 'var(--cc-ink)' }}>Truck Radar</h1>
         <p className="text-base leading-relaxed mb-8" style={{ color: 'var(--cc-ink-dim)' }}>
           Truck Radar works best on your phone — camera and compass required.
@@ -249,7 +249,7 @@ export default function TruckRadar() {
   if (status === 'error') {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-8 text-center" style={{ background: 'var(--cc-bg-0)' }}>
-        <div className="text-6xl mb-6"></div>
+        <Radar className="w-14 h-14 mb-6 mx-auto" style={{ color: 'var(--cc-ink-muted)' }} />
         <h1 className="font-display text-xl mb-3" style={{ color: 'var(--cc-ink)'}}>Couldn't Start Radar</h1>
         <p className="text-sm mb-8" style={{ color: 'var(--cc-ink-dim)' }}>{errorMsg}</p>
         <button onClick={startRadar} className="px-6 py-3 rounded-full font-bold"
@@ -277,7 +277,7 @@ export default function TruckRadar() {
               style={{ background: 'rgba(var(--cc-accent-rgb),0.08)', border:'2px solid rgba(var(--cc-accent-rgb),0.25)' }}>
               <div className="w-20 h-20 rounded-full flex items-center justify-center"
                 style={{ background: 'rgba(var(--cc-accent-rgb),0.12)', border:'2px solid rgba(var(--cc-accent-rgb),0.35)' }}>
-                <span className="text-4xl"></span>
+                <Truck className="w-9 h-9" style={{ color: 'var(--cc-ink-faint)' }} />
               </div>
             </div>
             {/* pulsing ring */}
