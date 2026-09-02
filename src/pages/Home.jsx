@@ -6,7 +6,7 @@ import { Mic, Search, ChevronDown, Bell } from 'lucide-react';
 
 // Home sections
 import CategoryRow from '@/components/home/CategoryRow';
-import DropsNearYou from '@/components/home/DropsNearYou';
+import CurbDropsBand from '@/components/home/CurbDropsBand';
 import LiveCarousel from '@/components/home/LiveCarousel';
 import CarouselSection from '@/components/home/CarouselSection';
 import ActivityFeed from '@/components/home/ActivityFeed';
@@ -269,14 +269,8 @@ export default function Home() {
       {/* ── FOLLOWED TRUCKS ── */}
       <FollowedTrucksRail user={user} trucks={visibleTrucks} />
 
-      {/* ── 6. CURB DROPS ── */}
-      <div className="mt-8">
-        <div className="flex items-center justify-between px-4 mb-3">
-          <h2 className="font-display text-lg" style={{ color:'var(--cc-cream)'}}> Curb Drops</h2>
-          <Link to="/deals" className="text-xs font-semibold tracking-widest uppercase" style={{ color:'var(--cc-ink-faint)'}}>Flash Deals</Link>
-        </div>
-        <DropsNearYou />
-      </div>
+      {/* ── 6. CURB DROPS — full-bleed warm band (the 30%) ── */}
+      <CurbDropsBand />
 
       {/* ── $5 SPECIALS ── */}
       <FiveDollarSpecials trucks={visibleTrucks} />
@@ -312,15 +306,13 @@ export default function Home() {
         <CompactStatsStrip user={user} />
       </div>
 
-      {/* ── TRUCK PARKS ── */}
-      <TruckParksRail />
-
-      {/* ── ACTIVITY FEED ── */}
-      <div className="mt-8">
-        <ActivityFeed trucks={visibleTrucks} />
-      </div>
-
-      <div className="h-8"/>
+      {/* ── CREAM SECTION (the 20%) — parks + activity on light ── */}
+      <section className="cc-cream-section mt-10 pt-8 pb-10">
+        <TruckParksRail />
+        <div className="mt-8">
+          <ActivityFeed trucks={visibleTrucks} />
+        </div>
+      </section>
     </div>
   );
 }
