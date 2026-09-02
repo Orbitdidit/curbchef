@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Bell } from 'lucide-react';
+import { ChevronLeft, Bell, ClipboardList } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import OrderEtaBadge from '@/components/vendor/OrderEtaBadge';
 import { parseServerDate, formatLocalTime } from '@/lib/timeUtils';
@@ -232,7 +232,7 @@ export default function VendorOrders() {
       <div className="px-5 flex flex-col gap-4 pb-10">
         {tabOrders.length === 0 ? (
           <div className="py-16 text-center">
-            <p className="text-4xl mb-2"></p>
+            <ClipboardList className="w-10 h-10 mb-2 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
             <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>No {activeTab} orders</p>
           </div>
         ) : (

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
-import { ChevronLeft, Camera, Upload, Zap, Flame, Leaf, Beef, Wheat, Droplets, AlertCircle, TrendingUp } from 'lucide-react';
+import { ChevronLeft, Camera, Upload, Zap, Flame, Leaf, Beef, Wheat, Droplets, AlertCircle, TrendingUp, Truck } from 'lucide-react';
 
 function MacroBar({ label, value, max, color, icon: Icon }) {
   const pct = Math.min((value / max) * 100, 100);
@@ -252,7 +252,7 @@ export default function FoodScan() {
                       <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0" style={{ background: 'var(--cc-bg-3)' }}>
                         {truck.image_url
                           ? <img src={truck.image_url} alt={truck.name} className="w-full h-full object-cover" />
-                          : <div className="w-full h-full flex items-center justify-center text-xl"></div>
+                          : <div className="w-full h-full flex items-center justify-center"><Truck className="w-5 h-5" style={{ color: 'var(--cc-ink-faint)' }} /></div>
                         }
                       </div>
                       <div className="flex-1 min-w-0">

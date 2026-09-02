@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Save, ToggleLeft, ToggleRight, ImageIcon, FileText, Utensils } from 'lucide-react';
+import { ChevronLeft, Save, ToggleLeft, ToggleRight, ImageIcon, FileText, Utensils, Truck } from 'lucide-react';
 import VendorGate from '@/components/vendor/VendorGate';
 import MediaUpload from '@/components/shared/MediaUpload';
 import CoverMediaUploader from '@/components/vendor/CoverMediaUploader';
@@ -47,7 +47,7 @@ function MenuAvailabilityToggle({ truckId }) {
 
   if (!menuItems.length) return (
     <div className="text-center py-10">
-      <p className="text-2xl mb-2"></p>
+      <Truck className="w-7 h-7 mb-2 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
       <p className="text-sm font-bold" style={{ color: 'var(--cc-ink)' }}>No menu items yet</p>
       <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-dim)' }}>Add items from the Menu tab first</p>
     </div>

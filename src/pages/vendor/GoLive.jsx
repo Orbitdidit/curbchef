@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { X, RefreshCw, Square } from 'lucide-react';
+import { X, RefreshCw, Square, Radio } from 'lucide-react';
 import VendorGate from '@/components/vendor/VendorGate';
 
 // ── helpers ──────────────────────────────────────────────────────────────────
@@ -35,7 +35,7 @@ function ErrorScreen({ message, onClose }) {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center px-8 text-center z-50"
       style={{ background: 'var(--cc-bg-0)' }}>
-      <span className="text-5xl mb-4"></span>
+      <Radio className="w-12 h-12 mb-4" style={{ color: 'var(--cc-ink-muted)' }} />
       <p className="font-display text-xl text-white mb-3">{message}</p>
       <button onClick={onClose}
         className="mt-6 px-8 py-3 rounded-full font-display text-sm"
@@ -104,7 +104,7 @@ function SuccessScreen() {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center px-8 text-center z-50"
       style={{ background: 'var(--cc-bg-0)' }}>
-      <div className="text-6xl mb-4 animate-bounce"></div>
+      <Radio className="w-14 h-14 mb-4 animate-pulse" style={{ color: 'var(--cc-cta)' }} />
       <p className="font-display text-2xl text-white mb-3">You're LIVE!</p>
       <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>
         Customers will see your truck in the live feed for the next 15 minutes.

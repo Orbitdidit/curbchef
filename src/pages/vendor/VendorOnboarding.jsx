@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MessageCircle, Truck } from 'lucide-react';
 import OnboardingStep1Basics from '@/components/vendor/onboarding/OnboardingStep1Basics';
 import OnboardingStep2Photos from '@/components/vendor/onboarding/OnboardingStep2Photos';
 import OnboardingStep3Location from '@/components/vendor/onboarding/OnboardingStep3Location';
@@ -83,7 +83,7 @@ export default function VendorOnboarding() {
   if (!truck) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: 'var(--cc-bg-0)' }}>
-        <div className="text-5xl mb-4"></div>
+        <Truck className="w-12 h-12 mb-4" style={{ color: 'var(--cc-ink-muted)' }} />
         <p className="font-display text-xl mb-2" style={{ color: 'var(--cc-ink)' }}>No truck found</p>
         <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)' }}>Ask your CurbChef contact to link your account to a truck.</p>
         <button onClick={() => navigate('/vendor-portal')}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Plus, Pencil, Trash2, ChevronRight } from 'lucide-react';
+import { ChevronLeft, Plus, Pencil, Trash2, ChevronRight, UtensilsCrossed } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
@@ -91,7 +91,7 @@ export default function VendorMenu() {
         </div>
       ) : items.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-5xl mb-3"></p>
+          <UtensilsCrossed className="w-12 h-12 mb-3 mx-auto" style={{ color: 'var(--cc-ink-faint)' }} />
           <p className="text-muted-foreground text-sm">No items yet. Add your first menu item!</p>
         </div>
       ) : (
