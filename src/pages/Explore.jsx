@@ -5,6 +5,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Search, Star, MapPin, Clock, LayoutGrid, List, AlignJustify, SlidersHorizontal, SearchX } from 'lucide-react';
 import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
 import AssistantFAB from '@/components/assistant/AssistantFAB';
+import TruckCard from '@/components/truck/BrowseTruckCard';
 
 const FILTERS = [
   { id:'all', label:'All'},
@@ -27,112 +28,11 @@ const SORTS = [
   { id:'open', label:'Open Now'},
 ];
 
-function TruckCard({ truck, view }) {
-  const { lat, lng } = useUserLocation();
-  const dist = lat && truck.latitude ? formatDist(distanceMiles(lat, lng, truck.latitude, truck.longitude)) : null;
-
-  if (view ==='grid') {
-    return (
-      <Link to={`/truck/${truck.id}`} className="block rounded-2xl overflow-hidden active:opacity-80" style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.15)'}}>
-        <div className="relative" style={{ height:'120px'}}>
-          <img src={truck.image_url ||'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=300'}
-            alt={truck.name} className="w-full h-full object-cover"/>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"/>
-          {truck.is_live && (
-            <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full" style={{ background:'rgba(var(--cc-warm-red-rgb),0.9)'}}>
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"/>
-              <span className="text-[9px] font-black text-white">LIVE</span>
-            </div>
-          )}
-          <div className="absolute bottom-2 left-2">
-            {truck.is_sample ? (
-              <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full" style={{ background:'rgba(251,191,36,0.9)', color:'#1a0f00'}}>DEMO</span>
-            ) : truck.status ==='open'&& (
-              <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full" style={{ background:'rgba(var(--cc-accent-rgb),0.9)', color:'var(--cc-accent-deep)'}}>OPEN</span>
-            )}
-          </div>
-        </div>
-        <div className="p-2.5">
-          <p className="font-display text-xs truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
-          <div className="flex items-center gap-1.5 mt-1">
-            <Star className="w-3 h-3 fill-yellow-400 text-yellow-400"/>
-            <span className="text-[10px] font-bold" style={{ color:'var(--cc-ink)'}}>{truck.rating?.toFixed(1) ||'4.8'}</span>
-            {dist && <span className="text-[10px]" style={{ color:'var(--cc-ink-dim)'}}>· {dist}</span>}
-          </div>
-        </div>
-      </Link>
-    );
-  }
-
-  if (view ==='compact') {
-    return (
-      <Link to={`/truck/${truck.id}`} className="flex items-center gap-3 py-2.5 active:opacity-80" style={{ borderBottom:'1px solid rgba(var(--cc-line-rgb),0.12)'}}>
-        <img src={truck.image_url ||'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=100'}
-          alt={truck.name} className="w-10 h-10 rounded-xl object-cover flex-shrink-0"/>
-        <div className="flex-1 min-w-0">
-          <p className="font-display text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
-          <p className="text-xs capitalize" style={{ color:'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')}</p>
-        </div>
-        <div className="flex items-center gap-1 flex-shrink-0">
-          <Star className="w-3 h-3 fill-yellow-400 text-yellow-400"/>
-          <span className="text-xs font-bold" style={{ color:'var(--cc-ink)'}}>{truck.rating?.toFixed(1) ||'4.8'}</span>
-          {truck.is_live && <span className="ml-1 text-[9px] font-black px-1.5 py-0.5 rounded-full" style={{ background:'var(--cc-warm-red)', color:'white'}}>LIVE</span>}
-        </div>
-      </Link>
-    );
-  }
-
-  // list (default)
-  return (
-    <Link to={`/truck/${truck.id}`} className="flex items-center gap-3 p-3 rounded-2xl active:opacity-80 transition-opacity" style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.15)'}}>
-      <div className="relative flex-shrink-0">
-        <img src={truck.image_url ||'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=200'}
-          alt={truck.name} className="w-16 h-16 rounded-xl object-cover"/>
-        {truck.is_live && (
-          <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center" style={{ background:'var(--cc-warm-red)'}}>
-            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"/>
-          </div>
-        )}
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-1.5 mb-0.5">
-          <p className="font-display text-sm truncate" style={{ color:'var(--cc-ink)'}}>{truck.name}</p>
-          {truck.is_sample ? (
-            <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full flex-shrink-0" style={{ background:'rgba(251,191,36,0.15)', color:'var(--cc-amber)'}}>DEMO</span>
-          ) : truck.status ==='open'&& (
-            <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full flex-shrink-0" style={{ background:'rgba(var(--cc-accent-rgb),0.15)', color:'var(--cc-accent)'}}>OPEN</span>
-          )}
-        </div>
-        <p className="text-xs capitalize mb-1" style={{ color:'var(--cc-ink-dim)'}}>{truck.cuisine_type?.replace('_','')}</p>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-0.5">
-            <Star className="w-3 h-3 fill-yellow-400 text-yellow-400"/>
-            <span className="text-xs font-bold" style={{ color:'var(--cc-ink)'}}>{truck.rating?.toFixed(1) ||'4.8'}</span>
-          </div>
-          {dist && (
-            <div className="flex items-center gap-0.5">
-              <MapPin className="w-3 h-3" style={{ color:'var(--cc-ink-dim)'}} />
-              <span className="text-xs" style={{ color:'var(--cc-ink-dim)'}}>{dist}</span>
-            </div>
-          )}
-          <div className="flex items-center gap-0.5">
-            <Clock className="w-3 h-3" style={{ color:'var(--cc-ink-dim)'}} />
-            <span className="text-xs" style={{ color:'var(--cc-ink-dim)'}}>15–20 min</span>
-          </div>
-        </div>
-      </div>
-      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))'}}>
-        <span className="text-xs font-black" style={{ color:'var(--cc-accent-deep)'}}>→</span>
-      </div>
-    </Link>
-  );
-}
-
 function SectionHeader({ title, emoji }) {
   return (
     <div className="flex items-center gap-2 mb-3">
       <span>{emoji}</span>
-      <h2 className="font-display text-sm" style={{ color:'var(--cc-ink)'}}>{title}</h2>
+      <h2 className="font-heading font-extrabold text-xl" style={{ color:'var(--cc-ink)'}}>{title}</h2>
     </div>
   );
 }
@@ -201,11 +101,11 @@ export default function Explore() {
   ];
 
   return (
-    <div className="min-h-screen pb-32" style={{ background:'var(--cc-bg-0)'}}>
+    <div className="cc-discovery min-h-screen pb-32 bg-discovery-bg">
       <AssistantFAB />
       {/* Sticky header */}
-      <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-3 sticky top-0 z-20" style={{ background:'rgba(13,21,23,0.95)', backdropFilter:'blur(20px)', borderBottom:'1px solid rgba(var(--cc-line-rgb),0.12)'}}>
-        <div className="flex items-center justify-between mb-3">
+      <div className="cc-paper px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-5 sticky top-0 z-20 rounded-b-3xl">
+        <div className="flex items-center justify-between mb-5 pr-14">
           <h1 className="font-display text-xl" style={{ color:'var(--cc-ink)'}}>Explore</h1>
           <div className="flex items-center gap-2">
             {/* Map button */}
@@ -238,19 +138,19 @@ export default function Explore() {
         </div>
 
         {/* Search bar */}
-        <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl mb-3" style={{ background:'#080f11', border:'1px solid rgba(var(--cc-line-rgb),0.25)'}}>
+        <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl mb-3" style={{ background:'var(--cc-bg-2)', border:'1px solid rgba(var(--cc-line-rgb),0.25)'}}>
           <Search className="w-4 h-4 flex-shrink-0" style={{ color:'var(--cc-ink-dim)'}} />
-          <input value={query} onChange={e => setQuery(e.target.value)}
-            placeholder="Tacos, brisket, ramen..." className="flex-1 bg-transparent text-sm outline-none" style={{ color:'var(--cc-ink)'}} />
-          {query && <button onClick={() => setQuery('')} className="text-xs" style={{ color:'var(--cc-ink-dim)'}}></button>}
+          <input aria-label="Search trucks by name or cuisine" value={query} onChange={e => setQuery(e.target.value)}
+            placeholder="Tacos, brisket, ramen..." className="min-w-0 flex-1 bg-transparent text-sm outline-none" style={{ color:'var(--cc-ink)'}} />
+          {query && <button aria-label="Clear search" onClick={() => setQuery('')} className="text-xs font-bold min-h-11" style={{ color:'var(--cc-ink-dim)'}}>Clear</button>}
         </div>
 
         {/* Filter pills + view toggle row */}
         <div className="flex items-center gap-2">
           <div className="flex gap-2 overflow-x-auto no-scrollbar flex-1 pb-1">
             {FILTERS.map(f => (
-              <button key={f.id} onClick={() => setFilter(f.id)}
-                className="px-3.5 py-1.5 rounded-full text-xs font-bold flex-shrink-0 transition-all" style={filter === f.id
+              <button key={f.id} onClick={() => setFilter(f.id)} aria-pressed={filter === f.id}
+                className="px-3.5 min-h-11 rounded-xl text-xs font-bold flex-shrink-0 transition-all" style={filter === f.id
                   ? { background:'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)'}
                   : { background:'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.25)'}
                 }>
@@ -261,8 +161,8 @@ export default function Explore() {
           {/* View toggle */}
           <div className="flex items-center gap-1 flex-shrink-0 p-1 rounded-xl" style={{ background:'var(--cc-bg-2)'}}>
             {viewIcons.map(({ id, Icon }) => (
-              <button key={id} onClick={() => setView(id)}
-                className="w-7 h-7 rounded-lg flex items-center justify-center transition-all" style={{ background: view === id ?'rgba(var(--cc-accent-rgb),0.15)':'transparent'}}>
+              <button key={id} onClick={() => setView(id)} aria-label={`${id} view`} aria-pressed={view === id}
+                className="w-11 h-11 rounded-lg flex items-center justify-center transition-all" style={{ background: view === id ?'rgba(var(--cc-accent-rgb),0.15)':'transparent'}}>
                 <Icon className="w-3.5 h-3.5" style={{ color: view === id ?'var(--cc-accent)':'var(--cc-ink-dim)'}} />
               </button>
             ))}

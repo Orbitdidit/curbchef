@@ -32,7 +32,7 @@ function ParkMiniCard({ park }) {
   );
 }
 
-export default function TruckParksRail() {
+export default function TruckParksRail({ discovery = false }) {
   const { data: parks = [] } = useQuery({
     queryKey: ['truck-parks-home'],
     queryFn: () => base44.entities.TruckPark.filter({ is_active: true, is_featured: true },'-featured_order', 5),
@@ -41,7 +41,7 @@ export default function TruckParksRail() {
   if (!parks.length) return null;
 
   return (
-    <div className="mt-8">
+    <div className={discovery ? 'cc-paper rounded-[2rem] mt-7 py-7' : 'mt-8'}>
       <div className="flex items-center justify-between px-4 mb-3">
         <h2 className="font-display text-lg" style={{ color:'var(--cc-on-cream)'}}>
            Houston's Hottest Truck Parks

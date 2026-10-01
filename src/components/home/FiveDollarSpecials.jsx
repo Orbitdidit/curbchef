@@ -7,8 +7,10 @@ import { Tag, ChevronRight, Truck } from 'lucide-react';
 export default function FiveDollarSpecials({ trucks }) {
   const { data: specials = [] } = useQuery({
     queryKey: ['five-dollar-specials'],
-    queryFn: () => base44.entities.MenuItem.filter({ is_available: true }),
-    select: (items) => items.filter(i => i.price <= 5 && i.price > 0).slice(0, 12),
+    queryFn: async () => {
+      const page = await base44.entities.MenuItem.filter({ is_available: true, price: { $gt: 0, $lte: 5 } }, { limit: 12 });
+      return page.items;
+    },
   });
 
   if (specials.length === 0) return null;
@@ -21,13 +23,8 @@ export default function FiveDollarSpecials({ trucks }) {
       {/* Header */}
       <div className="flex items-center justify-between px-5 mb-3">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ background:'linear-gradient(135deg,var(--cc-amber),#f59e0b)', boxShadow:'0 0 10px rgba(251,191,36,0.4)'}}>
-            <Tag className="w-3 h-3" style={{ color:'var(--cc-bg-0)'}} />
-          </div>
-          <h2 className="font-display text-base" style={{ color:'var(--cc-ink)'}}>$5 Specials Nearby</h2>
-          <span className="text-[10px] font-black px-2 py-0.5 rounded-full" style={{ background:'rgba(251,191,36,0.15)', color:'var(--cc-amber)', border:'1px solid rgba(251,191,36,0.3)'}}>
-             HOT DEALS
-          </span>
+          <Tag className="w-4 h-4 text-discovery-amber" />
+          <h2 className="font-heading font-extrabold text-xl text-discovery-ink">$5 & under</h2>
         </div>
         <Link to="/deals" className="flex items-center gap-0.5 text-xs font-bold" style={{ color:'var(--cc-accent)'}}>
           See all <ChevronRight className="w-3.5 h-3.5"/>
@@ -42,7 +39,7 @@ export default function FiveDollarSpecials({ trucks }) {
             <Link
               key={item.id}
               to={truck ? `/truck/${item.truck_id}/item/${item.id}` : `/truck/${item.truck_id}`}
-              className="flex-shrink-0 rounded-2xl overflow-hidden flex flex-col" style={{ width: 148, background:'var(--cc-bg-1)', border:'1px solid rgba(251,191,36,0.15)'}}
+              className="flex-shrink-0 rounded-2xl overflow-hidden flex flex-col" style={{ width: 172, background:'var(--cc-bg-1)', border:'1px solid rgba(251,191,36,0.15)'}}
             >
               {/* Image */}
               <div className="relative" style={{ height: 110 }}>
@@ -62,7 +59,7 @@ export default function FiveDollarSpecials({ trucks }) {
 
               {/* Info */}
               <div className="p-3 flex flex-col gap-0.5 flex-1">
-                <p className="font-display text-xs leading-tight line-clamp-2" style={{ color:'var(--cc-ink)'}}>
+                <p className="font-heading font-bold text-sm leading-snug line-clamp-2" style={{ color:'var(--cc-ink)'}}>
                   {item.name}
                 </p>
                 {truck && (

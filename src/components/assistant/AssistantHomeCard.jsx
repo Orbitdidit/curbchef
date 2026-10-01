@@ -13,49 +13,15 @@ export default function AssistantHomeCard() {
   return (
     <button
       onClick={handleTap}
-      className="w-full text-left rounded-3xl overflow-hidden active:scale-[0.98] transition-transform"
-      style={{
-        background: 'linear-gradient(135deg, rgba(var(--cc-accent-rgb),0.08) 0%, rgba(0,230,167,0.04) 100%)',
-        border: '1px solid rgba(var(--cc-accent-rgb),0.2)',
-      }}
+      className="w-full text-left rounded-3xl p-5 bg-discovery-surface border border-discovery-line text-discovery-ink"
     >
-      <div className="flex items-center gap-4 p-5">
-        <div
-          className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-          style={{
-            background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))',
-            boxShadow: '0 0 16px rgba(var(--cc-accent-rgb),0.35)',
-          }}
-        >
-          <Sparkles className="w-6 h-6" style={{ color: 'var(--cc-accent-deep)' }} />
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="font-display text-base leading-tight" style={{ color: 'var(--cc-ink)' }}>
-            What should I eat?
-          </p>
-          <p className="text-xs mt-0.5" style={{ color: 'var(--cc-ink-dim)' }}>
-            Tell us your craving and we'll find your best match.
-          </p>
-        </div>
-        <div
-          className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
-          style={{ background: 'rgba(var(--cc-accent-rgb),0.12)' }}
-        >
-          <ChevronRight className="w-5 h-5" style={{ color: 'var(--cc-accent)' }} />
-        </div>
+      <div className="flex items-center gap-3 mb-4">
+        <Sparkles className="w-5 h-5 text-discovery-amber" />
+        <span className="font-mono text-[10px] uppercase tracking-widest text-discovery-muted">A little help choosing</span>
       </div>
-      <div className="px-5 pb-4">
-        <div
-          className="w-full py-2.5 rounded-full text-center font-display text-sm"
-          style={{
-            background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))',
-            color: 'var(--cc-accent-deep)',
-            boxShadow: '0 0 12px rgba(var(--cc-accent-rgb),0.25)',
-          }}
-        >
-          Get Picks
-        </div>
-      </div>
+      <p className="font-heading font-extrabold text-2xl tracking-tight">What should I eat?</p>
+      <p className="text-sm leading-relaxed text-discovery-muted mt-2 mb-5">Tell us your craving. We’ll help find your next great bite.</p>
+      <span className="flex items-center justify-between text-sm font-bold text-discovery-amber border-t border-discovery-line pt-4">Find my flavor <ChevronRight className="w-5 h-5" /></span>
     </button>
   );
 }

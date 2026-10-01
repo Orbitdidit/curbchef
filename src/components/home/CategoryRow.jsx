@@ -21,11 +21,8 @@ export default function CategoryRow({ selected, onChange }) {
           <button
             key={cat.id}
             onClick={() => onChange(cat.id)}
-            className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold transition-all duration-200 whitespace-nowrap" style={{
-              background: isActive ?'var(--cc-accent-2)':'var(--cc-surface-3)',
-              color: isActive ?'var(--cc-black)':'var(--cc-ink-muted)',
-              border: isActive ?'none':'1px solid rgba(255,255,255,0.06)',
-            }}
+            aria-pressed={isActive}
+            className={`flex-shrink-0 min-h-11 px-4 rounded-xl text-sm font-semibold border whitespace-nowrap ${isActive ? 'bg-discovery-paper text-discovery-dark border-discovery-paper' : 'bg-discovery-surface text-discovery-muted border-discovery-line'}`}
           >
             <span>{cat.emoji}</span>
             {cat.label}

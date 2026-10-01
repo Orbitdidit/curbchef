@@ -1,72 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { Home, Compass, Search, User } from 'lucide-react';
+import { Home, Compass, ShoppingBag, User } from 'lucide-react';
 import { useTabNav } from '@/hooks/useTabNav';
-import { subscribe, getCartCount } from '@/lib/cartStore';
 
 const tabs = [
   { path: '/', icon: Home, label: 'Home' },
   { path: '/explore', icon: Compass, label: 'Explore' },
-  { path: '/search', icon: Search, label: 'Search' },
-  { path: '/profile', icon: User, label: 'Profile' },
+  { path: '/orders', icon: ShoppingBag, label: 'Orders' },
+  { path: '/profile', icon: User, label: 'You' },
 ];
 
 export default function BottomNav() {
   const { pathname } = useLocation();
   const { navigateTab } = useTabNav();
-  const [cartCount, setCartCount] = useState(getCartCount());
-  useEffect(() => subscribe(() => setCartCount(getCartCount())), []);
-
   return (
-    <nav
-      aria-label="Main navigation"
-      className="fixed bottom-0 left-0 right-0 z-50 flex justify-center"
-      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
-    >
-      <div className="w-full max-w-lg px-6 pb-3">
-        <div
-          className="flex items-center justify-around px-2 py-2"
-          role="tablist"
-          style={{
-            background: 'rgba(14,14,14,0.92)',
-            backdropFilter: 'blur(28px)',
-            border: '1px solid rgba(255,255,255,0.05)',
-            borderRadius: '20px',
-          }}
-        >
-          {tabs.map(({ path, icon: Icon, label }) => {
-            const active = path === '/' ? pathname === '/' : pathname.startsWith(path);
-            return (
-              <button
-                key={path}
-                role="tab"
-                aria-selected={active}
-                aria-label={label}
-                onClick={() => navigateTab(path)}
-                className="flex flex-col items-center gap-1 flex-1 py-2 min-h-[44px] justify-center relative"
-              >
-                <div className="relative">
-                  <Icon
-                    className="w-5 h-5 transition-colors"
-                    style={{ color: active ? 'var(--cc-accent-2)' : '#3D3D3D' }}
-                    strokeWidth={active ? 2.2 : 1.6}
-                    aria-hidden="true"
-                  />
-                  {path === '/' && cartCount > 0 && (
-                    <span className="absolute -top-1.5 -right-2 min-w-[16px] h-4 rounded-full flex items-center justify-center text-[9px] font-black text-white px-1"
-                      style={{ background: 'var(--cc-warm-red)' }}>
-                      {cartCount}
-                    </span>
-                  )}
-                </div>
-                <span className="text-[10px] font-medium transition-colors"
-                  style={{ color: active ? 'var(--cc-accent-2)' : '#3D3D3D' }}>
-                  {label}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+    <nav aria-label="Main navigation" className="cc-discovery fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-[max(0.75rem,env(safe-area-inset-bottom))] px-4 pointer-events-none">
+      <div className="w-full max-w-[448px] rounded-2xl border border-discovery-line bg-discovery-surface p-1.5 flex items-center shadow-xl pointer-events-auto">
+        {tabs.map(({ path, icon: Icon, label }) => {
+          const active = path === '/' ? pathname === '/' : pathname.startsWith(path);
+          return <button key={path} aria-current={active ? 'page' : undefined} onClick={() => navigateTab(path)} className={`flex flex-col items-center justify-center gap-1 flex-1 min-h-14 rounded-xl ${active ? 'bg-discovery-orange text-discovery-dark' : 'text-discovery-muted'}`}>
+            <Icon className="w-5 h-5" strokeWidth={active ? 2.4 : 1.8} aria-hidden="true" />
+            <span className="text-[11px] font-bold">{label}</span>
+          </button>;
+        })}
       </div>
     </nav>
   );

@@ -10,7 +10,7 @@ function SmallTruckCard({ truck, userLat, userLng }) {
   const isHot = truck.status === 'open' && (truck.rating || 0) >= 4.5;
 
   return (
-    <Link to={`/truck/${truck.id}`} className="flex-shrink-0 group" style={{ width: '160px' }}>
+    <Link to={`/truck/${truck.id}`} className="flex-shrink-0 group" style={{ width: '210px' }}>
       <div
         className="rounded-2xl overflow-hidden"
         style={{
@@ -22,7 +22,7 @@ function SmallTruckCard({ truck, userLat, userLng }) {
         onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
       >
         {/* Image */}
-        <div className="relative overflow-hidden" style={{ height: '110px' }}>
+        <div className="relative overflow-hidden" style={{ height: '150px' }}>
           <img
             src={truck.image_url || 'https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?w=400'}
             alt={truck.name}
@@ -44,18 +44,18 @@ function SmallTruckCard({ truck, userLat, userLng }) {
                 style={{ background: 'rgba(255,107,26,0.85)', color: 'white' }}>HOT</span>
             ) : truck.status === 'open' ? (
               <span className="px-2 py-0.5 rounded-full text-[9px] font-bold font-mono"
-                style={{ background: 'rgba(0,245,212,0.15)', color: 'var(--cc-accent-2)', border: '1px solid rgba(0,245,212,0.3)' }}>WARM</span>
+                style={{ background: 'var(--cc-d-dark)', color: 'var(--cc-d-status)' }}>OPEN</span>
             ) : null}
           </div>
         </div>
 
         {/* Info */}
         <div className="px-3 pt-2 pb-3">
-          <p className="font-display text-sm leading-tight truncate" style={{ color: 'var(--cc-cream)', letterSpacing: '-0.01em' }}>{truck.name}</p>
+          <p className="font-heading font-extrabold text-base leading-snug line-clamp-2 min-h-11" style={{ color: 'var(--cc-cream)', letterSpacing: '-0.01em' }}>{truck.name}</p>
           <div className="flex items-center justify-between mt-1.5">
             <div className="flex items-center gap-0.5">
               <Star className="w-3 h-3" style={{ fill: 'var(--cc-yellow)', color: 'var(--cc-yellow)' }} />
-              <span className="text-[11px] font-bold font-mono" style={{ color: 'var(--cc-cream)' }}>{truck.rating?.toFixed(1) || '4.8'}</span>
+              <span className="text-xs font-semibold" style={{ color: 'var(--cc-cream)' }}>{truck.rating != null ? truck.rating.toFixed(1) : 'New'}</span>
             </div>
             {dist && (
               <div className="flex items-center gap-0.5">
@@ -79,7 +79,7 @@ export default function CarouselSection({ title, emoji, badge, trucks, seeAllHre
       <div className="flex items-center justify-between px-4 mb-3">
         <div className="flex items-center gap-2">
           {emoji && <span className="text-base">{emoji}</span>}
-          <h2 className="font-display text-base" style={{ color: 'var(--cc-cream)', letterSpacing: '-0.02em' }}>{title}</h2>
+          <h2 className="font-heading font-extrabold text-xl" style={{ color: 'var(--cc-cream)', letterSpacing: '-0.02em' }}>{title}</h2>
           {badge && badge !== 'live' && (
             <span
               className="text-[9px] font-bold px-2 py-0.5 rounded-full font-mono"

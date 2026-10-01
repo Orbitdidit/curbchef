@@ -35,9 +35,9 @@ export default function AppLayout() {
 
   return (
     /* Desktop: dark side panels flanking a centered phone-frame */
-    <div className="min-h-screen flex items-stretch justify-center" style={{ background: '#050505' }}>
+    <div className="min-h-screen flex items-stretch justify-center bg-discovery-bg">
       {/* Left side panel — desktop only */}
-      <div className="hidden lg:flex flex-1 items-center justify-end pr-8 max-w-xs">
+      <div className="cc-discovery hidden lg:flex flex-1 items-center justify-end pr-8 max-w-xs">
         <div className="text-right">
           <p className="font-display text-2xl"><span style={{ color: 'var(--cc-cream)' }}>Curb</span><span style={{ color: 'var(--cc-accent-2)' }}>Chef</span></p>
           <p className="text-xs mt-1" style={{ color: 'var(--cc-ink-faint)' }}>Street food, elevated.</p>
@@ -68,10 +68,10 @@ export default function AppLayout() {
       </div>
 
       {/* Right side panel — desktop only */}
-      <div className="hidden lg:flex flex-1 items-center justify-start pl-8 max-w-xs">
+      <div className="cc-discovery hidden lg:flex flex-1 items-center justify-start pl-8 max-w-xs">
         <div className="space-y-3">
           <div className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(var(--cc-accent-rgb),0.05)', border: '1px solid rgba(var(--cc-accent-rgb),0.1)' }}>
-            <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: 'var(--cc-accent)' }}>OPEN NOW</p>
+            <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: 'var(--cc-accent)' }}>OUR CITY</p>
             <p className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>Houston, TX</p>
           </div>
           <div className="px-4 py-3 rounded-2xl" style={{ background: 'rgba(var(--cc-warm-rgb),0.05)', border: '1px solid rgba(var(--cc-warm-rgb),0.12)' }}>

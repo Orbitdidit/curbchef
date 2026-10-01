@@ -180,6 +180,57 @@
   }
 }
 
+/* Customer discovery palette. Scoped so vendor, admin and checkout stay unchanged. */
+:root, .dark {
+  --cc-d-bg: #0D0E10;
+  --cc-d-surface: #1B1D21;
+  --cc-d-raised: #282A30;
+  --cc-d-ink: #F4F3EF;
+  --cc-d-muted: #B5B2AA;
+  --cc-d-line: #393B41;
+  --cc-d-orange: #FF5A1F;
+  --cc-d-amber: #F2BA62;
+  --cc-d-paper: #F4F0E7;
+  --cc-d-card: #FFFCF5;
+  --cc-d-dark: #191A1D;
+  --cc-d-paper-muted: #625D54;
+  --cc-d-paper-accent: #AB350F;
+  --cc-d-status: #80C8B0;
+}
+.cc-discovery {
+  --cc-bg-0: var(--cc-d-bg); --cc-black: var(--cc-d-bg);
+  --cc-bg-1: var(--cc-d-surface); --cc-bg-2: var(--cc-d-surface); --cc-bg-3: var(--cc-d-raised);
+  --cc-surface: var(--cc-d-surface); --cc-surface-2: var(--cc-d-raised); --cc-surface-3: var(--cc-d-surface);
+  --cc-ink: var(--cc-d-ink); --cc-cream: var(--cc-d-ink);
+  --cc-ink-dim: var(--cc-d-muted); --cc-ink-muted: var(--cc-d-muted); --cc-ink-faint: var(--cc-d-muted);
+  --cc-accent: var(--cc-d-orange); --cc-accent-2: var(--cc-d-orange); --cc-accent-3: var(--cc-d-orange);
+  --cc-accent-deep: var(--cc-d-dark); --cc-accent-rgb: 255,90,31;
+  --cc-cta: var(--cc-d-orange); --cc-warm: var(--cc-d-orange); --cc-warm-2: var(--cc-d-amber);
+  color: var(--cc-d-ink);
+}
+.cc-paper {
+  --cc-bg-0: var(--cc-d-paper); --cc-bg-1: var(--cc-d-card); --cc-bg-2: var(--cc-d-card); --cc-bg-3: #E6DFD2;
+  --cc-surface: var(--cc-d-card); --cc-surface-2: #E6DFD2; --cc-surface-3: #E6DFD2;
+  --cc-ink: var(--cc-d-dark); --cc-cream: var(--cc-d-dark);
+  --cc-ink-dim: var(--cc-d-paper-muted); --cc-ink-muted: var(--cc-d-paper-muted); --cc-ink-faint: var(--cc-d-paper-muted);
+  --cc-accent: var(--cc-d-paper-accent); --cc-accent-2: var(--cc-d-paper-accent); --cc-accent-3: var(--cc-d-paper-accent);
+  --cc-accent-deep: var(--cc-d-card); --cc-black: var(--cc-d-card);
+  background: var(--cc-d-paper); color: var(--cc-d-dark);
+}
+.cc-discovery .font-display:not(.cc-editorial) { font-family: var(--font-heading); font-weight: 800; letter-spacing: -.025em; }
+.cc-discovery :is(button, a, input):focus-visible { outline: 2px solid var(--cc-d-amber); outline-offset: 4px; }
+.cc-discovery .cc-paper :is(button, a, input):focus-visible { outline-color: var(--cc-d-paper-accent); }
+.cc-action { background: var(--cc-d-orange); color: var(--cc-d-dark); border-radius: 999px; font-weight: 800; min-height: 44px; }
+.cc-feature-image { background: linear-gradient(180deg, transparent 35%, var(--cc-d-bg)); }
+.cc-menu-row { background: var(--cc-d-surface); border: 1px solid var(--cc-d-line); }
+.cc-profile-info { border-bottom: 5px solid var(--cc-d-orange); }
+.cc-discovery details > summary { list-style: none; }
+.cc-discovery details > summary::-webkit-details-marker { display: none; }
+.cc-discovery details[open] > summary .cc-details-chevron { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) {
+  .cc-discovery *, .cc-discovery *::before, .cc-discovery *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
 /* Hide scrollbar */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

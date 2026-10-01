@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCloseCountdown } from '@/hooks/useCloseCountdown';
 import ReliabilityBadge from '@/components/shared/ReliabilityBadge';
+import TruckMenuList from '@/components/truck/TruckMenuList';
 import {
   ChevronLeft, Share2, Star, Clock, Plus, Minus, Play,
   UserPlus, UserCheck, MapPin, ShoppingBag, Flame, Radio, Zap, UtensilsCrossed } from 'lucide-react';
@@ -87,35 +88,6 @@ export default function TruckProfile() {
     updateQuantity(item.id, qty - 1);
   };
 
-  // Reusable inline qty counter rendered on menu rows
-  const QtyControl = ({ item }) => {
-    const qty = getItemQty(item.id);
-    if (qty === 0) {
-      return (
-        <button onClick={(e) => handleAddToCart(e, item)}
-          className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', boxShadow:'0 0 10px rgba(var(--cc-accent-rgb),0.2)' }}>
-          <Plus className="w-4 h-4" style={{ color: 'var(--cc-accent-deep)' }} />
-        </button>
-      );
-    }
-    return (
-      <div className="flex items-center gap-2 flex-shrink-0" onClick={e => { e.preventDefault(); e.stopPropagation(); }}>
-        <button onClick={(e) => handleDecrement(e, item)}
-          className="w-8 h-8 rounded-full flex items-center justify-center"
-          style={{ background: 'var(--cc-bg-3)' }}>
-          <Minus className="w-3.5 h-3.5" style={{ color: 'var(--cc-ink)' }} />
-        </button>
-        <span className="font-display text-sm w-4 text-center" style={{ color: 'var(--cc-accent)' }}>{qty}</span>
-        <button onClick={(e) => handleAddToCart(e, item)}
-          className="w-8 h-8 rounded-full flex items-center justify-center"
-          style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}>
-          <Plus className="w-3.5 h-3.5" style={{ color: 'var(--cc-accent-deep)' }} />
-        </button>
-      </div>
-    );
-  };
-
   const handleShare = () => {
     const url = `${window.location.origin}/truck/${id}`;
     if (navigator.share) navigator.share({ title: truck?.name, text: truck?.description, url });
@@ -141,12 +113,12 @@ export default function TruckProfile() {
   }, []);
 
   const categoryLabel = (cat) => {
-    const labels = { mains: 'Signature Hits', sides:'Sides & Extras', drinks:'Liquid Neon', desserts:'Sweet Finish', specials:'Chef Specials' };
+    const labels = { mains: 'Signature Hits', sides:'Sides & Extras', drinks:'Drinks', desserts:'Sweet Finish', specials:'Chef Specials' };
     return labels[cat] || cat.replace('_','').replace(/\b\w/g, l => l.toUpperCase());
   };
 
   return (
-    <div className="min-h-screen pb-32" style={{ background: 'var(--cc-bg-0)' }}>
+    <div className="cc-discovery min-h-screen pb-32 bg-discovery-bg">
 
       {/* ── HERO CAROUSEL ── */}
       <div className="relative">
@@ -157,13 +129,13 @@ export default function TruckProfile() {
 
         {/* Nav buttons overlay */}
         <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 pt-[max(1rem,env(safe-area-inset-top))] z-10">
-          <button onClick={() => navigate(-1)}
-            className="w-10 h-10 rounded-2xl flex items-center justify-center"
+          <button onClick={() => navigate(-1)} aria-label="Back to trucks"
+            className="w-11 h-11 rounded-full flex items-center justify-center"
             style={{ background: 'rgba(13,21,23,0.7)', backdropFilter:'blur(16px)', border:'1px solid rgba(255,255,255,0.1)' }}>
             <ChevronLeft className="w-5 h-5 text-white" />
           </button>
-          <button onClick={handleShare}
-            className="w-10 h-10 rounded-2xl flex items-center justify-center"
+          <button onClick={handleShare} aria-label="Share this truck"
+            className="w-11 h-11 rounded-full flex items-center justify-center"
             style={{ background: 'rgba(13,21,23,0.7)', backdropFilter:'blur(16px)', border:'1px solid rgba(255,255,255,0.1)' }}>
             <Share2 className="w-4 h-4 text-white" />
           </button>
@@ -200,8 +172,7 @@ export default function TruckProfile() {
       </div>
 
       {/* ── INFO CARD ── */}
-      <div className="mx-4 -mt-4 relative z-10 rounded-3xl p-5 mb-1"
-        style={{ background: 'var(--cc-bg-1)', border:'1px solid rgba(var(--cc-line-rgb),0.25)', boxShadow:'0 8px 32px rgba(0,0,0,0.4)' }}>
+      <div className="cc-paper cc-profile-info mx-4 -mt-4 relative z-10 rounded-3xl p-5 mb-4">
 
         {/* Name + Follow */}
         <div className="flex items-start justify-between gap-3 mb-2">
@@ -213,8 +184,8 @@ export default function TruckProfile() {
             disabled={isPending}
             className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-black transition-all"
             style={isFollowing
-              ? { background: 'rgba(var(--cc-accent-rgb),0.12)', color:'var(--cc-accent)', border:'1px solid rgba(var(--cc-accent-rgb),0.4)' }
-              : { background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))', color:'var(--cc-accent-deep)', boxShadow:'0 0 16px rgba(var(--cc-accent-rgb),0.3)' }
+              ? { background: 'var(--cc-bg-3)', color:'var(--cc-ink)', border:'1px solid var(--cc-ink-dim)' }
+              : { background: 'var(--cc-accent)', color:'var(--cc-accent-deep)' }
             }>
             {isFollowing ? <UserCheck className="w-3.5 h-3.5"/> : <UserPlus className="w-3.5 h-3.5" />}
             {isFollowing ? 'Following':'Follow'}
@@ -232,7 +203,7 @@ export default function TruckProfile() {
         <div className="flex items-center gap-2 mb-3 flex-wrap">
           <div className="flex items-center gap-1">
             <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-            <span className="font-bold text-sm" style={{ color: 'var(--cc-ink)'}}>{truck.rating?.toFixed(1) ||'4.9'}</span>
+            <span className="font-bold text-sm" style={{ color: 'var(--cc-ink)'}}>{truck.rating != null ? truck.rating.toFixed(1) : 'New'}</span>
           </div>
           <span style={{ color: 'rgba(186,203,192,0.4)' }}>·</span>
           <span className="text-sm capitalize font-semibold" style={{ color: 'var(--cc-ink-dim)' }}>
@@ -257,11 +228,11 @@ export default function TruckProfile() {
         {/* Stats row */}
         <div className="grid grid-cols-3 gap-2">
           <div className="flex flex-col items-center justify-center py-3 px-2 rounded-2xl" style={{ background: 'var(--cc-bg-0)' }}>
-            <p className="text-[9px] font-bold tracking-widest mb-1" style={{ color: 'rgba(186,203,192,0.5)' }}>WAIT TIME</p>
-            <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>~12 min</p>
+            <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: 'var(--cc-ink-dim)' }}>LOCATION</p>
+            <p className="text-xs font-bold text-center" style={{ color: 'var(--cc-ink)' }}>{truck.city || 'Houston'}</p>
           </div>
           <div className="flex flex-col items-center justify-center py-3 px-1 rounded-2xl col-span-1" style={{ background: 'var(--cc-bg-0)' }}>
-            <p className="text-[9px] font-bold tracking-widest mb-1" style={{ color: 'rgba(186,203,192,0.5)' }}>HOURS</p>
+            <p className="text-[9px] font-bold tracking-widest mb-1" style={{ color: 'var(--cc-ink-dim)' }}>HOURS</p>
             <div className="flex items-center gap-1">
               {closeVariant === 'last_call' && (
                 <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse" style={{ background: 'var(--cc-warm-red)' }} />
@@ -277,7 +248,7 @@ export default function TruckProfile() {
             </div>
           </div>
           <div className="flex flex-col items-center justify-center py-3 px-2 rounded-2xl" style={{ background: 'var(--cc-bg-0)' }}>
-            <p className="text-[9px] font-bold tracking-widest mb-1" style={{ color: 'rgba(186,203,192,0.5)' }}>STATUS</p>
+            <p className="text-[9px] font-bold tracking-widest mb-1" style={{ color: 'var(--cc-ink-dim)' }}>STATUS</p>
             {truck.is_sample ? (
               <span className="font-display text-xs px-2 py-0.5 rounded-full"
                 style={{ background: 'rgba(251,191,36,0.2)', color:'var(--cc-amber)', border:'1px solid rgba(251,191,36,0.4)' }}>
@@ -293,11 +264,11 @@ export default function TruckProfile() {
       </div>
 
       {/* ── TABS ── */}
-      <div className="sticky top-0 z-20 px-5 flex gap-6 pt-4 pb-0"
-        style={{ background: 'rgba(13,21,23,0.97)', backdropFilter:'blur(20px)' }}>
+      <div className="sticky top-0 z-20 px-5 flex gap-6 pt-4 pb-0 bg-discovery-bg" aria-label="Truck sections">
         {TABS.map(t => (
           <button
             key={t}
+            aria-pressed={tab === t}
             onClick={() => setTab(t)}
             className="pb-3 text-sm font-black transition-all uppercase tracking-wider border-b-2"
             style={tab === t
@@ -321,7 +292,8 @@ export default function TruckProfile() {
               <div className="flex gap-2 mb-5 overflow-x-auto no-scrollbar">
                 {['all', ...categories].map(c => (
                   <button key={c} onClick={() => setMenuFilter(c)}
-                    className="px-4 py-1.5 rounded-full text-xs font-semibold flex-shrink-0 transition-all capitalize"
+                    aria-pressed={menuFilter === c}
+                    className="px-4 min-h-11 rounded-xl text-sm font-semibold flex-shrink-0 capitalize"
                     style={menuFilter === c
                       ? { background: 'rgba(var(--cc-accent-rgb),0.12)', color:'var(--cc-accent)', border:'1px solid rgba(var(--cc-accent-rgb),0.35)' }
                       : { background: 'var(--cc-bg-2)', color:'var(--cc-ink-dim)', border:'1px solid rgba(var(--cc-line-rgb),0.2)' }
@@ -332,102 +304,9 @@ export default function TruckProfile() {
               </div>
             )}
 
-            {/* Menu grouped by category */}
-            {menuFilter === 'all' && menuByCategory.length > 0 ? (
-              <div className="flex flex-col gap-8">
-                {menuByCategory.map(({ cat, items }) => (
-                  <div key={cat}>
-                    {/* Section header */}
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="font-display text-lg" style={{ color: 'var(--cc-ink)' }}>
-                        {categoryLabel(cat)}
-                      </h3>
-                      {cat === 'mains' && (
-                        <span className="text-[10px] font-black px-2.5 py-1 rounded-full"
-                          style={{ background: 'rgba(var(--cc-warm-rgb),0.15)', color:'var(--cc-warm)', border:'1px solid rgba(var(--cc-warm-rgb),0.3)' }}>
-                          TRENDING
-                        </span>
-                      )}
-                    </div>
-                    {/* Drinks: 2-col grid cards */}
-                    {cat === 'drinks' ? (
-                      <div className="grid grid-cols-2 gap-3">
-                        {items.map(item => (
-                          <Link key={item.id} to={`/truck/${id}/item/${item.id}`}
-                            className="p-4 rounded-2xl flex flex-col justify-between"
-                            style={{ background: 'linear-gradient(135deg,rgba(var(--cc-accent-rgb),0.07),rgba(var(--cc-accent-rgb),0.03))', border:'1px solid rgba(var(--cc-accent-rgb),0.12)' }}>
-                            <div>
-                              <p className="font-display text-sm mb-1" style={{ color: 'var(--cc-ink)' }}>{item.name}</p>
-                              <p className="text-xs leading-snug" style={{ color: 'var(--cc-ink-dim)' }}>{item.description}</p>
-                            </div>
-                            <div className="flex items-center justify-between mt-3">
-                              <p className="font-display text-base" style={{ color: 'var(--cc-accent)' }}>${item.price?.toFixed(2)}</p>
-                              <QtyControl item={item} />
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="flex flex-col gap-3">
-                        {items.map(item => (
-                          <Link key={item.id} to={`/truck/${id}/item/${item.id}`}
-                            className="flex items-center gap-4 py-3 border-b"
-                            style={{ borderColor: 'rgba(var(--cc-line-rgb),0.15)' }}>
-                            {/* Food image */}
-                            {item.image_url ? (
-                              <img src={item.image_url} alt={item.name}
-                                className="w-20 h-20 rounded-2xl object-cover flex-shrink-0"
-                                style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.4)' }} />
-                            ) : (
-                              <div className="w-20 h-20 rounded-2xl flex-shrink-0 flex items-center justify-center text-3xl"
-                                style={{ background: 'var(--cc-bg-2)' }}></div>
-                            )}
-                            {/* Info */}
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-0.5">
-                                <p className="font-display text-sm" style={{ color: 'var(--cc-ink)' }}>{item.name}</p>
-                                {item.is_special && (
-                                  <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full flex-shrink-0"
-                                    style={{ background: 'var(--cc-warm)', color:'white' }}>HOT</span>
-                                )}
-                              </div>
-                              <p className="text-xs leading-snug mb-2 line-clamp-2" style={{ color: 'var(--cc-ink-dim)' }}>{item.description}</p>
-                              <p className="font-display text-base" style={{ color: 'var(--cc-accent)' }}>${item.price?.toFixed(2)}</p>
-                            </div>
-                            <QtyControl item={item} />
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              /* Filtered view */
-              <div className="flex flex-col gap-3">
-                {filteredMenu.length === 0 ? (
-                  <p className="text-center py-12 text-sm" style={{ color: 'var(--cc-ink-dim)' }}>No items in this category</p>
-                ) : filteredMenu.map(item => (
-                  <Link key={item.id} to={`/truck/${id}/item/${item.id}`}
-                    className="flex items-center gap-4 py-3 border-b"
-                    style={{ borderColor: 'rgba(var(--cc-line-rgb),0.15)' }}>
-                    {item.image_url ? (
-                      <img src={item.image_url} alt={item.name}
-                        className="w-20 h-20 rounded-2xl object-cover flex-shrink-0" />
-                    ) : (
-                      <div className="w-20 h-20 rounded-2xl flex-shrink-0 flex items-center justify-center text-3xl"
-                        style={{ background: 'var(--cc-bg-2)' }}></div>
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <p className="font-display text-sm mb-0.5" style={{ color: 'var(--cc-ink)' }}>{item.name}</p>
-                      <p className="text-xs leading-snug mb-2 line-clamp-2" style={{ color: 'var(--cc-ink-dim)' }}>{item.description}</p>
-                      <p className="font-display text-base" style={{ color: 'var(--cc-accent)' }}>${item.price?.toFixed(2)}</p>
-                    </div>
-                    <QtyControl item={item} />
-                  </Link>
-                ))}
-              </div>
-            )}
+            {filteredMenu.length > 0 ? (
+              <TruckMenuList groups={menuFilter === 'all' ? menuByCategory : null} items={filteredMenu} truckId={id} getQuantity={getItemQty} onAdd={handleAddToCart} onRemove={handleDecrement} categoryLabel={categoryLabel} />
+            ) : menuItems.length > 0 ? <p className="text-center py-12 text-sm text-discovery-muted">No items in this category</p> : null}
 
             {menuItems.length === 0 && (
               <div className="text-center py-16">
@@ -458,30 +337,7 @@ export default function TruckProfile() {
                     LIMITED
                   </span>
                 </div>
-                {specials.map(item => (
-                  <Link key={item.id} to={`/truck/${id}/item/${item.id}`}
-                    className="flex items-center gap-4 py-3 border-b"
-                    style={{ borderColor: 'rgba(var(--cc-line-rgb),0.15)' }}>
-                    {item.image_url ? (
-                      <div className="relative flex-shrink-0">
-                        <img src={item.image_url} alt={item.name}
-                          className="w-24 h-24 rounded-2xl object-cover"
-                          style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.5)' }} />
-                        <span className="absolute top-1.5 left-1.5 text-[9px] font-black px-1.5 py-0.5 rounded-full"
-                          style={{ background: 'var(--cc-warm)', color:'white' }}>HOT</span>
-                      </div>
-                    ) : (
-                      <div className="w-24 h-24 rounded-2xl flex-shrink-0 flex items-center justify-center text-4xl"
-                        style={{ background: 'var(--cc-bg-2)' }}></div>
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <p className="font-display text-sm mb-1" style={{ color: 'var(--cc-ink)' }}>{item.name}</p>
-                      <p className="text-xs leading-snug mb-2 line-clamp-3" style={{ color: 'var(--cc-ink-dim)' }}>{item.description}</p>
-                      <p className="font-display text-lg" style={{ color: 'var(--cc-accent)' }}>${item.price?.toFixed(2)}</p>
-                    </div>
-                    <QtyControl item={item} />
-                  </Link>
-                ))}
+                <TruckMenuList items={specials} truckId={id} getQuantity={getItemQty} onAdd={handleAddToCart} onRemove={handleDecrement} />
               </div>
             )}
           </div>
@@ -562,10 +418,10 @@ export default function TruckProfile() {
               style={{
                 background: isOpen ? 'linear-gradient(135deg,var(--cc-accent) 0%,var(--cc-accent-3) 100%)':'var(--cc-bg-3)',
                 color: isOpen ? 'var(--cc-accent-deep)':'var(--cc-ink-dim)',
-                boxShadow: isOpen ? '0 0 28px rgba(var(--cc-accent-rgb),0.4), 0 8px 32px rgba(0,0,0,0.4)':'none',
+                boxShadow: 'none',
               }}>
               <ShoppingBag className="w-5 h-5" />
-              <span className="flex-1 text-center">{isOpen ? 'Order From This Truck':'Truck is Closed'}</span>
+              <span className="flex-1 text-center">{isOpen ? (totalCartCount > 0 ? 'View your bag' : 'View cart') : 'Truck is closed'}</span>
               {isOpen && totalCartCount > 0 && (
                 <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black"
                   style={{ background: 'rgba(0,56,38,0.35)' }}>

@@ -135,15 +135,15 @@ export default function LiveCarousel({ trucks = [] }) {
   const truckClips = trucks.map(t => ({ ...t, _isTruckCard: true, video_url: null }));
   const clips = dbClips.length > 0 ? dbClips : truckClips;
 
-  if (clips.length === 0) return null;
+  if (clips.length === 0) return <p className="mx-5 text-sm text-discovery-muted">The grills are quiet. Check back for fresh clips.</p>;
 
   const goTo = (i) => {
     setActive(i);
     // scroll the card into view
     const container = scrollRef.current;
     if (!container) return;
-    const cardW = container.offsetWidth;
-    container.scrollTo({ left: i * (cardW + 12), behavior:'smooth'});
+    const cardW = container.firstElementChild?.getBoundingClientRect().width || 0;
+    container.scrollTo({ left: i * (cardW + 12), behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   };
 
   return (
@@ -153,7 +153,8 @@ export default function LiveCarousel({ trucks = [] }) {
         className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory" style={{ paddingLeft:'20px', paddingRight:'20px', scrollPaddingLeft:'20px'}}
         onScroll={e => {
           const el = e.currentTarget;
-          const i = Math.round(el.scrollLeft / (el.offsetWidth + 12));
+          const cardW = el.firstElementChild?.getBoundingClientRect().width || el.offsetWidth;
+          const i = Math.max(0, Math.min(clips.length - 1, Math.round(el.scrollLeft / (cardW + 12))));
           if (i !== active) setActive(i);
         }}>
         {clips.map((clip, i) => (
@@ -167,12 +168,9 @@ export default function LiveCarousel({ trucks = [] }) {
       {clips.length > 1 && (
         <div className="flex items-center justify-center gap-1.5 mt-3">
           {clips.map((_, i) => (
-            <button key={i} onClick={() => goTo(i)}
-              className="rounded-full transition-all duration-300" style={{
-                width: i === active ? 20 : 6,
-                height: 6,
-                background: i === active ?'var(--cc-accent-2)':'rgba(255,255,255,0.15)',
-              }} />
+            <button key={i} onClick={() => goTo(i)} aria-label={`Show clip ${i + 1}`} aria-pressed={i === active} className="min-w-11 h-11 flex items-center justify-center">
+              <span className={`h-1.5 rounded-full ${i === active ? 'w-5 bg-discovery-orange' : 'w-1.5 bg-discovery-muted'}`} />
+            </button>
           ))}
         </div>
       )}

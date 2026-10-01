@@ -19,6 +19,13 @@ module.exports = {
         '4xl': '2rem',
       },
       colors: {
+        discovery: {
+          bg: 'var(--cc-d-bg)', surface: 'var(--cc-d-surface)', raised: 'var(--cc-d-raised)',
+          ink: 'var(--cc-d-ink)', muted: 'var(--cc-d-muted)', line: 'var(--cc-d-line)',
+          orange: 'var(--cc-d-orange)', amber: 'var(--cc-d-amber)', paper: 'var(--cc-d-paper)',
+          card: 'var(--cc-d-card)', dark: 'var(--cc-d-dark)', subtle: 'var(--cc-d-paper-muted)',
+          rust: 'var(--cc-d-paper-accent)', status: 'var(--cc-d-status)',
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

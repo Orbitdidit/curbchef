@@ -16,14 +16,14 @@ export default function CartFloatingButton() {
     <Link
       to="/cart"
       aria-label={`View cart: ${count} item${count !== 1 ? 's' : ''}, $${total.toFixed(2)}`}
-      className="fixed bottom-24 left-4 right-4 z-40 flex justify-center"
+      className="cc-discovery fixed bottom-[calc(5.5rem+env(safe-area-inset-bottom))] left-4 right-4 z-40 flex justify-center"
       style={{ maxWidth: '512px', margin: '0 auto', left: 0, right: 0 }}
     >
       <div
         className="w-full mx-4 flex items-center justify-between px-5 py-4 rounded-2xl"
         style={{
           background: 'linear-gradient(135deg, var(--cc-accent) 0%, var(--cc-accent-3) 100%)',
-          boxShadow: '0 0 24px rgba(var(--cc-accent-rgb),0.5)',
+          boxShadow: 'none',
           minHeight: '56px',
         }}
       >

@@ -77,7 +77,7 @@ export default function ItemDetail() {
 
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--cc-bg-0)' }}>
+    <div className="cc-discovery min-h-screen bg-discovery-bg">
       {/* Hero image */}
       <div className="relative h-72">
         <img
@@ -91,17 +91,13 @@ export default function ItemDetail() {
         <div className="absolute top-[max(1rem,env(safe-area-inset-top))] left-4 right-4 flex items-center justify-between">
           <button
             onClick={() => navigate(-1)}
-            className="w-9 h-9 rounded-xl flex items-center justify-center"
+            aria-label="Back to menu"
+            className="w-11 h-11 rounded-full flex items-center justify-center"
             style={{ background: 'rgba(13,21,23,0.7)', backdropFilter:'blur(10px)' }}
           >
             <ChevronLeft className="w-5 h-5 text-white" />
           </button>
-          <button
-            className="w-9 h-9 rounded-xl flex items-center justify-center"
-            style={{ background: 'rgba(13,21,23,0.7)', backdropFilter:'blur(10px)' }}
-          >
-            <Heart className="w-4.5 h-4.5 text-white" />
-          </button>
+
         </div>
 
         {/* Border glow on selected item */}
@@ -112,7 +108,7 @@ export default function ItemDetail() {
       </div>
 
       {/* Content */}
-      <div className="px-5 -mt-4 relative z-10 pb-40">
+      <div className="cc-paper px-5 pt-6 -mt-6 rounded-t-[2rem] relative z-10 pb-40">
         {/* Name + price */}
         <div className="flex items-start justify-between mb-3">
           <h1 className="font-display text-2xl leading-tight flex-1 mr-4" style={{ color: 'var(--cc-ink)' }}>
@@ -122,23 +118,19 @@ export default function ItemDetail() {
             <p className="font-display text-2xl" style={{ color: 'var(--cc-accent)' }}>
               ${item.price?.toFixed(2)}
             </p>
-            <p className="text-[10px] font-bold" style={{ color: 'var(--cc-ink-dim)' }}>PER {item.category?.toUpperCase()}</p>
+            <p className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>each</p>
           </div>
         </div>
 
         {/* Meta */}
         <div className="flex items-center gap-3 mb-4">
-          <div className="flex items-center gap-1">
-            <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-            <span className="text-sm font-bold" style={{ color: 'var(--cc-ink)' }}>4.8</span>
-            <span className="text-xs" style={{ color: 'var(--cc-ink-dim)' }}>(100 reviews)</span>
-          </div>
+          <p className="text-sm font-semibold" style={{ color: 'var(--cc-ink-dim)' }}>{truck?.name}</p>
           {item.is_special && (
             <span
               className="text-[10px] font-black px-2.5 py-1 rounded-full"
               style={{ background: 'rgba(var(--cc-warm-rgb),0.15)', color:'var(--cc-warm)', border:'1px solid rgba(var(--cc-warm-rgb),0.3)' }}
             >
-               TRENDING
+               CHEF SPECIAL
             </span>
           )}
         </div>
@@ -159,6 +151,7 @@ export default function ItemDetail() {
               {SPICE.map(s => (
                 <button
                   key={s}
+                  aria-pressed={spice === s}
                   onClick={() => setSpice(prev => prev === s ? null : s)}
                   className="flex-1 py-2.5 rounded-full text-sm font-bold transition-all"
                   style={spice === s
@@ -183,6 +176,7 @@ export default function ItemDetail() {
                 return (
                   <button
                     key={addon.name}
+                    aria-pressed={!!selected}
                     onClick={() => toggleAddOn(addon)}
                     className="flex items-center gap-3 p-3.5 rounded-2xl transition-all"
                     style={{
@@ -237,25 +231,27 @@ export default function ItemDetail() {
       {/* Sticky bottom: qty + add to cart */}
       <div
         className="fixed bottom-0 left-0 right-0 flex justify-center px-5 pb-6 pt-4 z-50"
-        style={{ background: 'rgba(13,21,23,0.97)', backdropFilter:'blur(16px)' }}
+        style={{ background: 'var(--cc-d-bg)' }}
       >
         <div className="w-full max-w-lg flex items-center gap-3">
           {/* Qty control */}
           <div
-            className="flex items-center gap-4 px-4 py-3 rounded-2xl flex-shrink-0"
+            className="flex items-center gap-1 px-1.5 py-2 rounded-full flex-shrink-0"
             style={{ background: 'var(--cc-bg-2)' }}
           >
             <button
+              aria-label="Decrease quantity"
               onClick={() => setQty(q => Math.max(1, q - 1))}
-              className="w-8 h-8 rounded-full flex items-center justify-center"
+              className="w-11 h-11 rounded-full flex items-center justify-center"
               style={{ background: 'var(--cc-bg-3)' }}
             >
               <Minus className="w-3.5 h-3.5" style={{ color: 'var(--cc-ink)' }} />
             </button>
             <span className="font-display text-lg w-4 text-center" style={{ color: 'var(--cc-ink)' }}>{qty}</span>
             <button
+              aria-label="Increase quantity"
               onClick={() => setQty(q => q + 1)}
-              className="w-8 h-8 rounded-full flex items-center justify-center"
+              className="w-11 h-11 rounded-full flex items-center justify-center"
               style={{ background: 'linear-gradient(135deg,var(--cc-accent),var(--cc-accent-3))' }}
             >
               <Plus className="w-3.5 h-3.5" style={{ color: 'var(--cc-accent-deep)' }} />
@@ -265,11 +261,11 @@ export default function ItemDetail() {
           {/* Add to cart */}
           <button
             onClick={handleAddToCart}
-            className="flex-1 py-4 rounded-2xl font-display text-base flex items-center justify-between px-5"
+            className="flex-1 min-w-0 py-3 min-h-14 rounded-full font-heading font-bold text-sm flex flex-wrap gap-x-2 items-center justify-center px-3"
             style={{
               background: 'linear-gradient(135deg, var(--cc-accent) 0%, var(--cc-accent-3) 100%)',
               color: 'var(--cc-accent-deep)',
-              boxShadow: '0 0 20px rgba(var(--cc-accent-rgb),0.4)',
+              boxShadow: 'none',
             }}
           >
             <span>{isInCart ? 'Update Cart':'Add to Cart'}</span>
