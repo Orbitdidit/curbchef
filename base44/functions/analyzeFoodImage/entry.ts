@@ -1,13 +1,9 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.23';
+import { secureEndpoint, boundedText, deny } from '../../shared/security.ts';
 
-Deno.serve(async (req) => {
-  const base44 = createClientFromRequest(req);
-
-  const { image_url } = await req.json();
-
-  if (!image_url) {
-    return Response.json({ error: 'image_url is required' }, { status: 400 });
-  }
+export default async function(req) {
+  return secureEndpoint(req, async ({ base44, body }) => {
+  const image_url = boundedText(body.image_url, 4096);
+  if (!image_url.startsWith('https://')) throw deny(400, 'An HTTPS image URL is required');
 
   const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
     prompt: `You are a food nutrition expert and dietitian AI. Analyze the food in this image.
@@ -50,4 +46,5 @@ Be concise and practical. If you cannot detect food clearly, set confidence belo
   });
 
   return Response.json(result);
-});
+  });
+}

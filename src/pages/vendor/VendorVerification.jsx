@@ -158,7 +158,7 @@ function VendorVerificationInner({ truck, user }) {
     });
 
     // Notify admin via existing function
-    await base44.functions.invoke('notifyNewTruckApplication', { truckId: truck.id, truckName: truck.name }).catch(() => {});
+    await base44.functions.invoke('notifyNewTruckApplication', { truck_id: truck.id }).catch(() => {});
 
     qc.invalidateQueries({ queryKey: ['vendor-truck'] });
     setSubmitting(false);

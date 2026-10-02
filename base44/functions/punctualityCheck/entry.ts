@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
+import { secureEndpoint } from '../../shared/security.ts';
 
 /**
  * Nightly punctuality check — run at midnight (or just after).
@@ -11,18 +11,9 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
  * Uses last_punctuality_check to avoid double-counting.
  * The caller (automation) passes no payload — this is a server-side job.
  */
-Deno.serve(async (req) => {
-  const base44 = createClientFromRequest(req);
-
-  // Verify admin or internal call (automation calls have no user)
-  let isAdmin = false;
-  try {
-    const user = await base44.auth.me();
-    isAdmin = user?.role === 'admin';
-  } catch {
-    // Automation/scheduled calls have no user — allow via service role only
-  }
-
+export default async function(req) {
+  return secureEndpoint(req, async ({ base44, body }) => {
+  if (body.dry_run === true) return Response.json({ authorized: true, dry_run: true });
   const trucks = await base44.asServiceRole.entities.FoodTruck.list();
   const now = new Date();
   const todayStr = now.toISOString().slice(0, 10); // "2026-04-17"
@@ -101,4 +92,5 @@ Deno.serve(async (req) => {
   }
 
   return Response.json({ checked: results.length, results });
-});
+  }, { admin: true });
+}

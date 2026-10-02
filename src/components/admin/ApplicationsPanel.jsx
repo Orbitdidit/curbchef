@@ -265,11 +265,7 @@ export default function ApplicationsPanel() {
       await base44.entities.TruckOnboarding.update(app.id, { status: 'approved' });
 
       // 4. Send approval email only after truck + menu are created
-      await base44.integrations.Core.SendEmail({
-        to: app.email,
-        subject: `🎉 ${app.truck_name} is approved on CurbChef!`,
-        body: `Hi ${app.owner_name},\n\nGreat news — your food truck "${app.truck_name}" has been approved on CurbChef!\n\nSign in to your Vendor Dashboard to:\n• Connect Stripe to accept card payments (12% platform fee per order)\n• Turn your truck OPEN and GO LIVE to start receiving orders\n• Manage your menu and food photos\n\nDashboard: https://app.curbchef.app/vendor\n\nSign in with: ${app.email}\n\nWelcome to CurbChef! 🚚🔥\n\n— The CurbChef Team`,
-      });
+      await base44.functions.invoke('sendVendorApprovedEmail', { truck_id: truck.id });
 
       return truck;
     },

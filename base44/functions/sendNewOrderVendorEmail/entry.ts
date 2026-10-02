@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
+import { secureEndpoint, vendorOrder, escapeData, recipient } from '../../shared/security.ts';
 
 function buildEmail(content) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"/></head>
@@ -19,19 +19,11 @@ function buildEmail(content) {
 </table></td></tr></table></body></html>`;
 }
 
-Deno.serve(async (req) => {
-  const base44 = createClientFromRequest(req);
-  const payload = await req.json();
-
-  const order = payload.data || payload;
-  if (!order.truck_id) return Response.json({ skipped: 'no truck_id' });
-
-  // Only fire on newly placed orders
-  if (order.status !== 'placed') return Response.json({ skipped: 'not placed status' });
-
-  const trucks = await base44.asServiceRole.entities.FoodTruck.filter({ id: order.truck_id });
-  const truck = trucks[0];
-  if (!truck?.owner_email) return Response.json({ skipped: 'no truck or owner_email' });
+export default async function(req) {
+  return secureEndpoint(req, async ({ base44, user, body }) => {
+  const stored = await vendorOrder(base44, user, body, 'placed');
+  const order = escapeData(stored.order);
+  const ownerEmail = recipient(stored.truck.owner_email);
 
   const platformFee = (order.total || 0) * 0.12;
   const vendorNet = (order.total || 0) - platformFee;
@@ -75,10 +67,11 @@ Deno.serve(async (req) => {
   `;
 
   await base44.asServiceRole.integrations.Core.SendEmail({
-    to: truck.owner_email,
+    to: ownerEmail,
     subject: `🔔 New order at ${order.truck_name} — Code ${order.pickup_code}`,
     body: buildEmail(content),
   });
 
   return Response.json({ sent: true });
-});
+  }, { admin: true });
+}

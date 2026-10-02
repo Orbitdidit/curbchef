@@ -246,7 +246,7 @@ export default function VerificationQueue() {
     });
     // Send verified email if owner email exists
     if (truck.owner_email) {
-      await base44.functions.invoke('sendVendorApprovedEmail', { truckId: truck.id, email: truck.owner_email, truckName: truck.name }).catch(() => {});
+      await base44.functions.invoke('sendVendorApprovedEmail', { truck_id: truck.id }).catch(() => {});
     }
     invalidate();
     setActionLoading(false);

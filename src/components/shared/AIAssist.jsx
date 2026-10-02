@@ -12,15 +12,7 @@ const ACTIONS = [
   { id:'promo', label:'Food Truck Promo Style' },
 ];
 
-const PROMPTS = {
-  headline: (t, ctx) => `Generate a punchy, exciting headline for a food truck app. Context: "${ctx || t}". Max 8 words. Return only the headline text.`,
-  rewrite: (t) => `Rewrite this copy for a premium food truck app in a bold, energetic style:"${t}". Return only the rewritten text.`,
-  shorten: (t) => `Shorten this to under 10 words while keeping the energy:"${t}". Return only the shortened text.`,
-  exciting: (t) => `Make this more exciting and high-energy for a food truck app:"${t}". Return only the text.`,
-  premium: (t) => `Rewrite this to sound premium and aspirational for an upscale food truck experience:"${t}". Return only the text.`,
-  houston: (t) => `Rewrite this with Houston street food culture energy. Make it feel local and authentic:"${t}". Return only the text.`,
-  promo: (t) => `Rewrite as a food truck promo: punchy, urgent, mouth-watering. Context:"${t}". Return only the promo text.`,
-};
+
 
 /**
  * AIAssist — shows a sparkle button next to any text field
@@ -38,9 +30,8 @@ export default function AIAssist({ value, context, onApply }) {
     setLoading(action.id);
     setOpen(false);
     try {
-      const prompt = PROMPTS[action.id](value || '', context ||'');
-      const result = await base44.integrations.Core.InvokeLLM({ prompt });
-      onApply(result.trim());
+      const { data } = await base44.functions.invoke('draftHomepageCopy', { action: action.id, value: value || '', context: context || '' });
+      onApply(data.text.trim());
     } catch (e) {
       // fail silently
     }

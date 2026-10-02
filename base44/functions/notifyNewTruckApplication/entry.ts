@@ -1,29 +1,6 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
+import { secureEndpoint, storedRecord, recordId, ownsTruck, deny, escapeData, recipient } from '../../shared/security.ts';
 
 const ADMIN_EMAIL = 'admin@curbchef.com';
-
-function buildMimeMessage({ to, subject, html }) {
-  const boundary = 'curbchef_boundary_' + Date.now();
-  const raw = [
-    `To: ${to}`,
-    `Subject: ${subject}`,
-    'MIME-Version: 1.0',
-    `Content-Type: multipart/alternative; boundary="${boundary}"`,
-    '',
-    `--${boundary}`,
-    'Content-Type: text/html; charset=UTF-8',
-    'Content-Transfer-Encoding: quoted-printable',
-    '',
-    html,
-    '',
-    `--${boundary}--`,
-  ].join('\r\n');
-
-  return btoa(unescape(encodeURIComponent(raw)))
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, '');
-}
 
 function vendorTypeLabel(type) {
   const map = {
@@ -46,36 +23,21 @@ function permitLabel(status) {
   return map[status] || status || '—';
 }
 
-async function sendEmail(accessToken, to, subject, html) {
-  const encoded = buildMimeMessage({ to, subject, html });
-  const res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ raw: encoded }),
-  });
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Gmail send failed: ${err}`);
-  }
-  return res.json();
-}
-
-Deno.serve(async (req) => {
-  try {
-    const base44 = createClientFromRequest(req);
-    const body = await req.json();
-
-    // Support both direct invocation (with data) and entity automation payload
-    const application = body.data || body.application;
-    if (!application) {
-      return Response.json({ error: 'No application data provided' }, { status: 400 });
+export default async function(req) {
+  return secureEndpoint(req, async ({ base44, user, body }) => {
+    const verification = !!(body.truck_id || body.truckId);
+    let record;
+    if (verification) {
+      const truck = await storedRecord(base44, 'FoodTruck', recordId(body, 'truck_id', 'truckId'));
+      if (!ownsTruck(user, truck) || truck.verification_status !== 'pending') throw deny();
+      record = { ...truck, truck_name: truck.name, email: truck.owner_email };
+    } else {
+      if (user.role !== 'admin') throw deny();
+      record = await storedRecord(base44, 'TruckOnboarding', recordId(body, 'application_id'));
+      if (record.status !== 'submitted') return Response.json({ skipped: 'not submitted' });
     }
-
-    const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
-
+    const application = escapeData(record);
+    const toVendor = verification ? null : recipient(record.email);
     const truckName = application.truck_name || 'Unknown Truck';
     const ownerName = application.owner_name || '—';
     const vendorEmail = application.email || '—';
@@ -222,19 +184,9 @@ Deno.serve(async (req) => {
 </body>
 </html>`;
 
-    const results = await Promise.allSettled([
-      sendEmail(accessToken, ADMIN_EMAIL, `🚚 New Application: ${truckName}`, adminHtml),
-      ...(vendorEmail && vendorEmail !== '—' ? [sendEmail(accessToken, vendorEmail, `✅ We received your CurbChef application — ${truckName}`, vendorHtml)] : []),
-    ]);
-
-    const errors = results.filter(r => r.status === 'rejected').map(r => r.reason?.message);
-    if (errors.length) {
-      console.error('Email errors:', errors);
-    }
-
-    return Response.json({ success: true, sent: results.filter(r => r.status === 'fulfilled').length });
-  } catch (error) {
-    console.error('notifyNewTruckApplication error:', error);
-    return Response.json({ error: error.message }, { status: 500 });
-  }
-});
+    const messages = [{ to: ADMIN_EMAIL, subject: `New application: ${truckName}`, body: adminHtml }];
+    if (toVendor) messages.push({ to: toVendor, subject: `We received your CurbChef application — ${truckName}`, body: vendorHtml });
+    await Promise.all(messages.map(message => base44.asServiceRole.integrations.Core.SendEmail(message)));
+    return Response.json({ success: true, sent: messages.length });
+  });
+}

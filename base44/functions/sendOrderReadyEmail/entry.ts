@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
+import { secureEndpoint, vendorOrder, escapeData, recipient } from '../../shared/security.ts';
 
 function buildEmail(content) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"/></head>
@@ -19,15 +19,12 @@ function buildEmail(content) {
 </table></td></tr></table></body></html>`;
 }
 
-Deno.serve(async (req) => {
-  const base44 = createClientFromRequest(req);
-  const { order_id } = await req.json();
-
-  const order = await base44.asServiceRole.entities.Order.get(order_id);
-  if (!order) return Response.json({ error: 'Order not found' }, { status: 404 });
-
-  const trucks = await base44.asServiceRole.entities.FoodTruck.filter({ id: order.truck_id });
-  const truck = trucks[0] || {};
+export default async function(req) {
+  return secureEndpoint(req, async ({ base44, user, body }) => {
+  const stored = await vendorOrder(base44, user, body, 'ready');
+  const order = escapeData(stored.order);
+  const truck = escapeData(stored.truck);
+  const customerEmail = recipient(stored.order.customer_email);
   const address = truck.address || truck.city || 'Houston, TX';
 
   const content = `
@@ -52,10 +49,11 @@ Deno.serve(async (req) => {
   `;
 
   await base44.asServiceRole.integrations.Core.SendEmail({
-    to: order.customer_email,
+    to: customerEmail,
     subject: `🚐 Your order is READY for pickup at ${order.truck_name}!`,
     body: buildEmail(content),
   });
 
   return Response.json({ sent: true });
-});
+  });
+}

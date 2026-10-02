@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
+import { secureEndpoint, storedRecord, recordId, escapeData, recipient } from '../../shared/security.ts';
 
 function buildEmail(content) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"/></head>
@@ -19,12 +19,11 @@ function buildEmail(content) {
 </table></td></tr></table></body></html>`;
 }
 
-Deno.serve(async (req) => {
-  const base44 = createClientFromRequest(req);
-  const payload = await req.json();
-
-  const app = payload.data || payload;
-  const toEmail = app.email;
+export default async function(req) {
+  return secureEndpoint(req, async ({ base44, body: payload }) => {
+  const record = await storedRecord(base44, 'TruckOnboarding', recordId(payload, 'application_id'));
+  const app = escapeData(record);
+  const toEmail = recipient(record.email);
   if (!toEmail) return Response.json({ skipped: 'no email' });
 
   // Only fire on status = submitted
@@ -60,4 +59,5 @@ Deno.serve(async (req) => {
   });
 
   return Response.json({ sent: true });
-});
+  }, { admin: true });
+}

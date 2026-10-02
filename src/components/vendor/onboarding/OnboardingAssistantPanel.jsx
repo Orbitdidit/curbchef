@@ -32,14 +32,12 @@ export default function OnboardingAssistantPanel({ truck, currentStep, onClose }
     setMessages(newMessages);
     setLoading(true);
 
-    const context = `You are a friendly onboarding guide for CurbChef, a Houston food truck platform. ${STEP_CONTEXT[currentStep] ||''} Truck name: ${truck?.name ||'unknown'}. Keep answers short and helpful.`;
-
-    const res = await base44.integrations.Core.InvokeLLM({
-      prompt: `${context}\n\nVendor question: ${text}`,
-    });
-
-    setMessages(prev => [...prev, { role:'assistant', content: typeof res ==='string'? res : (res.result || JSON.stringify(res)) }]);
-    setLoading(false);
+    try {
+      const { data } = await base44.functions.invoke('answerOnboardingQuestion', { truck_id: truck.id, step: currentStep, question: text });
+      setMessages(prev => [...prev, { role:'assistant', content: String(data.text) }]);
+    } catch {
+      setMessages(prev => [...prev, { role:'assistant', content: 'I couldn’t answer that just now. Please try again.' }]);
+    } finally { setLoading(false); }
   };
 
   const handleKey = (e) => {

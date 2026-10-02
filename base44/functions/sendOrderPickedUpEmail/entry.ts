@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
+import { secureEndpoint, vendorOrder, escapeData, recipient } from '../../shared/security.ts';
 
 function buildEmail(content) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"/></head>
@@ -19,12 +19,11 @@ function buildEmail(content) {
 </table></td></tr></table></body></html>`;
 }
 
-Deno.serve(async (req) => {
-  const base44 = createClientFromRequest(req);
-  const { order_id } = await req.json();
-
-  const order = await base44.asServiceRole.entities.Order.get(order_id);
-  if (!order) return Response.json({ error: 'Order not found' }, { status: 404 });
+export default async function(req) {
+  return secureEndpoint(req, async ({ base44, user, body }) => {
+  const stored = await vendorOrder(base44, user, body, 'picked_up');
+  const order = escapeData(stored.order);
+  const customerEmail = recipient(stored.order.customer_email);
 
   // Compute points earned (10 pts per $1)
   const pointsEarned = Math.round((order.total || 0) * 10);
@@ -49,10 +48,11 @@ Deno.serve(async (req) => {
   `;
 
   await base44.asServiceRole.integrations.Core.SendEmail({
-    to: order.customer_email,
+    to: customerEmail,
     subject: `✅ Thanks for ordering at ${order.truck_name}!`,
     body: buildEmail(content),
   });
 
   return Response.json({ sent: true });
-});
+  });
+}

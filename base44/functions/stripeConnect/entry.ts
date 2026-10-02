@@ -1,15 +1,11 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.23';
+import { secureEndpoint } from '../../shared/security.ts';
+import { secrets } from 'base44:runtime';
 import Stripe from 'npm:stripe@14.21.0';
 
-const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'), { apiVersion: '2024-04-10' });
-const IS_TEST = Deno.env.get('STRIPE_SECRET_KEY')?.startsWith('sk_test_');
-
-Deno.serve(async (req) => {
-  const base44 = createClientFromRequest(req);
-  const user = await base44.auth.me();
-  if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-
-  const body = await req.json().catch(() => ({}));
+export default async function(req) {
+  return secureEndpoint(req, async ({ base44, user, body }) => {
+  const stripe = new Stripe(secrets.get('STRIPE_SECRET_KEY'), { apiVersion: '2024-04-10' });
+  const IS_TEST = secrets.get('STRIPE_SECRET_KEY')?.startsWith('sk_test_');
   const { action, truck_id, return_url, refresh_url } = body;
 
   if (action === 'create_account_link') {
@@ -48,23 +44,21 @@ Deno.serve(async (req) => {
   }
 
   if (action === 'check_status') {
-    const { stripe_account_id } = body;
-    if (!stripe_account_id) return Response.json({ status: 'not_connected' });
-    const account = await stripe.accounts.retrieve(stripe_account_id);
+    const trucks = await base44.entities.FoodTruck.filter({ owner_email: user.email.trim().toLowerCase() });
+    const truck = trucks[0];
+    if (!truck?.stripe_account_id) return Response.json({ status: 'not_connected' });
+    const account = await stripe.accounts.retrieve(truck.stripe_account_id);
     const status = account.payouts_enabled
       ? 'payouts_enabled'
       : account.charges_enabled
       ? 'charges_enabled'
       : 'onboarding_started';
 
-    // Update truck record
-    const trucks = await base44.entities.FoodTruck.filter({ owner_email: user.email });
-    if (trucks[0]) {
-      await base44.asServiceRole.entities.FoodTruck.update(trucks[0].id, { stripe_onboarding_status: status });
-    }
+    await base44.asServiceRole.entities.FoodTruck.update(truck.id, { stripe_onboarding_status: status });
 
     return Response.json({ status, charges_enabled: account.charges_enabled, payouts_enabled: account.payouts_enabled, is_test: IS_TEST });
   }
 
   return Response.json({ error: 'Unknown action' }, { status: 400 });
-});
+  });
+}

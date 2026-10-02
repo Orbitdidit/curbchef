@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
+import { secureEndpoint, storedRecord, recordId, escapeData, recipient } from '../../shared/security.ts';
 
 function buildEmail(content) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"/></head>
@@ -19,19 +19,15 @@ function buildEmail(content) {
 </table></td></tr></table></body></html>`;
 }
 
-Deno.serve(async (req) => {
-  const base44 = createClientFromRequest(req);
-  const payload = await req.json();
-
-  // Called from entity automation — payload has event + data
-  const truck = payload.data || payload;
-  const ownerEmail = truck.owner_email;
+export default async function(req) {
+  return secureEndpoint(req, async ({ base44, body: payload }) => {
+  const record = await storedRecord(base44, 'FoodTruck', recordId(payload, 'truck_id', 'truckId'));
+  const truck = escapeData(record);
+  const ownerEmail = recipient(record.owner_email);
   if (!ownerEmail) return Response.json({ skipped: 'no owner_email' });
 
-  // Only fire when is_approved just flipped to true
-  const wasApproved = payload.old_data?.is_approved;
-  const isNowApproved = truck.is_approved;
-  if (wasApproved || !isNowApproved) return Response.json({ skipped: 'not newly approved' });
+  // The stored approval state, not caller-supplied event data, authorizes delivery.
+  if (!truck.is_approved) return Response.json({ skipped: 'not approved' });
 
   const steps = [
     ['1', 'Connect Stripe to receive payments', 'https://curbchef.app/vendor'],
@@ -78,4 +74,5 @@ Deno.serve(async (req) => {
   });
 
   return Response.json({ sent: true });
-});
+  }, { admin: true });
+}
