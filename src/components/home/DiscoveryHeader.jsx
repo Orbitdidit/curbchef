@@ -4,13 +4,13 @@ import { useQuery } from '@tanstack/react-query';
 import { ArrowUpRight, MapPin, Search, Radio } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
-const SLIDE_MS = 7000;
+const SLIDE_MS = 6000;
 
 /** Brand reel (HomepageConfig hero_video) first, then every active vendor clip. */
 function useHeroClips() {
   const { data: cfg = [] } = useQuery({
     queryKey: ['homepage-config-hero'],
-    queryFn: () => base44.entities.HomepageConfig.filter({ key: 'hero_video', is_active: true }),
+    queryFn: () => base44.entities.HomepageConfig.filter({ key: { $in: ['hero_video', 'hero_reel'] }, is_active: true }),
     staleTime: 300000,
   });
   const { data: clips = [] } = useQuery({
@@ -19,13 +19,21 @@ function useHeroClips() {
     staleTime: 60000,
   });
   return useMemo(() => {
-    const out = [];
-    const hero = cfg[0];
-    if (hero?.video_url) out.push({ id: 'brand', video: hero.video_url, poster: hero.poster_url, kind: 'brand' });
-    clips.forEach(c => c.video_url && out.push({
+    const list = Array.isArray(cfg) ? cfg : (cfg.items || []);
+    const brand = list.filter(c => c.key === 'hero_video' && c.video_url)
+      .map(c => ({ id: c.id, video: c.video_url, poster: c.poster_url, kind: 'brand' }));
+    const reels = list.filter(c => c.key === 'hero_reel' && c.video_url)
+      .map(c => ({ id: c.id, video: c.video_url, poster: c.poster_url, kind: 'brand' }));
+    const vendor = (Array.isArray(clips) ? clips : (clips.items || [])).filter(c => c.video_url).map(c => ({
       id: c.id, video: c.video_url, poster: c.poster_url, kind: 'clip',
       truck: c.truck_name, title: c.title, truckId: c.truck_id,
     }));
+    // Brand reel first, then alternate studio reels with real vendor clips.
+    const out = [...brand.slice(0, 1)];
+    for (let n = 0; n < Math.max(reels.length, vendor.length); n++) {
+      if (reels[n]) out.push(reels[n]);
+      if (vendor[n]) out.push(vendor[n]);
+    }
     return out;
   }, [cfg, clips]);
 }
@@ -69,6 +77,7 @@ export default function DiscoveryHeader({ query, setQuery, onSearch }) {
   }, [current?.id, reduceMotion]);
 
   const liveClip = current?.kind === 'clip' ? current : clips.find(c => c.kind === 'clip');
+  const upNext = clips.length > 1 ? clips[(i + 1) % clips.length] : null;
 
   return (
     <header>
@@ -168,6 +177,7 @@ export default function DiscoveryHeader({ query, setQuery, onSearch }) {
           </form>
         </div>
       </div>
+      {upNext?.video && !reduceMotion && <link rel="preload" as="video" href={upNext.video} />}
       <style>{'@keyframes ccStory{from{transform:scaleX(0)}to{transform:scaleX(1)}}'}</style>
     </header>
   );
