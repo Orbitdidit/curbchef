@@ -14,6 +14,8 @@ import AssistantSheet from '@/components/assistant/AssistantSheet';
 
 import AppLayout from './components/layout/AppLayout';
 import FrameLayout from './components/layout/FrameLayout';
+import PreviewBanner from './components/layout/PreviewBanner';
+import { checkPreviewAccess, isPreviewPath } from './lib/previewAccess';
 import Crave from './pages/Crave.jsx';
 import CraveList from './pages/CraveList.jsx';
 import AdminPreviewPill from './components/admin/AdminPreviewPill';
@@ -67,6 +69,9 @@ const AuthenticatedApp = () => {
   // Fetch launch_mode, beta users, and approved trucks for the signed-in user
   const [launchMode, setLaunchMode] = React.useState(null);
   const [isApproved, setIsApproved] = React.useState(null); // null = loading
+  const [hasPreview, setHasPreview] = React.useState(null);  // null = checking ?preview= link
+
+  React.useEffect(() => { checkPreviewAccess().then(setHasPreview); }, []);
 
   React.useEffect(() => {
     base44.entities.HomepageConfig.filter({ key: 'launch_mode' })
@@ -97,7 +102,7 @@ const AuthenticatedApp = () => {
     }).catch(() => setIsApproved(false));
   }, [isLoadingAuth, isAuthenticated, user]);
 
-  const loading = isLoadingPublicSettings || isLoadingAuth || launchMode === null || isApproved === null;
+  const loading = isLoadingPublicSettings || isLoadingAuth || launchMode === null || isApproved === null || hasPreview === null;
 
   if (loading) {
     return (
@@ -113,7 +118,7 @@ const AuthenticatedApp = () => {
   if (authError) {
     if (authError.type === 'user_not_registered') {
       return <UserNotRegisteredError />;
-    } else if (authError.type === 'auth_required') {
+    } else if (authError.type === 'auth_required' && !(hasPreview && isPreviewPath(location.pathname))) {
       return <SignIn navigateToLogin={navigateToLogin} />;
     }
   }
@@ -124,13 +129,16 @@ const AuthenticatedApp = () => {
   // Gate only applies when not in public mode
   const gateApplies = launchMode !== 'public';
 
+  // Preview link: browsing pages open to anyone holding a valid code
+  const previewing = gateApplies && hasPreview && !isApproved && isPreviewPath(location.pathname);
+
   // Not signed in + gate applies → sign-in screen
-  if (gateApplies && !isAuthenticated && !isOnboardRoute) {
+  if (gateApplies && !isAuthenticated && !isOnboardRoute && !previewing) {
     return <SignIn navigateToLogin={navigateToLogin} />;
   }
 
   // Signed in but not approved → friendly waitlist screen
-  if (gateApplies && isAuthenticated && !isApproved && !isOnboardRoute) {
+  if (gateApplies && isAuthenticated && !isApproved && !isOnboardRoute && !previewing) {
     return <NotApproved />;
   }
 
@@ -145,6 +153,7 @@ const AuthenticatedApp = () => {
         style={{ minHeight: '100dvh' }}
       >
         {isAdmin && <AdminPreviewPill />}
+        {previewing && <PreviewBanner />}
         <Routes location={location}>
           {/* Customer routes with bottom nav */}
           <Route element={<AppLayout />}>
