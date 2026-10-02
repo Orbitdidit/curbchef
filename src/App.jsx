@@ -14,6 +14,8 @@ import AssistantSheet from '@/components/assistant/AssistantSheet';
 
 import AppLayout from './components/layout/AppLayout';
 import FrameLayout from './components/layout/FrameLayout';
+import Crave from './pages/Crave.jsx';
+import CraveList from './pages/CraveList.jsx';
 import AdminPreviewPill from './components/admin/AdminPreviewPill';
 import Home from './pages/Home.jsx';
 import LiveFeed from './pages/LiveFeed';
@@ -178,6 +180,8 @@ const AuthenticatedApp = () => {
 
 
           <Route element={<FrameLayout />}>
+            <Route path="/crave" element={<Crave />} />
+            <Route path="/crave/list" element={<CraveList />} />
             <Route path="/search" element={<Search />} />
             <Route path="/live" element={<LiveFeed />} />
             <Route path="/truck/:id" element={<TruckProfile />} />

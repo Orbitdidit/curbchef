@@ -13,11 +13,13 @@ import AssistantHomeCard from '@/components/assistant/AssistantHomeCard';
 import HomeRewardsStrip from '@/components/home/HomeRewardsStrip';
 import TruckParksRail from '@/components/home/TruckParksRail';
 import DiscoveryExtras from '@/components/home/DiscoveryExtras';
+import CraveTeaser from '@/components/home/CraveTeaser';
 
 export default function DiscoveryFeed({ user, trucks, filteredTrucks, liveTrucks }) {
   return (
     <>
       <DiscoveryFeature trucks={filteredTrucks} />
+      <CraveTeaser trucks={trucks} />
       <section className="cc-paper rounded-3xl mt-7 pt-2 pb-7" aria-label="Find your next meal">
         {filteredTrucks.length ? <CarouselSection title="Find your next bite" trucks={filteredTrucks.slice(0, 10)} seeAllHref="/explore" /> : <div className="px-5 py-6"><h2 className="font-heading font-bold text-xl">Nothing on this menu yet.</h2><p className="text-sm mt-2 text-discovery-subtle">Try another cuisine or explore all trucks.</p><Link to="/explore" className="inline-flex items-center min-h-11 gap-2 text-sm font-bold text-discovery-rust mt-2">Explore trucks <ArrowUpRight className="w-4 h-4" /></Link></div>}
         <QuickReorder user={user} />
