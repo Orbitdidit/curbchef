@@ -14,6 +14,7 @@ import { getCart, addToCart, updateQuantity, subscribe as subscribeCart } from '
 import { useFollow } from '@/hooks/useFollow';
 import { useToast } from '@/components/ui/use-toast';
 import { useUserLocation, distanceMiles } from '@/lib/geoUtils';
+import DemoBadge from '@/components/shared/DemoBadge';
 
 const TABS = ['Menu','Specials','Clips'];
 
@@ -174,10 +175,15 @@ export default function TruckProfile() {
       {/* ── INFO CARD ── */}
       <div className="cc-paper cc-profile-info mx-4 -mt-4 relative z-10 rounded-3xl p-5 mb-4">
 
+        {truck.is_sample && (
+          <p className="mb-3 text-xs rounded-md px-3 py-2" style={{ background: 'rgba(242,186,98,0.12)', color: '#F2BA62', border: '1px solid rgba(242,186,98,0.3)' }}>
+            Demo truck. This is an example page showing what a finished CurbChef truck profile looks like.
+          </p>
+        )}
         {/* Name + Follow */}
         <div className="flex items-start justify-between gap-3 mb-2">
           <h1 className="font-display leading-none" style={{ color: 'var(--cc-ink)', fontSize:'clamp(1.6rem,7vw,2.4rem)' }}>
-            {truck.name}
+            {truck.name}{truck.is_sample && <DemoBadge />}
           </h1>
           <button
             onClick={toggleFollow}
