@@ -1,0 +1,81 @@
+{
+  "name": "CraveSwipe",
+  "type": "object",
+  "description": "One swipe in Crave. action=crave puts the item on the user's Crave List; pass/hide_truck teach the recommender what to skip. Vendors see crave counts per item.",
+  "properties": {
+    "menu_item_id": {
+      "type": "string"
+    },
+    "truck_id": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "crave",
+        "pass",
+        "hide_truck"
+      ],
+      "description": "crave = swipe right, pass = swipe left, hide_truck = swipe down"
+    },
+    "item_name": {
+      "type": "string"
+    },
+    "truck_name": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "cuisine_type": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "menu_item_id",
+    "truck_id",
+    "action"
+  ],
+  "rls": {
+    "create": true,
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}
