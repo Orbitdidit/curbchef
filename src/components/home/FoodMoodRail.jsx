@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, UtensilsCrossed, ScanLine, Play, MapPin, Gift, Zap } from 'lucide-react';
-const ICONS = [UtensilsCrossed, ScanLine, Play, MapPin, Gift, Zap];
+import { ArrowUpRight, Heart, ScanLine, Play, MapPin, Gift, Zap } from 'lucide-react';
+const ICONS = [Heart, ScanLine, Play, MapPin, Gift, Zap];
 
 const MOODS = [
-  { label:'Order Now', emoji:'', href:'/explore', color:'rgba(var(--cc-accent-rgb),0.12)', border:'rgba(var(--cc-accent-rgb),0.25)', textColor:'var(--cc-accent)'},
+  { label:'Crave', emoji:'', href:'/crave', color:'rgba(var(--cc-accent-rgb),0.12)', border:'rgba(var(--cc-accent-rgb),0.25)', textColor:'var(--cc-accent)'},
   { label:'Food Scan', emoji:'', href:'/scan', color:'rgba(var(--cc-accent-rgb),0.08)', border:'rgba(var(--cc-accent-rgb),0.2)', textColor:'var(--cc-accent)'},
   { label:'Watch Live', emoji:'', href:'/live', color:'rgba(var(--cc-warm-red-rgb),0.1)', border:'rgba(var(--cc-warm-red-rgb),0.25)', textColor:'var(--cc-warm-red)'},
   { label:'Find on Map', emoji:'', href:'/map', color:'rgba(var(--cc-warm-rgb),0.1)', border:'rgba(var(--cc-warm-rgb),0.25)', textColor:'var(--cc-warm)'},
