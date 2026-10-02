@@ -18,7 +18,7 @@ export function coachLines(step, { truck, menuItems = [] }) {
           `Welcome to CurbChef${name ? `, ${name}` : ''}. I'm Chef Coach. I'll walk you through setup, about 10 minutes total.`,
           `First: who you are. Eaters follow people, not logos, so tell them your story in a line or two.`,
         ],
-        why: 'Trucks with a short personal description get more follows than ones with just a cuisine type.',
+        why: 'A line about who you are turns your page from a listing into a place people want to try.',
       };
     case 2:
       return {
@@ -48,7 +48,7 @@ export function coachLines(step, { truck, menuItems = [] }) {
               `Time for the good part: your menu.`,
               `Start with your 3 best sellers. Give each one a photo and a description that makes people hungry.`,
             ],
-        why: 'Items with a photo sell far more than items without one. Your dishes also show up in Crave, where eaters swipe through food. No photo, no swipe.',
+        why: 'People order with their eyes. Your dishes also show up in Crave, where eaters swipe through food. No photo, no swipe.',
         guide: true,
       };
     case 5:
@@ -65,7 +65,7 @@ export function coachLines(step, { truck, menuItems = [] }) {
           `Almost there. A few extras that bring people to your window:`,
           `Live Clips (film 10 seconds of the cook) and Curb Drops (flash deals that ping nearby eaters).`,
         ],
-        why: 'Trucks that post a clip on their first day get discovered faster. It\'s free advertising.',
+        why: 'A 10-second clip proves you\'re real and cooking right now. It\'s free advertising at the top of the app.',
       };
     case 7:
       return {

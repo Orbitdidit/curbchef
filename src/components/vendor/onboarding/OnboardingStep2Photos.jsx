@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Upload, Loader2 } from 'lucide-react';
+import CoachedPhotoUpload from './CoachedPhotoUpload';
 
 function ImageUploader({ label, hint, currentUrl, onUploaded }) {
   const [uploading, setUploading] = useState(false);
@@ -47,18 +48,19 @@ export default function OnboardingStep2Photos({ truck, saveTruck }) {
     <div className="flex flex-col gap-6">
       <div>
         <p className="font-display text-xl mb-1" style={{ color: 'var(--cc-ink)' }}>Add your photos</p>
-        <p className="text-sm" style={{ color: 'var(--cc-ink-dim)' }}>Great photos get 3× more taps. Show off your brand!</p>
       </div>
 
-      <ImageUploader
-        label="Truck Logo *"
-        hint="Square image works best (min 400×400)"
+      <CoachedPhotoUpload
+        kind="logo"
+        label="Truck logo *"
+        hint="Square works best. No logo yet? Use your best food shot for now."
         currentUrl={truck?.image_url}
         onUploaded={(url) => saveTruck({ image_url: url })}
       />
-      <ImageUploader
-        label="Truck / Banner Photo *"
-        hint="Wide shot of your truck (min 800×400)"
+      <CoachedPhotoUpload
+        kind="truck"
+        label="Truck / banner photo *"
+        hint="Wide shot of your truck, window open, lights on if you've got them."
         currentUrl={truck?.cover_image_url}
         onUploaded={(url) => saveTruck({ cover_image_url: url })}
       />
