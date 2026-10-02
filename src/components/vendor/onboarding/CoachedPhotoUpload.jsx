@@ -19,9 +19,11 @@ export default function CoachedPhotoUpload({ label, hint, currentUrl, onUploaded
     e.target.value = '';
     if (!file) return;
     setError(''); setGrade(null); setUploading(true);
+    let stage = 'upload';
     try {
       const { file_url } = await base44.integrations.Core.UploadFile({ file });
       await onUploaded(file_url);
+      stage = 'grade';
       setUploading(false);
       setGrading(true);
       const res = await base44.functions.invoke('gradeFoodPhoto', { image_url: file_url, kind, item_name: itemName });
@@ -29,7 +31,7 @@ export default function CoachedPhotoUpload({ label, hint, currentUrl, onUploaded
       if (data?.error) throw new Error(data.error);
       setGrade(data);
     } catch (err) {
-      setError(uploading ? "That upload didn't go through. Try again." : 'Photo saved. Coach feedback is unavailable right now.');
+      setError(stage === 'upload' ? "That upload didn't go through. Try again." : 'Photo saved. Coach feedback is unavailable right now.');
     } finally {
       setUploading(false); setGrading(false);
     }
