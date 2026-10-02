@@ -6,6 +6,8 @@ import CoachedPhotoUpload from './CoachedPhotoUpload';
 const CATEGORIES = ['mains','sides','drinks','desserts','specials'];
 const MIN_ITEMS = 3;
 
+const isUnnamed = n => !n?.trim() || n.trim().toLowerCase() === 'new item';
+
 function MenuItemRow({ item, onDelete, truck, onChange }) {
   const [local, setLocal] = useState(item);
   const [writing, setWriting] = useState(false);
@@ -20,7 +22,7 @@ function MenuItemRow({ item, onDelete, truck, onChange }) {
 
   // Chef Coach drafts a description; the vendor can edit it before it saves.
   const writeIt = async () => {
-    if (!local.name?.trim()) return;
+    if (isUnnamed(local.name)) return;
     setWriting(true);
     try {
       const res = await base44.integrations.Core.InvokeLLM({
@@ -42,7 +44,7 @@ One sentence, 12-20 words. Make it mouth-watering and specific: texture, sauce, 
         onUploaded={(url) => save({ image_url: url })}
       />
       <div className="flex gap-2">
-        <input defaultValue={local.name} onBlur={e => save({ name: e.target.value })} placeholder="Item name" className="flex-1 px-3 py-2 rounded-xl text-sm outline-none"
+        <input defaultValue={isUnnamed(local.name) ? '' : local.name} onBlur={e => e.target.value.trim() && save({ name: e.target.value.trim() })} placeholder="Item name" className="flex-1 px-3 py-2 rounded-xl text-sm outline-none"
           style={{ background: 'var(--cc-bg-0)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.4)' }} />
         <input type="number" defaultValue={local.price} onBlur={e => save({ price: parseFloat(e.target.value) || 0 })}
           placeholder="$0.00" className="w-20 px-3 py-2 rounded-xl text-sm outline-none"
@@ -58,9 +60,9 @@ One sentence, 12-20 words. Make it mouth-watering and specific: texture, sauce, 
           className="w-full px-3 py-2 rounded-xl text-sm outline-none resize-none"
           style={{ background: 'var(--cc-bg-0)', color:'var(--cc-ink)', border:'1px solid rgba(var(--cc-line-rgb),0.6)' }}
         />
-        <button type="button" onClick={writeIt} disabled={writing || !local.name?.trim()}
+        <button type="button" onClick={writeIt} disabled={writing || isUnnamed(local.name)}
           className="flex items-center gap-1.5 text-xs font-bold w-fit min-h-8"
-          style={{ color: 'var(--cc-accent)', opacity: (!local.name?.trim()) ? 0.45 : 1 }}>
+          style={{ color: 'var(--cc-accent)', opacity: isUnnamed(local.name) ? 0.45 : 1 }}>
           {writing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
           {writing ? 'Writing…' : desc ? 'Rewrite it for me' : 'Write it for me'}
         </button>
@@ -92,7 +94,7 @@ export default function OnboardingStep4Menu({ truck, menuItems, setMenuItems }) 
   const addItem = async () => {
     setAdding(true);
     const item = await base44.entities.MenuItem.create({
-      truck_id: truck.id, name: '', price: 0, category:'mains', is_available: true,
+      truck_id: truck.id, name: 'New item', price: 0, category:'mains', is_available: true,
     });
     setMenuItems(prev => [...prev, item]);
     setAdding(false);
