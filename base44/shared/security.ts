@@ -32,7 +32,9 @@ export function recordId(body, ...keys) {
 }
 
 export async function storedRecord(base44, entity, id) {
-  const page = await base44.asServiceRole.entities[entity].filter({ id }, { limit: 1 });
+  let page;
+  try { page = await base44.asServiceRole.entities[entity].filter({ id }, { limit: 1 }); }
+  catch (error) { if ([400, 404].includes(error?.status)) throw deny(); throw error; }
   if (!page.items[0]) throw deny();
   return page.items[0];
 }

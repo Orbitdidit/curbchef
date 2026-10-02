@@ -25,11 +25,8 @@ function MenuItemRow({ item, onDelete, truck, onChange }) {
     if (isUnnamed(local.name)) return;
     setWriting(true);
     try {
-      const res = await base44.integrations.Core.InvokeLLM({
-        prompt: `Write a menu description for "${local.name}" from ${truck?.name || 'a Houston food truck'} (${(truck?.cuisine_type || 'street food').replace(/[_-]/g, ' ')}).
-One sentence, 12-20 words. Make it mouth-watering and specific: texture, sauce, how it's cooked. Houston casual, no hype words like "delicious" or "amazing", no emoji, no quotes.`,
-      });
-      const text = (typeof res === 'string' ? res : res?.result || '').trim().replace(/^["']|["']$/g, '');
+      const { data } = await base44.functions.invoke('draftMenuDescription', { item_id: item.id, item_name: local.name });
+      const text = String(data.text || '').trim().replace(/^["']|["']$/g, '');
       if (text) { setDesc(text); await save({ description: text }); }
     } finally { setWriting(false); }
   };
