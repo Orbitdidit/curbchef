@@ -135,5 +135,21 @@
     "truck_id",
     "items",
     "total"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "data.customer_email": "{{user.email}}"
+    },
+    "read": {
+      "data.customer_email": "{{user.email}}"
+    },
+    "update": {
+      "data.customer_email": "{{user.email}}"
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
 }

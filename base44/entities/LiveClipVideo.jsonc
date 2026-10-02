@@ -51,10 +51,7 @@
     "create": {
       "$or": [
         {
-          "base44.entities.FoodTruck.filter": {
-            "id": "data.truck_id",
-            "data.owner_email": "{{user.email}}"
-          }
+          "created_by_id": "{{user.id}}"
         },
         {
           "user_condition": {
@@ -84,10 +81,7 @@
     "update": {
       "$or": [
         {
-          "base44.entities.FoodTruck.filter": {
-            "id": "data.truck_id",
-            "data.owner_email": "{{user.email}}"
-          }
+          "created_by_id": "{{user.id}}"
         },
         {
           "user_condition": {
@@ -99,10 +93,7 @@
     "delete": {
       "$or": [
         {
-          "base44.entities.FoodTruck.filter": {
-            "id": "data.truck_id",
-            "data.owner_email": "{{user.email}}"
-          }
+          "created_by_id": "{{user.id}}"
         },
         {
           "user_condition": {

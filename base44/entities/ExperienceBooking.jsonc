@@ -87,12 +87,6 @@
           "data.customer_email": "{{user.email}}"
         },
         {
-          "base44.entities.ChefExperience.filter": {
-            "id": "data.chef_experience_id",
-            "data.owner_email": "{{user.email}}"
-          }
-        },
-        {
           "user_condition": {
             "role": "admin"
           }
@@ -103,12 +97,6 @@
       "$or": [
         {
           "data.customer_email": "{{user.email}}"
-        },
-        {
-          "base44.entities.ChefExperience.filter": {
-            "id": "data.chef_experience_id",
-            "data.owner_email": "{{user.email}}"
-          }
         },
         {
           "user_condition": {
