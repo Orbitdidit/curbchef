@@ -120,7 +120,7 @@ export default function DiscoveryHeader({ query, setQuery, onSearch }) {
             </div>
           )}
 
-          <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-discovery-ink/80">
+          <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em]" style={{ color: 'rgba(244,243,239,.82)' }}>
             <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--cc-d-mint)', boxShadow: '0 0 8px var(--cc-d-mint)' }} />
             Houston street food · no boring bites
           </p>

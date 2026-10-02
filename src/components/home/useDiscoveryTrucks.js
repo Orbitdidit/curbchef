@@ -2,9 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 
 const visible = { is_approved: true, $or: [{ is_sample: true }, { status: 'open' }] };
+// Food photos sell. Trucks with a real photo lead; trucks with no photo
+// (they'd fall back to a generic truck shot) go to the back of every rail.
+const hasPhoto = t => Boolean(t.image_url || t.cover_image_url);
+const foodFirst = items => [...items].sort((a, b) => Number(hasPhoto(b)) - Number(hasPhoto(a)));
+
 const getTrucks = async query => {
   const page = await base44.entities.FoodTruck.filter(query, { sort: '-rating', limit: 50 });
-  return page.items;
+  return foodFirst(page.items || []);
 };
 
 export default function useDiscoveryTrucks(category) {
