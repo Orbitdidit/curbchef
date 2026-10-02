@@ -370,3 +370,7 @@ button:active, a:active {
 .cc-tilt-l { transform: rotate(-3deg); }
 .cc-tilt-r { transform: rotate(2.5deg); }
 .cc-tag { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; padding: 4px 8px; border-radius: 3px; }
+
+/* Preview-link banner offset */
+body.cc-previewing #main-content { padding-top: 38px; }
+body.cc-previewing .cc-topmenu { transform: translateY(38px); }

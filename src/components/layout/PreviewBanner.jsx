@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 
 /** Thin top banner shown to preview-link visitors who aren't approved members. */
 export default function PreviewBanner() {
   const [open, setOpen] = useState(true);
+  // While the banner shows, push page content and the floating menu down so nothing hides under it.
+  useEffect(() => {
+    document.body.classList.toggle('cc-previewing', open);
+    return () => document.body.classList.remove('cc-previewing');
+  }, [open]);
   if (!open) return null;
   return (
     <div className="cc-discovery fixed top-0 left-0 right-0 z-[60] flex justify-center pointer-events-none">

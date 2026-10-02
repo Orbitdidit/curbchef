@@ -50,7 +50,7 @@ export default function AppLayout() {
         style={{ background: 'var(--cc-black)', maxWidth: '480px', minHeight: '100dvh' }}
       >
         {/* Top-right hamburger menu */}
-        <div className="fixed top-[max(1rem,env(safe-area-inset-top))] z-30" style={{ right: 'max(1rem, calc(50% - 225px))' }}>
+        <div className="cc-topmenu fixed top-[max(1rem,env(safe-area-inset-top))] z-30" style={{ right: 'max(1rem, calc(50% - 225px))' }}>
           <TopMenuBar />
         </div>
         <main
