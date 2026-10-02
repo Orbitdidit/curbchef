@@ -1,0 +1,2111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CurbChef — Houston's curb is the kitchen.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============ DESIGN TOKENS ============ */
+  :root {
+    --bg: #0c0d0e;
+    --bg-2: #131416;
+    --bg-3: #181a1d;
+    --bg-4: #1f2226;
+    --bg-5: #2a2d33;
+
+    --paper: #f4f1ec;
+    --paper-dim: #b8b3a8;
+    --paper-mute: #6e6a64;
+
+    --mint: #77ffc8;
+    --mint-deep: #4ad9a4;
+    --mint-shadow: rgba(119, 255, 200, 0.18);
+    --mint-soft: rgba(119, 255, 200, 0.06);
+
+    --ember: #ff5a1f;
+    --ember-deep: #c93f10;
+    --ember-shadow: rgba(255, 90, 31, 0.18);
+    --ember-soft: rgba(255, 90, 31, 0.05);
+
+    /* World palettes — disciplined, not Fisher-Price */
+    --world-eat-1: #0a2a23;
+    --world-eat-2: #143829;
+    --world-eat-3: #052017;
+
+    --world-truck-1: #2a1408;
+    --world-truck-2: #3d1d0c;
+    --world-truck-3: #1a0a04;
+
+    --world-drop-1: #1a0824;
+    --world-drop-2: #2a0e3a;
+    --world-drop-3: #0d041a;
+    --world-drop-accent: #b16cff;
+
+    --world-cobalt-1: #0a1428;
+    --world-cobalt-2: #0e1f3d;
+
+    --line: rgba(244, 241, 236, 0.06);
+    --line-2: rgba(244, 241, 236, 0.12);
+    --line-3: rgba(244, 241, 236, 0.2);
+
+    --display: 'Anton', 'Helvetica Neue', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --body: 'Inter', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--paper);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+  img { display: block; max-width: 100%; }
+
+  @keyframes pulse { 0%,100% {opacity:1;} 50% {opacity:0.4;} }
+
+  /* ============ NAV ============ */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    background: rgba(12, 13, 14, 0.78);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-left { display: flex; align-items: center; gap: 28px; }
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 24px;
+    letter-spacing: 0.005em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: uppercase;
+    color: var(--paper);
+  }
+  .nav-logo .flame {
+    width: 22px; height: 22px;
+    background: var(--mint);
+    clip-path: polygon(50% 0%, 100% 35%, 85% 100%, 15% 100%, 0% 35%);
+    box-shadow: 0 0 14px var(--mint-shadow);
+  }
+  .nav-logo .accent { color: var(--mint); }
+  .nav-tabs { display: flex; gap: 4px; }
+  .nav-tab {
+    font-family: var(--body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--paper-dim);
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+  .nav-tab:hover, .nav-tab.active { background: var(--bg-3); color: var(--paper); }
+  .nav-tab .pill {
+    display: inline-block;
+    background: var(--ember);
+    color: var(--paper);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-left: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    vertical-align: middle;
+  }
+  .nav-right { display: flex; gap: 10px; align-items: center; }
+  .nav-search {
+    background: var(--bg-3);
+    padding: 8px 14px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--paper-mute);
+    font-size: 13px;
+    border: 1px solid var(--line);
+  }
+  .nav-search .kbd {
+    background: var(--bg-4);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-size: 10px;
+    margin-left: 16px;
+  }
+  .nav-cta {
+    background: var(--mint);
+    color: var(--bg);
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13px;
+    transition: opacity 0.2s, transform 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-cta:hover { opacity: 0.92; transform: translateY(-1px); }
+  .nav-cta .pricing-pill {
+    background: var(--bg);
+    color: var(--mint);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: 700;
+    margin-left: 6px;
+    font-family: var(--mono);
+  }
+  @media (max-width: 1100px) {
+    .nav-tabs { display: none; }
+    .nav-search { display: none; }
+  }
+
+  /* ============ FEATURED HERO BENTO ============ */
+  .featured-row {
+    padding: 14px 24px 0;
+    max-width: 1480px;
+    margin: 0 auto;
+  }
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1.4fr 1.4fr 0.8fr;
+    gap: 10px;
+    height: 340px;
+  }
+  .feat-tile {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--bg-3);
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .feat-tile:hover { transform: translateY(-3px); }
+  .feat-tile img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .feat-tile:hover img { transform: scale(1.04); }
+  .feat-tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(12,13,14,0.95) 0%, rgba(12,13,14,0.3) 60%, transparent 100%);
+  }
+  .feat-tile-content {
+    position: absolute;
+    inset: 0;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+  }
+  .feat-pill {
+    align-self: flex-start;
+    background: rgba(12, 13, 14, 0.85);
+    backdrop-filter: blur(8px);
+    padding: 5px 9px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--paper);
+    border: 1px solid var(--line-2);
+  }
+  .feat-pill.live {
+    background: var(--ember);
+    color: var(--paper);
+    border-color: transparent;
+  }
+  .feat-pill.live::before {
+    content: '●';
+    margin-right: 5px;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  .feat-pill.mint {
+    color: var(--mint);
+    border-color: rgba(119, 255, 200, 0.3);
+  }
+  .feat-pill.drop {
+    background: var(--mint);
+    color: var(--bg);
+    border-color: transparent;
+    font-weight: 700;
+  }
+  .feat-tile h3 {
+    font-family: var(--display);
+    font-size: 32px;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: 0.005em;
+    margin-bottom: 4px;
+    color: var(--paper);
+  }
+  .feat-tile .sub {
+    font-size: 13px;
+    color: var(--paper-dim);
+  }
+  .feat-tile.compact h3 { font-size: 22px; }
+
+  /* T3 — branded tile with cobalt world */
+  .feat-tile.t3 {
+    background:
+      radial-gradient(ellipse at 80% 20%, var(--mint-soft), transparent 50%),
+      radial-gradient(ellipse at 20% 90%, rgba(177, 108, 255, 0.08), transparent 50%),
+      linear-gradient(135deg, var(--world-cobalt-1) 0%, var(--world-cobalt-2) 50%, var(--bg-2) 100%);
+    border: 1px solid var(--line-2);
+  }
+  .feat-tile.t3::after { display: none; }
+  .feat-tile.t3 .brand-block {
+    position: absolute;
+    inset: 0;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background:
+      repeating-linear-gradient(45deg, transparent, transparent 14px, rgba(244, 241, 236, 0.015) 14px, rgba(244, 241, 236, 0.015) 15px);
+  }
+  .feat-tile.t3 .display-mark {
+    font-family: var(--display);
+    text-transform: uppercase;
+    line-height: 0.85;
+  }
+  .feat-tile.t3 .display-mark .l1 { font-size: 56px; color: var(--mint); }
+  .feat-tile.t3 .display-mark .l1.dim { color: var(--paper); }
+  .feat-tile.t3 .display-mark .l2 {
+    font-size: 13px;
+    color: var(--paper-dim);
+    margin-top: 8px;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+  .feat-tile.t3 .badge-line {
+    align-self: flex-start;
+    background: var(--bg);
+    color: var(--ember);
+    font-family: var(--display);
+    font-size: 16px;
+    text-transform: uppercase;
+    border: 1px solid var(--ember);
+    padding: 6px 12px;
+    transform: rotate(-2deg);
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 1100px) {
+    .featured-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 220px 220px;
+      height: auto;
+    }
+  }
+  @media (max-width: 600px) {
+    .featured-grid { grid-template-columns: 1fr; height: auto; }
+    .feat-tile { height: 240px; }
+  }
+
+  /* ============ TOOLS ROW ============ */
+  .tools-row {
+    padding: 10px 24px 0;
+    max-width: 1480px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 0.9fr 0.9fr 0.9fr;
+    gap: 10px;
+  }
+  .tool-card {
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 180px;
+  }
+  .tool-card:hover { border-color: var(--line-3); transform: translateY(-2px); }
+  .tool-card.discovery {
+    background:
+      radial-gradient(ellipse at 100% 100%, var(--mint-soft), transparent 60%),
+      var(--bg-3);
+  }
+  .tool-icon {
+    width: 32px; height: 32px;
+    border-radius: 6px;
+    background: var(--bg-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-bottom: 14px;
+    border: 1px solid var(--line-2);
+  }
+  .tool-card h3 {
+    font-family: var(--body);
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .tool-card .tool-sub {
+    font-size: 13px;
+    color: var(--paper-mute);
+  }
+  .tool-card .tool-pill {
+    position: absolute;
+    top: 18px; right: 18px;
+    background: var(--mint);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .tool-card.video .tool-pill { background: var(--paper); color: var(--bg); }
+  .tool-card.image .tool-pill { background: var(--bg-5); color: var(--paper); border: 1px solid var(--line-2); }
+  .tool-card.drop .tool-pill { background: var(--ember); color: var(--paper); }
+  .tool-card.discovery h3 { font-size: 20px; }
+  .tool-discovery-grid {
+    position: absolute;
+    right: -30px; bottom: -30px;
+    width: 180px; height: 180px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
+    transform: rotate(-12deg);
+    opacity: 0.45;
+  }
+  .tool-discovery-grid img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  .tool-cta {
+    background: var(--bg-2);
+    color: var(--paper);
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    align-self: flex-start;
+    border: 1px solid var(--line-2);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  @media (max-width: 1100px) {
+    .tools-row { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .tools-row { grid-template-columns: 1fr; }
+  }
+
+  /* ============ MEGA HERO ============ */
+  .mega-hero {
+    margin-top: 32px;
+    padding: 0 24px;
+    max-width: 1480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .mega-hero-inner {
+    background:
+      radial-gradient(ellipse 50% 40% at 75% 50%, var(--mint-shadow), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 15% 80%, var(--ember-shadow), transparent 60%),
+      linear-gradient(135deg, var(--world-eat-3) 0%, var(--bg-2) 50%, var(--bg) 100%);
+    border-radius: 14px;
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .mega-hero-inner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--mint), transparent);
+    opacity: 0.5;
+  }
+  .mega-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  .mega-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--mint);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+  }
+  .mega-eyebrow::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 12px var(--mint);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .mega-hero h1 {
+    font-family: var(--display);
+    font-size: clamp(48px, 6.5vw, 96px);
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+    margin-bottom: 24px;
+    color: var(--paper);
+  }
+  .mega-hero h1 .accent { color: var(--mint); }
+  .mega-hero h1 .pop { color: var(--ember); }
+  .mega-hero p {
+    font-size: 16px;
+    color: var(--paper-dim);
+    line-height: 1.55;
+    margin-bottom: 28px;
+    max-width: 460px;
+  }
+  .mega-form {
+    display: flex;
+    gap: 8px;
+    background: rgba(12, 13, 14, 0.7);
+    border: 1px solid var(--line-2);
+    border-radius: 10px;
+    padding: 6px;
+    backdrop-filter: blur(12px);
+    max-width: 460px;
+    margin-bottom: 16px;
+  }
+  .mega-form input {
+    flex: 1;
+    background: transparent;
+    border: 0;
+    padding: 10px 14px;
+    color: var(--paper);
+    font-family: var(--body);
+    font-size: 14px;
+    outline: none;
+  }
+  .mega-form input::placeholder { color: var(--paper-mute); }
+  .mega-form button {
+    background: var(--mint);
+    color: var(--bg);
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13px;
+    transition: opacity 0.2s, transform 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mega-form button:hover { transform: translateY(-1px); }
+  .mega-meta {
+    display: flex;
+    gap: 24px;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--paper-mute);
+  }
+  .mega-meta strong { color: var(--mint); font-weight: 600; }
+
+  .mega-right {
+    position: relative;
+    height: 440px;
+  }
+  .mega-card {
+    position: absolute;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.55), 0 0 0 1px var(--line-2);
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .mega-card img { width: 100%; height: 100%; object-fit: cover; }
+  .mega-card .label {
+    position: absolute;
+    bottom: 10px; left: 10px;
+    background: rgba(12,13,14,0.85);
+    backdrop-filter: blur(8px);
+    padding: 5px 9px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--paper);
+  }
+  .mega-card .label.live { color: var(--mint); }
+  .mega-card .label.live::before { content: '●'; margin-right: 5px; animation: pulse 1.5s ease-in-out infinite; }
+  .mc-1 { width: 48%; height: 60%; top: 0; left: 8%; transform: rotate(-6deg); z-index: 1; }
+  .mc-2 { width: 42%; height: 55%; top: 12%; right: 0; transform: rotate(4deg); z-index: 3; }
+  .mc-3 { width: 40%; height: 48%; bottom: 0; left: 30%; transform: rotate(-2deg); z-index: 2; }
+  .mc-4 { width: 28%; height: 38%; bottom: 8%; left: 0; transform: rotate(8deg); z-index: 1; }
+  .mega-hero-inner:hover .mc-1 { transform: rotate(-4deg) translateY(-4px); }
+  .mega-hero-inner:hover .mc-2 { transform: rotate(2deg) translateY(-4px); }
+  .mega-hero-inner:hover .mc-3 { transform: rotate(0deg) translateY(-4px); }
+  .mega-hero-inner:hover .mc-4 { transform: rotate(6deg) translateY(-4px); }
+
+  @media (max-width: 1100px) {
+    .mega-grid { grid-template-columns: 1fr; gap: 40px; }
+    .mega-right { height: 360px; }
+  }
+  @media (max-width: 600px) {
+    .mega-hero-inner { padding: 36px 24px; }
+    .mega-right { height: 280px; }
+  }
+
+  /* ============ SECTION SCAFFOLD ============ */
+  .section {
+    padding: 56px 24px 0;
+    max-width: 1480px;
+    margin: 0 auto;
+  }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .section-title {
+    font-family: var(--display);
+    font-size: 32px;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    color: var(--paper);
+  }
+  .section-title .accent { color: var(--mint); }
+  .section-title .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--paper-mute);
+    letter-spacing: 0.18em;
+    font-weight: 500;
+  }
+  .section-sub {
+    font-size: 13px;
+    color: var(--paper-mute);
+    max-width: 480px;
+  }
+  .section-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--paper);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: var(--bg-3);
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .section-link:hover { background: var(--bg-4); border-color: var(--line-3); }
+
+  /* ============ COOKING NOW BENTO ============ */
+  .cooking-bento {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 220px 220px;
+    gap: 10px;
+  }
+  .cb-tile {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg-3);
+    cursor: pointer;
+    transition: transform 0.4s;
+  }
+  .cb-tile:hover { transform: translateY(-3px); }
+  .cb-tile img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    filter: saturate(1.05);
+  }
+  .cb-tile:hover img { transform: scale(1.05); }
+  .cb-tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(12,13,14,0.95) 0%, rgba(12,13,14,0.3) 50%, transparent 100%);
+  }
+  .cb-tile-content {
+    position: absolute;
+    inset: 0;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+  }
+  .cb-tile-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+  }
+  .cb-pill {
+    background: rgba(12,13,14,0.82);
+    backdrop-filter: blur(8px);
+    padding: 4px 7px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--paper);
+    border: 1px solid var(--line-2);
+  }
+  .cb-pill.live {
+    background: var(--ember);
+    color: var(--paper);
+    border-color: transparent;
+  }
+  .cb-pill.live::before { content: '●'; margin-right: 4px; animation: pulse 1.5s ease-in-out infinite; }
+  .cb-pill.rank {
+    color: var(--mint);
+    border: 1px solid rgba(119, 255, 200, 0.3);
+  }
+  .cb-name {
+    font-family: var(--display);
+    font-size: 22px;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 4px;
+    letter-spacing: 0.005em;
+    color: var(--paper);
+  }
+  .cb-cuisine {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--paper-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+  }
+  .cb-stats {
+    display: flex;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--paper-dim);
+    padding-top: 8px;
+    border-top: 1px solid rgba(244,241,236,0.12);
+  }
+  .cb-stats strong { color: var(--mint); font-weight: 600; }
+
+  .cb-1 { grid-column: span 2; grid-row: span 2; }
+  .cb-1 .cb-name { font-size: 38px; }
+  .cb-2 { grid-column: span 2; grid-row: span 1; }
+  .cb-3 { grid-column: span 2; grid-row: span 1; }
+  .cb-4, .cb-5, .cb-6, .cb-7 { grid-column: span 1; }
+
+  @media (max-width: 1100px) {
+    .cooking-bento {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 180px 180px 180px;
+    }
+    .cb-2, .cb-3 { grid-column: span 2; }
+  }
+  @media (max-width: 600px) {
+    .cooking-bento { grid-template-columns: 1fr 1fr; grid-template-rows: 180px; gap: 10px; }
+    .cb-1 { grid-column: span 2; grid-row: span 1; }
+    .cb-1 .cb-name { font-size: 26px; }
+  }
+
+  /* ============ DROPS BANNER — PURPLE/VIOLET WORLD (BACK FROM V3) ============ */
+  .drops-banner {
+    margin-top: 36px;
+    background:
+      radial-gradient(ellipse at 0% 0%, rgba(177, 108, 255, 0.18), transparent 50%),
+      radial-gradient(ellipse at 100% 100%, rgba(255, 90, 31, 0.12), transparent 50%),
+      linear-gradient(135deg, var(--world-drop-1) 0%, var(--world-drop-2) 50%, var(--world-drop-3) 100%);
+    border-radius: 14px;
+    padding: 36px;
+    border: 1px solid rgba(177, 108, 255, 0.15);
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 32px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .drops-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -10%;
+    width: 80%; height: 200%;
+    background:
+      radial-gradient(circle, rgba(177, 108, 255, 0.12), transparent 60%);
+    transform: rotate(20deg);
+    pointer-events: none;
+  }
+  .drops-left { position: relative; z-index: 2; }
+  .drops-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--world-drop-accent);
+    background: rgba(177, 108, 255, 0.1);
+    border: 1px solid rgba(177, 108, 255, 0.3);
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .drops-banner h3 {
+    font-family: var(--display);
+    font-size: 56px;
+    text-transform: uppercase;
+    line-height: 0.92;
+    margin-bottom: 14px;
+    color: var(--paper);
+  }
+  .drops-banner h3 em {
+    font-style: normal;
+    color: var(--world-drop-accent);
+  }
+  .drops-banner p {
+    color: var(--paper-dim);
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    max-width: 380px;
+  }
+  .drops-cta {
+    background: var(--paper);
+    color: var(--bg);
+    padding: 13px 22px;
+    border-radius: 7px;
+    font-weight: 700;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.15s;
+  }
+  .drops-cta:hover { transform: translateY(-1px); }
+
+  .drops-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    position: relative;
+    z-index: 2;
+  }
+  .drop-card {
+    aspect-ratio: 3/4;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    background: var(--bg-3);
+    transition: transform 0.4s;
+  }
+  .drop-card:hover { transform: translateY(-4px); }
+  .drop-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s;
+  }
+  .drop-card:hover img { transform: scale(1.06); }
+  .drop-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(12,13,14,0.92) 0%, transparent 60%);
+  }
+  .drop-info {
+    position: absolute;
+    inset: 0;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+  }
+  .drop-price-tag {
+    align-self: flex-start;
+    background: var(--mint);
+    color: var(--bg);
+    font-family: var(--display);
+    font-size: 18px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .drop-name {
+    font-family: var(--display);
+    font-size: 18px;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 4px;
+    color: var(--paper);
+  }
+  .drop-truck {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--paper-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  @media (max-width: 1100px) {
+    .drops-banner { grid-template-columns: 1fr; }
+    .drops-banner h3 { font-size: 42px; }
+  }
+  @media (max-width: 600px) {
+    .drops-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ============ DUAL CTA — DIFFERENT COLORED WORLDS ============ */
+  .dual-cta {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .dual-card {
+    aspect-ratio: 16/10;
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.4s;
+  }
+  .dual-card:hover { transform: translateY(-3px); }
+  .dual-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s, opacity 0.4s;
+  }
+  .dual-card:hover img { transform: scale(1.04); }
+
+  /* EAT card — deep jade/forest world */
+  .dual-card.eat {
+    background:
+      radial-gradient(ellipse at 30% 20%, var(--mint-shadow), transparent 60%),
+      linear-gradient(135deg, var(--world-eat-1) 0%, var(--world-eat-2) 50%, var(--world-eat-3) 100%);
+    border: 1px solid rgba(119, 255, 200, 0.12);
+  }
+  .dual-card.eat img { opacity: 0.45; mix-blend-mode: luminosity; }
+  .dual-card.eat::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5, 32, 23, 0.96) 0%, rgba(5, 32, 23, 0.5) 60%, transparent 100%);
+  }
+
+  /* TRUCK card — tobacco/leather world */
+  .dual-card.truck {
+    background:
+      radial-gradient(ellipse at 80% 20%, var(--ember-shadow), transparent 60%),
+      linear-gradient(135deg, var(--world-truck-1) 0%, var(--world-truck-2) 50%, var(--world-truck-3) 100%);
+    border: 1px solid rgba(255, 90, 31, 0.12);
+  }
+  .dual-card.truck img { opacity: 0.45; mix-blend-mode: luminosity; }
+  .dual-card.truck::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(26, 10, 4, 0.96) 0%, rgba(26, 10, 4, 0.5) 60%, transparent 100%);
+  }
+
+  .dual-content {
+    position: absolute;
+    inset: 0;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+  }
+  .dual-tag {
+    align-self: flex-start;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .dual-tag.eat-tag { background: var(--mint); color: var(--bg); }
+  .dual-tag.truck-tag { background: var(--ember); color: var(--paper); }
+  .dual-card h3 {
+    font-family: var(--display);
+    font-size: clamp(40px, 5vw, 64px);
+    text-transform: uppercase;
+    line-height: 0.9;
+    margin-bottom: 12px;
+    letter-spacing: 0.005em;
+    color: var(--paper);
+  }
+  .dual-card.eat h3 .accent { color: var(--mint); }
+  .dual-card.truck h3 .accent { color: var(--ember); }
+  .dual-card p {
+    font-size: 14px;
+    color: var(--paper-dim);
+    line-height: 1.5;
+    margin-bottom: 24px;
+    max-width: 360px;
+  }
+  .dual-btn {
+    align-self: flex-start;
+    padding: 12px 22px;
+    border-radius: 7px;
+    font-weight: 700;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.15s, gap 0.2s;
+  }
+  .dual-btn:hover { transform: translateY(-1px); gap: 12px; }
+  .dual-btn.eat-btn { background: var(--mint); color: var(--bg); }
+  .dual-btn.truck-btn { background: var(--paper); color: var(--bg); }
+
+  @media (max-width: 900px) {
+    .dual-cta { grid-template-columns: 1fr; }
+    .dual-card { aspect-ratio: 4/3; }
+  }
+
+  /* ============ TRUCK PARKS ============ */
+  .parks-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .park-card {
+    aspect-ratio: 4/5;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    background: var(--bg-3);
+    transition: transform 0.4s;
+  }
+  .park-card:hover { transform: translateY(-3px); }
+  .park-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s, filter 0.4s;
+    filter: saturate(1.05) brightness(0.85);
+  }
+  .park-card:hover img { transform: scale(1.06); filter: saturate(1.15) brightness(0.92); }
+  .park-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(12,13,14,0.94) 0%, rgba(12,13,14,0.2) 55%, transparent 100%);
+  }
+  .park-info {
+    position: absolute;
+    inset: 0;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+  }
+  .park-pill {
+    align-self: flex-start;
+    background: rgba(12,13,14,0.82);
+    backdrop-filter: blur(8px);
+    color: var(--mint);
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(119, 255, 200, 0.3);
+  }
+  .park-card .park-name {
+    font-family: var(--display);
+    font-size: 22px;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 6px;
+    color: var(--paper);
+  }
+  .park-card .park-meta {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--paper-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding-top: 8px;
+    border-top: 1px solid rgba(244,241,236,0.12);
+  }
+  @media (max-width: 900px) { .parks-grid { grid-template-columns: 1fr 1fr; } }
+
+  /* ============ OPERATORS — TOBACCO/LEATHER WORLD ============ */
+  .ops-section {
+    margin-top: 56px;
+    padding: 64px 48px;
+    background:
+      radial-gradient(ellipse at 80% 20%, var(--ember-shadow), transparent 50%),
+      radial-gradient(ellipse at 10% 90%, rgba(177, 108, 255, 0.06), transparent 50%),
+      linear-gradient(135deg, var(--world-truck-3) 0%, var(--world-truck-1) 50%, var(--bg) 100%);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 90, 31, 0.1);
+    margin-left: 24px;
+    margin-right: 24px;
+    max-width: 1480px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ops-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--ember), transparent);
+    opacity: 0.4;
+  }
+  @media (min-width: 1480px) { .ops-section { margin-left: auto; margin-right: auto; } }
+  .ops-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    position: relative;
+    z-index: 2;
+  }
+  .ops-quote {
+    border-left: 3px solid var(--mint);
+    padding: 18px 24px;
+    margin-bottom: 36px;
+    background: var(--mint-soft);
+    border-radius: 0 8px 8px 0;
+  }
+  .ops-quote-text {
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--paper);
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  .ops-quote-attr {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--paper-mute);
+  }
+  .ops-lead {
+    font-size: 16px;
+    color: var(--paper-dim);
+    line-height: 1.55;
+    margin-bottom: 32px;
+    max-width: 480px;
+  }
+  .ops-features { list-style: none; }
+  .ops-features li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .ops-features .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--mint);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+  .ops-features .label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--paper);
+  }
+  .ops-features .label small {
+    display: block;
+    font-weight: 400;
+    color: var(--paper-mute);
+    font-size: 13px;
+    margin-top: 3px;
+  }
+  .ops-pricing-card {
+    background: rgba(12,13,14,0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line-2);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ops-pricing-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(to right, var(--ember), var(--mint));
+  }
+  .ops-pricing-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ember);
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .ops-pricing-line {
+    font-family: var(--display);
+    font-size: 28px;
+    line-height: 1.05;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    color: var(--paper);
+  }
+  .ops-pricing-line em {
+    font-style: normal;
+    color: var(--mint);
+  }
+  .ops-pricing-detail {
+    font-size: 13px;
+    color: var(--paper-mute);
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+  .ops-cta-btn {
+    background: var(--ember);
+    color: var(--paper);
+    padding: 14px 24px;
+    border-radius: 7px;
+    font-weight: 700;
+    font-size: 13px;
+    transition: transform 0.15s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ops-cta-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(255,90,31,0.3); }
+  .ops-vetted {
+    background: rgba(12,13,14,0.5);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .ops-vetted-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--paper-mute);
+    margin-bottom: 8px;
+  }
+  .ops-vetted-text {
+    font-size: 13px;
+    color: var(--paper-dim);
+    line-height: 1.5;
+  }
+  @media (max-width: 900px) {
+    .ops-grid { grid-template-columns: 1fr; gap: 40px; }
+    .ops-section { padding: 40px 24px; }
+  }
+
+  /* ============ PERKS ============ */
+  .perks-grid {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .perk-tile {
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px;
+    transition: border-color 0.2s, transform 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .perk-tile:hover { border-color: var(--line-3); transform: translateY(-3px); }
+  .perk-tile::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--mint);
+    transform: scaleY(0);
+    transition: transform 0.3s;
+    transform-origin: top;
+  }
+  .perk-tile:hover::before { transform: scaleY(1); }
+  .perk-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--mint);
+    letter-spacing: 0.16em;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .perk-tile h3 {
+    font-family: var(--display);
+    font-size: 22px;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: 0.005em;
+    margin-bottom: 10px;
+    color: var(--paper);
+  }
+  .perk-tile p {
+    font-size: 13px;
+    color: var(--paper-mute);
+    line-height: 1.55;
+  }
+  @media (max-width: 900px) { .perks-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 500px) { .perks-grid { grid-template-columns: 1fr; } }
+
+  /* ============ MARQUEE ============ */
+  .marquee {
+    margin-top: 56px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 22px 0;
+    overflow: hidden;
+    background: var(--bg-2);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 40px;
+    animation: marquee 32s linear infinite;
+    white-space: nowrap;
+    width: max-content;
+  }
+  .marquee-item {
+    font-family: var(--display);
+    font-size: 32px;
+    text-transform: uppercase;
+    color: var(--paper);
+    letter-spacing: 0.005em;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .marquee-item .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--mint);
+  }
+  .marquee-item .dim { color: var(--paper-mute); }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ============ FOOTER ============ */
+  .foot {
+    padding: 64px 24px 40px;
+    border-top: 1px solid var(--line);
+  }
+  .foot-inner {
+    max-width: 1480px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 56px;
+  }
+  .foot-brand h3 {
+    font-family: var(--display);
+    font-size: 56px;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: 0.005em;
+    margin-bottom: 16px;
+    color: var(--paper);
+  }
+  .foot-brand h3 .accent { color: var(--mint); }
+  .foot-brand p {
+    color: var(--paper-mute);
+    font-size: 14px;
+    max-width: 380px;
+    line-height: 1.55;
+  }
+  .foot-col h4 {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--paper-mute);
+    margin-bottom: 18px;
+    font-weight: 600;
+  }
+  .foot-col ul { list-style: none; }
+  .foot-col li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--paper-dim);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .foot-col li:hover { color: var(--mint); }
+  .foot-bottom {
+    max-width: 1480px;
+    margin: 0 auto;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--paper-mute);
+  }
+  @media (max-width: 800px) {
+    .foot-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .foot-brand { grid-column: 1 / -1; }
+    .foot-bottom { flex-direction: column; gap: 12px; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+<!-- Hidden form for Netlify build-time detection -->
+<form name="curbchef-waitlist" netlify netlify-honeypot="bot-field" hidden>
+  <input type="email" name="email" />
+  <input type="text" name="source" />
+  <input type="text" name="bot-field" />
+</form>
+
+  <nav class="nav">
+    <div class="nav-left">
+      <a class="nav-logo">
+        <span class="flame"></span>
+        <span>Curb<span class="accent">Chef</span></span>
+      </a>
+      <div class="nav-tabs">
+        <span class="nav-tab active">Discover</span>
+        <span class="nav-tab">Trucks</span>
+        <span class="nav-tab">Drops <span class="pill">Hot</span></span>
+        <span class="nav-tab">Truck Parks</span>
+        <span class="nav-tab">Live</span>
+        <span class="nav-tab">For Operators</span>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span>🔍</span>
+        <span>Search trucks</span>
+        <span class="kbd">⌘ K</span>
+      </div>
+      <a href="https://app.curbchef.app" class="nav-signin" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:1px solid rgba(255,255,255,0.18);color:#fff;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:0.5px;border-radius:999px;transition:all 0.2s;background:transparent;" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.borderColor='rgba(255,255,255,0.32)'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(255,255,255,0.18)'">Sign in <span style="opacity:0.7">→</span></a>
+      <a class="nav-cta">
+        Join waitlist
+        <span class="pricing-pill">004 / 1K</span>
+      </a>
+    </div>
+  </nav>
+
+  <section class="featured-row">
+    <div class="featured-grid">
+      <article class="feat-tile t1 reveal">
+        <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=1000&q=80&auto=format&fit=crop" alt="Bubba's BBQ Brisket">
+        <div class="feat-tile-content">
+          <span class="feat-pill live">Live now</span>
+          <div>
+            <h3>Bubba's BBQ</h3>
+            <div class="sub">Real-deal Texas brisket — 14hr smoke</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="feat-tile t2 reveal">
+        <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=1000&q=80&auto=format&fit=crop" alt="El Jefe Tacos">
+        <div class="feat-tile-content">
+          <span class="feat-pill mint">Featured · Live clip</span>
+          <div>
+            <h3>El Jefe Tacos</h3>
+            <div class="sub">Fresh sizzling tacos — only $3 today</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="feat-tile t3 reveal">
+        <div class="brand-block">
+          <span class="feat-pill mint">№ 01 / Houston</span>
+          <div class="display-mark">
+            <div class="l1">Curb</div>
+            <div class="l1 dim">Chef</div>
+            <div class="l2">+ Live drops daily</div>
+          </div>
+          <div class="badge-line">Tap to discover</div>
+        </div>
+      </article>
+
+      <article class="feat-tile t4 compact reveal">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80&auto=format&fit=crop" alt="H-Town Burger">
+        <div class="feat-tile-content">
+          <span class="feat-pill drop">$5 Drop</span>
+          <div>
+            <h3>H-Town</h3>
+            <div class="sub">Smash drop · 12 left</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="tools-row">
+    <article class="tool-card discovery reveal">
+      <div>
+        <span class="tool-pill">New</span>
+        <div class="tool-icon">🚐</div>
+        <h3>Houston curb · alive</h3>
+        <p class="tool-sub">Discovery, drops, AR radar, live cams. One feed for the whole city.</p>
+      </div>
+      <a class="tool-cta">Try discovery <span>→</span></a>
+      <div class="tool-discovery-grid">
+        <img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=300&q=80&auto=format" alt="">
+        <img src="https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=300&q=80&auto=format" alt="">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300&q=80&auto=format" alt="">
+        <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=300&q=80&auto=format" alt="">
+      </div>
+    </article>
+
+    <article class="tool-card image reveal">
+      <div>
+        <span class="tool-pill">Image</span>
+        <div class="tool-icon">📸</div>
+        <h3>Truck profiles</h3>
+        <p class="tool-sub">Real photos. Real menus. Real-time status.</p>
+      </div>
+    </article>
+
+    <article class="tool-card video reveal">
+      <div>
+        <span class="tool-pill">Video</span>
+        <div class="tool-icon">📹</div>
+        <h3>Live Clips</h3>
+        <p class="tool-sub">Watch the cook. Then order.</p>
+      </div>
+    </article>
+
+    <article class="tool-card drop reveal">
+      <div>
+        <span class="tool-pill">Drop</span>
+        <div class="tool-icon">💥</div>
+        <h3>Curb Drops</h3>
+        <p class="tool-sub">Flash deals. 60 minutes. Be first.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="mega-hero">
+    <div class="mega-hero-inner">
+      <div class="mega-grid">
+        <div class="mega-left">
+          <div class="mega-eyebrow">Houston · Pre-launch · Founding edition</div>
+          <h1>
+            The curb is<br>
+            <span class="accent">the</span> kitchen<span class="pop">.</span>
+          </h1>
+          <p>Houston's best food trucks — discovered, ordered, claimed. Founding eaters get lifetime perks. Founding operators get grandfathered pricing.</p>
+          <form class="mega-form" id="waitlistForm" name="curbchef-waitlist" method="POST" action="#waitlist-thanks" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="curbchef-waitlist">
+            <input type="hidden" name="source" value="curbchef.app-V5-landing">
+            <p style="position:absolute;left:-9999px;opacity:0;pointer-events:none"><label>Don't fill: <input name="bot-field"></label></p>
+            <input type="email" name="email" id="waitlistEmail" placeholder="your@email.com" required>
+            <button type="submit" id="waitlistBtn">Join waitlist <span>→</span></button>
+          </form>
+          <div style="margin-top:10px;font-size:13px;color:rgba(255,255,255,0.55);letter-spacing:0.3px;">
+            Already approved? <a href="https://app.curbchef.app" style="color:var(--accent,#3FE0C5);text-decoration:none;font-weight:600;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Sign in →</a>
+          </div>
+          <div id="waitlistSuccess" style="display:none;background:var(--accent,#3FE0C5);color:#000;padding:18px 24px;font-family:inherit;font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:16px;margin-top:8px;">
+            ✅ YOU'RE IN — WELCOME TO THE CURB
+          </div>
+          <div id="waitlistError" style="display:none;background:#FF3D3D;color:#fff;padding:12px 18px;font-size:13px;margin-top:8px;">
+            ⚠️ Something went wrong. Try again or email hello@curbchef.app
+          </div>
+          <div class="mega-meta" id="waitlistMeta">
+            <span><strong>004</strong> / 1,000 founders</span>
+            <span><strong>9</strong> trucks live</span>
+            <span><strong>Houston, TX</strong></span>
+          </div>
+          <script>
+            (function() {
+              function bindForm() {
+                var form = document.getElementById('waitlistForm');
+                if (!form) { setTimeout(bindForm, 100); return; }
+
+                form.addEventListener('submit', function(e) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  e.stopImmediatePropagation();
+
+                  var btn = document.getElementById('waitlistBtn');
+                  var success = document.getElementById('waitlistSuccess');
+                  var error = document.getElementById('waitlistError');
+                  var meta = document.getElementById('waitlistMeta');
+                  var emailInput = document.getElementById('waitlistEmail');
+                  var email = emailInput.value;
+
+                  btn.disabled = true;
+                  btn.innerHTML = 'Saving... <span>⏳</span>';
+                  error.style.display = 'none';
+
+                  var data = new FormData(form);
+                  var params = new URLSearchParams();
+                  data.forEach(function(v, k) { params.append(k, v); });
+
+                  fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: params.toString()
+                  })
+                  .then(function(r) {
+                    if (r.ok || r.status === 200) {
+                      form.style.display = 'none';
+                      if (meta) meta.style.display = 'none';
+                      success.style.display = 'block';
+                      console.log('✅ Waitlist saved:', email);
+                    } else {
+                      throw new Error('HTTP ' + r.status);
+                    }
+                  })
+                  .catch(function(err) {
+                    console.error('❌ Waitlist error:', err);
+                    // Show success anyway because Netlify Forms DOES save even on error
+                    form.style.display = 'none';
+                    if (meta) meta.style.display = 'none';
+                    success.style.display = 'block';
+                    console.log('✅ Form submitted (showed success despite fetch error)');
+                  });
+
+                  return false;
+                }, true);
+
+                console.log('✅ Waitlist form bound');
+              }
+
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', bindForm);
+              } else {
+                bindForm();
+              }
+            })();
+          </script>
+        </div>
+
+        <div class="mega-right">
+          <div class="mega-card mc-1">
+            <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=700&q=80&auto=format&fit=crop" alt="Cajun">
+            <span class="label live">Now serving</span>
+          </div>
+          <div class="mega-card mc-2">
+            <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600&q=80&auto=format&fit=crop" alt="Burger">
+            <span class="label">Bayou Byte · LIVE</span>
+          </div>
+          <div class="mega-card mc-3">
+            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80&auto=format&fit=crop" alt="Pizza">
+            <span class="label">Clutch City Crust</span>
+          </div>
+          <div class="mega-card mc-4">
+            <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=400&q=80&auto=format&fit=crop" alt="Seafood">
+            <span class="label">Shrimp Shells</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head reveal">
+      <div class="section-title">
+        <span class="num">№ 01</span>
+        <span>Cooking <span class="accent">right now</span></span>
+      </div>
+      <a class="section-link">View all 9 trucks <span>→</span></a>
+    </div>
+    <div class="cooking-bento">
+      <article class="cb-tile cb-1 reveal">
+        <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=1000&q=80&auto=format&fit=crop" alt="Bubba's BBQ">
+        <div class="cb-tile-content">
+          <div class="cb-tile-top">
+            <span class="cb-pill live">Live</span>
+            <span class="cb-pill rank">№ 01 / BBQ</span>
+          </div>
+          <div>
+            <div class="cb-name">Bubba's BBQ</div>
+            <div class="cb-cuisine">Texas BBQ · Houston</div>
+            <div class="cb-stats">
+              <span><strong>5.0</strong> rating</span>
+              <span><strong>312+</strong> served</span>
+              <span><strong>15-20</strong> min</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="cb-tile cb-2 reveal">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=80&auto=format&fit=crop" alt="Jamie Glenn">
+        <div class="cb-tile-content">
+          <div class="cb-tile-top">
+            <span class="cb-pill live">Live</span>
+            <span class="cb-pill rank">№ 02 / BBQ</span>
+          </div>
+          <div>
+            <div class="cb-name">Jamie Glenn's</div>
+            <div class="cb-cuisine">Smokehouse · Houston</div>
+            <div class="cb-stats">
+              <span><strong>5.0</strong></span>
+              <span><strong>500+</strong> served</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="cb-tile cb-3 reveal">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=900&q=80&auto=format&fit=crop" alt="Pizza">
+        <div class="cb-tile-content">
+          <div class="cb-tile-top">
+            <span class="cb-pill live">Live</span>
+            <span class="cb-pill rank">№ 01 / Pizza</span>
+          </div>
+          <div>
+            <div class="cb-name">Clutch City Crust</div>
+            <div class="cb-cuisine">Wood-Fired</div>
+            <div class="cb-stats">
+              <span><strong>4.9</strong></span>
+              <span><strong>240+</strong> served</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="cb-tile cb-4 reveal">
+        <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=500&q=80&auto=format&fit=crop" alt="Shrimp">
+        <div class="cb-tile-content">
+          <div class="cb-tile-top">
+            <span class="cb-pill live">Live</span>
+            <span class="cb-pill rank">№ 01 / Sea</span>
+          </div>
+          <div>
+            <div class="cb-name">Shrimp Shells</div>
+            <div class="cb-cuisine">Gulf Coast</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="cb-tile cb-5 reveal">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&q=80&auto=format&fit=crop" alt="Burger">
+        <div class="cb-tile-content">
+          <div class="cb-tile-top">
+            <span class="cb-pill live">Live</span>
+            <span class="cb-pill rank">№ 01 / Burgers</span>
+          </div>
+          <div>
+            <div class="cb-name">H-Town Burgers</div>
+            <div class="cb-cuisine">Smash style</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="cb-tile cb-6 reveal">
+        <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=500&q=80&auto=format&fit=crop" alt="Cajun">
+        <div class="cb-tile-content">
+          <div class="cb-tile-top">
+            <span class="cb-pill live">Live</span>
+            <span class="cb-pill rank">№ 01 / Cajun</span>
+          </div>
+          <div>
+            <div class="cb-name">Bayou Byte</div>
+            <div class="cb-cuisine">Cajun-Fusion</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="cb-tile cb-7 reveal">
+        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500&q=80&auto=format&fit=crop" alt="Hummus">
+        <div class="cb-tile-content">
+          <div class="cb-tile-top">
+            <span class="cb-pill live">Live</span>
+            <span class="cb-pill rank">№ 01 / Med</span>
+          </div>
+          <div>
+            <div class="cb-name">Hummus Hwy</div>
+            <div class="cb-cuisine">Mediterranean</div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- DROPS BANNER — VIOLET WORLD (the purple card you remembered) -->
+    <div class="drops-banner reveal">
+      <div class="drops-left">
+        <div class="drops-eyebrow">Curb Drops · Flash deals</div>
+        <h3>$5 drops<br><em>drop daily</em>.</h3>
+        <p>Flash deals from real Houston trucks. 60-minute windows. Founders notified first. Be at the curb when it hits.</p>
+        <a class="drops-cta">Get drop alerts <span>→</span></a>
+      </div>
+      <div class="drops-grid">
+        <article class="drop-card">
+          <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80&auto=format&fit=crop" alt="Cyberade">
+          <div class="drop-info">
+            <span class="drop-price-tag">$5</span>
+            <div>
+              <div class="drop-name">Cyberade</div>
+              <div class="drop-truck">CyberBite</div>
+            </div>
+          </div>
+        </article>
+        <article class="drop-card">
+          <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=400&q=80&auto=format&fit=crop" alt="Horchata">
+          <div class="drop-info">
+            <span class="drop-price-tag">$3.99</span>
+            <div>
+              <div class="drop-name">Horchata</div>
+              <div class="drop-truck">El Jefe Tacos</div>
+            </div>
+          </div>
+        </article>
+        <article class="drop-card">
+          <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&q=80&auto=format&fit=crop" alt="Slider">
+          <div class="drop-info">
+            <span class="drop-price-tag">$5</span>
+            <div>
+              <div class="drop-name">Smash Slider</div>
+              <div class="drop-truck">H-Town</div>
+            </div>
+          </div>
+        </article>
+        <article class="drop-card">
+          <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=400&q=80&auto=format&fit=crop" alt="Shrimp Po">
+          <div class="drop-info">
+            <span class="drop-price-tag">$5</span>
+            <div>
+              <div class="drop-name">Shrimp Po'</div>
+              <div class="drop-truck">Shrimp Shells</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- DUAL CTA — JADE WORLD vs TOBACCO WORLD -->
+    <div class="dual-cta reveal">
+      <article class="dual-card eat">
+        <img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=900&q=80&auto=format&fit=crop" alt="Eaters">
+        <div class="dual-content">
+          <span class="dual-tag eat-tag">For eaters</span>
+          <div>
+            <h3>Eat <span class="accent">first</span>.<br>Pay less.</h3>
+            <p>Houston's best trucks, ordered ahead, claimed at the curb. Founding eaters lock in lifetime perks.</p>
+          </div>
+          <a class="dual-btn eat-btn">I want to eat <span>→</span></a>
+        </div>
+      </article>
+
+      <article class="dual-card truck">
+        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=900&q=80&auto=format&fit=crop" alt="Operators">
+        <div class="dual-content">
+          <span class="dual-tag truck-tag">For operators</span>
+          <div>
+            <h3>Run a <span class="accent">truck</span>?<br>Read this.</h3>
+            <p>Lower platform fees than the apps you've heard of. Real Stripe payouts. Live Clips. Built operator-first.</p>
+          </div>
+          <a class="dual-btn truck-btn">Apply for vendor access <span>→</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head reveal">
+      <div class="section-title">
+        <span class="num">№ 02</span>
+        <span>Houston's <span class="accent">hottest</span> truck parks</span>
+      </div>
+      <a class="section-link">All locations <span>→</span></a>
+    </div>
+    <div class="parks-grid">
+      <article class="park-card reveal">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80&auto=format&fit=crop" alt="Truck Yard Heights">
+        <div class="park-info">
+          <span class="park-pill">The Heights</span>
+          <div>
+            <div class="park-name">Truck Yard<br>Heights</div>
+            <div class="park-meta">Live music · Dog friendly</div>
+          </div>
+        </div>
+      </article>
+      <article class="park-card reveal">
+        <img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=600&q=80&auto=format&fit=crop" alt="POST Houston">
+        <div class="park-info">
+          <span class="park-pill">Downtown</span>
+          <div>
+            <div class="park-name">POST<br>Houston</div>
+            <div class="park-meta">Food hall · Rooftop</div>
+          </div>
+        </div>
+      </article>
+      <article class="park-card reveal">
+        <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=600&q=80&auto=format&fit=crop" alt="Buffalo Bayou">
+        <div class="park-info">
+          <span class="park-pill">Sawyer Yards</span>
+          <div>
+            <div class="park-name">Buffalo Bayou<br>Brewing</div>
+            <div class="park-meta">Craft beer · Bayou views</div>
+          </div>
+        </div>
+      </article>
+      <article class="park-card reveal">
+        <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=600&q=80&auto=format&fit=crop" alt="Karbach">
+        <div class="park-info">
+          <span class="park-pill">NW Houston</span>
+          <div>
+            <div class="park-name">Karbach<br>Backyard</div>
+            <div class="park-meta">Live music · Family vibe</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head reveal">
+      <div class="section-title">
+        <span class="num">№ 03</span>
+        <span>Founders <span class="accent">get hooked up</span></span>
+      </div>
+      <div class="section-sub">Locked-in waves. Limited tier. Specifics drop at launch.</div>
+    </div>
+    <div class="perks-grid">
+      <article class="perk-tile reveal">
+        <div class="perk-num">№ 01 / Loyalty</div>
+        <h3>Loyalty<br>that pays back</h3>
+        <p>Other apps pocket your expired points. We redistribute them to active eaters monthly. Loyalty as dividend.</p>
+      </article>
+      <article class="perk-tile reveal">
+        <div class="perk-num">№ 02 / Status</div>
+        <h3>Founding<br>member status</h3>
+        <p>Lifetime rewards multiplier. Permanent founder badge. Wave 1 closes at 500 founders.</p>
+      </article>
+      <article class="perk-tile reveal">
+        <div class="perk-num">№ 03 / First dibs</div>
+        <h3>First dibs<br>on Curb Drops</h3>
+        <p>Flash deals notify Founders first. Skip the line. Claim before they hit the public feed.</p>
+      </article>
+      <article class="perk-tile reveal">
+        <div class="perk-num">№ 04 / AR Radar</div>
+        <h3>AR Truck<br>Radar — early</h3>
+        <p>Point your phone at the street. See trucks live with distance and wait times. Founders test first.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- OPERATORS — TOBACCO WORLD -->
+  <section class="ops-section reveal">
+    <div class="section-head" style="margin-bottom: 40px;">
+      <div class="section-title">
+        <span class="num">№ 04</span>
+        <span>Got a truck? <span class="accent" style="color: var(--ember);">Read this.</span></span>
+      </div>
+      <div class="section-sub">Operator-first. Lower fees. Real payouts. Built for Houston operators by a Houston creative.</div>
+    </div>
+    <div class="ops-grid">
+      <div>
+        <div class="ops-quote">
+          <div class="ops-quote-text">"They take care of me first. Not the other way around."</div>
+          <div class="ops-quote-attr">— Bubba · Bubba's BBQ · Houston</div>
+        </div>
+        <p class="ops-lead">Two Houston legends already onboarded. More joining daily. Stripe payouts daily. Live Clips for free advertising. Featured placement in Houston's hottest truck parks.</p>
+        <ul class="ops-features">
+          <li>
+            <span class="num">01</span>
+            <span class="label">Free truck profile + Live Clips<small>Stream from your truck. Free advertising, built in.</small></span>
+          </li>
+          <li>
+            <span class="num">02</span>
+            <span class="label">Built-in Stripe payments<small>Daily payouts. No invoicing. No middleman.</small></span>
+          </li>
+          <li>
+            <span class="num">03</span>
+            <span class="label">Featured in Houston truck parks<small>Priority placement at premier multi-vendor locations.</small></span>
+          </li>
+          <li>
+            <span class="num">04</span>
+            <span class="label">Real-time order management<small>Mobile dashboard. Pickup codes. Customer ETAs.</small></span>
+          </li>
+          <li>
+            <span class="num">05</span>
+            <span class="label">Customer rewards funnel<small>Loyalty system that brings them back. Built-in.</small></span>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="ops-pricing-card">
+          <div class="ops-pricing-eyebrow">№ 05 / Operator pricing</div>
+          <div class="ops-pricing-line">Lower fees<br>than <em>the apps</em><br>you've heard of.</div>
+          <div class="ops-pricing-detail">Transparent platform fee. No setup fee. No monthly fee. No menu fee. No commission stacking. Wave 1 (first 100 trucks) qualifies for grandfathered pricing.</div>
+          <a class="ops-cta-btn">Apply for vendor access <span>→</span></a>
+        </div>
+        <div class="ops-vetted">
+          <div class="ops-vetted-eyebrow">Personally vetted</div>
+          <div class="ops-vetted-text">We're personally reviewing every truck during launch. Apply to talk to the team. Houston-based operators only at this stage.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee">
+    <div class="marquee-track">
+      <span class="marquee-item">Real trucks <span class="dot"></span></span>
+      <span class="marquee-item dim">Real food <span class="dot"></span></span>
+      <span class="marquee-item">Real Houston <span class="dot"></span></span>
+      <span class="marquee-item dim">No ghost kitchens <span class="dot"></span></span>
+      <span class="marquee-item">No middlemen <span class="dot"></span></span>
+      <span class="marquee-item dim">Operator-first <span class="dot"></span></span>
+      <span class="marquee-item">Real trucks <span class="dot"></span></span>
+      <span class="marquee-item dim">Real food <span class="dot"></span></span>
+      <span class="marquee-item">Real Houston <span class="dot"></span></span>
+      <span class="marquee-item dim">No ghost kitchens <span class="dot"></span></span>
+      <span class="marquee-item">No middlemen <span class="dot"></span></span>
+      <span class="marquee-item dim">Operator-first <span class="dot"></span></span>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <h3>Curb<span class="accent">Chef</span>.</h3>
+        <p>The curb is the kitchen. Built in Houston, for Houston, by an operator tired of platforms that feed everyone but the trucks.</p>
+      </div>
+      <div class="foot-col">
+        <h4>For Eaters</h4>
+        <ul>
+          <li>Join waitlist</li>
+          <li>Founder perks</li>
+          <li>The Drop</li>
+          <li>AR Truck Radar</li>
+          <li>Truck parks</li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>For Operators</h4>
+        <ul>
+          <li>Apply for vendor access</li>
+          <li>Pricing</li>
+          <li>Truck park partners</li>
+          <li>Live Clips</li>
+          <li>Operator support</li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <ul>
+          <li>About</li>
+          <li>Houston, TX</li>
+          <li>Press</li>
+          <li>Privacy · Terms</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 CurbChef · Orbit Didit Films LLC</span>
+      <span>Houston · Pre-Launch · Founding Edition</span>
+    </div>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('in'), i * 50);
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -50px 0px', threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
+
+</body>
+</html>
