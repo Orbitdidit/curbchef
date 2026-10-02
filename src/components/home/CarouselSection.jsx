@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Star, MapPin } from 'lucide-react';
 import { useUserLocation, distanceMiles, formatDist } from '@/lib/geoUtils';
+import DemoBadge from '@/components/shared/DemoBadge';
 
 function SmallTruckCard({ truck, userLat, userLng }) {
   const distVal = (userLat && truck.latitude) ? distanceMiles(userLat, userLng, truck.latitude, truck.longitude) : null;
@@ -51,7 +52,7 @@ function SmallTruckCard({ truck, userLat, userLng }) {
 
         {/* Info */}
         <div className="px-3 pt-2 pb-3">
-          <p className="font-heading font-extrabold text-base leading-snug line-clamp-2 min-h-11" style={{ color: 'var(--cc-cream)', letterSpacing: '-0.01em' }}>{truck.name}</p>
+          <p className="font-heading font-extrabold text-base leading-snug line-clamp-2 min-h-11" style={{ color: 'var(--cc-cream)', letterSpacing: '-0.01em' }}>{truck.name}{truck.is_sample && <DemoBadge />}</p>
           <div className="flex items-center justify-between mt-1.5">
             <div className="flex items-center gap-0.5">
               <Star className="w-3 h-3" style={{ fill: 'var(--cc-yellow)', color: 'var(--cc-yellow)' }} />

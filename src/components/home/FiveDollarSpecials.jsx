@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { Tag, ChevronRight, Truck } from 'lucide-react';
+import DemoBadge from '@/components/shared/DemoBadge';
 
 export default function FiveDollarSpecials({ trucks }) {
   const { data: specials = [] } = useQuery({
@@ -64,7 +65,7 @@ export default function FiveDollarSpecials({ trucks }) {
                 </p>
                 {truck && (
                   <p className="text-[10px] truncate mt-0.5" style={{ color:'var(--cc-ink-dim)'}}>
-                    {truck.name}
+                    {truck.name}{truck.is_sample && <DemoBadge />}
                   </p>
                 )}
               </div>

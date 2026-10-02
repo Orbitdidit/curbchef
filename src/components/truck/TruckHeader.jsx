@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, Star, MapPin, Clock, Heart, Share2 } from 'lucide-react';
+import DemoBadge from '@/components/shared/DemoBadge';
 
 export default function TruckHeader({ truck }) {
   return (
@@ -43,7 +44,12 @@ export default function TruckHeader({ truck }) {
             </span>
           )}
         </div>
-        <h1 className="font-heading text-2xl font-bold">{truck.name}</h1>
+        <h1 className="font-heading text-2xl font-bold">{truck.name}{truck.is_sample && <DemoBadge />}</h1>
+        {truck.is_sample && (
+          <p className="mt-2 text-xs rounded-md px-3 py-2" style={{ background: 'rgba(242,186,98,0.12)', color: '#F2BA62', border: '1px solid rgba(242,186,98,0.3)' }}>
+            Demo truck. This is an example page showing what a finished CurbChef truck profile looks like.
+          </p>
+        )}
         <p className="text-muted-foreground text-sm mt-1">{truck.description}</p>
         <div className="flex items-center gap-4 mt-3">
           <div className="flex items-center gap-1.5">

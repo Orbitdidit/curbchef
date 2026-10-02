@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import DemoBadge from '@/components/shared/DemoBadge';
 
 export default function DiscoveryFeature({ trucks }) {
   const [index, setIndex] = useState(0);
@@ -16,7 +17,7 @@ export default function DiscoveryFeature({ trucks }) {
           <span className="absolute top-4 left-4 bg-discovery-paper text-discovery-dark rounded-full px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-wider">{truck.is_sample ? 'Demo truck' : truck.is_live ? 'Live now' : truck.status === 'open' ? 'Open now' : 'Featured truck'}</span>
           <div className="absolute bottom-4 left-5 right-5">
             <p className="text-discovery-amber uppercase text-[10px] tracking-widest font-mono mb-2">{truck.cuisine_type?.replace(/_/g, ' ')} / Houston</p>
-            <h2 className="font-heading font-extrabold text-2xl leading-tight tracking-tight text-discovery-ink">{truck.name}</h2>
+            <h2 className="font-heading font-extrabold text-2xl leading-tight tracking-tight text-discovery-ink">{truck.name}{truck.is_sample && <DemoBadge />}</h2>
           </div>
         </Link>
       </div>
