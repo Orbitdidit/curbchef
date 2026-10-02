@@ -138,7 +138,6 @@ export default function Crave() {
   const [dragging, setDragging] = useState(false);
   const [exitDir, setExitDir] = useState(null);
   const [history, setHistory] = useState([]);       // [{ card, swipeId, action }]
-  const [hiddenTrucks, setHiddenTrucks] = useState(() => new Set());
   const [cravedCount, setCravedCount] = useState(0);
   const [showHint, setShowHint] = useState(false);
   const start = useRef(null);
@@ -151,7 +150,7 @@ export default function Crave() {
   // Deck snapshot for this session, so background refetches don't reshuffle under your thumb.
   const [session, setSession] = useState(null);
   useEffect(() => { if (!session && deck.length) setSession(deck); }, [deck, session]);
-  const cards = useMemo(() => (session || []).filter(c => !hiddenTrucks.has(c.truck_id)), [session, hiddenTrucks]);
+  const cards = session || [];
   const current = cards[index];
   const next = cards[index + 1];
 
@@ -181,24 +180,26 @@ export default function Crave() {
       setExitDir(null);
       setOffset({ x: 0, y: 0 });
       if (action === 'hide_truck') {
-        setHiddenTrucks(prev => new Set(prev).add(card.truck_id));
+        // Drop only the cards still ahead of you; what you already swiped stays put.
+        setSession(prev => [...prev.slice(0, index), ...prev.slice(index).filter(c => c.truck_id !== card.truck_id)]);
       } else {
         setIndex(i => i + 1);
       }
       if (action === 'crave') setCravedCount(c => c + 1);
     }, 260);
     if (navigator.vibrate) { try { navigator.vibrate(action === 'crave' ? 18 : 8); } catch { /* unsupported */ } }
+    const snapshot = session;
     const swipeId = await record(card, action);
-    setHistory(h => [...h.slice(-19), { card, swipeId, action }]);
+    setHistory(h => [...h.slice(-19), { card, swipeId, action, snapshot }]);
     if (action === 'crave') qc.invalidateQueries({ queryKey: ['crave-list'] });
-  }, [current, exitDir, navigate, record, qc]);
+  }, [current, exitDir, navigate, record, qc, index, session]);
 
   const undo = async () => {
     const last = history[history.length - 1];
     if (!last) return;
     setHistory(h => h.slice(0, -1));
     if (last.action === 'hide_truck') {
-      setHiddenTrucks(prev => { const s = new Set(prev); s.delete(last.card.truck_id); return s; });
+      if (last.snapshot) setSession(last.snapshot);
     } else {
       setIndex(i => Math.max(0, i - 1));
     }
