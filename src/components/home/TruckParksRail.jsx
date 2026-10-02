@@ -41,7 +41,7 @@ export default function TruckParksRail({ discovery = false }) {
   if (!parks.length) return null;
 
   return (
-    <div className={discovery ? 'cc-paper rounded-[2rem] mt-7 py-7' : 'mt-8'}>
+    <div className={discovery ? 'cc-paper rounded-3xl mt-7 py-7' : 'mt-8'}>
       <div className="flex items-center justify-between px-4 mb-3">
         <h2 className="font-display text-lg" style={{ color:'var(--cc-on-cream)'}}>
            Houston's Hottest Truck Parks

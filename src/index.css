@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -13,38 +13,38 @@
        the comment beside each token. ===================================== */
 
     /* Surfaces */
-    --cc-bg-0: #17191C;        /* B: #17191C  page base    */
-    --cc-bg-1: #1B1E22;        /* B: #1B1E22  raised       */
-    --cc-bg-2: #212429;        /* B: #212429  card         */
-    --cc-bg-3: #2B2F35;        /* B: #2B2F35  chip / well  */
-    --cc-black: #101214;       /* B: #101214               */
-    --cc-surface: #1B1E22;     /* B: #1B1E22               */
-    --cc-surface-2: #212429;   /* B: #212429               */
-    --cc-surface-3: #1B1E22;   /* B: #1B1E22               */
+    --cc-bg-0: #0C0D0E;        /* B: #17191C  page base    */
+    --cc-bg-1: #121416;        /* B: #1B1E22  raised       */
+    --cc-bg-2: #181A1D;        /* B: #212429  card         */
+    --cc-bg-3: #202328;        /* B: #2B2F35  chip / well  */
+    --cc-black: #08090A;       /* B: #101214               */
+    --cc-surface: #121416;     /* B: #1B1E22               */
+    --cc-surface-2: #181A1D;   /* B: #212429               */
+    --cc-surface-3: #121416;   /* B: #1B1E22               */
 
     /* Text */
-    --cc-ink: #F7F2E7;         /* B: #F7F2E7               */
-    --cc-ink-dim: #C9C4BA;     /* B: #C9C4BA               */
-    --cc-ink-muted: #8A857C;   /* B: #8A857C               */
-    --cc-ink-faint: #6E6961;   /* B: #6E6961               */
+    --cc-ink: #F4F3EF;         /* B: #F7F2E7               */
+    --cc-ink-dim: #C7C5BF;     /* B: #C9C4BA               */
+    --cc-ink-muted: #8C8A85;   /* B: #8A857C               */
+    --cc-ink-faint: #5F5E5A;   /* B: #6E6961               */
     --cc-cream: #F7F2E7;       /* B: #F7F2E7               */
 
     /* Accent — currently mint. Direction B splits these:
        warm = food / price / CTA,  teal = live / map / status */
-    --cc-accent: #4FB3AD;      /* B: #E8442A  warm primary */
-    --cc-accent-2: #4FB3AD;    /* B: #4FB3AD  teal status  */
-    --cc-accent-3: #4FB3AD;    /* B: #4FB3AD               */
-    --cc-accent-deep: #3D1005; /* B: #3D1005  on-warm text */
+    --cc-accent: #78FFC9;      /* B: #E8442A  warm primary */
+    --cc-accent-2: #78FFC9;    /* B: #4FB3AD  teal status  */
+    --cc-accent-3: #78FFC9;    /* B: #4FB3AD               */
+    --cc-accent-deep: #06261A; /* B: #3D1005  on-warm text */
 
     /* Warm ramp */
-    --cc-warm: #E8442A;        /* B: #E8442A               */
-    --cc-warm-red: #E8442A;    /* B: #E8442A               */
+    --cc-warm: #FF5B1F;        /* B: #E8442A               */
+    --cc-warm-red: #FF5B1F;    /* B: #E8442A               */
     --cc-warm-2: #F5A623;      /* B: #F5A623               */
     --cc-warm-3: #F5A623;      /* B: #F5A623               */
     --cc-amber: #F5A623;       /* B: #F5A623               */
     --cc-yellow: #F5A623;      /* B: #F5A623               */
 
-    --cc-cta: #E8442A;
+    --cc-cta: #FF5B1F;
     --cc-cta-hover: #F5A623;
 
     /* Cream ramp — light sections, lifted from the Claude Design comp */
@@ -59,17 +59,17 @@
     --cc-on-cream-muted: #5C5A54;
     --cc-cream-line-rgb: 220,211,190;
     --cc-on-cta: #FFF3EF;
-    --cc-teal-on-cream: #2E8A85;
+    --cc-teal-on-cream: #0E7A55;
 
     /* Utility */
     --cc-violet: #F5A623;
     --cc-green: #4FB3AD;
 
     /* RGB triplets — used by rgba() calls for alpha washes */
-    --cc-accent-rgb: 79,179,173;   /* B: 232,68,42   */
-    --cc-line-rgb: 62,66,74;        /* B: 62,66,74    */
-    --cc-warm-rgb: 232,68,42;       /* B: 232,68,42   */
-    --cc-warm-red-rgb: 232,68,42;   /* B: 232,68,42   */
+    --cc-accent-rgb: 120,255,201;   /* B: 232,68,42   */
+    --cc-line-rgb: 44,47,52;        /* B: 62,66,74    */
+    --cc-warm-rgb: 255,91,31;       /* B: 232,68,42   */
+    --cc-warm-red-rgb: 255,91,31;   /* B: 232,68,42   */
 
     /* === THERMAL NIGHT PALETTE === */
     --background: 0 0% 4%;           /* var(--cc-black) pure near-black */
@@ -101,7 +101,7 @@
     --chart-3: 27 100% 55%;
     --chart-4: 48 100% 52%;
     --chart-5: 280 60% 55%;
-    --radius: 0.875rem;
+    --radius: 0.5rem;
 
     --sidebar-background: 0 0% 8%;
     --sidebar-foreground: 37 16% 95%;
@@ -182,20 +182,22 @@
 
 /* Customer discovery palette. Scoped so vendor, admin and checkout stay unchanged. */
 :root, .dark {
-  --cc-d-bg: #0D0E10;
-  --cc-d-surface: #1B1D21;
-  --cc-d-raised: #282A30;
+  --cc-d-bg: #0C0D0E;
+  --cc-d-surface: #141618;
+  --cc-d-raised: #1C1F22;
   --cc-d-ink: #F4F3EF;
-  --cc-d-muted: #B5B2AA;
-  --cc-d-line: #393B41;
-  --cc-d-orange: #FF5A1F;
+  --cc-d-muted: #9A9893;
+  --cc-d-line: #26292D;
+  --cc-d-orange: #FF5B1F;
   --cc-d-amber: #F2BA62;
   --cc-d-paper: #F4F0E7;
   --cc-d-card: #FFFCF5;
-  --cc-d-dark: #191A1D;
+  --cc-d-dark: #0C0D0E;
   --cc-d-paper-muted: #625D54;
-  --cc-d-paper-accent: #AB350F;
-  --cc-d-status: #80C8B0;
+  --cc-d-paper-accent: #C2410C;
+  --cc-d-status: #78FFC9;
+  --cc-d-mint: #78FFC9;
+  --cc-d-mint-rgb: 120,255,201;
 }
 .cc-discovery {
   --cc-bg-0: var(--cc-d-bg); --cc-black: var(--cc-d-bg);
@@ -203,8 +205,8 @@
   --cc-surface: var(--cc-d-surface); --cc-surface-2: var(--cc-d-raised); --cc-surface-3: var(--cc-d-surface);
   --cc-ink: var(--cc-d-ink); --cc-cream: var(--cc-d-ink);
   --cc-ink-dim: var(--cc-d-muted); --cc-ink-muted: var(--cc-d-muted); --cc-ink-faint: var(--cc-d-muted);
-  --cc-accent: var(--cc-d-orange); --cc-accent-2: var(--cc-d-orange); --cc-accent-3: var(--cc-d-orange);
-  --cc-accent-deep: var(--cc-d-dark); --cc-accent-rgb: 255,90,31;
+  --cc-accent: var(--cc-d-mint); --cc-accent-2: var(--cc-d-mint); --cc-accent-3: var(--cc-d-mint);
+  --cc-accent-deep: var(--cc-d-dark); --cc-accent-rgb: 120,255,201;
   --cc-cta: var(--cc-d-orange); --cc-warm: var(--cc-d-orange); --cc-warm-2: var(--cc-d-amber);
   color: var(--cc-d-ink);
 }
@@ -217,10 +219,10 @@
   --cc-accent-deep: var(--cc-d-card); --cc-black: var(--cc-d-card);
   background: var(--cc-d-paper); color: var(--cc-d-dark);
 }
-.cc-discovery .font-display:not(.cc-editorial) { font-family: var(--font-heading); font-weight: 800; letter-spacing: -.025em; }
+.cc-discovery .font-display:not(.cc-editorial) { font-family: 'Anton', 'Bebas Neue', sans-serif; font-weight: 400; letter-spacing: .005em; text-transform: uppercase; line-height: .95; }
 .cc-discovery :is(button, a, input):focus-visible { outline: 2px solid var(--cc-d-amber); outline-offset: 4px; }
 .cc-discovery .cc-paper :is(button, a, input):focus-visible { outline-color: var(--cc-d-paper-accent); }
-.cc-action { background: var(--cc-d-orange); color: var(--cc-d-dark); border-radius: 999px; font-weight: 800; min-height: 44px; }
+.cc-action { background: var(--cc-d-orange); color: #0C0D0E; border-radius: 999px; font-weight: 800; min-height: 44px; }
 .cc-feature-image { background: linear-gradient(180deg, transparent 35%, var(--cc-d-bg)); }
 .cc-menu-row { background: var(--cc-d-surface); border: 1px solid var(--cc-d-line); }
 .cc-profile-info { border-bottom: 5px solid var(--cc-d-orange); }
@@ -318,9 +320,11 @@ button:active, a:active {
 }
 /* CurbChef display type — condensed caps for headlines, prices, buttons */
 .font-display {
-  font-family: 'Bebas Neue', 'Plus Jakarta Sans', sans-serif;
-  letter-spacing: 0.04em;
+  font-family: 'Anton', 'Bebas Neue', 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: 0.01em;
   font-weight: 400;
+  text-transform: uppercase;
+  line-height: 0.95;
 }
 .font-display.tracking-tight-display { letter-spacing: 0.02em; }
 
@@ -361,3 +365,8 @@ button:active, a:active {
   border-radius: 14px;
 }
 .cc-price { font-family: 'Bebas Neue', sans-serif; color: var(--cc-cta); letter-spacing: 0.02em; }
+/* SPLASH SIGNATURE — mint glow on highlight words, tilted photo cards */
+.cc-glow { color: var(--cc-d-mint); text-shadow: 0 0 22px rgba(var(--cc-d-mint-rgb), .35); }
+.cc-tilt-l { transform: rotate(-3deg); }
+.cc-tilt-r { transform: rotate(2.5deg); }
+.cc-tag { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; padding: 4px 8px; border-radius: 3px; }
