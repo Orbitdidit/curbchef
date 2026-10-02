@@ -65,7 +65,6 @@ export default function StripeConnectButton({ truck, onStatusUpdate }) {
     setLoading(true);
     const res = await base44.functions.invoke('stripeConnect', {
       action: 'check_status',
-      stripe_account_id: truck.stripe_account_id,
     });
     if (res.data && onStatusUpdate) onStatusUpdate(res.data.status);
     setLoading(false);
