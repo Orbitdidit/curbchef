@@ -53,7 +53,7 @@ export default function TopItems() {
       {/* Header */}
       <div className="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 flex items-center gap-3"
         style={{ background: 'var(--cc-surface)', borderBottom:'1px solid rgba(255,255,255,0.05)' }}>
-        <Link to="/" className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+        <Link to="/" aria-label="Back to home" className="w-11 h-11 min-w-11 min-h-11 rounded-xl flex items-center justify-center flex-shrink-0"
           style={{ background: 'var(--cc-surface-3)' }}>
           <ChevronLeft className="w-5 h-5" style={{ color: 'var(--cc-cream)' }} />
         </Link>

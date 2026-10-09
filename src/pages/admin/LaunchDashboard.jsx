@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, Plus, X, Check, AlertTriangle, Zap, Clock, Flag, Edit2, Save } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import DrawerSelect from '@/components/shared/DrawerSelect';
 
 const PRIORITY_STYLE = {
   Critical: { bg: 'rgba(var(--cc-warm-red-rgb),0.15)', color: 'var(--cc-warm-red)', border: 'rgba(var(--cc-warm-red-rgb),0.35)' },
@@ -81,17 +82,11 @@ function TaskRow({ task, onUpdate, onDelete }) {
             <div className="flex flex-wrap gap-2">
               {['priority', 'status', 'category', 'owner', 'affected_page'].map(field => (
                 field === 'priority' ? (
-                  <select key={field} value={form[field] || ''} onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
-                    className="rounded-lg px-2 py-1 text-xs outline-none"
-                    style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }}>
-                    {['Critical','High','Medium','Low'].map(v => <option key={v}>{v}</option>)}
-                  </select>
+                  <DrawerSelect key={field} label="Priority" value={form[field] || ''} onValueChange={value => setForm(f => ({ ...f, [field]: value }))}
+                    className="rounded-lg px-2 text-xs" options={['Critical','High','Medium','Low']} />
                 ) : field === 'status' ? (
-                  <select key={field} value={form[field] || ''} onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
-                    className="rounded-lg px-2 py-1 text-xs outline-none"
-                    style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }}>
-                    {['Not Started','In Progress','Blocked','Needs Test','Complete'].map(v => <option key={v}>{v}</option>)}
-                  </select>
+                  <DrawerSelect key={field} label="Status" value={form[field] || ''} onValueChange={value => setForm(f => ({ ...f, [field]: value }))}
+                    className="rounded-lg px-2 text-xs" options={['Not Started','In Progress','Blocked','Needs Test','Complete']} />
                 ) : (
                   <input key={field} placeholder={field.replace('_', ' ')} value={form[field] || ''}
                     onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
@@ -190,11 +185,9 @@ function AddTaskRow({ onAdd }) {
               { field: 'status', opts: ['Not Started','In Progress','Blocked','Needs Test','Complete'] },
               { field: 'category', opts: ['Vendor Flow','Customer Flow','Admin','Payments','Media','Mobile','Legal','Bug','Nice to Have','Infrastructure'] },
             ].map(({ field, opts }) => (
-              <select key={field} value={form[field]} onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
-                className="rounded-lg px-2 py-1 text-xs outline-none"
-                style={{ background: 'var(--cc-bg-2)', color: 'var(--cc-ink)', border: '1px solid rgba(var(--cc-line-rgb),0.4)' }}>
-                {opts.map(v => <option key={v}>{v}</option>)}
-              </select>
+              <DrawerSelect key={field} label={field.charAt(0).toUpperCase() + field.slice(1)} value={form[field]}
+                onValueChange={value => setForm(f => ({ ...f, [field]: value }))}
+                className="rounded-lg px-2 text-xs" options={opts} />
             ))}
             {['owner', 'affected_page'].map(f => (
               <input key={f} placeholder={f.replace('_', ' ')} value={form[f]}

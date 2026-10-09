@@ -7,7 +7,7 @@
  *
  * Usage: const { navigate: tabNavigate, getTabPath } = useTabNav();
  */
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 // Roots that map to each bottom-tab
@@ -18,11 +18,12 @@ function getTabRoot(pathname) {
   return TAB_ROOTS.find(r => r === '/' ? pathname === '/' : pathname.startsWith(r)) || null;
 }
 
+// Session cache shared by every hook instance, including AppLayout and BottomNav.
+const tabHistory = { current: {} };
+
 export function useTabNav() {
   const navigate = useNavigate();
   const location = useLocation();
-  // Store last visited full path per tab root
-  const tabHistory = useRef({});
 
   // Call this from AppLayout/pages to record the current path for the active tab
   const recordPath = useCallback((pathname) => {
@@ -34,7 +35,8 @@ export function useTabNav() {
   const navigateTab = useCallback((tabRoot) => {
     const currentRoot = getTabRoot(location.pathname);
     if (currentRoot === tabRoot) {
-      // Already on this tab — reset to root
+      // Already on this tab — reset to root, including the shared history.
+      tabHistory.current[tabRoot] = tabRoot;
       navigate(tabRoot, { replace: true });
     } else {
       // Navigate to last visited path on that tab (or root)

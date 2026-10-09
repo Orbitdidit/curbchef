@@ -14,10 +14,10 @@ export default function HomeHeader() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Link to="/search" className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center">
+          <Link to="/search" aria-label="Search" className="w-11 h-11 min-w-11 min-h-11 rounded-xl bg-secondary flex items-center justify-center">
             <Search className="w-4.5 h-4.5 text-foreground" />
           </Link>
-          <button className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center relative">
+          <button aria-label="Notifications" className="w-11 h-11 min-w-11 min-h-11 rounded-xl bg-secondary flex items-center justify-center relative">
             <Bell className="w-4.5 h-4.5 text-foreground" />
             <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-accent rounded-full" />
           </button>

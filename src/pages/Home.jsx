@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import CategoryRow from '@/components/home/CategoryRow';
 import DiscoveryHeader from '@/components/home/DiscoveryHeader';
 import DiscoveryFeed from '@/components/home/DiscoveryFeed';
 import useDiscoveryTrucks from '@/components/home/useDiscoveryTrucks';
+import { usePullToRefresh } from '@/hooks/usePullToRefresh';
+import PullIndicator from '@/components/layout/PullIndicator';
 
 export default function Home() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const refreshTarget = useRef(null);
+  const { pullDist, refreshing } = usePullToRefresh({
+    targetRef: refreshTarget,
+    onRefresh: () => Promise.all(['discovery-trucks', 'discovery-cuisine', 'discovery-live', 'live-clip-videos', 'clips', 'live-clip-videos-feed'].map(key =>
+      queryClient.invalidateQueries({ queryKey: [key], refetchType: 'active' })
+    )),
+  });
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const { data: user } = useQuery({ queryKey: ['me'], queryFn: () => base44.auth.me() });
@@ -18,7 +28,8 @@ export default function Home() {
     navigate(searchQuery.trim() ? `/search?q=${encodeURIComponent(searchQuery.trim())}` : '/search');
   };
   return (
-    <div className="cc-discovery min-h-screen bg-discovery-bg pb-16">
+    <div ref={refreshTarget} className="cc-discovery min-h-screen bg-discovery-bg pb-16">
+      <PullIndicator pullDist={pullDist} refreshing={refreshing} />
       <DiscoveryHeader query={searchQuery} setQuery={setSearchQuery} onSearch={handleSearch} />
       <div className="mt-5"><CategoryRow selected={selectedCategory} onChange={setSelectedCategory} /></div>
       {isLoading ? <div role="status" className="mx-4 mt-5 h-72 rounded-3xl bg-discovery-surface motion-safe:animate-pulse"><span className="sr-only">Finding food trucks…</span></div> : isError ? <div role="alert" className="p-6 text-center"><p>We couldn’t load the trucks.</p><button onClick={() => refetch()} className="cc-action px-5 mt-4">Try again</button></div> : <DiscoveryFeed user={user} trucks={visibleTrucks} filteredTrucks={filteredTrucks} liveTrucks={liveTrucks} />}

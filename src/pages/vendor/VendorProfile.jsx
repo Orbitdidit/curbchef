@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Save, ToggleLeft, ToggleRight, ImageIcon, FileText, Utensils, Truck } from 'lucide-react';
 import VendorGate from '@/components/vendor/VendorGate';
 import MediaUpload from '@/components/shared/MediaUpload';
+import DrawerSelect from '@/components/shared/DrawerSelect';
 import CoverMediaUploader from '@/components/vendor/CoverMediaUploader';
 import { useToast } from '@/components/ui/use-toast';
 import { RotateCcw } from 'lucide-react';
@@ -205,12 +206,10 @@ function VendorProfileInner({ truck, user }) {
               <p className="text-[10px] mt-1" style={{ color: 'var(--cc-ink-faint)' }}>{form.description.length} chars</p>
             </div>
             <div>
-              <label style={labelStyle}>CUISINE TYPE</label>
-              <select style={inputStyle} value={form.cuisine_type} onChange={e => set('cuisine_type', e.target.value)}>
-                {CUISINE_OPTIONS.map(c => (
-                  <option key={c} value={c}>{c.replace('_','').replace(/\b\w/g, l => l.toUpperCase())}</option>
-                ))}
-              </select>
+              <label htmlFor="profile-cuisine" style={labelStyle}>CUISINE TYPE</label>
+              <DrawerSelect id="profile-cuisine" label="Cuisine type" style={{ ...inputStyle, outline: undefined }} value={form.cuisine_type}
+                onValueChange={value => set('cuisine_type', value)}
+                options={CUISINE_OPTIONS.map(c => ({ value: c, label: c.replace('_','').replace(/\b\w/g, l => l.toUpperCase()) }))} />
             </div>
             <div>
               <label style={labelStyle}>LOCATION / ADDRESS</label>
@@ -229,13 +228,14 @@ function VendorProfileInner({ truck, user }) {
               <input style={inputStyle} value={form.live_description} onChange={e => set('live_description', e.target.value)} placeholder="e.g.  Cooking brisket plates until sold out" />
             </div>
             <div>
-              <label style={labelStyle}>DELIVERY MODE</label>
-              <select style={inputStyle} value={form.delivery_mode} onChange={e => set('delivery_mode', e.target.value)}>
-                <option value="pickup_only"> Pickup Only</option>
-                <option value="pickup_delivery_curbchef"> Pickup + CurbChef Delivery</option>
-                <option value="pickup_delivery_vendor"> Pickup + Vendor Delivery</option>
-                <option value="full_delivery" disabled> Full Delivery (coming soon)</option>
-              </select>
+              <label htmlFor="profile-delivery" style={labelStyle}>DELIVERY MODE</label>
+              <DrawerSelect id="profile-delivery" label="Delivery mode" style={{ ...inputStyle, outline: undefined }} value={form.delivery_mode}
+                onValueChange={value => set('delivery_mode', value)} options={[
+                  { value: 'pickup_only', label: 'Pickup Only' },
+                  { value: 'pickup_delivery_curbchef', label: 'Pickup + CurbChef Delivery' },
+                  { value: 'pickup_delivery_vendor', label: 'Pickup + Vendor Delivery' },
+                  { value: 'full_delivery', label: 'Full Delivery (coming soon)', disabled: true },
+                ]} />
             </div>
             {/* Replay Tour */}
             <div className="pt-2 border-t" style={{ borderColor: 'rgba(var(--cc-line-rgb),0.2)' }}>
