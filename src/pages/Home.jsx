@@ -8,6 +8,7 @@ import DiscoveryFeed from '@/components/home/DiscoveryFeed';
 import useDiscoveryTrucks from '@/components/home/useDiscoveryTrucks';
 import { usePullToRefresh } from '@/hooks/usePullToRefresh';
 import PullIndicator from '@/components/layout/PullIndicator';
+import GrillEmbers from '@/components/home/GrillEmbers';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -28,7 +29,8 @@ export default function Home() {
     navigate(searchQuery.trim() ? `/search?q=${encodeURIComponent(searchQuery.trim())}` : '/search');
   };
   return (
-    <div ref={refreshTarget} className="cc-discovery min-h-screen bg-discovery-bg pb-16">
+    <div ref={refreshTarget} className="cc-discovery relative min-h-screen bg-discovery-bg pb-16">
+      <GrillEmbers />
       <PullIndicator pullDist={pullDist} refreshing={refreshing} />
       <DiscoveryHeader query={searchQuery} setQuery={setSearchQuery} onSearch={handleSearch} />
       <div className="mt-5"><CategoryRow selected={selectedCategory} onChange={setSelectedCategory} /></div>
