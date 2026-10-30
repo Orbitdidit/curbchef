@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const EMBERS = Array.from({ length: 18 }, (_, i) => ({
   left: (i * 37) % 100,
-  size: 2 + (i % 3),
+  size: 3 + (i % 3),
   delay: (i * 0.7) % 6,
   duration: 4 + (i % 4),
   drift: ((i % 5) - 2) * 8,
@@ -23,7 +23,7 @@ export default function GrillEmbers() {
   }, []);
 
   return (
-    <div ref={ref} aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[420px] overflow-hidden z-0"
+    <div ref={ref} aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[420px] overflow-hidden z-30"
       style={{ opacity, transition: 'opacity 0.3s ease-out' }}>
       {EMBERS.map((e, i) => (
         <span key={i} className="cc-ember" style={{
