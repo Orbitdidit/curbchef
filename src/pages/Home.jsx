@@ -31,10 +31,12 @@ export default function Home() {
   return (
     <div ref={refreshTarget} className="cc-discovery relative min-h-screen bg-discovery-bg pb-16">
       <GrillEmbers />
+      <div className="relative z-10">
       <PullIndicator pullDist={pullDist} refreshing={refreshing} />
       <DiscoveryHeader query={searchQuery} setQuery={setSearchQuery} onSearch={handleSearch} />
       <div className="mt-5"><CategoryRow selected={selectedCategory} onChange={setSelectedCategory} /></div>
       {isLoading ? <div role="status" className="mx-4 mt-5 h-72 rounded-3xl bg-discovery-surface motion-safe:animate-pulse"><span className="sr-only">Finding food trucks…</span></div> : isError ? <div role="alert" className="p-6 text-center"><p>We couldn’t load the trucks.</p><button onClick={() => refetch()} className="cc-action px-5 mt-4">Try again</button></div> : <DiscoveryFeed user={user} trucks={visibleTrucks} filteredTrucks={filteredTrucks} liveTrucks={liveTrucks} />}
+      </div>
     </div>
   );
 }

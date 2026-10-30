@@ -239,7 +239,7 @@
   15%  { opacity: .9; }
   40%  { opacity: .4; }
   55%  { opacity: .85; }
-  100% { transform: translate(var(--drift), -260px) scale(.4); opacity: 0; }
+  100% { transform: translate(var(--drift), -180px) scale(.4); opacity: 0; }
 }
 .cc-ember {
   position: absolute; bottom: 0; border-radius: 999px;
