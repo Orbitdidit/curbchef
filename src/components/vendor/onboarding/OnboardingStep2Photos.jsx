@@ -53,7 +53,7 @@ export default function OnboardingStep2Photos({ truck, saveTruck }) {
       <CoachedPhotoUpload
         kind="logo"
         label="Truck logo *"
-        hint="Square works best. No logo yet? Use your best food shot for now."
+        hint="Square works best. You need a logo before you can open your truck."
         currentUrl={truck?.image_url}
         onUploaded={(url) => saveTruck({ image_url: url })}
       />

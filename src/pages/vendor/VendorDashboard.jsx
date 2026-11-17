@@ -15,6 +15,7 @@ import ReliabilityCard from '@/components/vendor/ReliabilityCard';
 import LaunchReadinessCard from '@/components/vendor/LaunchReadinessCard';
 import VendorTipsSection from '@/components/vendor/VendorTipsSection';
 import WelcomeTour from '@/components/vendor/WelcomeTour';
+import MissingLogoBanner from '@/components/vendor/MissingLogoBanner';
 
 function VendorDashboardInner({ truck: initialTruck, user }) {
   const qc = useQueryClient();
@@ -283,10 +284,12 @@ function VendorDashboardInner({ truck: initialTruck, user }) {
         </div>
 
         {/* Status toggle */}
+        {!truck.image_url && <MissingLogoBanner />}
         <div className="flex gap-2 mb-5">
           {['open','closed','sold_out'].map(s => (
             <button
               key={s}
+              disabled={s === 'open' && !truck.image_url}
               onClick={() => {
                 const data = { status: s };
                 if (s === 'closed' && truck.scheduled_close_time) {

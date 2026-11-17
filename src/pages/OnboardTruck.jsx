@@ -111,6 +111,7 @@ export default function OnboardTruck() {
     if (step === 0) return !!form.vendor_type;
     if (step === 1) return form.truck_name && form.owner_name && form.email;
     if (step === 2) return form.city;
+    if (step === 4) return !!form.logo_url;
     return true;
   };
 
@@ -313,7 +314,7 @@ export default function OnboardTruck() {
             <h2 className="font-display text-2xl mb-1" style={{ color: 'var(--cc-ink)' }}>Show us your vibe </h2>
             <p className="text-sm mb-6" style={{ color: 'var(--cc-ink-dim)'}}>Upload your logo, truck photo, and food shots.</p>
             {[
-              { key:'logo_url', label:'LOGO'},
+              { key:'logo_url', label:'LOGO (REQUIRED)'},
               { key:'truck_photo_url', label:'TRUCK PHOTO' },
             ].map(({ key, label }) => (
               <div key={key}>

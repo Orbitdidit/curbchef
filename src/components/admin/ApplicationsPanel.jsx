@@ -218,7 +218,7 @@ export default function ApplicationsPanel() {
         name: app.truck_name,
         cuisine_type: app.cuisine_type || 'fusion',
         description: `${app.truck_name} — ${(app.cuisine_type || 'food').replace('_', ' ')} in ${app.city || 'Houston'}`,
-        image_url: app.food_images?.[0] || app.truck_photo_url || '',
+        image_url: app.logo_url || '',
         cover_image_url: app.truck_photo_url || app.food_images?.[0] || '',
         address: app.city || 'Houston, TX',
         city: app.city || 'Houston',
